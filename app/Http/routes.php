@@ -14,8 +14,7 @@
 Route::group(['middleware' => ['web']], function () {
 
     Route::auth();
-    Route::controller('/', 'ScouterController');
-    Route::controller('admin', 'AdminController');
+    Route::controller( 'admin', 'AdminController' );
+    Route::controller( '/', 'ScouterController' );
+
 });
-
-
