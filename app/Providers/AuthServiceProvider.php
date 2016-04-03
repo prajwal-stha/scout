@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\adjustments;
+use App\Policies\adjustmentsPolicy;
+
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +16,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        adjustments::class => adjustmentsPolicy::class,
         'App\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**

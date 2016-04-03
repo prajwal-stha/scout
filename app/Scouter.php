@@ -2,29 +2,15 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Scouter extends Authenticatable
+class Scouter extends Model
 {
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    public function organizations(){
 
-    protected $table = 'users';
+        return $this->belongsTo(Organizations::class, 'organization_id');
 
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
 }
