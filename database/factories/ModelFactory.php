@@ -26,6 +26,12 @@ $factory->define(App\Document::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];
+});
 
+$factory->define(App\Districts::class, function (Faker\Generator $faker) {
+    return [
+        'district_code' => str_random(5),
+        'name' => str_random(10),
+    ];
 });
 

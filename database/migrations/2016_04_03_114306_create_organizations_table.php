@@ -31,6 +31,8 @@ class CreateOrganizationsTable extends Migration
             $table->string('address_line_2', 50);
             $table->string('email', 50);
             $table->integer('user_id')->unsigned()->nullable();
+            $table->string('background_colour');
+            $table->string('border_colour');
 
             $table->foreign('district_code')->references('district_code')->on('districts');
 

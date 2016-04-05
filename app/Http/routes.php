@@ -11,17 +11,17 @@
 |
 */
 
-Auth::loginUsingId(1);
+//Auth::loginUsingId(1);
 
-Route::group(['middleware' => ['web']], function () {
+Route::group( ['middleware' => ['web']], function () {
 
     Route::auth();
-    Route::controller( 'admin', 'AdminController' );
+
     Route::controller( 'districts', 'DistrictsController');
-    Route::get('document/{document}', 'DocumentsController@show');
     Route::controller( 'organizations', 'OrganizationsController');
     Route::controller( 'rate', 'RateController');
-    Route::controller( 'teams', 'TeamController');
-    Route::controller( '/', 'ScouterController' );
+    Route::controller( 'teams', 'TeamsController');
+//    Route::controller( '/', 'ScouterController' );
+    Route::controller( '/', 'AdminController' );
 
 });

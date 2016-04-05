@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+
+
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
 
 class AuthController extends Controller
 {
@@ -23,12 +26,16 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $username = 'username';
+
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectTo = 'admin';
+    protected $redirectTo = '/';
+    protected $redirectAfterLogout = '/login';
+
 
     /**
      * Create a new authentication controller instance.
@@ -37,6 +44,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+
     }
 
     /**
@@ -48,8 +56,10 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => 'required|max:255',
+            'f_name'   => 'required|max:255',
+            'l_name'   => 'required|max:255',
             'email'    => 'required|email|max:255|unique:users',
+            'username' => 'required|max:255|unique:users|alpha_dash',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -63,9 +73,12 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name'     => $data['name'],
+            'f_name'   => $data['f_name'],
+            'l_name'   => $data['l_name'],
             'email'    => $data['email'],
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
 }

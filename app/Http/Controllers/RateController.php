@@ -13,6 +13,8 @@ class RateController extends Controller
 {
     public function getIndex()
     {
+        $data['title'] = 'Nepal Scout - Rates';
+        return view('admin.rate', $data);
         
     }
 

@@ -34,11 +34,11 @@
         <form action="{{ url('/login') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
+                <input type="text" class="form-control" placeholder="User Name" name="username" value="{{ old('username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                @if ($errors->has('email'))
+                @if ($errors->has('username'))
                     <span class="help-block">
-                        <strong>{{ $errors->first('email') }}</strong>
+                        <strong>{{ $errors->first('username') }}</strong>
                     </span>
                 @endif
             </div>

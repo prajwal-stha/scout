@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Auth;
 
 class CreateDistrictsRequest extends Request
 {
@@ -13,6 +14,9 @@ class CreateDistrictsRequest extends Request
      */
     public function authorize()
     {
+        if(is_admin()){
+            return true;
+        }
         return false;
     }
 
@@ -24,7 +28,14 @@ class CreateDistrictsRequest extends Request
     public function rules()
     {
         return [
-            //
+            'district_code' => 'required|unique:districts',
+            'name'          => 'required|unique:districts'
         ];
+    }
+
+    public function forbiddenResponse()
+    {
+        return $this->redirector->to('districts');
+
     }
 }
