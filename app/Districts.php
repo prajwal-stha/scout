@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Districts extends Model
 {
 
-//    protected $primaryKey = 'district_code';
+    protected $table = 'districts';
+
+    protected $primaryKey = 'district_code';
 
     public $timestamps = false;
 
-    protected $fillable = array('name');
+    protected $fillable = array('name', 'district_code');
+
+
 
 
     /**
