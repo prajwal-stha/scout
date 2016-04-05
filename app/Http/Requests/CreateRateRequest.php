@@ -13,6 +13,9 @@ class CreateRateRequest extends Request
      */
     public function authorize()
     {
+        if(is_admin()){
+            return true;
+        }
         return false;
     }
 
@@ -24,7 +27,18 @@ class CreateRateRequest extends Request
     public function rules()
     {
         return [
-            //
+            'registration_rate'        => 'integer',
+            'scouter_rate'             => 'integer',
+            'team_rate'                => 'integer',
+            'committee_members_rate'   => 'integer',
+            'disaster_mgmt_trust_rate' => 'integer',
+
         ];
+    }
+
+    public function forbiddenResponse()
+    {
+        return $this->redirector->to('rate');
+
     }
 }

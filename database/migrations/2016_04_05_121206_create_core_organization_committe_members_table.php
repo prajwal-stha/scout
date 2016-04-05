@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationCommitteMembers extends Migration
+class CreateCoreOrganizationCommitteMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,18 @@ class CreateOrganizationCommitteMembers extends Migration
      */
     public function up()
     {
-
-        Schema::create('organization_commitee_members', function(Blueprint $table){
+        Schema::create('core_organization_commitee_members', function(Blueprint $table){
 
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('f_name', 50);
-            $table->string('l_name', 50);
+            $table->string('f_name', 50)->index();
+            $table->string('l_name', 50)->index();
             $table->integer('organization_id')->unsigned();
 
-            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->foreign('organization_id')->references('id')->on('core_organizations');
 
         });
-
     }
 
     /**
@@ -35,6 +33,6 @@ class CreateOrganizationCommitteMembers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organization_commitee_members');
+        Schema::dropIfExists('core_organization_commitee_members');
     }
 }

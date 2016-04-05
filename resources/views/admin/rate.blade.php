@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-
-
 @section('content')
 
     <section class="content-header">
@@ -40,35 +38,42 @@
                         <h3 class="box-title">Subscription Rates</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="{{  url('rate/create-rate') }}" method="post">
+                    @if(isset($rates))
+                        {{--<form role="form" action="{{  url('rate/create-rate') }}" method="post">--}}
+                        {{ Form::open(['url' => 'rate/edit-rate']) }}
+                    @else
+                        {{--<form role="form" action="{{  url('rate/edit-rate') }}" method="post">--}}
+                        {{ Form::model($rates, ['url' => 'rate/create-rate']) }}
+                    @endif
+
                         {{ csrf_field() }}
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Registration Fees</label>
-                                <input type="text" class="form-control" name="reg_fees">
-                            </div>
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Registration Fees</label>
+                                    <input type="text" class="form-control" name="registration_rate" value="{{ old('registration_rate') }}">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Scouter Registration Fees</label>
-                                <input type="text" class="form-control" name="s_reg_fees">
-                            </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Scouter Registration Fees</label>
+                                    <input type="text" class="form-control" name="scouter_rate" value="{{ old('scouter_rate') }}">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Member Registration Fees</label>
-                                <input type="text" class="form-control" name="m_reg_fees">
-                            </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Member Registration Fees</label>
+                                    <input type="text" class="form-control" name="team_rate" value="{{ old('team_rate') }}">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Committee Registration Fees</label>
-                                <input type="text" class="form-control" name="c_reg_fees">
-                            </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Committee Registration Fees</label>
+                                    <input type="text" class="form-control" name="committee_members_rate" value="{{ old('committee_members_rate') }}">
+                                </div>
 
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Disaster Management Trust</label>
-                                <input type="text" class="form-control" name="d_reg_fees">
-                            </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Disaster Management Trust</label>
+                                    <input type="text" class="form-control" name="disaster_mgmt_trust_rate" value="{{ old('disaster_mgmt_trust_rate') }}">
+                                </div>
 
-                        </div><!-- /.box-body -->
+                            </div><!-- /.box-body -->
 
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -86,8 +91,5 @@
 @section('scripts')
 
     @parent
-    <script>
-
-    </script>
 
 @stop

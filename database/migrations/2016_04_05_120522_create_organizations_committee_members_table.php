@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoreScouter extends Migration
+class CreateOrganizationsCommitteeMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateCoreScouter extends Migration
      */
     public function up()
     {
-        Schema::create('core_scouter', function( Blueprint $table){
+        Schema::create('organization_commitee_members', function(Blueprint $table){
 
             $table->engine = 'InnoDB';
 
@@ -21,7 +21,7 @@ class CreateCoreScouter extends Migration
             $table->string('l_name', 50);
             $table->integer('organization_id')->unsigned();
 
-            $table->foreign('organization_id')->references('id')->on('core_organizations');
+            $table->foreign('organization_id')->references('id')->on('organizations');
 
         });
     }
@@ -33,6 +33,6 @@ class CreateCoreScouter extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('core_scouter');
+        Schema::dropIfExists('organization_commitee_members');
     }
 }
