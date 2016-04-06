@@ -16,7 +16,7 @@ class CreateRateTable extends Migration
 
             $table->engine = 'InnoDB';
 
-            $table->increments('id')->unsigned();
+            $table->increments('id');
 
             $table->mediumInteger('registration_rate')->unsigned();
             $table->mediumInteger('scouter_rate')->unsigned();

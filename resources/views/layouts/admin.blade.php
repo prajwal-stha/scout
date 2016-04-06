@@ -193,7 +193,7 @@
     <script src="{{ asset( 'bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="{{ asset( 'morris/morris.min.js')  }}"></script>
+    <script src="{{ asset( 'morris/morris.min.js')  }}"></script
     <!-- Sparkline -->
     <script src="{{ asset( 'sparkline/jquery.sparkline.min.js') }}"></script>
     <!-- jvectormap -->
@@ -201,7 +201,7 @@
     <script src="{{ asset( 'jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
     <!-- jQuery Knob Chart -->
     <script src="{{ asset( 'knob/jquery.knob.js') }}"></script>
-    <!-- daterangepicker -->
+    {{--<!-- daterangepicker -->--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
     <script src="{{ asset( 'daterangepicker/daterangepicker.js') }}"></script>
     <!-- datepicker -->
@@ -219,6 +219,8 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset( 'js/demo.js') }}"></script>
     <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset( 'js/scout.js') }}"></script>
+
 @show
 </body>
 </html>

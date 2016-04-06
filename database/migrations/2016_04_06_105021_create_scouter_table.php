@@ -12,7 +12,7 @@ class CreateScouterTable extends Migration
      */
     public function up()
     {
-        Schema::create('scouter', function( Blueprint $table){
+        Schema::create('scouters', function( Blueprint $table){
 
             $table->engine = 'InnoDB';
 

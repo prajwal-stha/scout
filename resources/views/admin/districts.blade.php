@@ -11,36 +11,43 @@
 
 
     <section class="content">
+
         <!-- Small boxes (Stat box) -->
-        @if (count($errors) > 0)
+        {{--@if (count($errors) > 0)--}}
 
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-ban"></i> Whoops!</h4>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if(Session::has('msg'))
+            {{--<div class="alert alert-danger alert-dismissable">--}}
+                {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
+                {{--<h4><i class="icon fa fa-ban"></i> Whoops!</h4>--}}
+                {{--<ul>--}}
+                    {{--@foreach ($errors->all() as $error)--}}
+                        {{--<li>{{ $error }}</li>--}}
+                    {{--@endforeach--}}
+                {{--</ul>--}}
+            {{--</div>--}}
 
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Great!</h4>
-                {{ Session::get('msg') }}
-            </div>
-        @endif
+        {{--@endif--}}
 
-        @if(Session::has('districts_deleted'))
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Great!</h4>
-                {{ Session::get('districts_deleted') }}
-            </div>
+        {{--@if(Session::has('msg'))--}}
 
-        @endif
+            {{--<div class="alert alert-success alert-dismissable">--}}
+                {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
+                {{--<h4><i class="icon fa fa-check"></i> Great!</h4>--}}
+                {{--{{ Session::get('msg') }}--}}
+            {{--</div>--}}
+
+        {{--@endif--}}
+        <div id="alert-placeholder"></div>
+
+        {{--@if(Session::has('districts_deleted'))--}}
+
+            {{--<div class="alert alert-success alert-dismissable">--}}
+                {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
+                {{--<h4><i class="icon fa fa-check"></i> Great!</h4>--}}
+                {{--{{ Session::get('districts_deleted') }}--}}
+            {{--</div>--}}
+
+        {{--@endif--}}
+
         <div class="row">
             <div class="col-md-5">
                 <!-- general form elements -->
@@ -49,7 +56,7 @@
                         <h3 class="box-title">Add Districts</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    <form role="form" action="{{ url('districts/create') }}" method="post">
+                    <form role="form" action="{{ url('districts/create') }}" method="post" id="district-create-form">
                         {{ csrf_field() }}
                         <div class="box-body">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : ''}}">
@@ -123,114 +130,24 @@
     @parent
     <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('datatables/dataTables.bootstrap.min.js') }}"></script>
+
     <script>
 
         $('#list-districts').DataTable({
             "paging": true,
-            "lengthChange": false,
+            "lengthChange": true,
             "searching": true,
             "ordering": true,
             "info": true,
-            "autoWidth": false
-        });
-        $('.check-all').on('click', function () {
-            if ($(this).is(':checked')) {
-                $('.check-row input[type=checkbox]').prop('checked', true);
-                $(this).each(function () {
-                    if ($(this).is(':checked')) {
-                        $('#delete-submit').css('display', 'inline-block');
-                    }
-                });
-
-            } else {
-                $('.check-row input[type=checkbox]').prop('checked', false);
-                $(this).each(function(){
-                    if($(this).not(':checked')) {
-                        $('#delete-submit').css('display', 'none');
-                    }
-                });
-            }
+            "autoWidth": false,
+//            serverSide: true,
+//            ajax: {
+//                url: '/data-source',
+//                type: 'POST'
+//            }
         });
 
-        $('.check-row input[type=checkbox]').on('click', function () {
-
-            $(this).each(function() {
-
-                if($(this).is(':checked')) {
-
-                    $('#delete-submit').css('display', 'inline-block');
-
-                } else {
-
-                    $('#delete-submit').css('display', 'none');
-                }
-
-            });
-
-
-        });
-
-        $('#create-submit').on('submit', function(e) {
-            e.preventDefault();
-            console.log('attempting');
-            $.post(
-                $(this).prop('action'),
-                {
-                    "_token": $(this).find('input[name=_token]').val(),
-                    "name": $('#district-name').val(),
-                    "code": $('#district-code').val()
-                },
-                function (data) {
-                    console.log(data);
-                },
-                'json'
-            );
-            return false;
-        });
-        $('#delete-submit').on('click', function(event){
-            event.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this record!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel please!",
-                closeOnConfirm: false,
-                closeOnCancel: false
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    swal("Deleted!", "The record has been deleted.", "success");
-                    $('#remove_many_districts').submit();
-
-                } else {
-                    swal("Cancelled", "The record is safe.)", "error");
-                }
-            });
-        });
-        function confirmRemove(event){
-            event.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this record!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel please!",
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    swal("Deleted!", "The record has been deleted.", "success");
-                } else {
-                    swal("Cancelled", "The record is safe.)", "error");
-                }
-            });
-        }
     </script>
+
 @stop
 

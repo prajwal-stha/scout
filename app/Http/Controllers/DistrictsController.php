@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateDistrictsRequest;
 
-use App\Districts;
+use App\District;
 
 use Auth;
 use Session;
@@ -30,7 +30,7 @@ class DistrictsController extends Controller
      */
     public function getIndex()
     {
-        $districts = Districts::all();
+        $districts = District::all();
         $title = 'Nepal Scout - Districts';
         return view('admin.districts', array('title' => $title, 'districts' => $districts));
     }
@@ -41,9 +41,12 @@ class DistrictsController extends Controller
     {
 
         if (Session::token() !== $request->get('_token')) {
-            return response()->json(array(
+
+            $response = array(
                 'msg' => 'Unauthorized attempt to create districts'
-            ));
+            );
+
+            return response()->json($response);
 
         }
 
@@ -55,10 +58,14 @@ class DistrictsController extends Controller
         $validator = Validator::make($request->all(), $rules);
         // process the form
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $response = array(
+                'status'    => 'danger',
+                'msg'       => $validator->errors()->all()
+            );
+
         } else {
 
-            Districts::create(
+            District::create(
                 [
                     'name' => $request->get('name'),
                     'district_code' => $request->get('district_code'),
@@ -70,7 +77,8 @@ class DistrictsController extends Controller
                 'msg' => 'One more districts has been added.',
             );
         }
-        return redirect()->back()->with($response);
+
+        return response()->json($response);
 
     }
 
@@ -86,18 +94,16 @@ class DistrictsController extends Controller
 
     public function getDelete($id)
     {
-
-        $district = Districts::findOrFail($id);
-        if(Districts::destroy($district->id)){
+        $district = District::findOrFail($id);
+        if(District::destroy($district->id)){
             return redirect()->back()->with(array('districts_deleted' => 'One of the districts has been deleted.'));
         }
-
     }
 
     public function postRemove(Request $request)
     {
         if ( is_array($request->get('action_to')) ){
-            Districts::destroy($request->get('action_to'));
+            District::destroy($request->get('action_to'));
             return redirect()->back();
         } else {
 
