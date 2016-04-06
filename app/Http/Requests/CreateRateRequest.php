@@ -32,13 +32,12 @@ class CreateRateRequest extends Request
             'team_rate'                => 'integer',
             'committee_members_rate'   => 'integer',
             'disaster_mgmt_trust_rate' => 'integer',
-
         ];
     }
 
     public function forbiddenResponse()
     {
-        return $this->redirector->to('rate');
+        return $this->redirector->to('/rate');
 
     }
 }

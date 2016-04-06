@@ -9,8 +9,16 @@ use App\Http\Requests;
 use App\Http\Requests\CreateRateRequest;
 use App\Rate;
 
+use Session;
+
 class RateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware( 'auth' );
+
+    }
     public function getIndex()
     {
         $title = 'Nepal Scout - Rates';
@@ -18,7 +26,7 @@ class RateController extends Controller
         return view('admin.rate')->with(array('title' => $title, 'rates' => $rates));
     }
 
-    public function postCreateRate(CreateRateRequest $request)
+    public function postCreate(CreateRateRequest $request)
     {
         Rate::create
         (
@@ -34,13 +42,20 @@ class RateController extends Controller
         return redirect()->back()->withInput();
     }
 
-    public function getEditRate()
+
+    public function patchEdit($id, CreateRateRequest $request)
     {
+        $rates = Rate::findOrFail($id);
+
+        $input = $request->all();
+
+        $rates->fill($input)->save();
+
+        return redirect()->back()
+            ->with(['rates_updated' => 'Rates successfully updated'])
+            ->withInput();
         
     }
 
-    public function patchEditRate()
-    {
-        
-    }
+
 }

@@ -20,6 +20,11 @@ use Validator;
 class DistrictsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      *
      */
@@ -27,55 +32,36 @@ class DistrictsController extends Controller
     {
         $districts = Districts::all();
         $title = 'Nepal Scout - Districts';
-        return view('admin.districts', array('districts' => $districts, 'title' => $title));
-
-        
-    }
-
-    /**
-     *
-     */
-    public function getCreateDistricts()
-    {
-
+        return view('admin.districts', array('title' => $title, 'districts' => $districts));
     }
 
     /**
      */
-    public function postCreateDistricts(Request $request)
+    public function postCreate(Request $request)
     {
-//        Districts::create
-//        (
-//            [
-//                'name'            => $request->get('name'),
-//                'district_code'   => $request->get('district_code'),
-//            ]
-//        );
-//
-//        return Redirect::back()->with(['districts_created' => 'One more districts has been added.']);
-        if ( Session::token() !== $request->get( '_token' ) ) {
-            return response()->json( array(
+
+        if (Session::token() !== $request->get('_token')) {
+            return response()->json(array(
                 'msg' => 'Unauthorized attempt to create districts'
-            ) );
+            ));
 
         }
 
         $rules = array(
             'district_code' => 'required|unique:districts',
-            'name'          => 'required|unique:districts'
+            'name' => 'required|unique:districts'
         );
 
         $validator = Validator::make($request->all(), $rules);
         // process the form
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
 
             Districts::create(
                 [
-                    'name'            => $request->get('name'),
-                    'district_code'   => $request->get('district_code'),
+                    'name' => $request->get('name'),
+                    'district_code' => $request->get('district_code'),
                 ]
             );
 
@@ -84,39 +70,40 @@ class DistrictsController extends Controller
                 'msg' => 'One more districts has been added.',
             );
         }
-        return response()->json( $response );
-        
-    }
-
-    /**
-     *
-     */
-    public function getEditDistricts()
-    {
+        return redirect()->back()->with($response);
 
     }
+
 
     /**
      * @param CreateDistrictsRequest $request
      */
-    public function patchEditDistricts(CreateDistrictsRequest $request, $code)
+    public function patchUpdate(CreateDistrictsRequest $request, $code)
     {
 
 
     }
 
-    public function getDeleteDistricts($code)
+    public function getDelete($id)
     {
-        dd($code);
 
-    }
-
-    public function postDeleteManyDistricts(Request $request)
-    {
-        if ( null !== ($request->get('mass-delete')) && is_array($request->get('action_to')) ){
-            Districts::destroy($request->get('action_to'));
+        $district = Districts::findOrFail($id);
+        if(Districts::destroy($district->id)){
+            return redirect()->back()->with(array('districts_deleted' => 'One of the districts has been deleted.'));
         }
-        return redirect()->back()->with(['districts_deleted' => 'The Districts has been deleted.']);
+
+    }
+
+    public function postRemove(Request $request)
+    {
+        if ( is_array($request->get('action_to')) ){
+            Districts::destroy($request->get('action_to'));
+            return redirect()->back();
+        } else {
+
+            return redirect()->back();
+        }
+
 
     }
 

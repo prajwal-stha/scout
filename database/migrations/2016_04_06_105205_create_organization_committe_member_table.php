@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScouterTable extends Migration
+class CreateOrganizationCommitteMemberTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateScouterTable extends Migration
      */
     public function up()
     {
-        Schema::create('scouter', function( Blueprint $table){
+        Schema::create('organization_commitee_members', function(Blueprint $table){
 
             $table->engine = 'InnoDB';
 
@@ -33,6 +33,6 @@ class CreateScouterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scouter');
+        Schema::dropIfExists('organization_commitee_members');
     }
 }

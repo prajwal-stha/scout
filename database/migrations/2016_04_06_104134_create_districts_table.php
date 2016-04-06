@@ -16,10 +16,12 @@ class CreateDistrictsTable extends Migration
 
             $table->engine = 'InnoDB';
 
+            $table->increments('id');
+
             $table->string('district_code')->unique();
+
             $table->string('name', 50)->index();
 
-            $table->primary('district_code');
 
         });
     }

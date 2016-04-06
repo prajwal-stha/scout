@@ -10,5 +10,5 @@ use App\Teams;
 
 class TeamsController extends Controller
 {
-    //
+
 }

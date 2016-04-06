@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "~5.0",
         "lord/laroute" : "2.*",
-        "nesbot/carbon": "~1.14"
+        "nesbot/carbon": "~1.14",
+        "filp/whoops": "~1.0."
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

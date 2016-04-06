@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoreOrganizationsTable extends Migration
+class CreateOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,13 @@ class CreateCoreOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('core_organizations', function (Blueprint $table) {
+        Schema::create('organizations', function (Blueprint $table) {
 
             $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->string('registration_no')->unique()->nullable();
-            $table->string('district_code');
+            $table->integer('district_id')->unsigned();
             $table->date('registration_date')->nullable();
             $table->string('renew_status')->nullable();
             $table->enum('type', ['school', 'other']);
@@ -31,8 +31,10 @@ class CreateCoreOrganizationsTable extends Migration
             $table->string('address_line_2', 50);
             $table->string('email', 50);
             $table->integer('user_id')->unsigned()->nullable();
+            $table->string('background_colour');
+            $table->string('border_colour');
 
-            $table->foreign('district_code')->references('district_code')->on('districts');
+            $table->foreign('district_id')->references('id')->on('districts');
 
         });
     }
@@ -44,6 +46,6 @@ class CreateCoreOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('core_organizations');
+        Schema::dropIfExists('organizations');
     }
 }

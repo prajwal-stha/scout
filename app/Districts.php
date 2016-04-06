@@ -9,13 +9,10 @@ class Districts extends Model
 
     protected $table = 'districts';
 
-    protected $primaryKey = 'district_code';
 
     public $timestamps = false;
 
     protected $fillable = array('name', 'district_code');
-
-
 
 
     /**
@@ -24,7 +21,7 @@ class Districts extends Model
     public function organizations()
     {
 
-        return $this->hasMany( Organizations::class, 'district_code' );
+        return $this->hasMany( Organizations::class );
 
     }
 

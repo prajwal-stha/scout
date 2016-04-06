@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
 
+    protected $table = 'rates';
     /**
      * @var string
      */
@@ -46,5 +47,10 @@ class Rate extends Model
 
         $this->attributes['disaster_mgmt_trust_rate'] = 'Rs. ' . $value;
 
+    }
+
+    public function formRegistrationRateAttribute($value)
+    {
+       return 'Rs. ' . $value;
     }
 }

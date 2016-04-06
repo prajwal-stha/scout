@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Organizations extends Model
 {
+
+    protected $table = 'organizations';
     /**
      * @var string
      */
@@ -38,7 +40,7 @@ class Organizations extends Model
     public function districts()
     {
 
-        return $this->belongsTo(Districts::class, 'district_code');
+        return $this->belongsTo(Districts::class);
 
     }
 

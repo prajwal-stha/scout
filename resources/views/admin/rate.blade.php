@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <section class="content-header">
         <ol class="breadcrumb">
             <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -13,20 +14,35 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Whoops!</h4>
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
+
         @endif
+
         @if(Session::has('rate_created'))
-            <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Great!</strong> {{ Session::get('rate_created') }}<br><br>
+
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('rate_created') }}
+            </div>
+
+        @endif
+
+        @if(Session::has('rates_updated'))
+
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('rates_updated') }}
             </div>
 
         @endif
@@ -39,46 +55,53 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     @if(isset($rates))
-                        {{--<form role="form" action="{{  url('rate/create-rate') }}" method="post">--}}
-                        {{ Form::open(['url' => 'rate/edit-rate']) }}
+
+                        {{ Form::model($rates, ['url' => ['rate/edit', $rates['id']], 'method' => 'PATCH']) }}
+
                     @else
-                        {{--<form role="form" action="{{  url('rate/edit-rate') }}" method="post">--}}
-                        {{ Form::model($rates, ['url' => 'rate/create-rate']) }}
+
+                        {{ Form::open(['url' => 'rate/create']) }}
+
                     @endif
 
-                        {{ csrf_field() }}
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Registration Fees</label>
-                                    <input type="text" class="form-control" name="registration_rate" value="{{ old('registration_rate') }}">
-                                </div>
+                        <div class="box-body">
+                            <div class="form-group{{ $errors->has('registration_rate') ? ' has-error' : ''}}">
+                                {{ Form::label('registration_rate', 'Registration Fees') }}
+                                {{ Form::text('registration_rate', null, array('class' => 'form-control')) }}
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Scouter Registration Fees</label>
-                                    <input type="text" class="form-control" name="scouter_rate" value="{{ old('scouter_rate') }}">
-                                </div>
+                            <div class="form-group{{ $errors->has('scouter_rate') ? ' has-error' : ''}}">
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Member Registration Fees</label>
-                                    <input type="text" class="form-control" name="team_rate" value="{{ old('team_rate') }}">
-                                </div>
+                                {{ Form::label('scouter_rate', 'Scouter Registration Fees') }}
+                                {{ Form::text('scouter_rate', null, array('class' => 'form-control')) }}
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Committee Registration Fees</label>
-                                    <input type="text" class="form-control" name="committee_members_rate" value="{{ old('committee_members_rate') }}">
-                                </div>
+                            <div class="form-group{{ $errors->has('team_rate') ? ' has-error' : ''}}">
 
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Disaster Management Trust</label>
-                                    <input type="text" class="form-control" name="disaster_mgmt_trust_rate" value="{{ old('disaster_mgmt_trust_rate') }}">
-                                </div>
+                                {{ Form::label('team_rate', 'Member Registration Fees') }}
+                                {{ Form::text('team_rate', null, array('class' => 'form-control')) }}
+                            </div>
 
-                            </div><!-- /.box-body -->
+                            <div class="form-group{{ $errors->has('committee_members_rate') ? ' has-error' : ''}}">
+
+                                {{ Form::label('committee_members_rate', 'Committee Registration Fees') }}
+                                {{ Form::text('committee_members_rate', null, array('class' => 'form-control')) }}
+
+                            </div>
+
+                            <div class="form-group{{ $errors->has('disaster_mgmt_trust_rate') ? ' has-error' : ''}}">
+
+                                {{ Form::label('disaster_mgmt_trust_rate', 'Disaster Management Trust') }}
+                                {{ Form::text('disaster_mgmt_trust_rate', null, array('class' => 'form-control')) }}
+
+                            </div>
+
+                        </div><!-- /.box-body -->
 
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-                    </form>
+                    {{ Form::close() }}
 
                 </div><!-- /.box -->
 
