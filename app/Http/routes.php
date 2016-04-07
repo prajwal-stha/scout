@@ -20,13 +20,7 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'organizations', 'OrganizationsController');
     Route::controller( 'rate', 'RateController');
     Route::controller( 'teams', 'TeamsController');
-    Route::controller( 'scouter', 'ScouterController' );
-    Route::controller( '/', 'AdminController' );
-
-
-//    Route::post('/districts/change/{district}', array(
-//        'as'    => 'update-district',
-//        'uses'  => 'DistrictController@postCreate'
-//    ));
+    Route::controller( 'admin', 'AdminController' );
+    Route::controller( '/', 'ScouterController' );
 
 });

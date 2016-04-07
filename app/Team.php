@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Teams
  * @package App
  */
-class Teams extends Model
+class Team extends Model
 {
 
     /**

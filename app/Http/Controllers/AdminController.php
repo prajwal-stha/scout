@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 
+
 class AdminController extends Controller
 {
 
