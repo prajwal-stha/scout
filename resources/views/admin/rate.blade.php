@@ -54,7 +54,7 @@
                         <h3 class="box-title">Subscription Rates</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    @if(isset($rates))
+                    @if($rates)
 
                         {{ Form::model($rates, ['url' => ['rate/edit', $rates['id']], 'method' => 'PATCH']) }}
 

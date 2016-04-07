@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     $('.check-all').on('click', function () {
 
         if ($(this).is(':checked')) {
@@ -49,9 +50,16 @@ $(document).ready(function(){
             function (data) {
 
                 if(data.status == 'success') {
+                    console.log(data);
 
-                    var successMsg = returnAlert(data);
+                    var successMsg = returnSuccess(data);
                     $('#alert-placeholder').html(successMsg);
+                    var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
+                        '<a data-toggle="modal" data-target="#districtModal"><i class="fa fa-pencil"></i></a> | ' +
+                        '<a class="deleteDistrict" data-id="'+ data.district.id + '" href="' + delete_url +'/' +  data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
+                    $('#list-districts').prepend(row);
+
+                    $('#district-create-form').trigger('reset');
 
                 }else{
 
@@ -88,32 +96,20 @@ $(document).ready(function(){
         });
     });
 
-    function confirmRemove(event){
 
-        event.preventDefault();
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this record!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel please!",
-            closeOnConfirm: false,
-            closeOnCancel: true
-            },
-        function (isConfirm) {
-            if (isConfirm) {
-                swal("Deleted!", "The record has been deleted.", "success");
-            } else {
-                swal("Cancelled", "The record is safe.)", "error");
-            }
-        });
+    $('#modal-submit').on('click', function(){
+        $('#districtModal').modal('hide');
+    });
+
+
+    function returnSuccess(data){
+        var output = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-check"></i> Great!</h4>' + data.msg +
+        '</div>';
+        return output;
     }
 
     function returnAlert(data){
-        var output = '<div class="alert alert-'+ data.status + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-check"></i> Great!</h4>' + data.msg +
-        '</div>';
+        var output = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Whoops!</h4>' + data.msg + '</ul></div>';
         return output;
     }
 

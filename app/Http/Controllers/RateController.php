@@ -19,11 +19,12 @@ class RateController extends Controller
         $this->middleware( 'auth' );
 
     }
+
     public function getIndex()
     {
-        $title = 'Nepal Scout - Rates';
-        $rates = Rate::first();
-        return view('admin.rate')->with(array('title' => $title, 'rates' => $rates));
+        $data['title'] = 'Nepal Scout - Rates';
+        $data['rates'] = Rate::first();
+        return view('admin.rate')->with($data);
     }
 
     public function postCreate(CreateRateRequest $request)

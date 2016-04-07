@@ -14,8 +14,8 @@ class ScouterController extends Controller
 
     public function getIndex(){
 
-//        return view('auth.register');
-        return view('auth.login');
+        return view('scouter.organization');
 
     }
+
 }

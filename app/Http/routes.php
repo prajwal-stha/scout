@@ -23,4 +23,10 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'scouter', 'ScouterController' );
     Route::controller( '/', 'AdminController' );
 
+
+//    Route::post('/districts/change/{district}', array(
+//        'as'    => 'update-district',
+//        'uses'  => 'DistrictController@postCreate'
+//    ));
+
 });

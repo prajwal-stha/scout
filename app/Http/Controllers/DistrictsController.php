@@ -59,13 +59,13 @@ class DistrictsController extends Controller
         // process the form
         if ($validator->fails()) {
             $response = array(
-                'status'    => 'danger',
-                'msg'       => $validator->errors()->all()
+                'status' => 'danger',
+                'msg' => $validator->errors()->all()
             );
 
         } else {
 
-            District::create(
+            $district = District::create(
                 [
                     'name' => $request->get('name'),
                     'district_code' => $request->get('district_code'),
@@ -75,9 +75,20 @@ class DistrictsController extends Controller
             $response = array(
                 'status' => 'success',
                 'msg' => 'One more districts has been added.',
+                'district' => $district
             );
         }
 
+        return response()->json($response);
+    }
+
+    public function getUpdate($id)
+    {
+        $district = District::findOrFail($id);
+        $response = array(
+            'status'    => 'success',
+            'district'  => $district
+        );
         return response()->json($response);
 
     }
@@ -96,8 +107,16 @@ class DistrictsController extends Controller
     {
         $district = District::findOrFail($id);
         if(District::destroy($district->id)){
-            return redirect()->back()->with(array('districts_deleted' => 'One of the districts has been deleted.'));
+            $response = array(
+                'status' => 'success'
+            );
+//            return redirect()->back()->with(array('districts_deleted' => 'One of the districts has been deleted.'));
+        }else {
+            $response = array(
+                'status' => 'error'
+            );
         }
+        return response()->json($response);
     }
 
     public function postRemove(Request $request)
@@ -109,9 +128,5 @@ class DistrictsController extends Controller
 
             return redirect()->back();
         }
-
-
     }
-
-
 }

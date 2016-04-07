@@ -158,10 +158,6 @@
                         <i class="fa fa-compass"></i> <span>Districts</span>
                     </a>
                 </li>
-
-
-
-
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -193,7 +189,7 @@
     <script src="{{ asset( 'bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="{{ asset( 'morris/morris.min.js')  }}"></script
+    <script src="{{ asset( 'morris/morris.min.js')  }}"></script>
     <!-- Sparkline -->
     <script src="{{ asset( 'sparkline/jquery.sparkline.min.js') }}"></script>
     <!-- jvectormap -->
