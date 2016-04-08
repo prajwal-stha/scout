@@ -127,7 +127,7 @@
                                     </thead>
                                     <tbody id="list-districts">
 
-                                        @include('partials/districts')
+                                        @include('partials.districts')
 
                                     </tbody>
 

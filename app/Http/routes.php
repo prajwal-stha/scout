@@ -21,6 +21,7 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'rate', 'RateController');
     Route::controller( 'teams', 'TeamsController');
     Route::controller( 'admin', 'AdminController' );
+    Route::controller( 'scouter', 'ScouterController' );
     Route::controller( '/', 'ScouterController' );
 
 });

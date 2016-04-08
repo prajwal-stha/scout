@@ -17,9 +17,9 @@
                         <li><a href="{{ url('/') }}"><i class="fa fa-institution"></i> Organization Detail</a></li>
                         <li><a href="{{ url('/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
                         <li><a href="{{ url('/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
-                        <li><a href="{{ url('') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
-                        <li class="active"><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
-                        <li><a href="{{ url('/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
+                        <li><a href="{{ url('/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
+                        <li><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
+                        <li class="active"><a href="{{ url('/scouter/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
                     </ul>
                 </div><!-- /.box-body -->
             </div><!-- /. box -->

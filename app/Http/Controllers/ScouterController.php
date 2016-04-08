@@ -29,24 +29,28 @@ class ScouterController extends Controller
 
     public function getCommitte()
     {
+
         return view('scouter.member');
         
     }
 
     public function getScouter()
     {
+
         return view('scouter.scouter');
         
     }
 
     public function getTeam()
     {
+
         return view('scouter.team');
         
     }
 
     public function getRegistration()
     {
+
         return view('scouter.registration');
         
     }

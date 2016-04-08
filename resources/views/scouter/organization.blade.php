@@ -5,6 +5,7 @@
 
     <div class="row">
         <div class="col-md-4">
+
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Registration</h3>
@@ -15,14 +16,15 @@
                 <div class="box-body no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active"><a href="{{ url('/') }}"><i class="fa fa-institution"></i> Organization Detail</a></li>
-                        <li><a href="{{ url('/scouter/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
-                        <li><a href="{{ url('/scouter/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
-                        <li><a href="{{ url('/scouter/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
-                        <li><a href="{{ url('/scouter/team') }}"><i class="fa fa-users"></i> Teams</a></li>
-                        <li><a href="{{ url('/scouter/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
+                        <li><a href="{{ url('/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
+                        <li><a href="{{ url('/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
+                        <li><a href="{{ url('/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
+                        <li><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
+                        <li><a href="{{ url('/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
                     </ul>
                 </div><!-- /.box-body -->
             </div><!-- /. box -->
+
 
         </div>
         <div class="col-md-8">
@@ -54,7 +56,6 @@
                              </div>
                         </div>
 
-                        </div>
 
                         <div class="form-group">
 
