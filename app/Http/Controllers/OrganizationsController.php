@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CreateOrganizationsRequest;
 
 use App\Organization;
 
@@ -12,18 +13,10 @@ use App\Organization;
 class OrganizationsController extends Controller
 {
 
-    public function getIndex()
-    {
-        
-    }
 
-    public function getCreateOrganizations()
+    public function postCreate(CreateOrganizationsRequest $request)
     {
-        
-    }
-
-    public function postCreateOrganizations()
-    {
+        dd($request->all());
         
     }
 

@@ -26,33 +26,33 @@
 
         {{--@endif--}}
 
-        {{--@if(Session::has('msg'))--}}
+        @if(Session::has('district_updated'))
 
-            {{--<div class="alert alert-success alert-dismissable">--}}
-                {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
-                {{--<h4><i class="icon fa fa-check"></i> Great!</h4>--}}
-                {{--{{ Session::get('msg') }}--}}
-            {{--</div>--}}
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('district_updated') }}
+            </div>
 
-        {{--@endif--}}
+        @endif
         <div class="modal" id="districtModal" tabindex="-1" role="dialog" aria-labelledby="districtModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="districtModalLabel">New message</h4>
                     </div>
-                    <form action="" method="post" id="district-update-form">
+                    <form action="{{ url('districts/update') }}" method="post" id="district-update-form">
                         <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="id" value="" id="update-district-id">
                         {{ csrf_field() }}
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="district-name">District Name</label>
-                                <input type="text" class="form-control" id="update-district-name" placeholder="District Name" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control" id="update-district-name" placeholder="District Name" name="name" value="">
                             </div>
                             <div class="form-group">
                                 <label for="district-code">District Code</label>
-                                <input type="text" class="form-control" id="update-district-code" placeholder="District Code" name="district_code" value="{{ old('district_code') }}">
+                                <input type="text" class="form-control" id="update-district-code" placeholder="District Code" name="district_code" value="">
                             </div>
 
                         </div>
@@ -173,12 +173,12 @@
             var url = update_url + '/' + id;
             if(id) {
                 $.get(url).done(function(data){
-                    data.district.name = $('#update-district-name').val();
-                    data.district.district_code = $('#update-district-code').val();
-                    console.log(data);
-                    console.log(data.district.district_code);
-
+                    $('#update-district-name').val(data.district.name);
+                    $('#update-district-code').val(data.district.district_code);
+                    $('#update-district-id').val(id);
                 });
+                $('#districtModal').modal('show');
+
             }
         });
 

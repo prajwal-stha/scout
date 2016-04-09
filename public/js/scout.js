@@ -98,7 +98,7 @@ $(document).ready(function(){
 
 
     $('#modal-submit').on('click', function(){
-        $('#districtModal').modal('hide');
+        $('#district-update-form').submit();
     });
 
 
@@ -112,7 +112,6 @@ $(document).ready(function(){
         var output = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Whoops!</h4>' + data.msg + '</ul></div>';
         return output;
     }
-
 
 });
 

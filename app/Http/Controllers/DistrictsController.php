@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Requests\CreateDistrictsRequest;
+use App\Http\Requests\UpdateDistrictRequest;
+
 
 use App\District;
 
@@ -51,8 +52,8 @@ class DistrictsController extends Controller
         }
 
         $rules = array(
-            'district_code' => 'required|unique:districts',
-            'name' => 'required|unique:districts'
+            'district_code' => 'required|unique:districts,district_code',
+            'name' => 'required|unique:districts,name'
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -95,11 +96,22 @@ class DistrictsController extends Controller
 
 
     /**
-     * @param CreateDistrictsRequest $request
+     * @param UpdateDistrictRequest $request
+     * @return $this
      */
-    public function patchUpdate(CreateDistrictsRequest $request, $code)
+    public function patchUpdate(UpdateDistrictRequest $request)
     {
+        $id = $request->get('id');
 
+        if($id){
+            $district = District::findOrFail($id);
+            $input = $request->all();
+
+            $district->fill($input)->save();
+
+            return redirect()->back()
+                ->with(['district_updated' => 'District successfully updated']);
+        }
 
     }
 
@@ -110,7 +122,6 @@ class DistrictsController extends Controller
             $response = array(
                 'status' => 'success'
             );
-//            return redirect()->back()->with(array('districts_deleted' => 'One of the districts has been deleted.'));
         }else {
             $response = array(
                 'status' => 'error'

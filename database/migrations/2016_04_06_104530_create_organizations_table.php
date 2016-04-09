@@ -24,7 +24,7 @@ class CreateOrganizationsTable extends Migration
             $table->enum('type', ['school', 'other']);
             $table->string('name', 100)->index();
             $table->string('chairman_f_name', 50)->index();
-            $table->string('chairman_f_name', 50)->index();
+            $table->string('chairman_l_name', 50)->index();
             $table->string('chairman_mobile_no', 50);
             $table->string('tel_no', 50);
             $table->string('address_line_1', 50);
