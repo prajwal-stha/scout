@@ -5,5 +5,6 @@ Homestead.yaml
 Homestead.json
 .env
 .idea
+config/mail.php
 
 

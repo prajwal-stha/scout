@@ -202,7 +202,11 @@
                 $.ajax(delete_url + '/' + record_id),function(data) {
                     console.log(data);
                     if (data.status == 'success') {
+                        console.log(data);
+
+
                         swal("Deleted!", "The record has been deleted.", "success");
+
 
                     } else {
                         swal("Cancelled", "The record is safe.)", "error");

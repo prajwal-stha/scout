@@ -118,7 +118,8 @@ class DistrictsController extends Controller
     public function getDelete($id)
     {
         $district = District::findOrFail($id);
-        if(District::destroy($district->id)){
+        if($district){
+            District::destroy($district->id);
             $response = array(
                 'status' => 'success'
             );

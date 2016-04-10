@@ -21,15 +21,15 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="{{ asset( 'morris/morris.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'morris/morris.css' ) }}">--}}
     <!-- jvectormap -->
-    <link rel="stylesheet" href="{{ asset('jvectormap/jquery-jvectormap-1.2.2.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset('jvectormap/jquery-jvectormap-1.2.2.css' ) }}">--}}
     <!-- Date Picker -->
-    <link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">--}}
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset( 'daterangepicker/daterangepicker-bs3.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'daterangepicker/daterangepicker-bs3.css' ) }}">--}}
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="{{ asset( 'bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' ) }}">--}}
 
     <link rel="stylesheet" href="{{ asset( 'sweetalert/sweetalert.css' ) }}">
 
@@ -45,7 +45,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="{{ url('/') }}" class="logo">
+        <a href="{{ url('admin') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>NS</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -93,8 +93,8 @@
                             <li class="user-header">
                                 <img src="{{ asset( 'img/user2-160x160.jpg' ) }}" class="img-circle" alt="User Image">
                                 <p>
-                                    {{ Auth::user()->f_name }} {{ Auth::user()->l_name  }} - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{ Auth::user()->f_name }} {{ Auth::user()->l_name  }}
+                                    <small>@if (Auth::user()->created_at != null) {{ 'Member since ' . Auth::user()->created_at->toFormattedDateString() }} @endif</small>
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -148,13 +148,13 @@
                 </li>
 
                 <li>
-                    <a href="{{ url('/rate') }}">
+                    <a href="{{ url('rate') }}">
                         <i class="fa fa-calculator"></i> <span>Rates</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ url('/districts') }}">
+                    <a href="{{ url('districts') }}">
                         <i class="fa fa-compass"></i> <span>Districts</span>
                     </a>
                 </li>

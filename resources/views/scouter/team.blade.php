@@ -41,12 +41,13 @@
                                 <div class="form-group">
                                     <label class="control-label col-sm-4" for="lead-scouter">Team Name</label>
                                     <div class="col-sm-8">
-                                       <input type="text" class="form-control" name="name">
+                                       <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="create-submit">Save</button>
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary pull-right" id="team-submit">Save</button>
+                                </div>
                             </form>
-
 
                             <table class="table table-bordered table-striped">
                                 <tbody>
@@ -66,13 +67,13 @@
 
                                         <label class="control-label col-sm-3" for="email">Name</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="email" placeholder="First" name="email" value="{{ old('email') }}">
+                                            <input type="text" class="form-control" id="email" placeholder="First" name="f_name" value="{{ old('f_name') }}">
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="email" placeholder="Middle" name="email" value="{{ old('email') }}">
+                                            <input type="text" class="form-control" id="email" placeholder="Middle" name="m_name" value="{{ old('email') }}">
                                         </div>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="email" placeholder="Last" name="email" value="{{ old('email') }}">
+                                            <input type="text" class="form-control" id="email" placeholder="Last" name="l_name" value="{{ old('l_name') }}">
                                         </div>
                                     </div>
 
@@ -95,7 +96,6 @@
                                         <div class="col-sm-9">
                                             <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
                                         </div>
-
 
                                     </div>
 
@@ -135,13 +135,11 @@
                                     </div>
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary" id="create-submit">Add Member</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Add Member</button>
                                     </div>
                                 </form>
 
-
                                 </div>
-
 
                             </div>
                         </div>
@@ -192,7 +190,7 @@
 @section('scripts')
 
     @parent
-    
+
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script>
         $("[data-mask]").inputmask();

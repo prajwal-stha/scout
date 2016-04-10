@@ -33,7 +33,6 @@ class CreateOrganizationsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->string('background_colour');
             $table->string('border_colour');
-
             $table->foreign('district_id')->references('id')->on('districts');
 
         });

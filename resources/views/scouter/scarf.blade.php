@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="background-colour">Background Colour</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Background Colour" name="background_colour" value="{{ old('name') }}">
+                                <input type="text" class="form-control" id="background-colour" placeholder="Background Colour" name="background_colour" value="{{ old('background_colour') }}">
                             </div>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="background-colour" placeholder="Colour Code" name="colour_code" value="{{ old('name') }}">
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="background-colour">Border Colour</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Border Colour" name="border_colour" value="{{ old('name') }}">
+                                <input type="text" class="form-control" id="background-colour" placeholder="Border Colour" name="border_colour" value="{{ old('border_colour') }}">
                             </div>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="background-colour" placeholder="Colour Code" name="name" value="{{ old('name') }}">
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary" id="create-submit">Save</button>
+                            <button type="submit" class="btn btn-primary btn-lg pull-right">Save</button>
                         </div>
                     </div>
                 </form>

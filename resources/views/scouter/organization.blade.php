@@ -152,7 +152,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
                         </div>
                     </div>
                 </form>

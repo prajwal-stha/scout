@@ -27,17 +27,17 @@ class CreateRateRequest extends Request
     public function rules()
     {
         return [
-//            'registration_rate'        => 'alpha_num',
-//            'scouter_rate'             => 'alpha_num',
-//            'team_rate'                => 'alpha_num',
-//            'committee_members_rate'   => 'alpha_num',
-//            'disaster_mgmt_trust_rate' => 'alpha_num',
+            'registration_rate'        => 'integer',
+            'scouter_rate'             => 'integer',
+            'team_rate'                => 'integer',
+            'committee_members_rate'   => 'integer',
+            'disaster_mgmt_trust_rate' => 'integer',
         ];
     }
 
     public function forbiddenResponse()
     {
-        return $this->redirector->to('/rate');
+        return $this->redirector->to('rate');
 
     }
 }

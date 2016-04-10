@@ -56,7 +56,11 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" id="member-submit">Save</button><br /> <br />
+                        <div class="box-footer">
+
+                            <button type="submit" class="btn btn-primary pull-right" id="member-submit">Save</button><br />
+
+                        </div>
 
                         <div class="box-footer">
                             <table id="table-member" class="table table-bordered table-striped">
@@ -78,8 +82,6 @@
                                         <td><i class="fa fa-pencil"></i> |
                                             <i class="fa fa-trash-o"></i></td>
                                     </tr>
-
-
 
                                 </tbody>
 
