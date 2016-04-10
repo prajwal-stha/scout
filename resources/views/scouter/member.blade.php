@@ -32,7 +32,7 @@
                     <h3 class="box-title">Committee Member Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('organizations/create') }}" method="post" id="organization-create-form" class="form-horizontal">
+                <form role="form" action="{{ url('organizations/member') }}" method="post" id="member-create-form" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary" id="create-submit">Save</button><br /> <br />
+                        <button type="submit" class="btn btn-primary" id="member-submit">Save</button><br /> <br />
 
                         <div class="box-footer">
                             <table id="table-member" class="table table-bordered table-striped">
@@ -72,9 +72,9 @@
                                 <tbody id="list-member">
                                     <tr>
                                         <td class="check-row"><input name="action_to[]" type="checkbox" value=""></td>
-                                        <td>John</td>
-                                        <td>P. </td>
-                                        <td>Doe</td>
+                                        <td>{{ session()->get('f_name') }}</td>
+                                        <td>{{ session()->get('m_name') }}</td>
+                                        <td>{{ session()->get('l_name') }}</td>
                                         <td><i class="fa fa-pencil"></i> |
                                             <i class="fa fa-trash-o"></i></td>
                                     </tr>

@@ -68,7 +68,7 @@ class DistrictsController extends Controller
 
             $district = District::create(
                 [
-                    'name' => $request->get('name'),
+                    'name'          => $request->get('name'),
                     'district_code' => $request->get('district_code'),
                 ]
             );

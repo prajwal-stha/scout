@@ -16,28 +16,40 @@ class ScouterController extends Controller
 
     public function getIndex(){
         $data['district'] = District::all();
+        $data['title']    = 'Nepal Scout - Organizations';
 
         return view('scouter.organization')->with($data);
 
     }
 
     public function getScarf(){
+        $data['title']   = 'Nepal Scout - Scarf';
 
-        return view('scouter.scarf');
+        return view('scouter.scarf')->with($data);
         
     }
 
     public function getCommitte()
     {
+        $data['title']  = 'Nepal Scout - Member';
 
-        return view('scouter.member');
+        return view('scouter.member')->with($data);
         
     }
 
     public function getScouter()
     {
+        $data['title'] = 'Nepal Scout - Scouter';
+        if(session()->has('f_name')) {
+            $data['f_name'] = session()->get('f_name');
+            $data['m_name'] = session()->get('m_name');
+            $data['l_name'] = session()->get('l_name');
 
-        return view('scouter.scouter');
+            return view('scouter.scouter')->with($data);
+        }
+        else{
+            echo "No session";
+        }
         
     }
 

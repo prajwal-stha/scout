@@ -75,7 +75,7 @@
 
                             <label class="control-label col-sm-3" for="organization-start">Organization Start Date</label>
                             <div class="col-sm-4">
-                                <input type="text" id="organization-start" name="registration_date" value="{{ old('registration_date') }}" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                <input type="text" id="organization-start" name="registration_date" value="{{ old('registration_date') }}" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                             </div>
 
                         </div>

@@ -2,6 +2,7 @@
 
 
 @section('content')
+
     <div class="row">
         <div class="col-md-3">
 
@@ -31,7 +32,7 @@
                     <h3 class="box-title">Scarf Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('organizations/create') }}" method="post" id="organization-create-form" class="form-horizontal">
+                <form role="form" action="{{ url('organizations/scarf') }}" method="post" id="scarf-create-form" class="form-horizontal">
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
@@ -50,7 +51,7 @@
                                 <input type="text" class="form-control" id="background-colour" placeholder="Border Colour" name="border_colour" value="{{ old('name') }}">
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Background Colour" name="name" value="{{ old('name') }}">
+                                <input type="text" class="form-control" id="background-colour" placeholder="Colour Code" name="name" value="{{ old('name') }}">
                             </div>
                         </div>
 

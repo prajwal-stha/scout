@@ -24,15 +24,15 @@ class CreateOrganizationsRequest extends Request
     public function rules()
     {
         return [
-            'registration_date'     => 'required',
-            'type'                  => 'required',
+            'registration_date'     => 'required|date_format:"d/m/Y"',
+            'type'                  => 'required|string',
             'name'                  => 'required|unique:organizations,name',
-            'chairman_f_name'       => 'required',
-            'chairman_l_name'       => 'required',
-            'chairman_mobile_no'    => 'required',
-            'tel_no'                => 'required',
-            'address_line_1'        => 'required',
-            'address_line_2'        => 'required',
+            'chairman_f_name'       => 'required|string',
+            'chairman_l_name'       => 'required|string',
+            'chairman_mobile_no'    => 'required|string',
+            'tel_no'                => 'required|string',
+            'address_line_1'        => 'required|string',
+            'address_line_2'        => 'required|string',
             'email'                 => 'required|email|unique:organizations,email'
         ];
     }
