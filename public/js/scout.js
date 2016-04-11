@@ -1,5 +1,4 @@
-$(document).ready(function(){
-
+jQuery(document).ready(function() {
 
     $('.check-all').on('click', function () {
 
@@ -14,8 +13,8 @@ $(document).ready(function(){
         } else {
 
             $('.check-row input[type=checkbox]').prop('checked', false);
-            $(this).each(function(){
-                if($(this).not(':checked')) {
+            $(this).each(function () {
+                if ($(this).not(':checked')) {
                     $('#delete-submit').css('display', 'none');
                 }
             });
@@ -24,9 +23,9 @@ $(document).ready(function(){
 
     $('.check-row input[type=checkbox]').on('click', function () {
 
-        $(this).each(function() {
+        $(this).each(function () {
 
-            if($(this).is(':checked')) {
+            if ($(this).is(':checked')) {
 
                 $('#delete-submit').css('display', 'inline-block');
 
@@ -37,7 +36,7 @@ $(document).ready(function(){
         });
     });
 
-    $('#district-create-form').on('submit', function(e) {
+    $('#district-create-form').on('submit', function (e) {
         e.preventDefault();
 
         $.post(
@@ -49,19 +48,21 @@ $(document).ready(function(){
             },
             function (data) {
 
-                if(data.status == 'success') {
+                if (data.status == 'success') {
                     console.log(data);
 
                     var successMsg = returnSuccess(data);
                     $('#alert-placeholder').html(successMsg);
-                    var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
-                        '<a class="updateDistrict" id="updateDistrict" data-id="' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
-                        '<a class="deleteDistrict" data-id="'+ data.district.id + '" href="' + delete_url +'/' +  data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
-                    $('#list-districts').prepend(row);
+                    //var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
+                    //    '<a class="updateDistrict" data-id="' + data.district.id + '" href="' + update_url + '/' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
+                    //    '<a class="deleteDistrict" data-id="' + data.district.id + '" href="' + delete_url + '/' + data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
+                    //$('#list-districts').prepend(row);
+                    //$('#table-districts').load(index_url + ' #list-districts' );
+                    $('#table-list-districts').load();
 
                     $('#district-create-form').trigger('reset');
 
-                }else{
+                } else {
 
                     var errorMsg = returnAlert(data);
                     $('#alert-placeholder').html(errorMsg);
@@ -71,7 +72,8 @@ $(document).ready(function(){
         );
         return false;
     });
-    $('#delete-submit').on('click', function(event){
+
+    $('#delete-submit').on('click', function (event) {
 
         event.preventDefault();
         swal({
@@ -85,6 +87,18 @@ $(document).ready(function(){
             closeOnConfirm: false,
             closeOnCancel: false
         },
+            //function () {
+            //    $.ajax({
+            //        url : remove_url
+            //    }).done(function(data) {
+            //
+            //        swal("Deleted!", "Your file was successfully deleted!", "success");
+            //        row.remove();
+            //
+            //    }).error(function(data) {
+            //        swal("Oops", "We couldn't connect to the server!", "error");
+            //    });
+            //});
         function (isConfirm) {
             if (isConfirm) {
                 swal("Deleted!", "The record has been deleted.", "success");
@@ -96,24 +110,100 @@ $(document).ready(function(){
         });
     });
 
+    $('.updateDistrict').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#update-district-name').val(data.district.name);
+                $('#update-district-code').val(data.district.district_code);
+                $('#update-district-id').val(id);
+            });
+            $('#districtModal').modal('show');
+            return;
+        }
+    });
 
-    $('#modal-submit').on('click', function(){
+
+    $('.deleteDistrict').on("click", function (e) {
+
+        var record_id = $(this).attr('data-id');
+        var row = $(this).closest('tr');
+
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                row.remove();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+
+    });
+
+
+
+    $('#modal-submit').on('click', function () {
         $('#district-update-form').submit();
     });
 
 
-    function returnSuccess(data){
+    function returnSuccess(data) {
         var output = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-check"></i> Great!</h4>' + data.msg +
-        '</div>';
+            '</div>';
         return output;
     }
 
-    function returnAlert(data){
+    function returnAlert(data) {
         var output = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Whoops!</h4>' + data.msg + '</ul></div>';
         return output;
     }
 
+    function confirmRemove(event) {
+
+        event.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                swal("Deleted!", "The record has been deleted.", "success");
+                console.log($(this));
+                $(this).trigger("click");
+            } else {
+                swal("Cancelled", "The record is safe.)", "error");
+            }
+        });
+    }
 });
+
+
 
 
 

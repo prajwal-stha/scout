@@ -50,6 +50,12 @@
                             </form>
 
                             <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
                                         <td>Alpha</td>

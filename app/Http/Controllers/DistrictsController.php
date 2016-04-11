@@ -10,7 +10,6 @@ use App\Http\Requests\UpdateDistrictRequest;
 
 use App\District;
 
-use Auth;
 use Session;
 use Validator;
 
@@ -21,6 +20,9 @@ use Validator;
 class DistrictsController extends Controller
 {
 
+    /**
+     * DistrictsController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -36,7 +38,10 @@ class DistrictsController extends Controller
         return view('admin.districts', array('title' => $title, 'districts' => $districts));
     }
 
+
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postCreate(Request $request)
     {
@@ -83,6 +88,10 @@ class DistrictsController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getUpdate($id)
     {
         $district = District::findOrFail($id);
@@ -115,6 +124,10 @@ class DistrictsController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getDelete($id)
     {
         $district = District::findOrFail($id);
@@ -131,6 +144,10 @@ class DistrictsController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postRemove(Request $request)
     {
         if ( is_array($request->get('action_to')) ){

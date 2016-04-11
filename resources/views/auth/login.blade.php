@@ -9,11 +9,9 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset( 'bootstrap/css/bootstrap.min.css' ) }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
 
@@ -33,7 +31,7 @@
         <p class="login-box-msg">Sign In</p>
         <form action="{{ url('/login') }}" method="post">
             {{ csrf_field() }}
-            <div class="form-group has-feedback">
+            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                 <input type="text" class="form-control" placeholder="User Name" name="username" value="{{ old('username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 @if ($errors->has('username'))
@@ -42,7 +40,7 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group has-feedback">
+            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <input type="password" class="form-control" placeholder="Password" name="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @if ($errors->has('password'))
@@ -64,12 +62,6 @@
                 </div><!-- /.col -->
             </div>
         </form>
-
-        {{--<div class="social-auth-links text-center">--}}
-            {{--<p>- OR -</p>--}}
-            {{--<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>--}}
-            {{--<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>--}}
-        {{--</div><!-- /.social-auth-links -->--}}
 
         <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
         <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>

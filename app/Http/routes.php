@@ -22,6 +22,13 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'teams', 'TeamsController');
     Route::controller( 'admin', 'AdminController' );
     Route::controller( 'scouter', 'ScouterController' );
+
+    Route::get('districts/getAllDistricts', function($district){
+        return view('partials.districts')->withDistrict($district);
+    });
+
     Route::controller( '/', 'ScouterController' );
+
+
 
 });

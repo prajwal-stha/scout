@@ -74,14 +74,19 @@
                                     </tr>
                                 </thead>
                                 <tbody id="list-member">
-                                    <tr>
-                                        <td class="check-row"><input name="action_to[]" type="checkbox" value=""></td>
-                                        <td>{{ session()->get('f_name') }}</td>
-                                        <td>{{ session()->get('m_name') }}</td>
-                                        <td>{{ session()->get('l_name') }}</td>
-                                        <td><i class="fa fa-pencil"></i> |
-                                            <i class="fa fa-trash-o"></i></td>
-                                    </tr>
+                                    {{--@if(Session::has('member'))--}}
+                                        {{--<?php $member = Session::get('member'); ?>--}}
+                                        {{--@foreach($member as $value)--}}
+                                            {{--<tr>--}}
+                                                {{--<td class="check-row"><input name="action_to[]" type="checkbox" value=""></td>--}}
+                                                {{--<td>{{ $value->f_name }}</td>--}}
+                                                {{--<td>{{ $value->m_name }}</td>--}}
+                                                {{--<td>{{ $value->l_name }}</td>--}}
+                                                {{--<td><i class="fa fa-pencil"></i> |--}}
+                                                    {{--<i class="fa fa-trash-o"></i></td>--}}
+                                            {{--</tr>--}}
+                                        {{--@endforeach--}}
+                                    {{--@endif--}}
 
                                 </tbody>
 

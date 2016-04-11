@@ -12,19 +12,19 @@
     <section class="content">
 
         <!-- Small boxes (Stat box) -->
-        {{--@if (count($errors) > 0)--}}
+        @if (count($errors) > 0)
 
-        {{--<div class="alert alert-danger alert-dismissable">--}}
-        {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
-        {{--<h4><i class="icon fa fa-ban"></i> Whoops!</h4>--}}
-        {{--<ul>--}}
-        {{--@foreach ($errors->all() as $error)--}}
-        {{--<li>{{ $error }}</li>--}}
-        {{--@endforeach--}}
-        {{--</ul>--}}
-        {{--</div>--}}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i> Whoops!</h4>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
 
-        {{--@endif--}}
+        @endif
 
         @if(Session::has('district_updated'))
 
@@ -113,30 +113,8 @@
                         <div class="box-header">
                             <h3 class="box-title">All Districts</h3>
                         </div><!-- /.box-header -->
-                        <div class="box-body">
-                            <form action="{{ url('districts/remove') }}" method="post" id="remove_many_districts">
-                                {{ csrf_field() }}
-                                <table id="table-districts" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th><input name="action_to_all" type="checkbox" class="check-all"></th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="list-districts">
-
-                                        @include('partials.districts')
-
-                                    </tbody>
-
-                                </table>
-
-                                <div class="btn-toolbar list-toolbar">
-                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">Delete</button>
-                                </div>
-                            </form>
+                        <div class="box-body table-list-districts">
+                            @include('partials.districts')
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
                 @endif
@@ -157,6 +135,9 @@
 
         var update_url = "<?php echo url('districts/update'); ?>";
         var delete_url = "<?php echo url('districts/delete'); ?>";
+        var remove_url = "<?php echo url('districts/remove'); ?>";
+        var index_url = "<?php echo url('districts'); ?>";
+        var district_url =
 
         $('#table-districts').DataTable({
             "paging": true,
@@ -166,79 +147,6 @@
             "info": true,
             "autoWidth": false
         });
-
-        $('.updateDistrict').on('click', function(e){
-            e.preventDefault();
-            var id = $(this).attr('data-id');
-            var url = update_url + '/' + id;
-            if(id) {
-                $.get(url).done(function(data){
-                    $('#update-district-name').val(data.district.name);
-                    $('#update-district-code').val(data.district.district_code);
-                    $('#update-district-id').val(id);
-                });
-                $('#districtModal').modal('show');
-
-            }
-        });
-
-        $('.deleteDistrict').on("click", function(e){
-
-            var record_id = $(this).attr('data-id');
-
-            e.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this record!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel please!",
-                closeOnConfirm: true,
-                closeOnCancel: true
-            },
-            function () {
-                $.ajax(delete_url + '/' + record_id),function(data) {
-                    console.log(data);
-                    if (data.status == 'success') {
-                        console.log(data);
-
-
-                        swal("Deleted!", "The record has been deleted.", "success");
-
-
-                    } else {
-                        swal("Cancelled", "The record is safe.)", "error");
-                    }
-                }
-            });
-        });
-
-        function confirmRemove(event){
-
-            event.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this record!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel please!",
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function (isConfirm) {
-                if (isConfirm) {
-                    swal("Deleted!", "The record has been deleted.", "success");
-                    console.log($(this));
-                    $(this).trigger("click");
-                } else {
-                    swal("Cancelled", "The record is safe.)", "error");
-                }
-            });
-        }
     </script>
 
 @stop

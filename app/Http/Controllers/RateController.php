@@ -9,7 +9,6 @@ use App\Http\Requests;
 use App\Http\Requests\CreateRateRequest;
 use App\Rate;
 
-use Session;
 
 /**
  * Class RateController

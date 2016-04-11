@@ -39,29 +39,39 @@ class OrganizationsController extends Controller
             'background_colour'     => $request->get('background_colour'),
             'border_colour'         => $request->get('border_colour')
         ]);
+
         return view('scouter.member')->withTitle('Nepal Scouts - Member');
 
     }
 
     public function postMember(Request $request)
     {
-        $request->session()->put([
-            'f_name'     => $request->get('f_name'),
-            'm_name'     => $request->get('m_name'),
-            'l_name'     => $request->get('l_name')
-        ]);
-        return redirect('scouter/scouter');
+//        $request->session()->put([
+//            'f_name'     => $request->get('f_name'),
+//            'm_name'     => $request->get('m_name'),
+//            'l_name'     => $request->get('l_name')
+//        ]);
+        $data = array(
+            'f_name' => $request->get('f_name'),
+            'm_name' => $request->get('m_name'),
+            'l_name' => $request->get('l_name'));
+        Session::push('member', $data);
+
+        return redirect()->back();
 
     }
 
     public function getEditOrganizations()
     {
 
+
     }
 
     public function patchEditOrganizations()
     {
 
+
     }
+
 
 }
