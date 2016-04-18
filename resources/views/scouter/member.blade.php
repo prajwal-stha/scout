@@ -2,6 +2,54 @@
 
 
 @section('content')
+    @if(Session::has('member_created'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('member_created') }}
+        </div>
+
+    @endif
+
+    <div class="modal" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                {{ Form::open(['url' => 'organizations/edit-member', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{ Form::label('f-name', 'First Name') }}
+                        {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                    </div>
+                    <div class="form-group">
+                        {{ Form::label('m-name', 'Middle Name') }}
+                        {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('l-name', 'Last Name') }}
+                        {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="modal-submit">Submit</button>
+                </div>
+
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-3">
 
@@ -32,84 +80,118 @@
                     <h3 class="box-title">Committee Member Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('organizations/member') }}" method="post" id="member-create-form" class="form-horizontal">
-                    {{ csrf_field() }}
+                {{--<form role="form" action="{{ url('organizations/member') }}" method="post" id="member-create-form" class="form-horizontal">--}}
+                    {{--{{ csrf_field() }}--}}
+                    {{--@if(!empty($member))--}}
+
+                        {{--{{ Form::model($member, ['url' => ['organizations/edit-member', $member->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'member-create-form']) }}--}}
+
+                    {{--@else--}}
+
+                {{ Form::open(['url' => 'organizations/member', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
+
+                    {{--@endif--}}
+                    <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="f-name">First Name</label>
+                        <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
+                            {{ Form::label('f-name', 'First Name', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="f-name" placeholder="First Name" name="f_name" value="{{ old('f_name') }}">
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                                @if ($errors->has('f_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('f_name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="m-name">Middle Name</label>
+                        <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
+                            {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="m-name" placeholder="Middle Name" name="m_name" value="{{ old('m_name') }}">
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                                @if ($errors->has('m_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('m_name') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="l-name">Last Name</label>
+                        <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
+                            {{ Form::label('l-name', 'Last Name', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Last Name" name="l_name" value="{{ old('l_name') }}">
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                                @if ($errors->has('l_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('l_name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="box-footer">
 
-                            <button type="submit" class="btn btn-primary pull-right" id="member-submit">Save</button><br />
+                            <button type="submit" class="btn btn-primary pull-left" id="member-submit">Save</button>
+                            <button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>
 
                         </div>
+
+                {{ Form::close() }}
+                    @if(!empty($member))
 
                         <div class="box-footer">
-                            <table id="table-member" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th><input name="action_to_all" type="checkbox" class="check-all"></th>
-                                        <th>First Name</th>
-                                        <th>Middle Name</th>
-                                        <th>Last Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="list-member">
-                                    {{--@if(Session::has('member'))--}}
-                                        {{--<?php $member = Session::get('member'); ?>--}}
-                                        {{--@foreach($member as $value)--}}
-                                            {{--<tr>--}}
-                                                {{--<td class="check-row"><input name="action_to[]" type="checkbox" value=""></td>--}}
-                                                {{--<td>{{ $value->f_name }}</td>--}}
-                                                {{--<td>{{ $value->m_name }}</td>--}}
-                                                {{--<td>{{ $value->l_name }}</td>--}}
-                                                {{--<td><i class="fa fa-pencil"></i> |--}}
-                                                    {{--<i class="fa fa-trash-o"></i></td>--}}
-                                            {{--</tr>--}}
-                                        {{--@endforeach--}}
-                                    {{--@endif--}}
+                            <form action="{{ url('organizations/remove') }}" method="post" id="remove_many_members">
+                                {{ csrf_field() }}
+                                <table id="table-member" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th><input name="action_to_all" type="checkbox" class="check-all"></th>
+                                            <th>First Name</th>
+                                            <th>Middle Name</th>
+                                            <th>Last Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list-member">
+                                        @foreach($member as $value)
+                                            <tr>
+                                                <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
+                                                <td>{{ $value->f_name }}</td>
+                                                <td>{{ $value->m_name }}</td>
+                                                <td>{{ $value->l_name }}</td>
+                                                <td>
+                                                    <a class="updateMember" data-id="{{ $value->id }}">
+                                                        <i class="fa fa-pencil"></i></a> |
+                                                    <a class="deleteMember" data-id="{{ $value->id }}" href="{{ url( 'organizations/delete-member', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
+                                            </tr>
+                                        @endforeach
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                                <div class="btn-toolbar list-toolbar">
+                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">Delete</button>
+                                </div>
+                            </form>
                         </div>
+                    @endif
 
                     </div>
-                </form>
             </div><!-- /.box -->
 
         </div>
 
     </div>
-
-
-
-
 @stop
 
 @section('scripts')
 
-
     @parent
+    <script>
+        var update_url = "<?php echo url('organizations/updateMember'); ?>";
+        console.log(update_url);
+    </script>
 
 
 @stop

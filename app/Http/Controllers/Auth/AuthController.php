@@ -66,20 +66,20 @@ class AuthController extends Controller
 //    }
 
 
-    protected function postLogin(Request $request)
-    {
-        dd($request);
-        if (Auth::attempt([
-            'username'  => $request->get('username'),
-            'password'  => $request->get('password'),
-            'verified'  => 1
-        ]))
-        {
-            return redirect()->intended('dashboard');
-        }
-
-
-    }
+//    protected function postLogin(Request $request)
+//    {
+//        dd($request);
+//        if (Auth::attempt([
+//            'username'  => $request->get('username'),
+//            'password'  => $request->get('password'),
+//            'verified'  => 1
+//        ]))
+//        {
+//            return redirect()->intended('dashboard');
+//        }
+//
+//
+//    }
 
     public function showLoginForm()
     {
@@ -107,7 +107,7 @@ class AuthController extends Controller
             // If attempts > 3 and time < 10 minutes
             if ($loginAttempts > 3 && (time() - $loginAttemptTime <= 600))
             {
-                return redirect()-back()->with('error', 'maximum login attempts reached. Try again in a while');
+                return redirect()-back()->with('error', 'Maximum login attempts reached. Try again in a while');
             }
             // If time > 10 minutes, reset attempts counter and time in session
             if (time() - $loginAttemptTime > 600)
@@ -127,7 +127,12 @@ class AuthController extends Controller
             'verified'  => 1
         ], $request->get('remember')))
         {
-            return redirect()->intended('scouter');
+            if(Auth::user()->level != 1){
+                return redirect()->intended('scouter');
+            } else {
+                return redirect()->intended('admin');
+            }
+
         }else{
             return redirect()->back()->with(['not_verified', 'Please verify your email address before you can login']);
         }

@@ -23,8 +23,12 @@ class Organization extends Model
      */
     public function teams(){
 
-        return $this->hasMany(Teams::class);
+        return $this->hasMany(Team::class);
 
+    }
+
+    public function members(){
+        return $this->hasMany(Member::class);
     }
 
     /**

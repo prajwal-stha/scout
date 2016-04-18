@@ -3,6 +3,17 @@
 
 @section('content')
 
+    @if(Session::has('org_update'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('org_update') }}
+        </div>
+
+    @endif
+
+
 
     <div class="row">
         <div class="col-md-3">
@@ -35,13 +46,21 @@
                     <h3 class="box-title">Organization Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('organizations/create') }}" method="post" id="organization-create-form" class="form-horizontal">
-                    {{ csrf_field() }}
+
+                @if(isset($org_id))
+
+                    {{ Form::model($organization, ['url' => ['organizations/edit', $org_id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
+
+                @else
+
+                    {{ Form::open(['url' => 'organizations/create'], ['class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
+
+                @endif
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="control-label col-sm-3" for="organization-name">Name of Organization</label>
+                            {{ Form::label('organization-name', 'Name of Organization', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="organization-name" placeholder="Organization Name" name="name" value="{{ old('name') }}">
+                                {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name')) }}
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -52,27 +71,27 @@
 
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-type">Type</label>
+                            {{ Form::label('organization-type', 'Type', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <select class="form-control" id="organization-type" name="type">
-                                    <option>Select</option>
-                                    <option value="school">School</option>
-                                    <option value="other">Organization</option>
-                                </select>
+                                {{ Form::select('type', array(
+                                    'school'      => 'School',
+                                    'organization'=> 'Organization'
+                                ), null, array('class' => 'form-control')) }}
                                 @if ($errors->has('type'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('type') }}</strong>
                                     </span>
                                 @endif
-                             </div>
+                            </div>
+
                         </div>
 
 
                         <div class="form-group{{ $errors->has('registration_date') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-start">Organization Start Date</label>
+                            {{ Form::label('organization-start', 'Organization Start Date', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" id="organization-start" name="registration_date" value="{{ old('registration_date') }}" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('registration_date'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('registration_date') }}</strong>
@@ -84,9 +103,10 @@
 
                         <div class="form-group{{ $errors->has('address_line_1') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-address-1">Address Line 1</label>
+                            {{ Form::label('organization-address-1', 'Address Line 1', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="organization-address-1" placeholder="Address Line 1" name="address_line_1" value="{{ old('address_line_1') }}">
+                                {{ Form::text('address_line_1', null, array('class' => 'form-control', 'id' => 'address_line_1')) }}
+
                                 @if ($errors->has('address_line_1'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('address_line_1') }}</strong>
@@ -97,9 +117,9 @@
 
                         <div class="form-group{{ $errors->has('address_line_2') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-address-2">Address Line 2</label>
+                            {{ Form::label('organization-address-2', 'Address Line 2', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="organization-address-2" placeholder="Address Line 2" name="address_line_2" value="{{ old('address_line_2') }}">
+                                {{ Form::text('address_line_2', null, array('class' => 'form-control', 'id' => 'address_line_2')) }}
                                 @if ($errors->has('address_line_2'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('address_line_2') }}</strong>
@@ -111,16 +131,10 @@
 
                         <div class="form-group{{ $errors->has('district') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="district">District</label>
+                            {{ Form::label('district', 'District', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <select class="form-control" id="district" name="district">
-                                    <option>Select</option>
-                                    @if(!empty($district))
-                                        @foreach($district as $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                                {{ Form::select('district',formatOption($district) , null, array('class' => 'form-control')) }}
+
                                 @if ($errors->has('district'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('district') }}</strong>
@@ -132,17 +146,21 @@
 
                         <div class="form-group{{ $errors->has('chairman_f_name') || $errors->has('chairman_l_name') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="chairman">Chairman / Principal</label>
+                            {{ Form::label('chairman', 'Chairman / Principal', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="chairman" placeholder="First Name" name="chairman_f_name" value="{{ old('chairman_f_name') }}">
+
+                                {{ Form::text('chairman_f_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
+
                                 @if ($errors->has('chairman_f_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('chairman_f_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
+
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="chairman" placeholder="Last Name" name="chairman_l_name" value="{{ old('chairman_l_name') }}">
+                                {{ Form::text('chairman_l_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
+
                                 @if ($errors->has('chairman_l_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('chairman_l_name') }}</strong>
@@ -154,9 +172,10 @@
 
                         <div class="form-group{{ $errors->has('chairman_mobile_no') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="chairman-mobile">Chairman Mobile No.</label>
+                            {{ Form::label('chairman-mobile', 'Chairman Mobile No.', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="chairman-mobile" placeholder="Chairman Mobile No." name="chairman_mobile_no" value="{{ old('chairman_mobile_no') }}">
+                                {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile')) }}
+
                                 @if ($errors->has('chairman_mobile_no'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('chairman_mobile_no') }}</strong>
@@ -168,9 +187,10 @@
 
                         <div class="form-group{{ $errors->has('tel_no') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-tel">Organization Tel No.</label>
+                            {{ Form::label( 'organization-tel', 'Organization Tel No.', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="organization-tel" placeholder="Organization Tel No." name="tel_no" value="{{ old('tel_no') }}">
+                                {{ Form::text('tel_no', null, array('class' => 'form-control', 'id' => 'organization-tel')) }}
+
                                 @if ($errors->has('tel_no'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('tel_no') }}</strong>
@@ -182,9 +202,11 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
-                            <label class="control-label col-sm-3" for="organization-email">Organization Email</label>
+                            {{ Form::label( 'organization-email', 'Organization Email', array( 'class' => 'control-label col-sm-3')) }}
+
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="organization-email" placeholder="Organization Email" name="email" value="{{ old('email') }}">
+                                {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'organization-email')) }}
+
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -211,7 +233,7 @@
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{  asset('js/parallax.js') }}"></script>
     <script>
-        $("[data-mask]").inputmask();
+        $("#registration_date").inputmask();
         $("#organization-create-form").submit(function() {
             if ($(this).find('font[class="error"]').length > 0) {
                 var scrolto = $('#organization-create-form').find('font[class="error"]:first').parent();
@@ -221,8 +243,8 @@
                 return false;
             }
         });
-        $( "#organization-start" ).datepicker({
-            startDate: new Date(),
+        $( "#registration_date" ).datepicker({
+//            startDate: new Date("October 13, 1930 11:13:00"),
             format:'dd/mm/yyyy',
             changeMonth: true,
             changeYear: true,

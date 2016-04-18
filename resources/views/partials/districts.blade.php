@@ -1,4 +1,4 @@
-<form action="{{ url('districts/remove') }}" method="post" id="remove_many_districts">
+<form action="{{ url('districts/remove-members') }}" method="post" id="remove_many_districts">
     {{ csrf_field() }}
     <table id="table-districts" class="table table-bordered table-striped">
         <thead>

@@ -30,40 +30,6 @@ jQuery(document).ready(function() {
     });
 
 
-    //    if ($(this).is(':checked')) {
-    //        $('.check-row input[type=checkbox]').prop('checked', true);
-    //        $(this).each(function () {
-    //            if ($(this).is(':checked')) {
-    //                $('#delete-submit').css('display', 'inline-block');
-    //            }
-    //        });
-    //
-    //    } else {
-    //
-    //        $('.check-row input[type=checkbox]').prop('checked', false);
-    //        $(this).each(function () {
-    //            if ($(this).not(':checked')) {
-    //                $('#delete-submit').css('display', 'none');
-    //            }
-    //        });
-    //    }
-    //});
-    //
-    //$('.check-row input[type=checkbox]').on('click', function () {
-    //
-    //    $(this).each(function () {
-    //
-    //        if ($(this).is(':checked')) {
-    //
-    //            $('#delete-submit').css('display', 'inline-block');
-    //
-    //        } else {
-    //
-    //            $('#delete-submit').css('display', 'none');
-    //        }
-    //    });
-    //});
-
     $('#district-create-form').on('submit', function (e) {
         e.preventDefault();
 
@@ -229,6 +195,21 @@ jQuery(document).ready(function() {
             }
         });
     }
+
+    $('.updateMember').on('click', function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#f-name').val(data.district.name);
+                $('#m-name').val(data.district.district_code);
+                $('#l-name').val(id);
+            });
+            $('#memberModal').modal('show');
+            return;
+        }
+    });
 });
 
 

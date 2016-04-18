@@ -3,6 +3,7 @@
 
 @section('content')
 
+
     <div class="row">
         <div class="col-md-3">
 
@@ -36,33 +37,61 @@
                 </div>
 
             @endif
+
+            @if(Session::has('scarf_update'))
+
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Great!</h4>
+                    {{ Session::get('scarf_update') }}
+                </div>
+
+            @endif
+
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Scarf Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('organizations/scarf') }}" method="post" id="scarf-create-form" class="form-horizontal">
-                    {{ csrf_field() }}
+
+                @if(isset($org_id))
+
+                    {{ Form::model($organization, ['url' => ['organizations/edit-scarf', $org_id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'scarf-create-form']) }}
+
+                @else
+
+                    {{ Form::open(['url' => 'organizations/scarf'], ['class' => 'form-horizontal', 'id' =>'scarf-create-form']) }}
+
+                @endif
                     <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="background-colour">Background Colour</label>
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            {{ Form::label('background-colour', 'Background Colour', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Background Colour" name="background_colour" value="{{ old('background_colour') }}">
+                                {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
+                                @if ($errors->has('background_colour'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('background_colour') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Colour Code" name="colour_code" value="{{ old('name') }}">
-                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="background-colour">Border Colour</label>
+                        <div class="form-group{{ $errors->has('border_colour') ? ' has-error' : '' }}">
+                            {{ Form::label('border-colour', 'Border Colour', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Border Colour" name="border_colour" value="{{ old('border_colour') }}">
+
+                                {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour')) }}
+
+                                @if ($errors->has('border_colour'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('border_colour') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" id="background-colour" placeholder="Colour Code" name="name" value="{{ old('name') }}">
-                            </div>
+
                         </div>
 
                         <div class="box-footer">
