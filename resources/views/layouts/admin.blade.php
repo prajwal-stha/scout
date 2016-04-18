@@ -215,6 +215,7 @@
     <!-- AdminLTE for demo purposes -->
     {{--<script src="{{ asset( 'js/demo.js') }}"></script>--}}
     <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset( 'js/jquery.validate.js') }}"></script>
     <script src="{{ asset( 'js/scout.js') }}"></script>
 
 @show

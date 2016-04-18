@@ -27,11 +27,11 @@ class CreateRateRequest extends Request
     public function rules()
     {
         return [
-            'registration_rate'        => 'integer',
-            'scouter_rate'             => 'integer',
-            'team_rate'                => 'integer',
-            'committee_members_rate'   => 'integer',
-            'disaster_mgmt_trust_rate' => 'integer',
+            'registration_rate'        => 'required|integer',
+            'scouter_rate'             => 'required|integer',
+            'team_rate'                => 'required|integer',
+            'committee_members_rate'   => 'required|integer',
+            'disaster_mgmt_trust_rate' => 'required|integer',
         ];
     }
 

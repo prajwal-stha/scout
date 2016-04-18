@@ -10,8 +10,16 @@ use App\Scouter;
 
 use App\District;
 
+use App\User;
+
 class ScouterController extends Controller
 {
+
+    public function __construct(){
+
+        $this->middleware('auth', ['except' => 'logout']);
+
+    }
 
 
     public function getIndex(){
@@ -66,5 +74,7 @@ class ScouterController extends Controller
         return view('scouter.registration');
         
     }
+
+
 
 }

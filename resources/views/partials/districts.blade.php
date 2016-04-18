@@ -13,7 +13,7 @@
 
         @foreach($districts as $value)
             <tr>
-                <td class="check-row"><input name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
+                <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
                 <td>{{ $value->district_code }}</td>
                 <td>{{ $value->name }}</td>
                 <td><a class="updateDistrict" data-id="{{ $value->id }}" href="{{ url('districts/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a> |

@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
             'f_name'         => 'John',
             'l_name'         => 'Doe',
             'email'          => 'admin@gmail.com',
+            'token'         => bcrypt(str_random(30)),
             'level'          => 1,
             'username'       => 'admin',
             'password'       => bcrypt('123goldkist'),

@@ -158,4 +158,13 @@ class DistrictsController extends Controller
             return redirect()->back();
         }
     }
+
+    public function getAllDistricts()
+    {
+        $districts = District::all();
+
+        return view('partials.districts')->withDistricts($districts);
+
+    }
+
 }

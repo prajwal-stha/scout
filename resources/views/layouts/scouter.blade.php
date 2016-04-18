@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset( 'ionicons/css/ionicons.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css' ) }}">
+    <link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
@@ -80,6 +81,8 @@
     <script src="{{ asset( 'jQuery/jQuery-2.1.4.min.js' ) }}"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset( 'bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ asset( 'datepicker/bootstrap-datepicker.js') }}"></script>
     <!-- SlimScroll -->
     <script src="{{ asset( 'slimScroll/jquery.slimscroll.min.js' ) }}"></script>
     <!-- FastClick -->

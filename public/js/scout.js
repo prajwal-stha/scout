@@ -1,40 +1,68 @@
 jQuery(document).ready(function() {
+    $('#delete-submit').prop('disabled', true);
 
-    $('.check-all').on('click', function () {
-
+    $('.check-all').on('change', function () {
         if ($(this).is(':checked')) {
-            $('.check-row input[type=checkbox]').prop('checked', true);
-            $(this).each(function () {
-                if ($(this).is(':checked')) {
-                    $('#delete-submit').css('display', 'inline-block');
-                }
-            });
+            $('.check-row').prop('checked', true);
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+        }
+        else{
+            $('.check-row').prop('checked', false);
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+
+        }
+
+    });
+
+    $('.check-row').on('change', function(){
+        if ($(this).is(':checked')) {
+
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
 
         } else {
-
-            $('.check-row input[type=checkbox]').prop('checked', false);
-            $(this).each(function () {
-                if ($(this).not(':checked')) {
-                    $('#delete-submit').css('display', 'none');
-                }
-            });
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
         }
+
     });
 
-    $('.check-row input[type=checkbox]').on('click', function () {
 
-        $(this).each(function () {
-
-            if ($(this).is(':checked')) {
-
-                $('#delete-submit').css('display', 'inline-block');
-
-            } else {
-
-                $('#delete-submit').css('display', 'none');
-            }
-        });
-    });
+    //    if ($(this).is(':checked')) {
+    //        $('.check-row input[type=checkbox]').prop('checked', true);
+    //        $(this).each(function () {
+    //            if ($(this).is(':checked')) {
+    //                $('#delete-submit').css('display', 'inline-block');
+    //            }
+    //        });
+    //
+    //    } else {
+    //
+    //        $('.check-row input[type=checkbox]').prop('checked', false);
+    //        $(this).each(function () {
+    //            if ($(this).not(':checked')) {
+    //                $('#delete-submit').css('display', 'none');
+    //            }
+    //        });
+    //    }
+    //});
+    //
+    //$('.check-row input[type=checkbox]').on('click', function () {
+    //
+    //    $(this).each(function () {
+    //
+    //        if ($(this).is(':checked')) {
+    //
+    //            $('#delete-submit').css('display', 'inline-block');
+    //
+    //        } else {
+    //
+    //            $('#delete-submit').css('display', 'none');
+    //        }
+    //    });
+    //});
 
     $('#district-create-form').on('submit', function (e) {
         e.preventDefault();
@@ -57,8 +85,8 @@ jQuery(document).ready(function() {
                     //    '<a class="updateDistrict" data-id="' + data.district.id + '" href="' + update_url + '/' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
                     //    '<a class="deleteDistrict" data-id="' + data.district.id + '" href="' + delete_url + '/' + data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
                     //$('#list-districts').prepend(row);
-                    //$('#table-districts').load(index_url + ' #list-districts' );
-                    $('#table-list-districts').load();
+                    $('#table-districts').load(index_url + ' #list-districts' );
+                    //$('#table-districts').load(district_url + ' #list-districts' );
 
                     $('#district-create-form').trigger('reset');
 

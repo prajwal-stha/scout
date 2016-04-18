@@ -27,6 +27,15 @@
 
         </div>
         <div class="col-md-8">
+            @if(Session::has('district_updated'))
+
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-check"></i> Great!</h4>
+                    {{ Session::get('district_updated') }}
+                </div>
+
+            @endif
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Scarf Detail</h3>
@@ -34,6 +43,7 @@
                 <!-- form start -->
                 <form role="form" action="{{ url('organizations/scarf') }}" method="post" id="scarf-create-form" class="form-horizontal">
                     {{ csrf_field() }}
+                    <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-sm-3" for="background-colour">Background Colour</label>

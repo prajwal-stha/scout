@@ -27,6 +27,21 @@
     <div class="login-logo">
         <a href="{{ url('/') }}">Nepal <b>Scout</b> </a>
     </div><!-- /.login-logo -->
+    @if(Session::has('confirmed'))
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('confirmed') }}
+        </div>
+    @endif
+    @if(Session::has('not_verified'))
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('not_verified') }}
+        </div>
+    @endif
+
     <div class="login-box-body">
         <p class="login-box-msg">Sign In</p>
         <form action="{{ url('/login') }}" method="post">

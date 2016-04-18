@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Http\Requests\CreateRateRequest;
+use App\Http\Requests\UpdateRateRequest;
 use App\Rate;
 
 
@@ -59,10 +60,10 @@ class RateController extends Controller
 
     /**
      * @param $id
-     * @param Request $request
+     * @param UpdateRateRequest $request
      * @return $this
      */
-    public function patchEdit($id, Request $request)
+    public function patchEdit($id, UpdateRateRequest $request)
     {
         $rates = Rate::findOrFail($id);
 

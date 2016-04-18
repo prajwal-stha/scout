@@ -16,15 +16,29 @@
 Route::group( ['middleware' => ['web']], function () {
 
     Route::auth();
-    Route::controller( 'districts', 'DistrictsController');
+    Route::controller( 'districts', 'DistrictsController', [
+        'getAllDistricts'  => 'all-districts',
+    ]);
     Route::controller( 'organizations', 'OrganizationsController');
     Route::controller( 'rate', 'RateController');
     Route::controller( 'teams', 'TeamsController');
     Route::controller( 'admin', 'AdminController' );
     Route::controller( 'scouter', 'ScouterController' );
 
-    Route::get('districts/getAllDistricts', function($district){
-        return view('partials.districts')->withDistrict($district);
+
+
+//    Route::get('districts/getAllDistricts', function(){
+//        $district = App\District::all();
+//        return view('partials.districts')->withDistrict($district);
+//    });
+
+
+    Route::get('/confirm/{token?}', function($token){
+        $user = App\User::whereToken($token)->firstOrFail();
+        $user->verified = true;
+        $user->token = null;
+        $user->save();
+        return redirect('/login');
     });
 
     Route::controller( '/', 'ScouterController' );

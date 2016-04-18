@@ -137,7 +137,7 @@
         var delete_url = "<?php echo url('districts/delete'); ?>";
         var remove_url = "<?php echo url('districts/remove'); ?>";
         var index_url = "<?php echo url('districts'); ?>";
-        var district_url =
+        var district_url = "<?php echo route('all-districts'); ?>";
 
         $('#table-districts').DataTable({
             "paging": true,
