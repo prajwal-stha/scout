@@ -16,6 +16,9 @@ class Organization extends Model
      */
     public $timestamps = false;
 
+    /**
+     * @var array
+     */
     protected $fillable = array('registration_no', 'district_id', 'registration_date', 'renew_status', 'type', 'name', 'chairman_f_name', 'chairman_l_name', 'chairman_mobile_no', 'tel_no', 'address_line_1', 'address_line_2', 'email', 'user_id', 'background_colour', 'border_colour');
 
     /**
@@ -27,6 +30,9 @@ class Organization extends Model
 
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function members(){
         return $this->hasMany(Member::class);
     }
@@ -47,6 +53,18 @@ class Organization extends Model
 
         return $this->belongsTo(Districts::class);
 
+    }
+
+    /**
+     * Accessor for Registration Date Attribute
+     * @param $value
+     * @return string
+     */
+    public function getRegistrationDateAttribute($value)
+    {
+        $value = explode('-', $value);
+        $value = $value[2].'/'.$value[1].'/'.$value[0];
+        return $this->attributes['registration_date'] = $value;
     }
 
 }

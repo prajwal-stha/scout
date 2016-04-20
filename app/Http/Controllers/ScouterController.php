@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Requests\CreateScouterRequest;
+
 use Auth;
 
 use App\Scouter;
@@ -16,6 +18,8 @@ use App\User;
 
 use App\Member;
 use App\Organization;
+
+use App\Team;
 
 class ScouterController extends Controller
 {
@@ -74,6 +78,21 @@ class ScouterController extends Controller
             if(Member::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
             }
+
+            if(Scouter::where( 'organization_id', session()->get('org_id'))
+                    ->where( 'is_lead', true)->count() > 0 ) {
+                $data['leadScouter']  = Scouter::where('organization_id', session()->get('org_id'))
+                                        ->where('is_lead', 1)
+                                        ->first();
+            }
+
+
+            if(Scouter::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+                $data['scouter']  = Scouter::where('organization_id', session()->get('org_id'))
+                                    ->where('is_lead', 0)
+                                    ->first();
+            }
+
         }
         return view('scouter.scouter')->with($data);
         
@@ -81,16 +100,125 @@ class ScouterController extends Controller
 
     public function getTeam()
     {
+        $data['title'] = 'Nepal Scout - Scouter';
+        if(session()->has('org_id')) {
+            $data['org_id']   = session()->get('org_id');
+            if(Team::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+                $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+            }
 
-        return view('scouter.team');
+        }
+        return view('scouter.team')->with($data);
         
     }
+    
 
-    public function getRegistration()
+    public function postCreate(CreateScouterRequest $request)
     {
 
-        return view('scouter.registration');
+        if($request->has('org_id')) {
+
+            Scouter::create([
+                'name'              => $request->get('name'),
+                'email'             => $request->get('email'),
+                'permission'        => $request->get('permission'),
+                'permission_date'   => $request->has('permission_date') ? formatDate($request->get('permission_date')) : null,
+                'btc_no'            => $request->get('btc_no'),
+                'btc_date'          => $request->has('btc_date') ? formatDate($request->get('btc_date')) : null,
+                'advance_no'        => $request->get('advance_no'),
+                'advance_date'      => $request->has('advance_date') ? formatDate($request->get('advance_date')) : null,
+                'alt_no'            => $request->get('alt_no'),
+                'alt_date'          => $request->has('alt_date') ? formatDate($request->get('alt_date')) : null,
+                'lt_no'             => $request->get('lt_no'),
+                'lt_date'           => $request->has('lt_date') ? formatDate($request->get('lt_date')) : null,
+                'organization_id'   => $request->get('org_id')
+            ]);
+            return redirect()->back()->with(['scouter_created' => 'The assistant scouter has been created.']);
+        } else {
+
+            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+
+        }
         
     }
 
+    public function postCreateLeadScouter(CreateScouterRequest $request)
+    {
+        if($request->has('org_id')) {
+            Scouter::create([
+                'name'              => $request->get('name'),
+                'email'             => $request->get('email'),
+                'permission'        => $request->get('permission'),
+                'permission_date'   => $request->has('permission_date') ? formatDate($request->get('permission_date')) : null,
+                'btc_no'            => $request->get('btc_no'),
+                'btc_date'          => $request->has('btc_date') ? formatDate($request->get('btc_date')) : null,
+                'advance_no'        => $request->get('advance_no'),
+                'advance_date'      => $request->has('advance_date') ? formatDate($request->get('advance_date')) : null,
+                'alt_no'            => $request->get('alt_no'),
+                'alt_date'          => $request->has('alt_date') ? formatDate($request->get('alt_date')) : null,
+                'lt_no'             => $request->get('lt_no'),
+                'lt_date'           => $request->has('lt_date') ? formatDate($request->get('lt_date')) : null,
+                'is_lead'           => true,
+                'organization_id'   => $request->get('org_id')
+            ]);
+            return redirect()->back()->with(['lead_created' => 'The lead scouter has been created.']);
+        } else {
+
+            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+
+        }
+    }
+
+
+    public function patchEdit(Request $request, $id)
+    {
+        if($id){
+            $scouter = Scouter::findOrFail($id);
+            if($scouter){
+                $scouter->name              = $request->get('name');
+                $scouter->email             = $request->get('email');
+                $scouter->permission        = $request->get('permission');
+                $scouter->permission_date   = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
+                $scouter->btc_no            = $request->get('btc_no');
+                $scouter->btc_date          = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no        = $request->get('advance_no');
+                $scouter->advance_date      = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no            = $request->get('alt_no');
+                $scouter->alt_date          = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no             = $request->get('lt_no');
+                $scouter->lt_date           = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->save();
+            }
+
+            return redirect()->back()
+                ->with(['scouter_updated' => 'Scouter successfully updated']);
+        }
+
+    }
+
+    public function patchEditLead(Request $request, $id)
+    {
+
+        if($id){
+            $scouter = Scouter::findOrFail($id);
+            if($scouter){
+                $scouter->name              = $request->get('name');
+                $scouter->email             = $request->get('email');
+                $scouter->permission        = $request->get('permission');
+                $scouter->permission_date   = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
+                $scouter->btc_no            = $request->get('btc_no');
+                $scouter->btc_date          = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no        = $request->get('advance_no');
+                $scouter->advance_date      = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no            = $request->get('alt_no');
+                $scouter->alt_date          = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no             = $request->get('lt_no');
+                $scouter->lt_date           = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->save();
+            }
+
+            return redirect()->back()
+                ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
+        }
+    }
 }

@@ -37,7 +37,7 @@ class UpdateOrganizationsRequest extends Request
             'chairman_mobile_no'    => 'required|string',
             'tel_no'                => 'required|string',
             'address_line_1'        => 'required|string',
-            'address_line_2'        => 'required|string',
+            'address_line_2'        => 'string',
             'email'                 => 'required|email|unique:organizations,email'.$this->get('id')
         ];
     }

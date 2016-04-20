@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use Auth;
 
-class CreateMemberRequest extends Request
+class CreateScouterRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,15 +29,15 @@ class CreateMemberRequest extends Request
      */
     public function rules()
     {
+
         return [
-            'f_name'    => 'required',
-            'l_name'    => 'required'
+            'name'                 => 'required',
+            'btc_date'             => 'date',
+            'advance_date'         => 'date',
+            'alt_date'             => 'date',
+            'lt_date'              => 'date',
+            'email'                => 'required|email'
         ];
     }
 
-    public function forbiddenResponse()
-    {
-        return $this->redirector->to('scouter/committe')->withErrors();
-
-    }
 }

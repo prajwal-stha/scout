@@ -3,6 +3,18 @@
 
 @section('content')
 
+
+    @if(Session::has('no_org'))
+
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Error!</h4>
+            {{ Session::get('no_org') }}
+        </div>
+
+    @endif
+
+
     @if(Session::has('org_update'))
 
         <div class="alert alert-success alert-dismissable">
@@ -53,12 +65,12 @@
 
                 @else
 
-                    {{ Form::open(['url' => 'organizations/create'], ['class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
+                    {{ Form::open(['url' => 'organizations/create', 'class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
 
                 @endif
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            {{ Form::label('organization-name', 'Name of Organization', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('organization-name', 'Name of Organization *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name')) }}
                                 @if ($errors->has('name'))
@@ -71,7 +83,7 @@
 
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
-                            {{ Form::label('organization-type', 'Type', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::select('type', array(
                                     'school'      => 'School',
@@ -89,7 +101,7 @@
 
                         <div class="form-group{{ $errors->has('registration_date') ? ' has-error' : '' }}">
 
-                            {{ Form::label('organization-start', 'Organization Start Date', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('organization-start', 'Organization Start Date *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('registration_date'))
@@ -103,7 +115,7 @@
 
                         <div class="form-group{{ $errors->has('address_line_1') ? ' has-error' : '' }}">
 
-                            {{ Form::label('organization-address-1', 'Address Line 1', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('organization-address-1', 'Address Line 1 *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('address_line_1', null, array('class' => 'form-control', 'id' => 'address_line_1')) }}
 
@@ -131,7 +143,7 @@
 
                         <div class="form-group{{ $errors->has('district') ? ' has-error' : '' }}">
 
-                            {{ Form::label('district', 'District', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('district', 'District *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::select('district',formatOption($district) , null, array('class' => 'form-control')) }}
 
@@ -146,7 +158,7 @@
 
                         <div class="form-group{{ $errors->has('chairman_f_name') || $errors->has('chairman_l_name') ? ' has-error' : '' }}">
 
-                            {{ Form::label('chairman', 'Chairman / Principal', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('chairman', 'Chairman / Principal *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
 
                                 {{ Form::text('chairman_f_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
@@ -172,9 +184,9 @@
 
                         <div class="form-group{{ $errors->has('chairman_mobile_no') ? ' has-error' : '' }}">
 
-                            {{ Form::label('chairman-mobile', 'Chairman Mobile No.', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('chairman-mobile', 'Chairman Mobile No. *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile')) }}
+                                {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control phone', 'id' => 'chairman-mobile')) }}
 
                                 @if ($errors->has('chairman_mobile_no'))
                                     <span class="help-block">
@@ -187,7 +199,7 @@
 
                         <div class="form-group{{ $errors->has('tel_no') ? ' has-error' : '' }}">
 
-                            {{ Form::label( 'organization-tel', 'Organization Tel No.', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label( 'organization-tel', 'Organization Tel No. *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('tel_no', null, array('class' => 'form-control', 'id' => 'organization-tel')) }}
 
@@ -202,7 +214,7 @@
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
-                            {{ Form::label( 'organization-email', 'Organization Email', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label( 'organization-email', 'Organization Email *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-4">
                                 {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'organization-email')) }}
@@ -234,9 +246,10 @@
     <script src="{{  asset('js/parallax.js') }}"></script>
     <script>
         $("#registration_date").inputmask();
+        $(".phone").mask("999-999-9999",{placeholder:"#"});
         $("#organization-create-form").submit(function() {
             if ($(this).find('font[class="error"]').length > 0) {
-                var scrolto = $('#organization-create-form').find('font[class="error"]:first').parent();
+                var scrolto = $('#organization-create-form').find('.help-block:first').parent();
                 $('html,body').animate({
                     scrollTop: $(scrolto).offset().top}, 2000
                 );

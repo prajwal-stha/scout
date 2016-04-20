@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+
 use Auth;
 
-class CreateMemberRequest extends Request
+class CreateTeamRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,14 +30,7 @@ class CreateMemberRequest extends Request
     public function rules()
     {
         return [
-            'f_name'    => 'required',
-            'l_name'    => 'required'
+            'name'  => 'required|unique:teams,name,'.$this->get('organization_id')
         ];
-    }
-
-    public function forbiddenResponse()
-    {
-        return $this->redirector->to('scouter/committe')->withErrors();
-
     }
 }

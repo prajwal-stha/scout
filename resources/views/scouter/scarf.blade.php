@@ -60,13 +60,13 @@
 
                 @else
 
-                    {{ Form::open(['url' => 'organizations/scarf'], ['class' => 'form-horizontal', 'id' =>'scarf-create-form']) }}
+                    {{ Form::open(['url' => 'organizations/scarf', 'class' => 'form-horizontal', 'id' =>'scarf-create-form']) }}
 
                 @endif
                     <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            {{ Form::label('background-colour', 'Background Colour', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
                                 @if ($errors->has('background_colour'))
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('border_colour') ? ' has-error' : '' }}">
-                            {{ Form::label('border-colour', 'Border Colour', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('border-colour', 'Border Colour *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
 
                                 {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour')) }}

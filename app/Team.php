@@ -16,6 +16,9 @@ class Team extends Model
      */
     public $timestamps = false;
 
+
+    protected $fillable = ['name', 'organization_id'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -23,5 +26,11 @@ class Team extends Model
     {
         return $this->belongsTo(Organizations::class);
 
+    }
+
+    public function teammembers()
+    {
+        return $this->hasMany(TeamMember::class);
+        
     }
 }

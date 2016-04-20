@@ -8,18 +8,33 @@ use App\Http\Requests;
 use App\Http\Requests\CreateOrganizationsRequest;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateScarfRequest;
+use App\Http\Requests\UpdateMemberRequest;
+
 
 use App\Organization;
 use App\Member;
 use Session;
 use Auth;
 
+/**
+ * Class OrganizationsController
+ * @package App\Http\Controllers
+ */
 class OrganizationsController extends Controller
 {
+    /**
+     * OrganizationsController constructor.
+     */
     public function __construct(){
         $this->middleware('auth');
     }
 
+    /**
+     *
+     * Creates new organization
+     * @param CreateOrganizationsRequest $request
+     * @return $this
+     */
     public function postCreate(CreateOrganizationsRequest $request)
     {
 
@@ -45,6 +60,13 @@ class OrganizationsController extends Controller
         ]);
     }
 
+    /**
+     *
+     * Post updated organization detail
+     * @param $id
+     * @param Request $request
+     * @return $this
+     */
     public function patchEdit($id, Request $request)
     {
         $org = Organization::findOrFail($id);
@@ -59,6 +81,13 @@ class OrganizationsController extends Controller
 
     }
 
+
+    /**
+     *
+     * Creates new scarf details
+     * @param CreateScarfRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postScarf(CreateScarfRequest $request)
     {
         if($request->has('org_id')) {
@@ -69,14 +98,22 @@ class OrganizationsController extends Controller
                     'border_colour'     => $request->get('border_colour')
                 ]);
 
-            return view('scouter.member')->withTitle('Nepal Scouts - Member');
+            return redirect('scouter.committe');
 
         }
         else{
-            return redirect('scouter');
+            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
     }
 
+
+    /**
+     *
+     * Post updated details of scarf
+     * @param $id
+     * @param Request $request
+     * @return $this
+     */
     public function patchEditScarf($id, Request $request)
     {
         $org = Organization::findOrFail($id);
@@ -90,26 +127,39 @@ class OrganizationsController extends Controller
 
     }
 
+
+    /**
+     *
+     * Creates new member
+     * @param CreateMemberRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postMember(CreateMemberRequest $request)
     {
         if($request->has('org_id')) {
             Member::create([
-                'f_name' => $request->get('f_name'),
-                'm_name' => $request->get('m_name'),
-                'l_name' => $request->get('l_name'),
+                'f_name'            => $request->get('f_name'),
+                'm_name'            => $request->get('m_name'),
+                'l_name'            => $request->get('l_name'),
                 'organization_id'   => $request->get('org_id')
             ]);
 
            return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
 
         } else {
-            return redirect('scouter');
+            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
     }
 
+
+    /**
+     *
+     * Remove the member in bulk
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postRemove(Request $request)
     {
-        dd($request);
         if ( is_array($request->get('action_to')) ){
             Member::destroy($request->get('action_to'));
             return redirect()->back();
@@ -119,6 +169,13 @@ class OrganizationsController extends Controller
         }
     }
 
+
+    /**
+     *
+     * Removes single member from the list
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getDeleteMember($id)
     {
         $member = Member::findOrFail($id);
@@ -130,8 +187,33 @@ class OrganizationsController extends Controller
     }
 
 
-    public function patchUpdateMember($request)
+    /**
+     *
+     * Populate the edit form for member update
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUpdateMember($id)
     {
+        $member = Member::findOrFail($id);
+        $response = array(
+            'status'    => 'success',
+            'member'    => $member
+        );
+        return response()->json($response);
+
+    }
+
+
+    /**
+     *
+     * Post the updated detail of member
+     * @param UpdateMemberRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchUpdateMember(UpdateMemberRequest $request)
+    {
+
         $id = $request->get('id');
 
         if($id){
@@ -144,23 +226,6 @@ class OrganizationsController extends Controller
                 ->with(['member_updated' => 'Member successfully updated']);
         }
         
-    }
-
-    public function getUpdateMember($id)
-    {
-        $member = Member::findOrFail($id);
-        $response = array(
-            'status'    => 'success',
-            'member'    => $member
-        );
-        return response()->json($response);
-
-    }
-
-    public function patchEditOrganizations()
-    {
-
-
     }
 
 }

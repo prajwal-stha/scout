@@ -40,7 +40,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'scouter';
+//    protected $redirectTo = 'scouter';
 
 //    protected $redirectAfterLogout = '/login';
 
@@ -143,23 +143,23 @@ class AuthController extends Controller
     public function register(Request $request){
         $this->validate($request,[
             'f_name'    => 'required|max:255',
-            'l_name'    =>  'required|max:255',
-            'email'    => 'required|email|max:255|unique:users,email',
-            'username' => 'required|max:255|unique:users,username|alpha_dash',
-            'password' => 'required|min:6|confirmed',
+            'l_name'    => 'required|max:255',
+            'email'     => 'required|email|max:255|unique:users,email',
+            'username'  => 'required|max:255|unique:users,username|alpha_dash',
+            'password'  => 'required|min:6|confirmed',
         ]);
         $user = User::create([
             'f_name'   => $request->get('f_name'),
             'l_name'   => $request->get('l_name'),
             'email'    => $request->get('email'),
-            'token'    => bcrypt(str_random(30)),
+            'token'    => bcrypt($request->get('email'). time()),
             'username' => $request->get('username'),
             'password' => $request->get('password'),
         ]);
         Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
             $m->from('noreply@nepalscout.org.np', 'Your Application');
 
-            $m->to($user->email, $user->name)->subject('Your Reminder!');
+            $m->to($user->email, $user->name)->subject('Email Confirmation');
         });
 
         return redirect()->back()->with('user_created', 'You are now registered');

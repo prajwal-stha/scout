@@ -197,19 +197,49 @@ jQuery(document).ready(function() {
     }
 
     $('.updateMember').on('click', function (e) {
+
         e.preventDefault();
         var id = $(this).attr('data-id');
-        var url = update_url + '/' + id;
+        var url = update_member_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
-                $('#f-name').val(data.district.name);
-                $('#m-name').val(data.district.district_code);
-                $('#l-name').val(id);
+                $('#f-name').val(data.member.f_name);
+                $('#m-name').val(data.member.m_name);
+                $('#l-name').val(data.member.l_name);
+                $('#update-member-org-id').val(data.member.organization_id);
+                $('#update-member-id').val(id);
             });
             $('#memberModal').modal('show');
             return;
         }
     });
+
+    $('#modal-member-submit').on('click', function () {
+        $('.update-member-form').submit();
+    });
+
+    $('.updateTeam').on('click', function (e) {
+
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_team_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                console.log(data);
+                $('#team-name').val(data.team.name);
+                $('#update-team-org-id').val(data.team.organization_id);
+                $('#update-team-id').val(id);
+            });
+            $('#teamModal').modal('show');
+            return;
+        }
+    });
+
+    $('#modal-team-submit').on('click', function () {
+        $('.update-team-form').submit();
+    });
+
+
 });
 
 

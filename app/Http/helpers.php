@@ -36,3 +36,15 @@ function formatOption( $option )
     return $data;
 }
 
+
+function formatNameOption( $option )
+{
+    $data = [];
+    if(!empty($option)){
+        foreach($option as $value){
+            $data[$value->f_name . ' ' . $value->m_name . ' '. $value->l_name]   = $value->f_name . ' ' . $value->m_name . ' '. $value->l_name;
+        }
+    }
+    return $data;
+}
+

@@ -21,11 +21,13 @@
                     </button>
                 </div>
 
-                {{ Form::open(['url' => 'organizations/edit-member', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
+                {{ Form::open(['url' => 'organizations/update-member', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
+                <input type="hidden" name="organization_id" value="" id="update-member-org-id">
+                <input type="hidden" name="id" value="" id="update-member-id">
 
                 <div class="modal-body">
                     <div class="form-group">
-                        {{ Form::label('f-name', 'First Name') }}
+                        {{ Form::label('f-name', 'First Name *') }}
                         {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
                     </div>
                     <div class="form-group">
@@ -34,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        {{ Form::label('l-name', 'Last Name') }}
+                        {{ Form::label('l-name', 'Last Name *') }}
                         {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
                     </div>
 
@@ -42,7 +44,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="modal-submit">Submit</button>
+                    <button type="button" class="btn btn-primary" id="modal-member-submit">Update</button>
                 </div>
 
                 {{ Form::close() }}
@@ -94,7 +96,7 @@
                     <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
-                            {{ Form::label('f-name', 'First Name', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
                                 @if ($errors->has('f_name'))
@@ -119,7 +121,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
-                            {{ Form::label('l-name', 'Last Name', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
                                 @if ($errors->has('l_name'))
@@ -171,7 +173,7 @@
 
                                 </table>
                                 <div class="btn-toolbar list-toolbar">
-                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">Delete</button>
+                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-member">Delete</button>
                                 </div>
                             </form>
                         </div>
@@ -189,8 +191,8 @@
 
     @parent
     <script>
-        var update_url = "<?php echo url('organizations/updateMember'); ?>";
-        console.log(update_url);
+        var update_member_url = "<?php echo url('organizations/update-member'); ?>";
+        console.log(update_member_url);
     </script>
 
 

@@ -2,6 +2,48 @@
 
 
 @section('content')
+
+
+    @if(Session::has('team_updated'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('team_updated') }}
+        </div>
+
+    @endif
+
+    <div class="modal" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                {{ Form::open(['url' => 'team/update', 'method' => 'PATCH', 'class' => 'update-team-form']) }}
+                    <input type="hidden" name="organization_id" value="" id="update-team-org-id">
+                    <input type="hidden" name="id" value="" id="update-team-id">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ Form::label('name', 'Name *') }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="modal-team-submit">Update</button>
+                    </div>
+
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-3">
 
@@ -36,34 +78,50 @@
                     <div class="row">
                         <div class="col-md-4">
 
-                            <form role="form" action="{{ url('team/create') }}" method="post" id="team-create-form" class="form-horizontal">
-                                {{ csrf_field() }}
+                            {{ Form::open(['url' => 'team/create', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
+                                <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+
                                 <div class="form-group">
-                                    <label class="control-label col-sm-4" for="lead-scouter">Team Name</label>
-                                    <div class="col-sm-8">
-                                       <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                    {{ Form::label('team-name', 'Team Name *', array( 'class' => 'control-label col-sm-4')) }}
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
                                     </div>
+                                    @if ($errors->has('name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary pull-right" id="team-submit">Save</button>
                                 </div>
-                            </form>
+                            {{ Form::close() }}
 
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Alpha</td>
-                                        <td><i class="fa fa-pencil"></i> |
-                                            <i class="fa fa-trash-o"></i></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                            @if(isset($team))
+
+                                <table class="table table-bordered table-striped">
+                                    <thead align="center">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($team as $value)
+                                            <tr>
+                                                <td>{{ $value->name }}</td>
+                                                <td><a class="updateTeam" data-id="{{ $value->id }}">
+                                                        <i class="fa fa-pencil"></i></a> |
+                                                    <a class="deleteTeam" data-id="{{ $value->id }}" href="{{ url( 'team/remove', [$value->id]) }}"><i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            @endif
 
                         </div>
                             <div class="col-md-8">
@@ -188,9 +246,6 @@
         </div>
     </div>
 
-
-
-
 @stop
 
 @section('scripts')
@@ -199,6 +254,8 @@
 
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script>
+        var update_team_url = "<?php echo url('team/update'); ?>";
+        console.log(update_team_url);
         $("[data-mask]").inputmask();
     </script>
 

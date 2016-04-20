@@ -48,7 +48,43 @@
                             <input type="text" class="form-control" id="navbar-search-input" placeholder="Search" name="search">
                         </div>
                     </form>
-                </div><!-- /.navbar-collapse --
+                </div><!-- /.navbar-collapse -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li><!-- end notification -->
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->f_name }} {{ Auth::user()->l_name }} <span class="caret"></span></a>
+
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li><a href="{{ url( '/logout' ) }}"><i class="fa fa-sign-out"></i>Sign out</a></li>
+                                {{--<li class="divider"></li>--}}
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-custom-menu -->
             </div><!-- /.container-fluid -->
         </nav>
     </header>

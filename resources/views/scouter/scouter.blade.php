@@ -2,6 +2,49 @@
 
 
 @section('content')
+
+    @if(Session::has('scouter_created'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('scouter_created') }}
+        </div>
+
+    @endif
+
+    @if(Session::has('lead_created'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('lead_created') }}
+        </div>
+
+    @endif
+
+    @if(Session::has('scouter_updated'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('scouter_updated') }}
+        </div>
+
+    @endif
+
+
+    @if(Session::has('lead_scouter_updated'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('lead_scouter_updated') }}
+        </div>
+
+    @endif
+
+
     <div class="row">
         <div class="col-md-3">
 
@@ -33,138 +76,67 @@
                     <h3 class="box-title">Scouter Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{ url('scouter/create') }}" method="post" id="scouter-create-form" class="form-horizontal">
-                    {{ csrf_field() }}
-                    <div class="box-body">
-                        <div class="row">
+
+                <div class="box-body">
+                    @if(isset($leadScouter))
+
+                        {{ Form::model($leadScouter, ['url' => ['scouter/edit-lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
+
+                    @else
+
+                        {{ Form::open(['url' => 'scouter/create-lead-scouter', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
+
+                    @endif
+                        <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+                    <div class="row">
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-4" for="lead-scouter">Lead Scouter *</label>
+                                    {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-4')) }}
                                     <div class="col-sm-8">
-                                        <select class="form-control" name="lead-scouter">
-                                            <option>Select</option>
-                                        </select>
+                                        {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
+                                        @if ($errors->has('name'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-8">
 
                                 <div class="form-group">
+                                    {{ Form::label('email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
 
-                                    <label class="control-label col-sm-6" for="email">Email</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="{{ old('email') }}">
+                                        {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'email')) }}
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
 
 
                                 <div class="form-group">
 
-                                    <label class="control-label col-sm-6" for="organization-start">Permission Letter No. / Date</label>
+                                    {{ Form::label('perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="perm_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">B.T.C / P.T.C No. / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
+                                        {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'perm_letter_no')) }}
+                                        @if ($errors->has('permission'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('permission') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">Advance Certificate / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">ALT No. / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">L.T Diploma / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <hr>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4" for="organization-name">Assistant Lead Scouter *</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control" name="lead-scouter">
-                                            <option>Select</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-8">
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="email">Email</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="email" placeholder="Email" name="email" value="{{ old('email') }}">
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="control-label col-sm-6" for="organization-start">Permission Letter No. / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="perm_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">B.T.C / P.T.C No. / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                        {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        @if ($errors->has('permission_date'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('permission_date') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
 
@@ -172,36 +144,60 @@
 
                                 <div class="form-group">
 
-                                    <label class="control-label col-sm-6" for="organization-start">Advance Certificate / Date</label>
+                                    {{ Form::label('btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
+                                        {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'btc_no')) }}
+
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    <label class="control-label col-sm-6" for="organization-start">ALT No. / Date</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+                                        {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    <label class="control-label col-sm-6" for="organization-start">L.T Diploma / Date</label>
+                                    {{ Form::label('advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
+
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" placeholder="Letter No." name="btc_letter_no">
+                                        {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'advance_no')) }}
+
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="text" id="organization-start" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+
+                                        {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+
+                                        {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'alt_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+
+                                        {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lt_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     </div>
 
                                 </div>
@@ -213,15 +209,149 @@
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
                         </div>
-                    </div>
-                </form>
-            </div><!-- /.box -->
 
+                    {{ Form::close() }}
+
+                    @if(isset($scouter))
+
+                        {{ Form::model($scouter, ['url' => ['scouter/edit', $scouter->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-scouter-form']) }}
+
+
+                    @else
+
+                        {{ Form::open(['url' => 'scouter/create', 'class' => 'form-horizontal' ,'id' =>'create-scouter-form'])  }}
+
+                    @endif
+
+                        <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+
+
+                        <div class="row">
+                            <hr>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ Form::label('asst-lead-scouter', 'Assistant Lead Scouter', array( 'class' => 'control-label col-sm-4')) }}
+                                    <div class="col-sm-8">
+                                        {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
+                                        @if ($errors->has('asst_lead_scouter'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+
+                                <div class="form-group">
+                                    {{ Form::label('email', 'Email', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-6">
+                                        {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'email')) }}
+                                        @if ($errors->has('email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    {{ Form::label('perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    <div class="col-sm-3">
+                                        {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'perm_letter_no')) }}
+                                        @if ($errors->has('permission'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('permission') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        @if ($errors->has('permission_date'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('permission_date') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    <div class="col-sm-3">
+                                        {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'btc_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+                                        {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'advance_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+                                        {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'alt_no')) }}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lt_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
+                        </div>
+                    {{ Form::close() }}
+                    </div>
+
+                </div><!-- /.box -->
+
+            </div>
         </div>
     </div>
-
-
-
 
 @stop
 
@@ -230,7 +360,7 @@
     @parent
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script>
-        $("[data-mask]").inputmask();
+        $(".date").inputmask();
     </script>
 
 
