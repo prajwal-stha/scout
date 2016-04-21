@@ -119,11 +119,16 @@ jQuery(document).ready(function() {
         }
     });
 
+    $('#modal-submit').on('click', function () {
+        $('#district-update-form').submit();
+    });
+
 
     $('.deleteDistrict').on("click", function (e) {
 
         var record_id = $(this).attr('data-id');
         var row = $(this).closest('tr');
+        var rowIndex = $('#table-districts tr').index(row);
 
         e.preventDefault();
         swal({
@@ -143,6 +148,9 @@ jQuery(document).ready(function() {
             }).done(function (data) {
 
                 swal("Deleted!", "Your record was successfully deleted!", "success");
+                if(rowIndex == 1){
+                    $('#remove_many_districts').remove();
+                }
                 row.remove();
 
             }).error(function (data) {
@@ -153,12 +161,103 @@ jQuery(document).ready(function() {
 
     });
 
+    $('.deleteMember').on("click", function (e) {
 
+        var record_id = $(this).attr('data-id');
+        var row = $(this).closest('tr');
+        var rowIndex = $('#table-member tr').index(row);
 
-    $('#modal-submit').on('click', function () {
-        $('#district-update-form').submit();
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_member_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                if(rowIndex == 1){
+                    $('#remove_many_members').remove();
+                }
+                row.remove();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
     });
 
+    $('#delete-member').on('click', function (event) {
+
+        event.preventDefault();
+        swal({
+            title: "Are you sure?",
+                text: "You will not be able to recover this record!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel please!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                swal("Deleted!", "The record has been deleted.", "success");
+                $('#remove_many_members').submit();
+
+            } else {
+                swal("Cancelled", "The record is safe.)", "error");
+            }
+        });
+    });
+
+    $('.deleteTeam').on("click", function (e) {
+
+        var record_id = $(this).attr('data-id');
+        var row = $(this).closest('tr');
+        var rowIndex = $('#teams-list tr').index(row);
+
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_team_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                if(rowIndex == 1){
+                    $('#teams-list').remove();
+                }
+                row.remove();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+
+    });
 
     function returnSuccess(data) {
         var output = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-check"></i> Great!</h4>' + data.msg +
@@ -188,7 +287,6 @@ jQuery(document).ready(function() {
         function (isConfirm) {
             if (isConfirm) {
                 swal("Deleted!", "The record has been deleted.", "success");
-                console.log($(this));
                 $(this).trigger("click");
             } else {
                 swal("Cancelled", "The record is safe.)", "error");
@@ -239,7 +337,78 @@ jQuery(document).ready(function() {
         $('.update-team-form').submit();
     });
 
+    $('.updateTeamMember').on('click', function (e) {
 
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_teamMember_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#teamMemberId').val(id);
+                $('#f-name').val(data.teamMember.f_name);
+                $('#m-name').val(data.teamMember.m_name);
+                $('#l-name').val(data.teamMember.l_name);
+                $('#dob').val(data.teamMember.dob);
+                $('#entry_date').val(data.teamMember.entry_date);
+                $('#position').val(data.teamMember.position);
+                $('#passed_date').val(data.teamMember.passed_date);
+                $('#note').val(data.teamMember.note);
+            });
+            $('#teamMemberModal').modal('show');
+            return;
+        }
+    });
+
+    $('#modal-teamMember-submit').on('click', function () {
+        $('.update-teamMember-form').submit();
+    });
+
+
+    $('.deleteTeamMember').on("click", function (e) {
+
+        var record_id = $(this).attr('data-id');
+        var row = $(this).closest('tr');
+        var rowIndex = $('#team-member-list tr').index(row);
+
+        e.preventDefault();
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_teamMember_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                if(rowIndex == 1){
+                    $('#team-member-list').remove();
+                }
+                row.remove();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+    });
+
+    $('#create_team_member').on('click', function(e){
+        e.preventDefault();
+        if(!$('#team_id').val()){
+            sweetAlert("Error...", "Please create team first!", "error");
+
+        }else{
+            $(this).unbind('click').click();
+        }
+    });
 });
 
 

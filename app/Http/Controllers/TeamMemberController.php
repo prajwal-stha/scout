@@ -6,7 +6,75 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Requests\CreateTeamMemberRequest;
+
+use App\Team;
+
+use App\TeamMember;
+
 class TeamMemberController extends Controller
 {
-    //
+
+
+    public function postCreate(CreateTeamMemberRequest $request)
+    {
+        TeamMember::create([
+            'f_name'         => $request->get('f_name'),
+            'm_name'         => $request->get('m_name'),
+            'l_name'         => $request->get('l_name'),
+            'dob'            => formatDate($request->get('dob')),
+            'entry_date'     => formatDate($request->get('entry_date')),
+            'passed_date'    => formatDate($request->get('passed_date')),
+            'note'           => $request->get('note'),
+            'team_id'        => $request->get('team_id'),
+            'position'       => $request->get('position')
+        ]);
+
+        return redirect()->back()->with(['team_member_created' => 'One of the team member has been created']);
+
+    }
+
+    public function getDelete($id)
+    {
+        $member = TeamMember::findOrFail($id);
+        if($member){
+            TeamMember::destroy($member->id);
+        }
+        return redirect()->back()->with('member_deleted', 'One of the member has been removed');
+
+    }
+
+    public function getUpdate($id)
+    {
+        $teamMember = TeamMember::findOrFail($id);
+        $response = array(
+            'status'        => 'success',
+            'teamMember'    => $teamMember
+        );
+        return response()->json($response);
+    }
+
+    public function patchUpdate(Request $request)
+    {
+        $id = $request->get('id');
+        if($id){
+            $teamMember = TeamMember::findOrFail($id);
+            if($teamMember){
+                $teamMember->f_name            = $request->get('f_name');
+                $teamMember->m_name            = $request->get('m_name');
+                $teamMember->l_name            = $request->get('l_name');
+                $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
+                $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
+                $teamMember->position          = $request->get('position');
+                $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
+                $teamMember->note              = $request->get('note');
+                $teamMember->team_id           = $request->get('team_id');
+                $teamMember->save();
+            }
+
+            return redirect()->back()
+                ->with(['team_member_updated' => 'Team Member successfully updated']);
+        }
+        
+    }
 }

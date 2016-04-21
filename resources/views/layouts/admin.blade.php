@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset( 'ionicons/css/ionicons.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset( 'sweetalert/sweetalert.css' ) }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
@@ -31,7 +33,7 @@
     <!-- bootstrap wysihtml5 - text editor -->
     {{--<link rel="stylesheet" href="{{ asset( 'bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' ) }}">--}}
 
-    <link rel="stylesheet" href="{{ asset( 'sweetalert/sweetalert.css' ) }}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

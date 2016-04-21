@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Auth;
-use App\Member;
 
-class CreateMemberRequest extends Request
+use Auth;
+
+class CreateTeamMemberRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,9 +16,7 @@ class CreateMemberRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(Member::where('organization_id', session()->get('org_id'))->count() < 7) {
-                return TRUE;
-            }
+            return TRUE;
         } else {
             return FALSE;
         }
@@ -32,14 +30,14 @@ class CreateMemberRequest extends Request
     public function rules()
     {
         return [
-            'f_name'    => 'required',
-            'l_name'    => 'required'
+            'f_name'        => 'required',
+            'l_name'        => 'required',
+            'entry_date'    => 'required|date_format:"d/m/Y"',
+            'position'      => 'required',
+            'passed_date'   => 'required|date_format:"d/m/Y"',
+            'note'          => 'max:500',
+            'team_id'       => 'required'
         ];
     }
 
-    public function forbiddenResponse()
-    {
-        return $this->redirector->to('scouter/committe')->withErrors('Committe Member limit reached');
-
-    }
 }

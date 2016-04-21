@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\TeamMember;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -38,7 +39,6 @@ class ScouterController extends Controller
             $data['org_id'] = session()->get('org_id');
             $data['organization'] = Organization::findOrFail(session()->get('org_id'));
         }
-
         return view('scouter.organization')->with($data);
 
     }
@@ -98,15 +98,29 @@ class ScouterController extends Controller
         
     }
 
-    public function getTeam()
+    public function getTeam($teamId = null)
     {
         $data['title'] = 'Nepal Scout - Scouter';
-        if(session()->has('org_id')) {
-            $data['org_id']   = session()->get('org_id');
-            if(Team::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
-                $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+        if(is_null($teamId)){
+            if(session()->has('org_id')) {
+                $data['org_id']   = session()->get('org_id');
+                if(Team::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+                    $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+                    $data['teamId'] = $data['team']->first()->id;
+                    if($data['teamId']) {
+                        $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
+                    }
+                }
             }
-
+        } else {
+            if(session()->has('org_id')) {
+                $data['org_id']   = session()->get('org_id');
+                if(Team::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+                    $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+                    $data['team_member'] = TeamMember::where('team_id', $teamId)->get();
+                    $data['teamId'] = $teamId;
+                }
+            }
         }
         return view('scouter.team')->with($data);
         

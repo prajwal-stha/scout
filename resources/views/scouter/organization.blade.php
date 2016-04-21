@@ -27,6 +27,7 @@
 
 
 
+
     <div class="row">
         <div class="col-md-3">
 
@@ -61,7 +62,7 @@
 
                 @if(isset($org_id))
 
-                    {{ Form::model($organization, ['url' => ['organizations/edit', $org_id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
+                    {{ Form::model($organization, ['url' => ['organizations/edit', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
 
                 @else
 
@@ -101,7 +102,7 @@
 
                         <div class="form-group{{ $errors->has('registration_date') ? ' has-error' : '' }}">
 
-                            {{ Form::label('organization-start', 'Organization Start Date *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('registration_date', 'Organization Start Date *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('registration_date'))
@@ -186,7 +187,7 @@
 
                             {{ Form::label('chairman-mobile', 'Chairman Mobile No. *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control phone', 'id' => 'chairman-mobile')) }}
+                                {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile')) }}
 
                                 @if ($errors->has('chairman_mobile_no'))
                                     <span class="help-block">
@@ -242,11 +243,10 @@
 @section('scripts')
 
     @parent
-    <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{  asset('js/parallax.js') }}"></script>
     <script>
         $("#registration_date").inputmask();
-        $(".phone").mask("999-999-9999",{placeholder:"#"});
+        $("#chairman-mobile").inputmask("999-999-9999",{placeholder:"#"});
         $("#organization-create-form").submit(function() {
             if ($(this).find('font[class="error"]').length > 0) {
                 var scrolto = $('#organization-create-form').find('.help-block:first').parent();

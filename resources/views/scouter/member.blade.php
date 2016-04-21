@@ -12,6 +12,17 @@
 
     @endif
 
+    @if (count($errors) > 0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="modal" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -192,7 +203,7 @@
     @parent
     <script>
         var update_member_url = "<?php echo url('organizations/update-member'); ?>";
-        console.log(update_member_url);
+        var delete_member_url = "<?php echo url('organizations/delete-member'); ?>";
     </script>
 
 

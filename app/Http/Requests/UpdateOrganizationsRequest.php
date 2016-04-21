@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+use App\Organization;
+
+use Auth;
+
 class UpdateOrganizationsRequest extends Request
 {
     /**
@@ -30,7 +34,7 @@ class UpdateOrganizationsRequest extends Request
         return [
             'registration_date'     => 'required|date_format:"d/m/Y"',
             'type'                  => 'required|string',
-            'name'                  => 'required|unique:organizations,name'.$this->get('id'),
+            'name'                  => 'required|unique:organizations,name,'. $this->get('id'),
             'district'              => 'required',
             'chairman_f_name'       => 'required|string',
             'chairman_l_name'       => 'required|string',
@@ -38,7 +42,7 @@ class UpdateOrganizationsRequest extends Request
             'tel_no'                => 'required|string',
             'address_line_1'        => 'required|string',
             'address_line_2'        => 'string',
-            'email'                 => 'required|email|unique:organizations,email'.$this->get('id')
+            'email'                 => 'required|email|unique:organizations,email,'. $this->get('id'),
         ];
     }
 

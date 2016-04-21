@@ -24,7 +24,7 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'team', 'TeamsController');
     Route::controller( 'admin', 'AdminController' );
     Route::controller( 'scouter', 'ScouterController' );
-
+    Route::controller( 'member', 'TeamMemberController' );
 
 
 //    Route::get('districts/getAllDistricts', function(){

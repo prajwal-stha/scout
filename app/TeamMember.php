@@ -19,4 +19,33 @@ class TeamMember extends Model
         return $this->belongsTo(Team::class);
 
     }
+
+    public function getDobAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['dob'] = $value;
+        }
+    }
+
+    public function getEntryDateAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['entry_date'] = $value;
+        }
+    }
+
+    public function getPassedDateAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['passed_date'] = $value;
+        }
+    }
+
+
 }

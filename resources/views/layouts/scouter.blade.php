@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset( 'ionicons/css/ionicons.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset( 'sweetalert/sweetalert.css' ) }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">
@@ -125,8 +127,11 @@
     <script src="{{ asset( 'fastclick/fastclick.min.js' ) }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset( 'js/app.min.js' ) }}"></script>
+
+    <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset( 'js/demo.js') }}"></script>
+    <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{ asset( 'js/scout.js') }}"></script>
 
 @show

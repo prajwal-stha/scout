@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\CreateOrganizationsRequest;
+use App\Http\Requests\UpdateOrganizationsRequest;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateScarfRequest;
 use App\Http\Requests\UpdateMemberRequest;
@@ -64,11 +65,12 @@ class OrganizationsController extends Controller
      *
      * Post updated organization detail
      * @param $id
-     * @param Request $request
+     * @param UpdateOrganizationsRequest $request
      * @return $this
      */
-    public function patchEdit($id, Request $request)
+    public function patchEdit(UpdateOrganizationsRequest $request, $id)
     {
+//        dd($request->all());
         $org = Organization::findOrFail($id);
 
         $input = $request->all();
@@ -98,7 +100,7 @@ class OrganizationsController extends Controller
                     'border_colour'     => $request->get('border_colour')
                 ]);
 
-            return redirect('scouter.committe');
+            return redirect('scouter/committe');
 
         }
         else{

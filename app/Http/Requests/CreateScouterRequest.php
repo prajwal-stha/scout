@@ -6,6 +6,8 @@ use App\Http\Requests\Request;
 
 use Auth;
 
+use App\Scouter;
+
 class CreateScouterRequest extends Request
 {
     /**
@@ -16,6 +18,9 @@ class CreateScouterRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
+            if(Scouter::where('organization_id', session()->get('org_id'))->count() < 2) {
+                return TRUE;
+            }
             return TRUE;
         } else {
             return FALSE;

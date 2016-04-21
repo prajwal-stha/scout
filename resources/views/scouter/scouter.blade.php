@@ -212,7 +212,7 @@
 
                     {{ Form::close() }}
 
-                    @if(isset($scouter))
+                    @if(isset($scouter) && $scouter->count())
 
                         {{ Form::model($scouter, ['url' => ['scouter/edit', $scouter->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-scouter-form']) }}
 
@@ -358,7 +358,6 @@
 @section('scripts')
 
     @parent
-    <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script>
         $(".date").inputmask();
     </script>

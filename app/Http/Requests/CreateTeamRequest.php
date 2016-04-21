@@ -6,6 +6,8 @@ use App\Http\Requests\Request;
 
 use Auth;
 
+use App\Team;
+
 class CreateTeamRequest extends Request
 {
     /**
@@ -16,7 +18,9 @@ class CreateTeamRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            return TRUE;
+            if(Team::where('organization_id', session()->get('org_id'))->count() < 4) {
+                return TRUE;
+            }
         } else {
             return FALSE;
         }
@@ -32,5 +36,11 @@ class CreateTeamRequest extends Request
         return [
             'name'  => 'required|unique:teams,name,'.$this->get('organization_id')
         ];
+    }
+
+    public function forbiddenResponse()
+    {
+        return $this->redirector->to('scouter/team')->withErrors('Team limit has reached');
+
     }
 }
