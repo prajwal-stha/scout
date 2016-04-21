@@ -25,9 +25,6 @@
 
     @endif
 
-
-
-
     <div class="row">
         <div class="col-md-3">
 
@@ -63,7 +60,7 @@
                 @if(isset($org_id))
 
                     {{ Form::model($organization, ['url' => ['organizations/edit', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
-
+                    <input type="hidden" name="id" value="{{ $org_id }}">
                 @else
 
                     {{ Form::open(['url' => 'organizations/create', 'class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
@@ -248,7 +245,7 @@
         $("#registration_date").inputmask();
         $("#chairman-mobile").inputmask("999-999-9999",{placeholder:"#"});
         $("#organization-create-form").submit(function() {
-            if ($(this).find('font[class="error"]').length > 0) {
+            if ($(this).find('.help-block').length > 0) {
                 var scrolto = $('#organization-create-form').find('.help-block:first').parent();
                 $('html,body').animate({
                     scrollTop: $(scrolto).offset().top}, 2000

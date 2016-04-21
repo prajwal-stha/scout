@@ -18,7 +18,7 @@ class District extends Model
     public function organizations()
     {
 
-        return $this->hasMany( Organizations::class );
+        return $this->hasMany( Organization::class );
 
     }
 

@@ -40,7 +40,7 @@ class Organization extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function scouter()
+    public function scouters()
     {
         return $this->hasMany(Scouter::class);
     }
@@ -48,7 +48,7 @@ class Organization extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function districts()
+    public function district()
     {
 
         return $this->belongsTo(Districts::class);

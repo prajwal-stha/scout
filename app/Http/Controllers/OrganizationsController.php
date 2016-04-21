@@ -64,22 +64,29 @@ class OrganizationsController extends Controller
     /**
      *
      * Post updated organization detail
-     * @param $id
      * @param UpdateOrganizationsRequest $request
      * @return $this
      */
     public function patchEdit(UpdateOrganizationsRequest $request, $id)
     {
-//        dd($request->all());
-        $org = Organization::findOrFail($id);
+            $org = Organization::findOrFail($id);
+            if ($org) {
+                $org->name = $request->get('name');
+                $org->type = $request->get('type');
+                $org->registration_date = $request->has('registration_date') ? formatDate($request->get('registration_date')) : null;
+                $org->address_line_1 = $request->get('address_line_1');
+                $org->address_line_2 = $request->has('address_line_2') ? $request->get('address_line_2') : '';
+                $org->district_id = $request->get('district');
+                $org->chairman_f_name = $request->get('chairman_f_name');
+                $org->chairman_l_name = $request->get('chairman_f_name');
+                $org->chairman_mobile_no = $request->get('chairman_mobile_no');
+                $org->tel_no = $request->get('tel_no');
+                $org->email = $request->get('email');
+                $org->save();
+            }
 
-        $input = $request->all();
-
-        $org->fill($input)->save();
-
-        return redirect()->back()
-            ->with(['org_update' => 'Organization successfully updated'])
-            ->withInput();
+            return redirect()->back()
+                ->with(['org_update' => 'Organization successfully updated']);
 
     }
 
@@ -138,12 +145,12 @@ class OrganizationsController extends Controller
      */
     public function postMember(CreateMemberRequest $request)
     {
-        if($request->has('org_id')) {
+        if($request->has('organization_id')) {
             Member::create([
                 'f_name'            => $request->get('f_name'),
                 'm_name'            => $request->get('m_name'),
                 'l_name'            => $request->get('l_name'),
-                'organization_id'   => $request->get('org_id')
+                'organization_id'   => $request->get('organization_id')
             ]);
 
            return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);

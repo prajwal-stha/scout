@@ -32,7 +32,7 @@ class CreateOrganizationsRequest extends Request
             'registration_date'     => 'required|date_format:"d/m/Y"',
             'type'                  => 'required|string',
             'name'                  => 'required|unique:organizations,name',
-            'district'              => 'required',
+            'district'              => 'required|exists:districts,id',
             'chairman_f_name'       => 'required|string',
             'chairman_l_name'       => 'required|string',
             'chairman_mobile_no'    => 'required|string',

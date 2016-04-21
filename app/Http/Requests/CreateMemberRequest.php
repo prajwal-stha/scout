@@ -32,8 +32,9 @@ class CreateMemberRequest extends Request
     public function rules()
     {
         return [
-            'f_name'    => 'required',
-            'l_name'    => 'required'
+            'f_name'          => 'required',
+            'l_name'          => 'required',
+            'organization_id' => 'required|exists:organizations,id'
         ];
     }
 

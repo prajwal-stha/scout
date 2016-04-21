@@ -47,11 +47,11 @@
                         {{ csrf_field() }}
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="district-name">District Name</label>
+                                <label for="update-district-name">District Name</label>
                                 <input type="text" class="form-control" id="update-district-name" placeholder="District Name" name="name" value="">
                             </div>
                             <div class="form-group">
-                                <label for="district-code">District Code</label>
+                                <label for="update-district-code">District Code</label>
                                 <input type="text" class="form-control" id="update-district-code" placeholder="District Code" name="district_code" value="">
                             </div>
 

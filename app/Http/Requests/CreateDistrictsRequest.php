@@ -28,8 +28,8 @@ class CreateDistrictsRequest extends Request
     public function rules()
     {
         return [
-            'district_code' => 'required|unique:districts',
-            'name'          => 'required|unique:districts'
+            'district_code' => 'required|unique:districts,district_code',
+            'name'          => 'required|unique:districts,name'
         ];
     }
 

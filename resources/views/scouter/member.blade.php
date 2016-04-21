@@ -104,7 +104,7 @@
                 {{ Form::open(['url' => 'organizations/member', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
 
                     {{--@endif--}}
-                    <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+                    <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
                             {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}

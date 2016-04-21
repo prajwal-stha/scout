@@ -36,7 +36,7 @@ class CreateTeamMemberRequest extends Request
             'position'      => 'required',
             'passed_date'   => 'required|date_format:"d/m/Y"',
             'note'          => 'max:500',
-            'team_id'       => 'required'
+            'team_id'       => 'required|exists:teams,id'
         ];
     }
 

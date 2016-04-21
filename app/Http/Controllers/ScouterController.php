@@ -184,7 +184,7 @@ class ScouterController extends Controller
     }
 
 
-    public function patchEdit(Request $request, $id)
+    public function patchEdit(CreateScouterRequest $request, $id)
     {
         if($id){
             $scouter = Scouter::findOrFail($id);
@@ -205,12 +205,12 @@ class ScouterController extends Controller
             }
 
             return redirect()->back()
-                ->with(['scouter_updated' => 'Scouter successfully updated']);
+                ->with(['scouter_updated' => 'Assistant Lead Scouter successfully updated']);
         }
 
     }
 
-    public function patchEditLead(Request $request, $id)
+    public function patchEditLead(CreateScouterRequest $request, $id)
     {
 
         if($id){

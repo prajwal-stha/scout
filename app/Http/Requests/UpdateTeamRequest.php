@@ -30,7 +30,8 @@ class UpdateTeamRequest extends Request
     public function rules()
     {
         return [
-            'name'  => 'required|unique:teams,name,'.$this->get('id')
+            'name'              => 'required|unique:teams,name,'.$this->get('id'),
+            'organization_id'   => 'required|exists:organizations,id'
         ];
     }
 }

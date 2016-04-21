@@ -30,7 +30,7 @@ class CreateScarfRequest extends Request
     {
         return [
             'background_colour'     => 'required',
-            'border_colour'         => 'required'
+            'border_colour'         => 'required',
         ];
     }
 }

@@ -22,9 +22,9 @@ class Team extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function organizations()
+    public function organization()
     {
-        return $this->belongsTo(Organizations::class);
+        return $this->belongsTo(Organization::class);
 
     }
 

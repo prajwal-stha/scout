@@ -106,10 +106,10 @@
                             <div class="col-md-8">
 
                                 <div class="form-group">
-                                    {{ Form::label('email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
+                                    {{ Form::label('lead_email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
 
                                     <div class="col-sm-6">
-                                        {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'email')) }}
+                                        {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
                                         @if ($errors->has('email'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('email') }}</strong>
@@ -121,9 +121,9 @@
 
                                 <div class="form-group">
 
-                                    {{ Form::label('perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    {{ Form::label('lead_perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'perm_letter_no')) }}
+                                        {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'lead_perm_letter_no')) }}
                                         @if ($errors->has('permission'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('permission') }}</strong>
@@ -131,7 +131,7 @@
                                         @endif
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'lead_perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                         @if ($errors->has('permission_date'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('permission_date') }}</strong>
@@ -144,45 +144,28 @@
 
                                 <div class="form-group">
 
-                                    {{ Form::label('btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    {{ Form::label('lead_btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'btc_no')) }}
+                                        {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'lead_btc_no')) }}
 
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
-                                    </div>
-
-                                </div>
-
-                                <div class="form-group">
-
-                                    {{ Form::label('advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
-
-                                    <div class="col-sm-3">
-                                        {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'advance_no')) }}
-
-                                    </div>
-                                    <div class="col-sm-3">
-
-                                        {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
-
+                                        {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'lead_btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     </div>
 
                                 </div>
 
                                 <div class="form-group">
 
-                                    {{ Form::label('alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    {{ Form::label('lead_advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
 
                                     <div class="col-sm-3">
-
-                                        {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'alt_no')) }}
+                                        {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'lead_advance_no')) }}
 
                                     </div>
                                     <div class="col-sm-3">
 
-                                        {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'lead_advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                     </div>
 
@@ -190,14 +173,31 @@
 
                                 <div class="form-group">
 
-                                    {{ Form::label('lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                    {{ Form::label('lead_alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
 
                                     <div class="col-sm-3">
-                                        {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lt_no')) }}
+
+                                        {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'lead_alt_no')) }}
 
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                        {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'lead_alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ Form::label('lead_lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lead_lt_no')) }}
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lead_lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     </div>
 
                                 </div>
@@ -360,6 +360,19 @@
     @parent
     <script>
         $(".date").inputmask();
+        $( "#alt_date, #lt_date, #advance_date, #btc_date, #perm_date, #lead_alt_date, #lead_lt_date, #lead_advance_date, #lead_btc_date, #lead_perm_date" ).datepicker({
+            format:'dd/mm/yyyy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1930:2030',
+            inline: true,
+            dy:true,
+        });
+
+
+
+
+
     </script>
 
 

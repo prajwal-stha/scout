@@ -276,7 +276,7 @@
                                         {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
 
                                         <div class="col-sm-9">
-                                            {{ Form::text('dob', null, array('class' => 'form-control', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                             @if ($errors->has('dob'))
                                                 <span class="help-block">
@@ -293,7 +293,7 @@
                                         {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
 
                                         <div class="col-sm-9">
-                                            {{ Form::text('entry_date', null, array('class' => 'form-control', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                             @if ($errors->has('entry_date'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('entry_date') }}</strong>
@@ -329,7 +329,7 @@
                                         {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
 
                                         <div class="col-sm-9">
-                                            {{ Form::text('passed_date', null, array('class' => 'form-control', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                             @if ($errors->has('passed_date'))
                                                 <span class="help-block">
@@ -420,6 +420,15 @@
         $("#dob").inputmask();
         $("#entry_date").inputmask();
         $("#passed_date").inputmask();
+
+        $( ".date-picker" ).datepicker({
+            format:'dd/mm/yyyy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1930:2030',
+            inline: true,
+            dy:true,
+        });
     </script>
 
 

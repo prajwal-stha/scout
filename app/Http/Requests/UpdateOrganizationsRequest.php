@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-use App\Organization;
-
 use Auth;
+//use App\Organization;
 
 class UpdateOrganizationsRequest extends Request
 {
@@ -34,21 +33,15 @@ class UpdateOrganizationsRequest extends Request
         return [
             'registration_date'     => 'required|date_format:"d/m/Y"',
             'type'                  => 'required|string',
-            'name'                  => 'required|unique:organizations,name,'. $this->get('id'),
-            'district'              => 'required',
+            'name'                  => 'required|unique:organizations,name,'.$this->get('id'),
+            'district'              => 'required|exists:districts,id',
             'chairman_f_name'       => 'required|string',
             'chairman_l_name'       => 'required|string',
             'chairman_mobile_no'    => 'required|string',
             'tel_no'                => 'required|string',
             'address_line_1'        => 'required|string',
             'address_line_2'        => 'string',
-            'email'                 => 'required|email|unique:organizations,email,'. $this->get('id'),
+            'email'                 => 'required|email|unique:organizations,email,'.$this->get('id'),
         ];
-    }
-
-    public function forbiddenResponse()
-    {
-        return $this->redirector->to('scouter')->withErrors();
-
     }
 }
