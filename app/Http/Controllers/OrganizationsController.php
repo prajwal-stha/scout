@@ -16,7 +16,7 @@ use App\Organization;
 use App\Member;
 use Session;
 use Auth;
-
+use Validator;
 /**
  * Class OrganizationsController
  * @package App\Http\Controllers
@@ -69,24 +69,24 @@ class OrganizationsController extends Controller
      */
     public function patchEdit(UpdateOrganizationsRequest $request, $id)
     {
-            $org = Organization::findOrFail($id);
-            if ($org) {
-                $org->name = $request->get('name');
-                $org->type = $request->get('type');
-                $org->registration_date = $request->has('registration_date') ? formatDate($request->get('registration_date')) : null;
-                $org->address_line_1 = $request->get('address_line_1');
-                $org->address_line_2 = $request->has('address_line_2') ? $request->get('address_line_2') : '';
-                $org->district_id = $request->get('district');
-                $org->chairman_f_name = $request->get('chairman_f_name');
-                $org->chairman_l_name = $request->get('chairman_f_name');
-                $org->chairman_mobile_no = $request->get('chairman_mobile_no');
-                $org->tel_no = $request->get('tel_no');
-                $org->email = $request->get('email');
-                $org->save();
-            }
+        $org = Organization::findOrFail($id);
+        if ($org) {
+            $org->name = $request->get('name');
+            $org->type = $request->get('type');
+            $org->registration_date = $request->has('registration_date') ? formatDate($request->get('registration_date')) : null;
+            $org->address_line_1 = $request->get('address_line_1');
+            $org->address_line_2 = $request->has('address_line_2') ? $request->get('address_line_2') : '';
+            $org->district_id = $request->get('district');
+            $org->chairman_f_name = $request->get('chairman_f_name');
+            $org->chairman_l_name = $request->get('chairman_f_name');
+            $org->chairman_mobile_no = $request->get('chairman_mobile_no');
+            $org->tel_no = $request->get('tel_no');
+            $org->email = $request->get('email');
+            $org->save();
+        }
 
-            return redirect()->back()
-                ->with(['org_update' => 'Organization successfully updated']);
+        return redirect()->back()
+            ->with(['org_update' => 'Organization successfully updated']);
 
     }
 
@@ -173,7 +173,6 @@ class OrganizationsController extends Controller
             Member::destroy($request->get('action_to'));
             return redirect()->back();
         } else {
-
             return redirect()->back();
         }
     }
@@ -217,23 +216,59 @@ class OrganizationsController extends Controller
     /**
      *
      * Post the updated detail of member
-     * @param UpdateMemberRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function patchUpdateMember(UpdateMemberRequest $request)
+    public function patchUpdateMember(Request $request)
     {
+        $rules = array(
+            'f_name'            => 'required',
+            'l_name'            => 'required',
+            'organization_id'   => 'required|exists:organizations,id'
+        );
 
-        $id = $request->get('id');
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->errors()->all()
+            );
 
-        if($id){
-            $member = Member::findOrFail($id);
-            $input = $request->all();
+        } else {
+            $id = $request->get('id');
 
-            $member->fill($input)->save();
+            if($id){
+                $member = Member::findOrFail($id);
+                $input = $request->all();
 
-            return redirect()->back()
-                ->with(['member_updated' => 'Member successfully updated']);
+                $member->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'Member successfully updated.',
+                    'member'   => $member
+                );
+
+//                return redirect()->back()
+//                    ->with(['member_updated' => 'Member successfully updated']);
+
+            }
+//            return redirect()->back()
+//                ->with(['district_updated' => 'District successfully updated']);
         }
+        return response()->json($response);
+//        $id = $request->get('id');
+//
+//        if($id){
+//            $member = Member::findOrFail($id);
+//            $input = $request->all();
+//
+//            $member->fill($input)->save();
+//
+//            return redirect()->back()
+//                ->with(['member_updated' => 'Member successfully updated']);
+//        }
         
     }
 

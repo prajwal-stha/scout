@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Http\Requests\CreateScouterRequest;
+use App\Http\Requests\UpdateScouterRequest;
 
 use Auth;
 
@@ -79,12 +80,6 @@ class ScouterController extends Controller
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
             }
 
-            if(Scouter::where( 'organization_id', session()->get('org_id'))
-                    ->where( 'is_lead', true)->count() > 0 ) {
-                $data['leadScouter']  = Scouter::where('organization_id', session()->get('org_id'))
-                                        ->where('is_lead', 1)
-                                        ->first();
-            }
 
 
             if(Scouter::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
@@ -96,6 +91,27 @@ class ScouterController extends Controller
         }
         return view('scouter.scouter')->with($data);
         
+    }
+
+    public function getLeadScouter()
+    {
+        $data['title'] = 'Nepal Scout - Scouter';
+        if(session()->has('org_id')) {
+            $data['org_id'] = session()->get('org_id');
+            if (Member::where('organization_id', session()->get('org_id'))->count() > 0) {
+                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+            }
+
+            if (Scouter::where('organization_id', session()->get('org_id'))
+                    ->where('is_lead', true)->count() > 0
+            ) {
+                $data['leadScouter'] = Scouter::where('organization_id', session()->get('org_id'))
+                    ->where('is_lead', 1)
+                    ->first();
+            }
+        }
+        return view('scouter.lead-scouter')->with($data);
+
     }
 
     public function getTeam($teamId = null)
@@ -126,7 +142,7 @@ class ScouterController extends Controller
         
     }
     
-
+    // Create assistant scouter
     public function postCreate(CreateScouterRequest $request)
     {
 
@@ -156,6 +172,8 @@ class ScouterController extends Controller
         
     }
 
+
+    // create lead scouter
     public function postCreateLeadScouter(CreateScouterRequest $request)
     {
         if($request->has('org_id')) {
@@ -184,7 +202,7 @@ class ScouterController extends Controller
     }
 
 
-    public function patchEdit(CreateScouterRequest $request, $id)
+    public function patchEdit(UpdateScouterRequest $request, $id)
     {
         if($id){
             $scouter = Scouter::findOrFail($id);
@@ -210,7 +228,7 @@ class ScouterController extends Controller
 
     }
 
-    public function patchEditLead(CreateScouterRequest $request, $id)
+    public function patchEditLead(UpdateScouterRequest $request, $id)
     {
 
         if($id){

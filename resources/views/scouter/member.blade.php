@@ -12,7 +12,7 @@
 
     @endif
 
-    @if (count($errors) > 0)
+    @if ($errors->has(0))
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <ul>
@@ -26,6 +26,7 @@
     <div class="modal" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <div class="alert-placeholder"></div>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -73,16 +74,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ url('/') }}"><i class="fa fa-institution"></i> Organization Detail</a></li>
-                        <li><a href="{{ url('/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
-                        <li class="active"><a href="{{ url('/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
-                        <li><a href="{{ url('scouter/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
-                        <li><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
-                        <li><a href="{{ url('/scouter/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
-                    </ul>
-                </div><!-- /.box-body -->
+                @include('partials/nav')
             </div><!-- /. box -->
 
 
@@ -93,17 +85,8 @@
                     <h3 class="box-title">Committee Member Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                {{--<form role="form" action="{{ url('organizations/member') }}" method="post" id="member-create-form" class="form-horizontal">--}}
-                    {{--{{ csrf_field() }}--}}
-                    {{--@if(!empty($member))--}}
-
-                        {{--{{ Form::model($member, ['url' => ['organizations/edit-member', $member->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'member-create-form']) }}--}}
-
-                    {{--@else--}}
 
                 {{ Form::open(['url' => 'organizations/member', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
-
-                    {{--@endif--}}
                     <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
@@ -202,6 +185,7 @@
 
     @parent
     <script>
+        var index_member_url  = "<?php echo url('scouter/committe'); ?>"
         var update_member_url = "<?php echo url('organizations/update-member'); ?>";
         var delete_member_url = "<?php echo url('organizations/delete-member'); ?>";
     </script>

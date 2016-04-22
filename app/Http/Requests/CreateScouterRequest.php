@@ -21,7 +21,6 @@ class CreateScouterRequest extends Request
             if(Scouter::where('organization_id', session()->get('org_id'))->count() < 2) {
                 return TRUE;
             }
-            return TRUE;
         } else {
             return FALSE;
         }
@@ -34,9 +33,10 @@ class CreateScouterRequest extends Request
      */
     public function rules()
     {
-
         return [
             'name'                 => 'required',
+            'permission'           => 'required_with:permission_date',
+            'permission_date'      => 'required_with:btc_no|date_format:"d/m/Y"',
             'btc_no'               => 'required_with:btc_date',
             'btc_date'             => 'required_with:btc_no|date_format:"d/m/Y"',
             'advance_no'           => 'required_with:advance_date',
@@ -46,8 +46,11 @@ class CreateScouterRequest extends Request
             'lt_no'                => 'required_with:lt_date',
             'lt_date'              => 'required_with:lt_no|date_format:"d/m/Y"',
             'email'                => 'required|email',
-            'organization_id'      => 'required|exists:organizations,id'
+            'org_id'               => 'required|exists:organizations,id'
         ];
+
+
     }
 
 }
+

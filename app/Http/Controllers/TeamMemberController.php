@@ -56,25 +56,50 @@ class TeamMemberController extends Controller
 
     public function patchUpdate(Request $request)
     {
-        $id = $request->get('id');
-        if($id){
-            $teamMember = TeamMember::findOrFail($id);
-            if($teamMember){
-                $teamMember->f_name            = $request->get('f_name');
-                $teamMember->m_name            = $request->get('m_name');
-                $teamMember->l_name            = $request->get('l_name');
-                $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
-                $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
-                $teamMember->position          = $request->get('position');
-                $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
-                $teamMember->note              = $request->get('note');
-                $teamMember->team_id           = $request->get('team_id');
-                $teamMember->save();
-            }
+        $rules = array(
+            'f_name'        => 'required',
+            'l_name'        => 'required',
+            'dob'           => 'required|date_format:"d/m/Y"',
+            'entry_date'    => 'required|date_format:"d/m/Y"',
+            'position'      => 'required',
+            'passed_date'   => 'required|date_format:"d/m/Y"',
+            'note'          => 'max:500',
+            'team_id'       => 'required|exists:teams,id'
+        );
 
-            return redirect()->back()
-                ->with(['team_member_updated' => 'Team Member successfully updated']);
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->errors()->all()
+            );
+
+        } else {
+            $id = $request->get('id');
+            if($id){
+                $teamMember = TeamMember::findOrFail($id);
+                if($teamMember){
+                    $teamMember->f_name            = $request->get('f_name');
+                    $teamMember->m_name            = $request->get('m_name');
+                    $teamMember->l_name            = $request->get('l_name');
+                    $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
+                    $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
+                    $teamMember->position          = $request->get('position');
+                    $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
+                    $teamMember->note              = $request->get('note');
+                    $teamMember->team_id           = $request->get('team_id');
+                    $teamMember->save();
+                }
+
+                $response = array(
+                    'status'         => 'success',
+                    'msg'            => 'Team Member successfully updated successfully updated.',
+                    'teamMember'     => $teamMember
+                );
+            }
         }
-        
+        return response()->json($response);
     }
+
 }

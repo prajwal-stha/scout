@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\CreateDistrictsRequest;
 use App\Http\Requests\UpdateDistrictRequest;
 
 
@@ -40,52 +41,47 @@ class DistrictsController extends Controller
 
 
     /**
-     * @param Request $request
+     * @param CreateDistrictsRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postCreate(Request $request)
+    public function postCreate(CreateDistrictsRequest $request)
     {
 
-        if (Session::token() !== $request->get('_token')) {
+//        if (Session::token() !== $request->get('_token')) {
+//
+//            $response = array(
+//                'msg' => 'Unauthorized attempt to create districts'
+//            );
+//
+//            return response()->json($response);
+//
+//        }
+//
+//        $rules = array(
+//            'district_code' => 'required|unique:districts,district_code',
+//            'name' => 'required|unique:districts,name'
+//        );
+//
+//        $validator = Validator::make($request->all(), $rules);
+//        // process the form
+//        if ($validator->fails()) {
+//            $response = array(
+//                'status' => 'danger',
+//                'msg' => $validator->errors()->all()
+//            );
+//
+//        } else {
 
-            $response = array(
-                'msg' => 'Unauthorized attempt to create districts'
-            );
-
-            return response()->json($response);
-
-        }
-
-        $rules = array(
-            'district_code' => 'required|unique:districts,district_code',
-            'name' => 'required|unique:districts,name'
+        District::create(
+            [
+                'name'          => $request->get('name'),
+                'district_code' => $request->get('district_code'),
+            ]
         );
 
-        $validator = Validator::make($request->all(), $rules);
-        // process the form
-        if ($validator->fails()) {
-            $response = array(
-                'status' => 'danger',
-                'msg' => $validator->errors()->all()
-            );
+        return redirect()->back()
+            ->with('district_created', 'One more districts has been added.' );
 
-        } else {
-
-            $district = District::create(
-                [
-                    'name'          => $request->get('name'),
-                    'district_code' => $request->get('district_code'),
-                ]
-            );
-
-            $response = array(
-                'status' => 'success',
-                'msg' => 'One more districts has been added.',
-                'district' => $district
-            );
-        }
-
-        return response()->json($response);
     }
 
     /**
@@ -105,22 +101,43 @@ class DistrictsController extends Controller
 
 
     /**
-     * @param UpdateDistrictRequest $request
+     * @param Request $request
      * @return $this
      */
-    public function patchUpdate(UpdateDistrictRequest $request)
+    public function patchUpdate(Request $request)
     {
-        $id = $request->get('id');
 
-        if($id){
-            $district = District::findOrFail($id);
-            $input = $request->all();
+        $rules = array(
+            'district_code' => 'required|unique:districts,district_code,'.$request->get('id'),
+            'name'          => 'required|unique:districts,name,'.$request->get('id')
+        );
 
-            $district->fill($input)->save();
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->errors()->all()
+            );
 
-            return redirect()->back()
-                ->with(['district_updated' => 'District successfully updated']);
+        } else {
+            $id = $request->get('id');
+
+            if($id) {
+                $district = District::findOrFail($id);
+                $input = $request->all();
+
+                $district->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'District successfully updated.',
+                    'district' => $district
+                );
+
+            }
         }
+        return response()->json($response);
 
     }
 

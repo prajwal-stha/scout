@@ -58,18 +58,37 @@ class TeamsController extends Controller
 
     }
 
-    public function patchUpdate(UpdateTeamRequest $request){
-        $id = $request->get('id');
+    public function patchUpdate(Request $request){
 
-        if($id){
-            $team = Team::findOrFail($id);
-            $input = $request->all();
+        $rules = array(
+            'name'              => 'required|unique:teams,name,'.$request->get('id'),
+            'organization_id'   => 'required|exists:organizations,id'
+        );
 
-            $team->fill($input)->save();
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->errors()->all()
+            );
 
-            return redirect()->back()
-                ->with(['team_updated' => 'Team successfully updated']);
+        } else {
+            $id = $request->get('id');
+            if ( $id ) {
+                $team  = Team::findOrFail($id);
+                $input = $request->all();
+
+                $team->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'Team successfully updated.',
+                    'team'     => $team
+                );
+            }
         }
+        return response()->json($response);
 
     }
 

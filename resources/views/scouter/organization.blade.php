@@ -3,7 +3,6 @@
 
 @section('content')
 
-
     @if(Session::has('no_org'))
 
         <div class="alert alert-danger alert-dismissable">
@@ -35,16 +34,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="{{ url('/') }}"><i class="fa fa-institution"></i> Organization Detail</a></li>
-                        <li><a href="{{ url('/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
-                        <li><a href="{{ url('/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
-                        <li><a href="{{ url('scouter/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
-                        <li><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
-                        <li><a href="{{ url('/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
-                    </ul>
-                </div><!-- /.box-body -->
+                @include('partials/nav')
             </div><!-- /. box -->
 
         </div>
@@ -244,17 +234,16 @@
     <script>
         $("#registration_date").inputmask();
         $("#chairman-mobile").inputmask("999-999-9999",{placeholder:"#"});
-        $("#organization-create-form").submit(function() {
-            if ($(this).find('.help-block').length > 0) {
-                var scrolto = $('#organization-create-form').find('.help-block:first').parent();
-                $('html,body').animate({
-                    scrollTop: $(scrolto).offset().top}, 2000
-                );
-                return false;
-            }
-        });
+//        $("#organization-create-form").submit(function() {
+//            if ($(this).find('.help-block').length > 0) {
+//                var scrolto = $('#organization-create-form').find('.help-block:first').parent();
+//                $('html,body').animate({
+//                    scrollTop: $(scrolto).offset().top}, 2000
+//                );
+//                return false;
+//            }
+//        });
         $( "#registration_date" ).datepicker({
-//            startDate: new Date("October 13, 1930 11:13:00"),
             format:'dd/mm/yyyy',
             changeMonth: true,
             changeYear: true,

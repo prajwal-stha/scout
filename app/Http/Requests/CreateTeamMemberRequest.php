@@ -32,6 +32,7 @@ class CreateTeamMemberRequest extends Request
         return [
             'f_name'        => 'required',
             'l_name'        => 'required',
+            'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"',
             'position'      => 'required',
             'passed_date'   => 'required|date_format:"d/m/Y"',

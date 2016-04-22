@@ -27,7 +27,7 @@
         </div>
     @endif
 
-    @if (count($errors) > 0)
+    @if ($errors->has(0))
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <ul>
@@ -41,6 +41,7 @@
     <div class="modal" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <div class="alert-placeholder"></div>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -73,6 +74,7 @@
 
         <div class="modal" id="teamMemberModal" tabindex="-1" role="dialog" aria-labelledby="teamMemberModalLabel">
             <div class="modal-dialog" role="document">
+                <div class="alert-placeholder-member"></div>
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -163,16 +165,7 @@
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="{{ url('/') }}"><i class="fa fa-institution"></i> Organization Detail</a></li>
-                        <li><a href="{{ url('/scarf') }}"><i class="fa fa-lemon-o"></i> Scarf Detail</a></li>
-                        <li><a href="{{ url('/committe') }}"><i class="fa fa-users"></i> Committe Member</a></li>
-                        <li><a href="{{ url('scouter/scouter') }}"><i class="fa fa-user-plus"></i> Scouter Detail</a></li>
-                        <li class="active"><a href="{{ url('/team') }}"><i class="fa fa-users"></i> Teams</a></li>
-                        <li><a href="{{ url('/registration') }}"><i class="fa fa-calculator"></i> Registration Cost Detail</a></li>
-                    </ul>
-                </div><!-- /.box-body -->
+                @include('partials/nav')
             </div><!-- /. box -->
 
 
@@ -190,7 +183,7 @@
                             {{ Form::open(['url' => 'team/create', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
 
                                 <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
-                                <div class="form-group">
+                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                     {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
@@ -238,7 +231,7 @@
                                 @if(isset($team))
                                     <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
                                 @endif
-                                <div class="form-group">
+                                <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 
                                         {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
                                         <div class="col-sm-3">
@@ -271,7 +264,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
 
                                         {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
 
@@ -288,7 +281,7 @@
 
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('entry_date') ? ' has-error' : '' }}">
 
                                         {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
 
@@ -304,7 +297,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
 
                                         {{ Form::label('position', 'Current Level', array( 'class' => 'control-label col-sm-3')) }}
 
@@ -324,7 +317,7 @@
 
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('passed_date') ? ' has-error' : '' }}">
 
                                         {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
 
@@ -341,7 +334,7 @@
                                     </div>
 
 
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
 
                                         {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
                                         <div class="col-sm-9">
@@ -410,6 +403,7 @@
 
     @parent
     <script>
+        var index_team_url = "<?php echo url('scouter/team'); ?>";
         var update_team_url = "<?php echo url('team/update'); ?>";
         var delete_team_url = "<?php echo url('team/remove'); ?>";
         var update_teamMember_url = "<?php echo url('member/update'); ?>";

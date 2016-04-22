@@ -27,11 +27,6 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'member', 'TeamMemberController' );
 
 
-//    Route::get('districts/getAllDistricts', function(){
-//        $district = App\District::all();
-//        return view('partials.districts')->withDistrict($district);
-//    });
-
 
     Route::get('/confirm/{token?}', function($token){
         $user = App\User::whereToken($token)->firstOrFail();
@@ -42,7 +37,5 @@ Route::group( ['middleware' => ['web']], function () {
     });
 
     Route::controller( '/', 'ScouterController' );
-
-
 
 });

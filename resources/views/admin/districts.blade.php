@@ -12,19 +12,19 @@
     <section class="content">
 
         <!-- Small boxes (Stat box) -->
-        @if (count($errors) > 0)
+        {{--@if (count($errors) > 0)--}}
 
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-ban"></i> Whoops!</h4>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+            {{--<div class="alert alert-danger alert-dismissable">--}}
+                {{--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>--}}
+                {{--<h4><i class="icon fa fa-ban"></i> Whoops!</h4>--}}
+                {{--<ul>--}}
+                    {{--@foreach ($errors->all() as $error)--}}
+                        {{--<li>{{ $error }}</li>--}}
+                    {{--@endforeach--}}
+                {{--</ul>--}}
+            {{--</div>--}}
 
-        @endif
+        {{--@endif--}}
 
         @if(Session::has('district_updated'))
 
@@ -38,6 +38,7 @@
         <div class="modal" id="districtModal" tabindex="-1" role="dialog" aria-labelledby="districtModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                    <div id="modal-alert-placeholder"></div>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
@@ -87,13 +88,23 @@
                     <form role="form" action="{{ url('districts/create') }}" method="post" id="district-create-form">
                         {{ csrf_field() }}
                         <div class="box-body">
-                            <div id="form-name" class="form-group">
+                            <div id="form-name" class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label for="district-name">District Name</label>
                                 <input type="text" class="form-control" id="district-name" placeholder="District Name" name="name" value="{{ old('name') }}">
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div id="form-code" class="form-group">
+                            <div id="form-code" class="form-group{{ $errors->has('district_code') ? ' has-error' : '' }}">
                                 <label for="district-code">District Code</label>
                                 <input type="text" class="form-control" id="district-code" placeholder="District Code" name="district_code" value="{{ old('district_code') }}">
+                                @if ($errors->has('district_code'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('district_code') }}</strong>
+                                    </span>
+                                @endif
                             </div>
 
                         </div><!-- /.box-body -->
@@ -113,6 +124,7 @@
                         <div class="box-header">
                             <h3 class="box-title">All Districts</h3>
                         </div><!-- /.box-header -->
+
                         <div class="box-body table-list-districts">
                             @include('partials.districts')
                         </div><!-- /.box-body -->
@@ -133,11 +145,10 @@
 
     <script>
 
-        var update_url = "<?php echo url('districts/update'); ?>";
-        var delete_url = "<?php echo url('districts/delete'); ?>";
-        var remove_url = "<?php echo url('districts/remove'); ?>";
-        var index_url = "<?php echo url('districts'); ?>";
-        var district_url = "<?php echo route('all-districts'); ?>";
+        var update_district_url = "<?php echo url('districts/update'); ?>";
+        var delete_district_url = "<?php echo url('districts/delete'); ?>";
+        var remove_district_url = "<?php echo url('districts/remove'); ?>";
+        var index_district_url = "<?php echo url('districts'); ?>";
 
         $('#table-districts').DataTable({
             "paging": true,

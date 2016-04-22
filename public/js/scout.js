@@ -30,42 +30,42 @@ jQuery(document).ready(function() {
     });
 
 
-    $('#district-create-form').on('submit', function (e) {
-        e.preventDefault();
-
-        $.post(
-            $(this).prop('action'),
-            {
-                "_token": $(this).find('input[name=_token]').val(),
-                "name": $('#district-name').val(),
-                "district_code": $('#district-code').val()
-            },
-            function (data) {
-
-                if (data.status == 'success') {
-                    console.log(data);
-
-                    var successMsg = returnSuccess(data);
-                    $('#alert-placeholder').html(successMsg);
-                    //var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
-                    //    '<a class="updateDistrict" data-id="' + data.district.id + '" href="' + update_url + '/' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
-                    //    '<a class="deleteDistrict" data-id="' + data.district.id + '" href="' + delete_url + '/' + data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
-                    //$('#list-districts').prepend(row);
-                    $('#table-districts').load(index_url + ' #list-districts' );
-                    //$('#table-districts').load(district_url + ' #list-districts' );
-
-                    $('#district-create-form').trigger('reset');
-
-                } else {
-
-                    var errorMsg = returnAlert(data);
-                    $('#alert-placeholder').html(errorMsg);
-                }
-            },
-            'json'
-        );
-        return false;
-    });
+    //$('#district-create-form').on('submit', function (e) {
+    //    e.preventDefault();
+    //
+    //    $.post(
+    //        $(this).prop('action'),
+    //        {
+    //            "_token": $(this).find('input[name=_token]').val(),
+    //            "name": $('#district-name').val(),
+    //            "district_code": $('#district-code').val()
+    //        },
+    //        function (data) {
+    //
+    //            if (data.status == 'success') {
+    //                console.log(data);
+    //
+    //                var successMsg = returnSuccess(data);
+    //                $('#alert-placeholder').html(successMsg);
+    //                //var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
+    //                //    '<a class="updateDistrict" data-id="' + data.district.id + '" href="' + update_url + '/' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
+    //                //    '<a class="deleteDistrict" data-id="' + data.district.id + '" href="' + delete_url + '/' + data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
+    //                //$('#list-districts').prepend(row);
+    //                $('#table-districts').load(index_url + ' #list-districts' );
+    //                //$('#table-districts').load(district_url + ' #list-districts' );
+    //
+    //                $('#district-create-form').trigger('reset');
+    //
+    //            } else {
+    //
+    //                var errorMsg = returnAlert(data);
+    //                $('#alert-placeholder').html(errorMsg);
+    //            }
+    //        },
+    //        'json'
+    //    );
+    //    return false;
+    //});
 
     $('#delete-submit').on('click', function (event) {
 
@@ -81,18 +81,6 @@ jQuery(document).ready(function() {
             closeOnConfirm: false,
             closeOnCancel: false
         },
-            //function () {
-            //    $.ajax({
-            //        url : remove_url
-            //    }).done(function(data) {
-            //
-            //        swal("Deleted!", "Your file was successfully deleted!", "success");
-            //        row.remove();
-            //
-            //    }).error(function(data) {
-            //        swal("Oops", "We couldn't connect to the server!", "error");
-            //    });
-            //});
         function (isConfirm) {
             if (isConfirm) {
                 swal("Deleted!", "The record has been deleted.", "success");
@@ -107,7 +95,7 @@ jQuery(document).ready(function() {
     $('.updateDistrict').on('click', function (e) {
         e.preventDefault();
         var id = $(this).attr('data-id');
-        var url = update_url + '/' + id;
+        var url = update_district_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
                 $('#update-district-name').val(data.district.name);
@@ -121,6 +109,68 @@ jQuery(document).ready(function() {
 
     $('#modal-submit').on('click', function () {
         $('#district-update-form').submit();
+    });
+
+    $('#district-update-form').on('submit', function(e){
+        e.preventDefault();
+        console.log($(this).prop('action'));
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-district-id').val(),
+                "name": $('#update-district-name').val(),
+                "district_code": $('#update-district-code').val()
+            },
+            dataType: "json"
+        })
+        .done(function( data ) {
+            if(data.status == 'success' ){
+                var successMsg = returnSuccess(data);
+
+                $('#districtModal').modal('hide');
+                window.location.href = index_district_url;
+            }else {
+                var errorMsg = returnAlert(data);
+                $('#modal-alert-placeholder').html(errorMsg);
+            }
+        });
+
+        //$.post(
+        //    $(this).prop('action'),
+        //    {
+        //        "_token": $(this).find('input[name=_token]').val(),
+        //        "id": $('#update-district-id').val(),
+        //        "name": $('#update-district-name').val(),
+        //        "district_code": $('#update-district-code').val()
+        //    },
+        //    function (data) {
+        //
+        //        if (data.status == 'success') {
+        //            console.log(data);
+        //
+        //            //var successMsg = returnSuccess(data);
+        //            //$('#alert-placeholder').html(successMsg);
+        //            //var row = '<tr><td class="check-row"><input name="action_to[]" type="checkbox" value="' + data.district.id + '"></td><td>' + data.district.district_code + '</td><td> ' + data.district.name + '</td><td>' +
+        //            //    '<a class="updateDistrict" data-id="' + data.district.id + '" href="' + update_url + '/' + data.district.id + '"><i class="fa fa-pencil"></i></a> | ' +
+        //            //    '<a class="deleteDistrict" data-id="' + data.district.id + '" href="' + delete_url + '/' + data.district.id + '"><i class="fa fa-trash-o"></i></a></td></tr>';
+        //            //$('#list-districts').prepend(row);
+        //            $('#table-districts').load(index_url + ' #list-districts' );
+        //            //$('#table-districts').load(district_url + ' #list-districts' );
+        //
+        //            $('#district-create-form').trigger('reset');
+        //
+        //        } else {
+        //
+        //            var errorMsg = returnAlert(data);
+        //            $('#modal-alert-placeholder').html(errorMsg);
+        //        }
+        //    },
+        //    'json'
+        //);
+        //return false;
+
     });
 
 
@@ -144,14 +194,15 @@ jQuery(document).ready(function() {
         },
         function () {
             $.ajax({
-                url: delete_url + '/' + record_id
+                url: delete_district_url + '/' + record_id
             }).done(function (data) {
 
                 swal("Deleted!", "Your record was successfully deleted!", "success");
-                if(rowIndex == 1){
-                    $('#remove_many_districts').remove();
-                }
-                row.remove();
+                //if(rowIndex == 1){
+                //    $('#remove_many_districts').remove();
+                //}
+                //row.remove();
+                window.location.href = index_district_url;
 
             }).error(function (data) {
                 swal("Oops", "We couldn't delete your record!", "error");
@@ -164,8 +215,8 @@ jQuery(document).ready(function() {
     $('.deleteMember').on("click", function (e) {
 
         var record_id = $(this).attr('data-id');
-        var row = $(this).closest('tr');
-        var rowIndex = $('#table-member tr').index(row);
+        var row       = $(this).closest('tr');
+        var rowIndex  = $('#table-member tr').index(row);
 
         e.preventDefault();
         swal({
@@ -316,6 +367,34 @@ jQuery(document).ready(function() {
         $('.update-member-form').submit();
     });
 
+    $('.update-member-form').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-member-id').val(),
+                "f_name": $('#f-name').val(),
+                "m_name": $('#m-name').val(),
+                "l_name": $('#l-name').val(),
+                "organization_id": $('#update-member-org-id').val()
+            },
+            dataType: "json"
+        })
+        .done(function (data) {
+            if (data.status == 'success') {
+                var successMsg = returnSuccess(data);
+
+                $('#memberModal').modal('hide');
+                window.location.href = index_member_url;
+            } else {
+                var errorMsg = returnAlert(data);
+                $('.alert-placeholder').html(errorMsg);
+            }
+        });
+    });
+
     $('.updateTeam').on('click', function (e) {
 
         e.preventDefault();
@@ -323,7 +402,6 @@ jQuery(document).ready(function() {
         var url = update_team_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
-                console.log(data);
                 $('#team-name').val(data.team.name);
                 $('#update-team-org-id').val(data.team.organization_id);
                 $('#update-team-id').val(id);
@@ -336,6 +414,35 @@ jQuery(document).ready(function() {
     $('#modal-team-submit').on('click', function () {
         $('.update-team-form').submit();
     });
+
+
+    $('.update-team-form').on('submit', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-team-id').val(),
+                "name": $('#team-name').val(),
+                "organization_id": $('#update-team-org-id').val()
+            },
+            dataType: "json"
+        })
+        .done(function (data) {
+            if (data.status == 'success') {
+                var successMsg = returnSuccess(data);
+
+                $('#teamModal').modal('hide');
+                window.location.href = index_team_url;
+            } else {
+                var errorMsg = returnAlert(data);
+                $('.alert-placeholder').html(errorMsg);
+            }
+        });
+    });
+
 
     $('.updateTeamMember').on('click', function (e) {
 
@@ -363,6 +470,38 @@ jQuery(document).ready(function() {
         $('.update-teamMember-form').submit();
     });
 
+    $('.update-teamMember-form').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#teamMemberId').val(),
+                "f_name": $('#f-name').val(),
+                "m_name": $('#m-name').val(),
+                "l_name": $('#l-name').val(),
+                "dob": $('#dob').val(),
+                "entry_date": $('#entry_date').val(),
+                "position": $('#position').val(),
+                "passed_date": $('#passed_date').val(),
+                "note": $('#note').val(),
+            },
+            dataType: "json"
+        })
+        .done(function (data) {
+            if (data.status == 'success') {
+                var successMsg = returnSuccess(data);
+
+                $('#teamMemberModal').modal('hide');
+                window.location.href = index_team_url;
+            } else {
+                var errorMsg = returnAlert(data);
+                $('.alert-placeholder-member').html(errorMsg);
+            }
+        });
+
+    });
 
     $('.deleteTeamMember').on("click", function (e) {
 
@@ -401,6 +540,7 @@ jQuery(document).ready(function() {
     });
 
     $('#create_team_member').on('click', function(e){
+
         e.preventDefault();
         if(!$('#team_id').val()){
             sweetAlert("Error...", "Please create team first!", "error");
@@ -409,6 +549,7 @@ jQuery(document).ready(function() {
             $(this).unbind('click').click();
         }
     });
+
 });
 
 
