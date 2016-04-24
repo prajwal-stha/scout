@@ -36,6 +36,10 @@ Route::group( ['middleware' => ['web']], function () {
         return redirect('/login');
     });
 
+    Route::get('test', function(){
+        return view('scouter/print');
+    });
+
     Route::controller( '/', 'ScouterController' );
 
 });

@@ -27,9 +27,18 @@ use App\Rate;
 
 use DB;
 
+use PDF;
+
+/**
+ * Class ScouterController
+ * @package App\Http\Controllers
+ */
 class ScouterController extends Controller
 {
 
+    /**
+     * ScouterController constructor.
+     */
     public function __construct(){
 
         $this->middleware('auth', ['except' => 'logout']);
@@ -37,6 +46,9 @@ class ScouterController extends Controller
     }
 
 
+    /**
+     * @return $this
+     */
     public function getIndex(){
         $data['district'] = District::all();
         $data['title']    = 'Nepal Scout - Organizations';
@@ -48,6 +60,9 @@ class ScouterController extends Controller
 
     }
 
+    /**
+     * @return $this
+     */
     public function getScarf(){
         $data['title']   = 'Nepal Scout - Scarf';
         if(session()->has('org_id')){
@@ -60,6 +75,9 @@ class ScouterController extends Controller
         
     }
 
+    /**
+     * @return $this
+     */
     public function getCommitte()
     {
         $data['title']  = 'Nepal Scout - Member';
@@ -75,12 +93,15 @@ class ScouterController extends Controller
         return view('scouter.member')->with($data);
     }
 
+    /**
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function getScouter()
     {
         $data['title'] = 'Nepal Scout - Scouter';
         if(session()->has('org_id')) {
             $data['org_id']        = session()->get('org_id');
-            if(Member::where( 'organization_id', session()->get('org_id'))->count() >= 3) {
+            if(Member::where( 'organization_id', session()->get('org_id'))->distinct()->count() >= 3) {
 
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
 
@@ -101,13 +122,16 @@ class ScouterController extends Controller
         
     }
 
+    /**
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function getLeadScouter()
     {
         $data['title'] = 'Nepal Scout - Scouter';
 
         if(session()->has('org_id')) {
             $data['org_id'] = session()->get('org_id');
-            if (Member::where('organization_id', session()->get('org_id'))->count() >= 3) {
+            if (Member::where('organization_id', session()->get('org_id'))->distinct()->count() >= 3) {
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
             }else{
 
@@ -128,6 +152,10 @@ class ScouterController extends Controller
 
     }
 
+    /**
+     * @param null $teamId
+     * @return $this
+     */
     public function getTeam($teamId = null)
     {
         $data['title'] = 'Nepal Scout - Scouter';
@@ -156,6 +184,9 @@ class ScouterController extends Controller
         
     }
 
+    /**
+     * @return $this
+     */
     public function getRegistration()
     {
         $data['title']      = 'Registration Cost Detail';
@@ -163,7 +194,6 @@ class ScouterController extends Controller
 
         if(session()->has('org_id')) {
             $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
-//            $team = Team::where('organization_id', session()->get('org_id'))->get();
             $data['scout'] = intval(DB::table('teams')
                 ->join('team_members', function ($join) {
                     $join->on('teams.id', '=', 'team_members.team_id')
@@ -182,6 +212,10 @@ class ScouterController extends Controller
     }
     
     // Create assistant scouter
+    /**
+     * @param CreateScouterRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCreate(CreateScouterRequest $request)
     {
 
@@ -213,6 +247,10 @@ class ScouterController extends Controller
 
 
     // create lead scouter
+    /**
+     * @param CreateScouterRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCreateLeadScouter(CreateScouterRequest $request)
     {
         if($request->has('org_id')) {
@@ -241,6 +279,11 @@ class ScouterController extends Controller
     }
 
 
+    /**
+     * @param UpdateScouterRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function patchEdit(UpdateScouterRequest $request, $id)
     {
         if($id){
@@ -267,6 +310,11 @@ class ScouterController extends Controller
 
     }
 
+    /**
+     * @param UpdateScouterRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function patchEditLead(UpdateScouterRequest $request, $id)
     {
 
@@ -293,9 +341,36 @@ class ScouterController extends Controller
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function getPrint()
     {
-        dd('exit');
-        
+        $data['title']  = 'Nepal Scout - Print';
+        if(session()->has('org_id')) {
+
+            $data['org_id'] = session()->get('org_id');
+            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+            $data['district']   = DB::table('districts')
+                ->join('organizations', function ($join) {
+                    $join->on('organizations.district_id', '=', 'districts.id')
+                        ->where('organizations.id', '=', session()->get('org_id'));
+                })
+                ->selectRaw('districts.name as d_name, organizations.name as o_name')
+                ->get();
+            $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+            $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+            $data['team_member'] = DB::table('teams')
+                ->join('team_members', function ($join) {
+                    $join->on('teams.id', '=', 'team_members.team_id')
+                        ->where('teams.organization_id', '=', session()->get('org_id'));
+                })
+                ->get();
+
+
+            $pdf = PDF::loadView('scouter.print', $data);
+            return $pdf->download('scouter.pdf');
+        }
     }
+
 }

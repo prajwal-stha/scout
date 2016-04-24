@@ -93,7 +93,7 @@
 
 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Committee Member Detail</h3>

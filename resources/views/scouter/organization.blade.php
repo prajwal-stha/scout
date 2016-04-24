@@ -216,7 +216,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
+                            <button type="submit" class="btn btn-primary pull-right">Save</button>
                         </div>
                     </div>
                 </form>
@@ -234,15 +234,15 @@
     <script>
         $("#registration_date").inputmask();
         $("#chairman-mobile").inputmask("999-999-9999",{placeholder:"#"});
-//        $("#organization-create-form").submit(function() {
-//            if ($(this).find('.help-block').length > 0) {
-//                var scrolto = $('#organization-create-form').find('.help-block:first').parent();
-//                $('html,body').animate({
-//                    scrollTop: $(scrolto).offset().top}, 2000
-//                );
-//                return false;
-//            }
-//        });
+        $("#organization-create-form").submit(function() {
+            if ($(this).find('.help-block').length > 0) {
+                var scrolto = $('#organization-create-form').find('.help-block:first').parent();
+                $('html,body').animate({
+                    scrollTop: $(scrolto).offset().top}, 2000
+                );
+                return false;
+            }
+        });
         $( "#registration_date" ).datepicker({
             format:'dd/mm/yyyy',
             changeMonth: true,

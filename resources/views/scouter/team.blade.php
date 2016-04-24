@@ -352,7 +352,7 @@
                                     </div>
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary" id="create_team_member"><i class="ion-plus-round"></i> Add Member</button>
+                                        <button type="submit" class="btn btn-primary" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
                                         {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                                     </div>
                                 {{ Form::close() }}

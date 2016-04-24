@@ -22,16 +22,6 @@
     <link rel="stylesheet" href="{{ asset( 'css/skins/_all-skins.min.css' ) }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">
-    <!-- Morris chart -->
-    {{--<link rel="stylesheet" href="{{ asset( 'morris/morris.css' ) }}">--}}
-    <!-- jvectormap -->
-    {{--<link rel="stylesheet" href="{{ asset('jvectormap/jquery-jvectormap-1.2.2.css' ) }}">--}}
-    <!-- Date Picker -->
-    {{--<link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">--}}
-    <!-- Daterange picker -->
-    {{--<link rel="stylesheet" href="{{ asset( 'daterangepicker/daterangepicker-bs3.css' ) }}">--}}
-    <!-- bootstrap wysihtml5 - text editor -->
-    {{--<link rel="stylesheet" href="{{ asset( 'bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' ) }}">--}}
 
 
 
@@ -142,20 +132,21 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
-                <li>
-                    <a href="javascript:;">
+                <li{!! Request::path() == 'admin/form' ? ' class="active"': '' !!}>
+                    <a href=" {{ url('admin/form') }}">
                         <i class="fa fa-envelope"></i> <span>Form Requests</span>
                         <small class="label pull-right bg-yellow">10</small>
+
                     </a>
                 </li>
 
-                <li>
+                <li{!! Request::path() == 'rate' ? ' class="active"' : '' !!}>
                     <a href="{{ url('rate') }}">
                         <i class="fa fa-calculator"></i> <span>Rates</span>
                     </a>
                 </li>
 
-                <li>
+                <li{!! Request::path() == 'districts' ? ' class="active"': '' !!}>
                     <a href="{{ url('districts') }}">
                         <i class="fa fa-compass"></i> <span>Districts</span>
                     </a>

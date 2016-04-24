@@ -17,7 +17,7 @@
             </div><!-- /. box -->
 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             @if(Session::has('district_updated'))
 
                 <div class="alert alert-success alert-dismissable">
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary btn-lg pull-right">Save</button>
+                            <button type="submit" class="btn btn-primary pull-right">Save</button>
                         </div>
                     </div>
                 </form>
