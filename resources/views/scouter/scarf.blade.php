@@ -55,7 +55,7 @@
                 @endif
                     <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="box-body">
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('background_colour') ? ' has-error' : '' }}">
                             {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
                                 {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
@@ -85,7 +85,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary pull-right">Save</button>
+                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-refresh"></i> Save</button>
                         </div>
                     </div>
                 </form>

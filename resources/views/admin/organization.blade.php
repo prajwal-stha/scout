@@ -1,61 +1,36 @@
-@extends('layouts.scouter')
-
+@extends('layouts.admin')
 
 @section('content')
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>{{ $organization->name }}</li>
+            <li class="active">Organizations</li>
 
-    @if(Session::has('no_org'))
+        </ol>
+    </section>
 
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Error!</h4>
-            {{ Session::get('no_org') }}
-        </div>
+    <section class="content">
+        @if(Session::has('org_update'))
 
-    @endif
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('org_update') }}
+            </div>
 
+        @endif
 
-    @if(Session::has('org_update'))
-
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('org_update') }}
-        </div>
-
-    @endif
-
-    <div class="row">
-        <div class="col-md-3">
 
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Registration</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                @include('partials/nav')
-            </div><!-- /. box -->
-
-        </div>
-
-        <div class="col-md-9">
-            <!-- general form elements -->
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Organization Detail</h3>
+                    <h3 class="box-title"><strong>{{ $organization->name }}</strong></h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
-                @if(isset($org_id))
+                {{ Form::model($organization, ['url' => ['admin/organization', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
+                    <input type="hidden" name="id" value="{{ $organization->id }}">
 
-                    {{ Form::model($organization, ['url' => ['organizations/edit', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
-                    <input type="hidden" name="id" value="{{ $org_id }}">
-                @else
-
-                    {{ Form::open(['url' => 'organizations/create', 'class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
-
-                @endif
                     <div class="box-body">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             {{ Form::label('organization-name', 'Name of Organization *', array( 'class' => 'control-label col-sm-3')) }}
@@ -215,21 +190,54 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('background_colour') ? ' has-error' : '' }}">
+                            {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4">
+                                {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
+                                @if ($errors->has('background_colour'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('background_colour') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="form-group{{ $errors->has('border_colour') ? ' has-error' : '' }}">
+                            {{ Form::label('border-colour', 'Border Colour *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4">
+
+                                {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour')) }}
+
+                                @if ($errors->has('border_colour'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('border_colour') }}</strong>
+                                </span>
+                                @endif
+
+                            </div>
+
+                        </div>
+
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-refresh"></i> Save</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
+                            {{ link_to('admin/committee/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                         </div>
                     </div>
                 {{ Form::close() }}
             </div><!-- /.box -->
 
         </div>
-    </div>
+
+    </section>
 
 @stop
+
 
 @section('scripts')
 
     @parent
+
     <script src="{{  asset('js/parallax.js') }}"></script>
     <script>
         $("#registration_date").inputmask();
@@ -252,5 +260,6 @@
             dy:true,
         });
     </script>
+
 
 @stop

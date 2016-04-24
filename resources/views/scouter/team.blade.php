@@ -204,7 +204,7 @@
                                     @endif
                                 </div>
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary pull-right" id="team-submit">Save</button>
+                                    <button type="submit" class="btn btn-primary pull-right" id="team-submit"><i class="fa fa-plus-circle"></i> Add Team</button>
                                 </div>
                             {{ Form::close() }}
 

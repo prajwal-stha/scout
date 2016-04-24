@@ -237,7 +237,7 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary ">Save</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
                             {{ link_to('scouter/team', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                         </div>
                     {{ Form::close() }}

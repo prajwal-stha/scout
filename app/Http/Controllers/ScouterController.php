@@ -140,8 +140,7 @@ class ScouterController extends Controller
             }
 
             if (Scouter::where('organization_id', session()->get('org_id'))
-                    ->where('is_lead', true)->count() > 0
-            ) {
+                    ->where('is_lead', true)->count() > 0) {
                 $data['leadScouter'] = Scouter::where('organization_id', session()->get('org_id'))
                     ->where('is_lead', 1)
                     ->first();
@@ -204,8 +203,6 @@ class ScouterController extends Controller
             $data['total']  = $data['scouter'] + $data['scout'] + $data['member'];
 
         }
-
-
 
         return view('scouter.registration')->with($data);
         

@@ -27,6 +27,6 @@
     </table>
 
     <div class="btn-toolbar list-toolbar">
-        <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">Delete</button>
+        <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit"><i class="fa fa-trash-o"></i> Delete</button>
     </div>
 </form>

@@ -1,0 +1,207 @@
+@extends('layouts.admin')
+
+@section('content')
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>{{ $organization->name }}</li>
+            <li class="active">Lead-Scouter</li>
+
+        </ol>
+    </section>
+
+    <section class="content">
+        {{--<div class="row">--}}
+            {{--<div class="col-md-9">--}}
+                <!-- general form elements -->
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Lead Scouter Detail</h3>
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="box-body">
+
+                        {{ Form::model($leadScouter, ['url' => ['admin/edit-lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-4')) }}
+                                        <div class="col-sm-6">
+                                            {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
+                                            @if ($errors->has('name'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('name') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        {{ Form::label('lead_email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
+
+                                        <div class="col-sm-6">
+                                            {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
+                                            @if ($errors->has('lemail'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group{{ $errors->has('permission') || $errors->has('permission_date') ? ' has-error' : '' }}">
+
+                                        {{ Form::label('lead_perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                        <div class="col-sm-3">
+                                            {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'lead_perm_letter_no')) }}
+                                            @if ($errors->has('permission'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('permission') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'lead_perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            @if ($errors->has('permission_date'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('permission_date') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('btc_no') || $errors->has('btc_date') ? ' has-error' : '' }}">
+
+                                        {{ Form::label('lead_btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                        <div class="col-sm-3">
+                                            {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'lead_btc_no')) }}
+                                            @if ($errors->has('btc_no'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('btc_no') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{ Form::text('lead_btc_date', null, array('class' => 'form-control date', 'id' => 'lead_btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            @if ($errors->has('btc_date'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('btc_date') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('advance_no') || $errors->has('advance_date') ? ' has-error' : '' }}">
+
+                                        {{ Form::label('lead_advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                        <div class="col-sm-3">
+                                            {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'lead_advance_no')) }}
+
+                                            @if ($errors->has('advance_no'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('advance_no') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'lead_advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            @if ($errors->has('advance_date'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('advance_date') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('alt_no') || $errors->has('alt_date') ? ' has-error' : '' }}">
+
+                                        {{ Form::label('lead_alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                        <div class="col-sm-3">
+
+                                            {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'lead_alt_no')) }}
+                                            @if ($errors->has('alt_no'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('alt_no') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                            {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'lead_alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            @if ($errors->has('alt_date'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('alt_date') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group{{ $errors->has('lt_no') || $errors->has('lt_date')? ' has-error' : '' }}">
+
+                                        {{ Form::label('lead_lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+
+                                        <div class="col-sm-3">
+                                            {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lead_lt_no')) }}
+                                            @if ($errors->has('lt_no'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('lt_no') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-sm-3">
+                                            {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lead_lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                            @if ($errors->has('lt_date'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('lt_date') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
+                                {{ link_to('admin/scouter/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                            </div>
+
+                        {{ Form::close() }}
+                    </div>
+
+                </div><!-- /.box -->
+
+            {{--</div>--}}
+        {{--</div>--}}
+
+    </section>
+
+
+
+@stop
+
+
+@section('scripts')
+
+    @parent
+
+
+
+@stop

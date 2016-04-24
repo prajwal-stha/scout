@@ -112,7 +112,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary" id="create-submit">Submit</button>
+                            <button type="submit" class="btn btn-primary" id="create-submit"><i class="fa fa-refresh"></i> Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->

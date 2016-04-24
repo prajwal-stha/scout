@@ -216,7 +216,7 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary ">Save</button>
+                        <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
                         {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                     </div>
 
@@ -227,7 +227,6 @@
 
         </div>
     </div>
-    </div>
 
 @stop
 
@@ -235,6 +234,7 @@
 
     @parent
     <script>
+        $(".date").inputmask();
         $( ".date" ).datepicker({
             format:'dd/mm/yyyy',
             changeMonth: true,

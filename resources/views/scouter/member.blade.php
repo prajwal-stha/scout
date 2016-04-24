@@ -142,7 +142,7 @@
 
                         <div class="box-footer">
 
-                            <button type="submit" class="btn btn-primary pull-left" id="member-submit">Save</button>
+                            <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i class="fa fa-refresh"></i> Save</button>
                             {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                             {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}
 
@@ -182,7 +182,7 @@
 
                                 </table>
                                 <div class="btn-toolbar list-toolbar">
-                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-member">Delete</button>
+                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-member"><i class="fa fa-trash-o"></i> Delete</button>
                                 </div>
                             </form>
                         </div>

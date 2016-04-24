@@ -36,15 +36,15 @@
                                 </thead>
                                 <tbody id="form-requests">
 
-                                    @foreach( $organizations as $value)
-                                        <tr>
-                                            <td>{{ $value->name }} </td>
-                                            <td>
-                                                <a href="{{ url('admin/view-form', [$value->id]) }}"><i class="fa fa-eye"></i></a> |
-                                                <i class="fa fa-print"></i>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                @foreach( $organizations as $value)
+                                    <tr>
+                                        <td><a class="team-name" href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a> </td>
+                                        <td>
+                                            <a href="{{ url('admin/view-organization', [$value->id]) }}"><i class="fa fa-eye"></i></a>  |
+                                            <i class="fa fa-print"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                                 </tbody>
 
@@ -56,6 +56,7 @@
                 </div><!-- /.box -->
 
             </div>
+        </div>
     </section>
 
 
