@@ -292,4 +292,10 @@ class ScouterController extends Controller
                 ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
         }
     }
+
+    public function getPrint()
+    {
+        dd('exit');
+        
+    }
 }
