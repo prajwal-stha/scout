@@ -12,6 +12,18 @@
 
     @endif
 
+
+    @if(Session::has('member_not_filled'))
+
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('member_not_filled') }}
+        </div>
+
+    @endif
+
+
     @if ($errors->has(0))
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -39,19 +51,21 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        {{ Form::label('f-name', 'First Name *') }}
-                        {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                        {{ Form::label('f_name', 'First Name *') }}
+                        {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                        <span class="error-message"></span>
                     </div>
                     <div class="form-group">
-                        {{ Form::label('m-name', 'Middle Name') }}
-                        {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                        {{ Form::label('m_name', 'Middle Name') }}
+                        {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                        <span class="error-message"></span>
                     </div>
 
                     <div class="form-group">
-                        {{ Form::label('l-name', 'Last Name *') }}
-                        {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                        {{ Form::label('l_name', 'Last Name *') }}
+                        {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                        <span class="error-message"></span>
                     </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -129,7 +143,8 @@
                         <div class="box-footer">
 
                             <button type="submit" class="btn btn-primary pull-left" id="member-submit">Save</button>
-                            <button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>
+                            {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                            {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}
 
                         </div>
 

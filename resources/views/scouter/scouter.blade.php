@@ -237,7 +237,8 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
+                            <button type="submit" class="btn btn-primary ">Save</button>
+                            {{ link_to('scouter/team', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                         </div>
                     {{ Form::close() }}
                     </div>

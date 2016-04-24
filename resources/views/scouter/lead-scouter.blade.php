@@ -122,16 +122,16 @@
                                     {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'lead_btc_no')) }}
                                     @if ($errors->has('btc_no'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('btc_no') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('btc_no') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
                                     {{ Form::text('lead_btc_date', null, array('class' => 'form-control date', 'id' => 'lead_btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('btc_date'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('btc_date') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('btc_date') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
 
@@ -147,8 +147,8 @@
 
                                     @if ($errors->has('advance_no'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('advance_no') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('advance_no') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
@@ -156,8 +156,8 @@
                                     {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'lead_advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('advance_date'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('advance_date') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('advance_date') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
 
@@ -172,8 +172,8 @@
                                     {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'lead_alt_no')) }}
                                     @if ($errors->has('alt_no'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('alt_no') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('alt_no') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
@@ -181,8 +181,8 @@
                                     {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'lead_alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('alt_date'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('alt_date') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('alt_date') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
 
@@ -196,16 +196,16 @@
                                     {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lead_lt_no')) }}
                                     @if ($errors->has('lt_no'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('lt_no') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('lt_no') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
                                     {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lead_lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('lt_date'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('lt_date') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('lt_date') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
 
@@ -216,7 +216,8 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary pull-right btn-lg">Save</button>
+                        <button type="submit" class="btn btn-primary ">Save</button>
+                        {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                     </div>
 
                     {{ Form::close() }}

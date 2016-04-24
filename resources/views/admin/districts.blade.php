@@ -48,12 +48,14 @@
                         {{ csrf_field() }}
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="update-district-name">District Name</label>
-                                <input type="text" class="form-control" id="update-district-name" placeholder="District Name" name="name" value="">
+                                <label for="name">District Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="District Name" name="name" value="">
+                                <span class="error-message"></span>
                             </div>
                             <div class="form-group">
-                                <label for="update-district-code">District Code</label>
-                                <input type="text" class="form-control" id="update-district-code" placeholder="District Code" name="district_code" value="">
+                                <label for="district_code">District Code</label>
+                                <input type="text" class="form-control" id="district_code" placeholder="District Code" name="district_code" value="">
+                                <span class="error-message"></span>
                             </div>
 
                         </div>
@@ -89,8 +91,8 @@
                         {{ csrf_field() }}
                         <div class="box-body">
                             <div id="form-name" class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="district-name">District Name</label>
-                                <input type="text" class="form-control" id="district-name" placeholder="District Name" name="name" value="{{ old('name') }}">
+                                <label for="create-district-name">District Name</label>
+                                <input type="text" class="form-control" id="create-district-name" placeholder="District Name" name="name" value="{{ old('name') }}">
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -98,8 +100,8 @@
                                 @endif
                             </div>
                             <div id="form-code" class="form-group{{ $errors->has('district_code') ? ' has-error' : '' }}">
-                                <label for="district-code">District Code</label>
-                                <input type="text" class="form-control" id="district-code" placeholder="District Code" name="district_code" value="{{ old('district_code') }}">
+                                <label for="create-district-code">District Code</label>
+                                <input type="text" class="form-control" id="create-district-code" placeholder="District Code" name="district_code" value="{{ old('district_code') }}">
                                 @if ($errors->has('district_code'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('district_code') }}</strong>

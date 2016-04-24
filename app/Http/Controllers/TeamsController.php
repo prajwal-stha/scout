@@ -70,7 +70,7 @@ class TeamsController extends Controller
         if ($validator->fails()) {
             $response = array(
                 'status' => 'danger',
-                'msg'    => $validator->errors()->all()
+                'msg'    => $validator->getMessageBag()->toArray()
             );
 
         } else {

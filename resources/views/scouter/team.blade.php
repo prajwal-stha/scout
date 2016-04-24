@@ -55,7 +55,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {{ Form::label('name', 'Name *') }}
-                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
+                            <span class="error-message"></span>
                         </div>
 
                     </div>
@@ -184,9 +185,9 @@
 
                                 <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
+                                    {{ Form::label('team-name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
                                     <div class="col-md-8 col-sm-8 col-xs-12">
-                                        {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
+                                        {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
                                     </div>
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -343,7 +344,8 @@
                                     </div>
 
                                     <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary pull-right" id="create_team_member">Add Member</button>
+                                        <button type="submit" class="btn btn-primary" id="create_team_member"><i class="ion-plus-round"></i> Add Member</button>
+                                        {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                                     </div>
                                 {{ Form::close() }}
 

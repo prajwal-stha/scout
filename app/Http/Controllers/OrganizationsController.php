@@ -232,9 +232,8 @@ class OrganizationsController extends Controller
         if ($validator->fails()) {
             $response = array(
                 'status' => 'danger',
-                'msg'    => $validator->errors()->all()
+                'msg'    => $validator->getMessageBag()->toArray()
             );
-
         } else {
             $id = $request->get('id');
 

@@ -10,6 +10,7 @@ use App\Http\Requests\CreateRateRequest;
 use App\Http\Requests\UpdateRateRequest;
 use App\Rate;
 
+use Auth;
 
 /**
  * Class RateController

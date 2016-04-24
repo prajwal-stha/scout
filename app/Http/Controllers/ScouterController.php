@@ -23,6 +23,10 @@ use App\Organization;
 
 use App\Team;
 
+use App\Rate;
+
+use DB;
+
 class ScouterController extends Controller
 {
 
@@ -76,11 +80,15 @@ class ScouterController extends Controller
         $data['title'] = 'Nepal Scout - Scouter';
         if(session()->has('org_id')) {
             $data['org_id']        = session()->get('org_id');
-            if(Member::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+            if(Member::where( 'organization_id', session()->get('org_id'))->count() >= 3) {
+
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+
+            } else {
+
+                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+
             }
-
-
 
             if(Scouter::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
                 $data['scouter']  = Scouter::where('organization_id', session()->get('org_id'))
@@ -96,10 +104,15 @@ class ScouterController extends Controller
     public function getLeadScouter()
     {
         $data['title'] = 'Nepal Scout - Scouter';
+
         if(session()->has('org_id')) {
             $data['org_id'] = session()->get('org_id');
-            if (Member::where('organization_id', session()->get('org_id'))->count() > 0) {
+            if (Member::where('organization_id', session()->get('org_id'))->count() >= 3) {
                 $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+            }else{
+
+                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+
             }
 
             if (Scouter::where('organization_id', session()->get('org_id'))
@@ -110,6 +123,7 @@ class ScouterController extends Controller
                     ->first();
             }
         }
+
         return view('scouter.lead-scouter')->with($data);
 
     }
@@ -139,6 +153,31 @@ class ScouterController extends Controller
             }
         }
         return view('scouter.team')->with($data);
+        
+    }
+
+    public function getRegistration()
+    {
+        $data['title']      = 'Registration Cost Detail';
+        $data['rates']      = Rate::first();
+
+        if(session()->has('org_id')) {
+            $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
+//            $team = Team::where('organization_id', session()->get('org_id'))->get();
+            $data['scout'] = intval(DB::table('teams')
+                ->join('team_members', function ($join) {
+                    $join->on('teams.id', '=', 'team_members.team_id')
+                    ->where('teams.organization_id', '=', session()->get('org_id'));
+                })
+                ->count());
+            $data['member'] = intval(Member::where('organization_id', session()->get('org_id'))->count());
+            $data['total']  = $data['scouter'] + $data['scout'] + $data['member'];
+
+        }
+
+
+
+        return view('scouter.registration')->with($data);
         
     }
     

@@ -117,7 +117,8 @@ class DistrictsController extends Controller
         if ($validator->fails()) {
             $response = array(
                 'status' => 'danger',
-                'msg'    => $validator->errors()->all()
+//                'msg'    => $validator->errors()->all()
+                'msg'    => $validator->getMessageBag()->toArray()
             );
 
         } else {
@@ -134,7 +135,6 @@ class DistrictsController extends Controller
                     'msg'      => 'District successfully updated.',
                     'district' => $district
                 );
-
             }
         }
         return response()->json($response);

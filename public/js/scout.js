@@ -98,8 +98,8 @@ jQuery(document).ready(function() {
         var url = update_district_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
-                $('#update-district-name').val(data.district.name);
-                $('#update-district-code').val(data.district.district_code);
+                $('#name').val(data.district.name);
+                $('#district_code').val(data.district.district_code);
                 $('#update-district-id').val(id);
             });
             $('#districtModal').modal('show');
@@ -113,15 +113,23 @@ jQuery(document).ready(function() {
 
     $('#district-update-form').on('submit', function(e){
         e.preventDefault();
-        console.log($(this).prop('action'));
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('errors');
+        });
+        var current_form = $(this);
         $.ajax({
             method: "PATCH",
             url: $(this).prop('action'),
             data: {
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#update-district-id').val(),
-                "name": $('#update-district-name').val(),
-                "district_code": $('#update-district-code').val()
+                "name": $('#name').val(),
+                "district_code": $('#district_code').val()
             },
             dataType: "json"
         })
@@ -132,8 +140,17 @@ jQuery(document).ready(function() {
                 $('#districtModal').modal('hide');
                 window.location.href = index_district_url;
             }else {
-                var errorMsg = returnAlert(data);
-                $('#modal-alert-placeholder').html(errorMsg);
+                //var errorMsg = returnAlert(data);
+                //$('#modal-alert-placeholder').html(errorMsg);
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+
+                    var error_message = data.msg[key];
+                    current_form.find('#'+key).addClass('errors');
+                    var parent = current_form.find('#'+key).parent();
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
+                }
             }
         });
 
@@ -142,7 +159,7 @@ jQuery(document).ready(function() {
         //    {
         //        "_token": $(this).find('input[name=_token]').val(),
         //        "id": $('#update-district-id').val(),
-        //        "name": $('#update-district-name').val(),
+        //        "name": $('#update-district-name').val(),§
         //        "district_code": $('#update-district-code').val()
         //    },
         //    function (data) {
@@ -352,9 +369,9 @@ jQuery(document).ready(function() {
         var url = update_member_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
-                $('#f-name').val(data.member.f_name);
-                $('#m-name').val(data.member.m_name);
-                $('#l-name').val(data.member.l_name);
+                $('#f_name').val(data.member.f_name);
+                $('#m_name').val(data.member.m_name);
+                $('#l_name').val(data.member.l_name);
                 $('#update-member-org-id').val(data.member.organization_id);
                 $('#update-member-id').val(id);
             });
@@ -369,15 +386,24 @@ jQuery(document).ready(function() {
 
     $('.update-member-form').on('submit', function(e) {
         e.preventDefault();
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('has-error');
+        });
+        var current_form = $(this);
         $.ajax({
             method: "PATCH",
             url: $(this).prop('action'),
             data: {
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#update-member-id').val(),
-                "f_name": $('#f-name').val(),
-                "m_name": $('#m-name').val(),
-                "l_name": $('#l-name').val(),
+                "f_name": $('#f_name').val(),
+                "m_name": $('#m_name').val(),
+                "l_name": $('#l_name').val(),
                 "organization_id": $('#update-member-org-id').val()
             },
             dataType: "json"
@@ -389,8 +415,17 @@ jQuery(document).ready(function() {
                 $('#memberModal').modal('hide');
                 window.location.href = index_member_url;
             } else {
-                var errorMsg = returnAlert(data);
-                $('.alert-placeholder').html(errorMsg);
+                //var errorMsg = returnAlert(data);
+                //$('.alert-placeholder').html(errorMsg);
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+                    var error_message = data.msg[key];
+                    var parent = current_form.find('#' + key).parent();
+                    current_form.find('#' + key).addClass('has-error');
+
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
+                }
             }
         });
     });
@@ -402,7 +437,7 @@ jQuery(document).ready(function() {
         var url = update_team_url + '/' + id;
         if (id) {
             $.get(url).done(function (data) {
-                $('#team-name').val(data.team.name);
+                $('#name').val(data.team.name);
                 $('#update-team-org-id').val(data.team.organization_id);
                 $('#update-team-id').val(id);
             });
@@ -418,6 +453,16 @@ jQuery(document).ready(function() {
 
     $('.update-team-form').on('submit', function(e){
         e.preventDefault();
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('has-error');
+        });
+
+        var current_form = $(this);
 
         $.ajax({
             method: "PATCH",
@@ -425,7 +470,7 @@ jQuery(document).ready(function() {
             data: {
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#update-team-id').val(),
-                "name": $('#team-name').val(),
+                "name": $('#name').val(),
                 "organization_id": $('#update-team-org-id').val()
             },
             dataType: "json"
@@ -437,8 +482,17 @@ jQuery(document).ready(function() {
                 $('#teamModal').modal('hide');
                 window.location.href = index_team_url;
             } else {
-                var errorMsg = returnAlert(data);
-                $('.alert-placeholder').html(errorMsg);
+                //var errorMsg = returnAlert(data);
+                //$('.alert-placeholder').html(errorMsg);
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+                    var error_message = data.msg[key];
+                    var parent = current_form.find('#' + key).parent();
+                    current_form.find('#' + key).addClass('has-error');
+
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
+                }
             }
         });
     });
@@ -549,7 +603,6 @@ jQuery(document).ready(function() {
             $(this).unbind('click').click();
         }
     });
-
 });
 
 
