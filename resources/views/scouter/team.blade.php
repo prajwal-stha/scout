@@ -89,17 +89,20 @@
 
                         <div class="modal-body">
                             <div class="form-group">
-                                {{ Form::label('f-name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('f_name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
                                 <div class="col-sm-3">
-                                    {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                                    {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                                    <span class="error-message"></span>
                                 </div>
 
                                 <div class="col-sm-3">
-                                    {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                                    {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                                    <span class="error-message"></span>
                                 </div>
 
                                 <div class="col-sm-3">
-                                    {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                                    {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                                    <span class="error-message"></span>
                                 </div>
 
                             </div>
@@ -108,6 +111,7 @@
                                 {{ Form::label('dob', 'DOB *', array( 'class' => 'control-label col-sm-3')) }}
                                 <div class="col-sm-9">
                                     {{ Form::text('dob', null, array('class' => 'form-control', 'id' => 'dob', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    <span class="error-message"></span>
                                 </div>
                             </div>
 
@@ -115,6 +119,7 @@
                                 {{ Form::label('entry_date', 'Date of Join *', array( 'class' => 'control-label col-sm-3')) }}
                                 <div class="col-sm-9">
                                     {{ Form::text('entry_date', null, array('class' => 'form-control', 'id' => 'entry_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    <span class="error-message"></span>
                                 </div>
                             </div>
 
@@ -126,6 +131,7 @@
                                             'alpha'      => 'Alpha',
                                             'beta'       => 'Beta'
                                         ), null, array('class' => 'form-control', 'id' => 'position' )) }}
+                                    <span class="error-message"></span>
                                 </div>
 
                             </div>
@@ -134,6 +140,7 @@
                                 {{ Form::label('passed_date', 'Passed Date *', array( 'class' => 'control-label col-sm-3')) }}
                                 <div class="col-sm-9">
                                     {{ Form::text('passed_date', null, array('class' => 'form-control', 'id' => 'passed_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    <span class="error-message"></span>
                                 </div>
                             </div>
 
@@ -141,6 +148,7 @@
                                 {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
                                 <div class="col-sm-9">
                                     {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'size' => '30x5']) }}
+                                    <span class="error-message"></span>
                                 </div>
                             </div>
 

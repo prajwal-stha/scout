@@ -478,7 +478,6 @@ jQuery(document).ready(function() {
         .done(function (data) {
             if (data.status == 'success') {
                 var successMsg = returnSuccess(data);
-
                 $('#teamModal').modal('hide');
                 window.location.href = index_team_url;
             } else {
@@ -506,9 +505,9 @@ jQuery(document).ready(function() {
         if (id) {
             $.get(url).done(function (data) {
                 $('#teamMemberId').val(id);
-                $('#f-name').val(data.teamMember.f_name);
-                $('#m-name').val(data.teamMember.m_name);
-                $('#l-name').val(data.teamMember.l_name);
+                $('#f_name').val(data.teamMember.f_name);
+                $('#m_name').val(data.teamMember.m_name);
+                $('#l_name').val(data.teamMember.l_name);
                 $('#dob').val(data.teamMember.dob);
                 $('#entry_date').val(data.teamMember.entry_date);
                 $('#position').val(data.teamMember.position);
@@ -526,32 +525,53 @@ jQuery(document).ready(function() {
 
     $('.update-teamMember-form').on('submit', function(e){
         e.preventDefault();
+
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('has-error');
+        });
+        var current_form = $(this);
         $.ajax({
             method: "PATCH",
             url: $(this).prop('action'),
             data: {
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#teamMemberId').val(),
-                "f_name": $('#f-name').val(),
-                "m_name": $('#m-name').val(),
-                "l_name": $('#l-name').val(),
+                "f_name": $('#f_name').val(),
+                "m_name": $('#m_name').val(),
+                "l_name": $('#l_name').val(),
                 "dob": $('#dob').val(),
                 "entry_date": $('#entry_date').val(),
                 "position": $('#position').val(),
                 "passed_date": $('#passed_date').val(),
                 "note": $('#note').val(),
+                "team_id": $('#team_id').val()
             },
             dataType: "json"
         })
         .done(function (data) {
+            console.log(data);
             if (data.status == 'success') {
                 var successMsg = returnSuccess(data);
 
                 $('#teamMemberModal').modal('hide');
                 window.location.href = index_team_url;
             } else {
-                var errorMsg = returnAlert(data);
-                $('.alert-placeholder-member').html(errorMsg);
+                //var errorMsg = returnAlert(data);
+                //$('.alert-placeholder-member').html(errorMsg);
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+                    var error_message = data.msg[key];
+                    var parent = current_form.find('#' + key).parent();
+                    current_form.find('#' + key).addClass('has-error');
+
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
+                }
             }
         });
 
@@ -604,8 +624,3 @@ jQuery(document).ready(function() {
         }
     });
 });
-
-
-
-
-

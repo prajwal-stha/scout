@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateTeamRequest;
 
 use App\Team;
 
+use Validator;
+
 
 class TeamsController extends Controller
 {
@@ -88,9 +90,7 @@ class TeamsController extends Controller
                 );
             }
         }
+
         return response()->json($response);
-
     }
-
-
 }

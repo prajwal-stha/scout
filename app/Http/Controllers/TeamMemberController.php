@@ -12,6 +12,8 @@ use App\Team;
 
 use App\TeamMember;
 
+use Validator;
+
 class TeamMemberController extends Controller
 {
 
@@ -62,7 +64,7 @@ class TeamMemberController extends Controller
             'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"',
             'position'      => 'required',
-            'passed_date'   => 'required|date_format:"d/m/Y"',
+            'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',
             'team_id'       => 'required|exists:teams,id'
         );
@@ -72,7 +74,7 @@ class TeamMemberController extends Controller
         if ($validator->fails()) {
             $response = array(
                 'status' => 'danger',
-                'msg'    => $validator->errors()->all()
+                'msg'    => $validator->getMessageBag()->toArray()
             );
 
         } else {
