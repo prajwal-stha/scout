@@ -11,9 +11,18 @@
     </section>
 
     <section class="content">
-        {{--<div class="row">--}}
-        {{--<div class="col-md-9">--}}
-                <!-- general form elements -->
+
+        @if(Session::has('scouter_updated'))
+
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('scouter_updated') }}
+            </div>
+
+        @endif
+
+
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">Assistant-Lead Scouter Detail</h3>
@@ -22,34 +31,34 @@
 
             <div class="box-body">
 
-                {{ Form::model($scouter, ['url' => ['admin/edit-lead', $scouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
-
+                {{ Form::model($scouter, ['url' => ['admin/scouter', $scouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal']) }}
+                <input type="hidden" name="org_id" id="org_id" value="{{ $organization->id }}">
                 <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-4')) }}
                             <div class="col-sm-6">
                                 {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                 @if ($errors->has('name'))
                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             {{ Form::label('lead_email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
 
                             <div class="col-sm-6">
                                 {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
-                                @if ($errors->has('lemail'))
+                                @if ($errors->has('email'))
                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -62,16 +71,16 @@
                                 {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'lead_perm_letter_no')) }}
                                 @if ($errors->has('permission'))
                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('permission') }}</strong>
-                                                </span>
+                                        <strong>{{ $errors->first('permission') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
                                 {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'lead_perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('permission_date'))
                                     <span class="help-block">
-                                                    <strong>{{ $errors->first('permission_date') }}</strong>
-                                                </span>
+                                        <strong>{{ $errors->first('permission_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -85,16 +94,17 @@
                                 {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'lead_btc_no')) }}
                                 @if ($errors->has('btc_no'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('btc_no') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('btc_no') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
                                 {{ Form::text('lead_btc_date', null, array('class' => 'form-control date', 'id' => 'lead_btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('btc_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('btc_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('btc_date') }}</strong>
+                                    </span>
+
                                 @endif
                             </div>
 
@@ -110,8 +120,8 @@
 
                                 @if ($errors->has('advance_no'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('advance_no') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('advance_no') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
@@ -119,8 +129,8 @@
                                 {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'lead_advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('advance_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('advance_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('advance_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -135,8 +145,8 @@
                                 {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'lead_alt_no')) }}
                                 @if ($errors->has('alt_no'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('alt_no') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('alt_no') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
@@ -144,8 +154,8 @@
                                 {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'lead_alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('alt_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('alt_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('alt_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -159,16 +169,16 @@
                                 {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lead_lt_no')) }}
                                 @if ($errors->has('lt_no'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('lt_no') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('lt_no') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
                                 {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lead_lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('lt_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('lt_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('lt_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -188,8 +198,6 @@
 
         </div><!-- /.box -->
 
-        {{--</div>--}}
-        {{--</div>--}}
 
     </section>
 
@@ -201,6 +209,18 @@
 @section('scripts')
 
     @parent
+    <script>
+        $(".date").inputmask();
+        $( ".date" ).datepicker({
+            format:'dd/mm/yyyy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1930:2030',
+            inline: true,
+            dy:true,
+        });
+
+    </script>
 
 
 

@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+
+use App\Http\Requests\CreateOrganizationAdminRequest;
+use App\Http\Requests\UpdateScouterRequest;
+use App\Http\Requests\CreateMemberRequest;
+use App\Http\Requests\UpdateMemberRequest;
+use App\Http\Requests\CreateRegisterRequest;
 
 use App\Http\Controllers\Controller;
 
@@ -26,9 +31,18 @@ use App\Rate;
 
 use DB;
 
+use Validator;
+
+/**
+ * Class AdminController
+ * @package App\Http\Controllers
+ */
 class AdminController extends Controller
 {
 
+    /**
+     * AdminController constructor.
+     */
     public function __construct(){
         $this->middleware('auth');
     }
@@ -45,12 +59,20 @@ class AdminController extends Controller
         return view( 'admin.dashboard')->with( $data);
     }
 
+    /**
+     * @return $this
+     */
     public function getForm(){
-        $data['organizations'] = Organization::whereNull('registration_no')->get();
+        $data['organizations'] = Organization::whereNull('registration_no')
+                ->where('is_declined', false)->get();
         $data['title'] = 'Nepal Scout - New Form Requests';
         return view( 'admin.formrequest')->with($data);
     }
 
+    /**
+     * @param null $id
+     * @return $this
+     */
     public function getViewOrganization($id = NULL)
     {
         $data['organization'] = Organization::findOrFail($id);
@@ -61,29 +83,18 @@ class AdminController extends Controller
     }
 
 
-    public function patchOrganization(Request $request, $id)
+    /**
+     * @param CreateOrganizationAdminRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchOrganization(CreateOrganizationAdminRequest $request, $id)
     {
-        $rules = array(
-            'registration_date'     => 'required|date_format:"d/m/Y"',
-            'type'                  => 'required|string',
-            'name'                  => 'required|unique:organizations,name,'.$request->get('id'),
-            'district'              => 'required|exists:districts,id',
-            'chairman_f_name'       => 'required|string',
-            'chairman_l_name'       => 'required|string',
-            'chairman_mobile_no'    => 'required|string',
-            'tel_no'                => 'required|string',
-            'address_line_1'        => 'required|string',
-            'address_line_2'        => 'string',
-            'email'                 => 'required|email|unique:organizations,email,'.$request->get('id'),
-            'background_colour'     => 'required',
-            'border_colour'         => 'required',
-        );
 
         $org = Organization::findOrFail($id);
 
-        $validator = Validator::make($request->all(), $rules);
 
-        if($validator->passes()){
+        if($org){
             $org->name               = $request->get('name');
             $org->type               = $request->get('type');
             $org->registration_date  = $request->has('registration_date') ? formatDate($request->get('registration_date')) : null;
@@ -106,6 +117,10 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getCommittee($id)
     {
         $data['title'] = 'Nepal Scout';
@@ -117,17 +132,97 @@ class AdminController extends Controller
 
     }
 
-    public function patchCommittee(Request $request, $id)
+    /**
+     * @param CreateMemberRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postCommittee(CreateMemberRequest $request)
     {
+        Member::create([
+            'f_name'            => $request->get('f_name'),
+            'm_name'            => $request->get('m_name'),
+            'l_name'            => $request->get('l_name'),
+            'organization_id'   => $request->get('organization_id')
+        ]);
+
+        return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getCommitteeMember($id)
+    {
+        $member = Member::findOrFail($id);
+        $response = array(
+            'status'    => 'success',
+            'member'    => $member
+        );
+        return response()->json($response);
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function patchCommittee(Request $request)
+    {
+        $rules = array(
+            'f_name'            => 'required',
+            'l_name'            => 'required',
+            'organization_id'   => 'required|exists:organizations,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->getMessageBag()->toArray()
+            );
+        } else {
+            $id = $request->get('id');
+
+            if($id){
+                $member = Member::findOrFail($id);
+                $input = $request->all();
+
+                $member->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'Member successfully updated.',
+                    'member'   => $member
+                );
+            }
+
+        }
+        return response()->json($response);
         
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getDeleteCommittee($id)
     {
-
+        $member = Member::findOrFail($id);
+        if($member){
+            Member::destroy($member->id);
+        }
+        return redirect()->back()->with('committee_member_deleted', 'One of the committe member has been removed from the organization.');
         
     }
 
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getLeadScouter($id)
     {
         $data['title'] = 'Nepal Scout';
@@ -139,11 +234,76 @@ class AdminController extends Controller
             ->first();
 
         return view('admin/lead-scouter')->with( $data );
-
         
     }
 
+    /**
+     * @param UpdateScouterRequest $request
+     * @param $scouter_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchLead(UpdateScouterRequest $request, $scouter_id)
+    {
+        if($scouter_id) {
 
+            $scouter = Scouter::findOrFail($scouter_id);
+            if ($scouter) {
+                $scouter->name = $request->get('name');
+                $scouter->email = $request->get('email');
+                $scouter->permission = $request->get('permission');
+                $scouter->permission_date = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
+                $scouter->btc_no = $request->get('btc_no');
+                $scouter->btc_date = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no = $request->get('advance_no');
+                $scouter->advance_date = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no = $request->get('alt_no');
+                $scouter->alt_date = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no = $request->get('lt_no');
+                $scouter->lt_date = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->save();
+            }
+
+            return redirect()->back()
+                ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
+        }
+
+    }
+
+    /**
+     * @param UpdateScouterRequest $request
+     * @param $scouter_id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchScouter(UpdateScouterRequest $request, $scouter_id)
+    {
+        if($scouter_id){
+            $scouter = Scouter::findOrFail($scouter_id);
+            if($scouter){
+                $scouter->name              = $request->get('name');
+                $scouter->email             = $request->get('email');
+                $scouter->permission        = $request->get('permission');
+                $scouter->permission_date   = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
+                $scouter->btc_no            = $request->get('btc_no');
+                $scouter->btc_date          = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no        = $request->get('advance_no');
+                $scouter->advance_date      = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no            = $request->get('alt_no');
+                $scouter->alt_date          = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no             = $request->get('lt_no');
+                $scouter->lt_date           = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->save();
+            }
+
+            return redirect()->back()
+                ->with(['scouter_updated' => 'Assistant Lead Scouter successfully updated']);
+        }
+    }
+
+
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getScouter($id)
     {
 
@@ -159,6 +319,11 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @param null $team_id
+     * @return $this
+     */
     public function getTeams($id, $team_id = NULL)
     {
         $data['title'] = 'Nepal Scout';
@@ -178,42 +343,159 @@ class AdminController extends Controller
 
     }
 
-    public function getTeamMembers($id, $team_id)
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUpdateTeam($id)
     {
-        $data['title'] = 'Nepal Scout';
-        $data['organization'] = Organization::findOrFail($id);
-        $data['team'] = Team::where('organization_id', $id)->get();
-
-
-    }
-
-    public function patchTeams(Request $request, $id)
-    {
-
-
-    }
-
-
-    public function getDeleteTeams($id)
-    {
-
-
-    }
-
-    public function getMember($id){
-
-    }
-
-    public function patchMember(Request $request, $id)
-    {
-
-    }
-
-    public function getDeleteMember($id)
-    {
+        $team = Team::findOrFail($id);
+        $response = array(
+            'status'    => 'success',
+            'team'    => $team
+        );
+        return response()->json($response);
         
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function patchTeams(Request $request)
+    {
+        $rules = array(
+            'name'              => 'required|unique:teams,name,'.$request->get('id'),
+            'organization_id'   => 'required|exists:organizations,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->getMessageBag()->toArray()
+            );
+
+        } else {
+            $id = $request->get('id');
+            if ( $id ) {
+                $team  = Team::findOrFail($id);
+                $input = $request->all();
+
+                $team->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'Team successfully updated.',
+                    'team'     => $team
+                );
+            }
+        }
+
+        return response()->json($response);
+    }
+
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function getDeleteTeams($id)
+    {
+        $team = Team::findOrFail($id);
+        if($team){
+            Team::destroy($team->id);
+        }
+        return redirect()->back()->with('team_deleted', 'One of the team has been removed');
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getMember($id)
+    {
+        $teamMember = TeamMember::findOrFail($id);
+        $response = array(
+            'status'        => 'success',
+            'teamMember'    => $teamMember
+        );
+        return response()->json($response);
+
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function patchMember(Request $request)
+    {
+        $rules = array(
+            'f_name'        => 'required',
+            'l_name'        => 'required',
+            'dob'           => 'required|date_format:"d/m/Y"',
+            'entry_date'    => 'required|date_format:"d/m/Y"',
+            'position'      => 'required',
+            'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
+            'note'          => 'max:500',
+            'team_id'       => 'required|exists:teams,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->getMessageBag()->toArray()
+            );
+
+        } else {
+            $id = $request->get('id');
+            if($id){
+                $teamMember = TeamMember::findOrFail($id);
+                if($teamMember){
+                    $teamMember->f_name            = $request->get('f_name');
+                    $teamMember->m_name            = $request->get('m_name');
+                    $teamMember->l_name            = $request->get('l_name');
+                    $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
+                    $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
+                    $teamMember->position          = $request->get('position');
+                    $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
+                    $teamMember->note              = $request->get('note');
+                    $teamMember->team_id           = $request->get('team_id');
+                    $teamMember->save();
+                }
+
+                $response = array(
+                    'status'         => 'success',
+                    'msg'            => 'Team Member successfully updated successfully updated.',
+                    'teamMember'     => $teamMember
+                );
+            }
+        }
+        return response()->json($response);
+
+    }
+
+    /**
+     * @param $id
+     */
+    public function getDeleteMember($id)
+    {
+        $member = TeamMember::findOrFail($id);
+        if($member){
+            TeamMember::destroy($member->id);
+        }
+//        return redirect()->back()->with('member_deleted', 'One of the member has been removed');
+        
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getRegistration($id)
     {
 
@@ -233,5 +515,70 @@ class AdminController extends Controller
 
         return view('admin.registration')->with($data);
         
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function patchRegister(Request $request)
+    {
+        $rules = array(
+            'registration_no'   => 'required|unique:organizations,registration_no',
+            'organization_id'   => 'required|exists:organizations,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->getMessageBag()->toArray()
+            );
+
+        } else {
+            $id = $request->get('organization_id');
+
+            $org = Organization::findOrFail($id);
+            if($org){
+
+                $org->registration_no = $request->get('registration_no');
+                $org->save();
+            }
+
+            $response = array(
+                'status'   => 'success',
+                'msg'      => 'Organization successfully updated.'
+            );
+
+        }
+        return response()->json($response);
+    }
+
+    /**
+     * Declines Form Requests
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchDecline(Request $request)
+    {
+        $rules = array(
+            'organization_id'   => 'required|exists:organizations,id'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->passes()) {
+            $id = $request->get('organization_id');
+
+            $org = Organization::findOrFail($id);
+            if($org){
+
+                $org->is_declined = true;
+                $org->save();
+            }
+
+        }
+        return redirect()->back()->with('organization_deleted', 'The organizaton has been declined.');
     }
 }

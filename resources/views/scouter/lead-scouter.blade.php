@@ -83,7 +83,7 @@
 
                                 <div class="col-sm-6">
                                     {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
-                                    @if ($errors->has('lemail'))
+                                    @if ($errors->has('email'))
                                         <span class="help-block">
                                                 <strong>{{ $errors->first('email') }}</strong>
                                             </span>

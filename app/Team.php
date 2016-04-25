@@ -17,6 +17,9 @@ class Team extends Model
     public $timestamps = false;
 
 
+    /**
+     * @var array
+     */
     protected $fillable = ['name', 'organization_id'];
 
     /**
@@ -28,6 +31,9 @@ class Team extends Model
 
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function teammembers()
     {
         return $this->hasMany(TeamMember::class);

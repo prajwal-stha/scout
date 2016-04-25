@@ -16,6 +16,9 @@ class Scouter extends Model
      */
     public $timestamps = false;
 
+    /**
+     * @var array
+     */
     protected $fillable = ['name', 'permission', 'permission_date', 'btc_no', 'btc_date', 'advance_no', 'advance_date', 'alt_no', 'alt_date', 'lt_no', 'lt_date', 'is_lead', 'email', 'organization_id'];
 
     /**
@@ -27,6 +30,10 @@ class Scouter extends Model
 
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function getPermissionDateAttribute($value)
     {
         if($value) {
@@ -36,6 +43,10 @@ class Scouter extends Model
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function getBtcDateAttribute($value)
     {
         if($value) {
@@ -45,6 +56,10 @@ class Scouter extends Model
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function getAdvanceDateAttribute($value)
     {
         if($value) {
@@ -54,6 +69,10 @@ class Scouter extends Model
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function getAltDateAttribute($value)
     {
         if($value) {
@@ -63,6 +82,10 @@ class Scouter extends Model
         }
     }
 
+    /**
+     * @param $value
+     * @return string
+     */
     public function getLtDateAttribute($value)
     {
         if($value) {

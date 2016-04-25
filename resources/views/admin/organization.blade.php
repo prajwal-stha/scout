@@ -242,7 +242,10 @@
     <script>
         $("#registration_date").inputmask();
         $("#chairman-mobile").inputmask("999-999-9999",{placeholder:"#"});
-        $("#organization-create-form").submit(function() {
+        $("#organization-create-form").on('submit', function() {
+            $( '.help-block' ).each(function( ) {
+                $(this).remove();
+            });
             if ($(this).find('.help-block').length > 0) {
                 var scrolto = $('#organization-create-form').find('.help-block:first').parent();
                 $('html,body').animate({

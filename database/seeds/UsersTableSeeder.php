@@ -15,9 +15,23 @@ class UsersTableSeeder extends Seeder
             'f_name'         => 'John',
             'l_name'         => 'Doe',
             'email'          => 'admin@gmail.com',
-            'token'         => bcrypt(str_random(30)),
+            'verified'       => 1,
+            'token'          => bcrypt(str_random(30)),
             'level'          => 1,
             'username'       => 'admin',
+            'password'       => bcrypt('123goldkist'),
+            'remember_token' => str_random(10)
+        ]);
+
+
+        DB::table('users')->insert([
+            'f_name'         => 'Foo',
+            'l_name'         => 'Bar',
+            'email'          => 'user@gmail.com',
+            'verified'       => 1,
+            'token'          => bcrypt(str_random(30)),
+            'level'          => 1,
+            'username'       => 'user',
             'password'       => bcrypt('123goldkist'),
             'remember_token' => str_random(10)
         ]);

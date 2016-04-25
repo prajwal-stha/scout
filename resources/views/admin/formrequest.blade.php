@@ -20,11 +20,11 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">New Form Requests</h3>
+                        <h3 class="box-title">{{ $organizations->count() > 0 ? 'New Form Requests' : 'Grab a cup of coffee. No new form request for now.' }}</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
-                    @if(isset($organizations))
+                    @if($organizations->count() > 0)
                         <div class="box-body">
                             <table id="form-requests" class="table table-bordered table-striped">
                                 <thead>

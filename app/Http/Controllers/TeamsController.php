@@ -14,15 +14,26 @@ use App\Team;
 use Validator;
 
 
+/**
+ * Class TeamsController
+ * @package App\Http\Controllers
+ */
 class TeamsController extends Controller
 {
 
+    /**
+     * TeamsController constructor.
+     */
     public function __construct(){
 
         $this->middleware('auth');
 
     }
 
+    /**
+     * @param CreateTeamRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCreate(CreateTeamRequest $request){
         if($request->has('org_id')){
             Team::create([
@@ -39,6 +50,10 @@ class TeamsController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getRemove($id)
     {
         $team = Team::findOrFail($id);
@@ -49,6 +64,10 @@ class TeamsController extends Controller
         
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getUpdate($id)
     {
         $team = Team::findOrFail($id);
@@ -60,6 +79,10 @@ class TeamsController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function patchUpdate(Request $request){
 
         $rules = array(

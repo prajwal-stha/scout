@@ -14,10 +14,18 @@ use App\TeamMember;
 
 use Validator;
 
+/**
+ * Class TeamMemberController
+ * @package App\Http\Controllers
+ */
 class TeamMemberController extends Controller
 {
 
 
+    /**
+     * @param CreateTeamMemberRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postCreate(CreateTeamMemberRequest $request)
     {
         TeamMember::create([
@@ -36,6 +44,10 @@ class TeamMemberController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function getDelete($id)
     {
         $member = TeamMember::findOrFail($id);
@@ -46,6 +58,10 @@ class TeamMemberController extends Controller
 
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getUpdate($id)
     {
         $teamMember = TeamMember::findOrFail($id);
@@ -56,6 +72,10 @@ class TeamMemberController extends Controller
         return response()->json($response);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function patchUpdate(Request $request)
     {
         $rules = array(

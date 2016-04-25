@@ -19,8 +19,9 @@ class CreateTeamsTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->integer('organization_id')->unsigned();
-            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->foreign('organization_id')->references('id')->on('core_organizations');
             $table->unique(['name', 'organization_id']);
+            $table->timestamps();
 
         });
     }

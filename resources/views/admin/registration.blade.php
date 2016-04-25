@@ -3,6 +3,16 @@
 
 @section('content')
 
+    @if(Session::has('organization_deleted'))
+
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            {{ Session::get('organization_deleted') }}
+        </div>
+
+    @endif
+
     <section class="content-header">
         <ol class="breadcrumb">
             <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -13,6 +23,37 @@
 
     <!-- Main content -->
     <section class="content">
+        <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="alert-placeholder"></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    {{ Form::model($organization, ['url' => ['admin/register', $organization->id], 'method' => 'PATCH', 'class' => 'register-form']) }}
+                        <input type="hidden" name="organization_id" value="{{ $organization->id }}" id="organization_id">
+
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                {{ Form::label('registration_no', 'Registration No. *') }}
+                                {{ Form::text('registration_no', null, array('class' => 'form-control', 'id' => 'registration_no')) }}
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="modal-register-submit">Register</button>
+                        </div>
+
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
 
         <div class="box box-success">
             <div class="box-header with-border">
@@ -73,8 +114,17 @@
 
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Approve</button>
-                {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}
+
+                    <button type="submit" class="btn btn-primary register-modal"><i class="fa fa-check-square-o"></i> Approve</button>
+                    @if($organization->is_declined == false)
+                        {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
+                            <input type="hidden" name="organization_id" value="{{ $organization->id }}">
+                            <button type="submit" data-id="{{ $organization->id }}" class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline</button>
+                        {{ Form::close() }}
+                    @endif
+
+                    {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}
+
             </div>
         </div>
 
@@ -86,6 +136,9 @@
 @section( 'scripts' )
 
     @parent
+    <script>
+        var decline_url = "<?php echo url('admin/decline'); ?>";
+    </script>
 
 
 
