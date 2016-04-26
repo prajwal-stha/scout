@@ -208,7 +208,7 @@
 
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{ asset( 'js/jquery.validate.js') }}"></script>
-    <script src="{{ asset( 'js/scout.js') }}"></script>
+    <script src="{{ asset( 'js/admin.js') }}"></script>
 
 @show
 </body>

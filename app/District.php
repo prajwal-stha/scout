@@ -32,4 +32,8 @@ class District extends Model
 
     }
 
+    public function get_attributes(){
+        return $this->fillable;
+    }
+
 }

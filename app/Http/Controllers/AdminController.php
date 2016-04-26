@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use App\Scout\Service\CloneTable;
 
 use App\Http\Requests;
 
@@ -28,6 +29,12 @@ use App\Team;
 use App\TeamMember;
 
 use App\Rate;
+use App\CoreOrganization;
+use App\CoreMember;
+use App\CoreTeam;
+use App\CoreTeamMember;
+use App\CoreScouter;
+
 
 use DB;
 
@@ -41,10 +48,42 @@ class AdminController extends Controller
 {
 
     /**
-     * AdminController constructor.
+     * @var CloneTable
      */
-    public function __construct(){
+    protected $clone;
+
+    /**
+     * @var
+     */
+    protected $organization;
+
+    /**
+     * @var
+     */
+//    protected $team;
+
+    /**
+     * @var
+     */
+    //protected $member;
+
+    /**
+     * @var
+     */
+    //protected $team_member;
+
+    /**
+     * @var
+     */
+    //protected $scouter;
+
+    /**
+     * AdminController constructor.
+     * @param CloneTable $clone
+     */
+    public function __construct(CloneTable $clone){
         $this->middleware('auth');
+        $this->clone = $clone;
     }
 
     /**
@@ -215,7 +254,8 @@ class AdminController extends Controller
         if($member){
             Member::destroy($member->id);
         }
-        return redirect()->back()->with('committee_member_deleted', 'One of the committe member has been removed from the organization.');
+        return redirect()->back()
+            ->with('committee_member_deleted', 'One of the committe member has been removed from the organization.');
         
     }
 
@@ -331,7 +371,9 @@ class AdminController extends Controller
         $data['team'] = Team::where('organization_id', $id)->get();
 
         if(is_null($team_id)) {
+
             $data['teamId'] = $data['team']->first()->id;
+
         }else{
 
             $data['teamId'] = $team_id;
@@ -393,7 +435,6 @@ class AdminController extends Controller
                 );
             }
         }
-
         return response()->json($response);
     }
 
@@ -550,6 +591,7 @@ class AdminController extends Controller
                 'status'   => 'success',
                 'msg'      => 'Organization successfully updated.'
             );
+            $this->cloneModel($org->id);
 
         }
         return response()->json($response);
@@ -580,5 +622,180 @@ class AdminController extends Controller
 
         }
         return redirect()->back()->with('organization_deleted', 'The organizaton has been declined.');
+    }
+
+
+    /**
+     * @param $id
+     */
+    public function cloneModel($id){
+
+
+        // related organization committe member
+        // related team
+        // related team member
+        // related scouter
+
+        $this->organization = Organization::find($id);
+
+//        $this->member = Member::where('organization_id', $id)->get();
+//
+//        $this->team = Team::where('organization_id', $id)->get();
+//
+//        $this->scouter = Scouter::where('organization_id', $id)->get();
+
+        // Clone organization
+        $this->cloneOrganization();
+
+       // Clone Organization Commiitte Member
+        $this->cloneMember();
+
+        // Clone Team
+        $this->cloneTeam();
+
+        // Clone Scouter
+        //$this->cloneScouter();
+
+        //  Clone Team Member
+        $this->cloneTeammember();
+
+    }
+
+    /**
+     *
+     */
+    public function cloneOrganization(){
+
+        // Variable : manipulation
+        $attributes = $this->organization->get_attributes();
+
+        // new or overwrite data
+        $this->clone->setOverwrite(array(
+            'original_id' => $this->organization->id,
+        ));
+
+        $this->clone->cloneObject($this->organization, $this->findAbstractModel('CoreOrganization'), $attributes);
+
+        print_r($this->clone->errors());
+
+    }
+
+
+    /**
+     *
+     */
+    public function cloneMember()
+    {
+
+        $member = new Member;
+        $cloningData = $this->organization->members->all();
+
+        $overwrites = array();
+
+        foreach($cloningData as $data){
+            $overwrites[] = $data->id;
+        }
+
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreMember'), $member->get_attributes(), $overwrites);
+
+        print_r($this->clone->errors());
+        
+    }
+
+    /**
+     *
+     */
+    public function cloneTeam()
+    {
+
+        $team = new Team;
+        $cloningData = $this->organization->teams->all();
+        $overwrites = array();
+
+        foreach($cloningData as $data){
+            $overwrites[] = $data->id;
+        }
+
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreTeam'), $team->get_attributes(), $overwrites);
+
+        print_r($this->clone->errors());
+        
+    }
+
+    /**
+     *
+     */
+    public function cloneScouter()
+    {
+        $scouter = new Scouter;
+        $cloningData = $this->organization->scouters->all();
+        $overwrites = array();
+
+        foreach($cloningData as $data){
+            $overwrites[] = $data->id;
+        }
+
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreScouter'), $scouter->get_attributes(), $overwrites);
+
+        print_r($this->clone->errors());
+
+    }
+
+    /**
+     *
+     */
+    public function cloneTeammember()
+    {
+
+
+
+
+
+        $attributes = $this->team_member->get_attributes();
+
+        //$this->team = Team::where('organization_id', $id)->get();
+
+
+        // new or overwrite data
+        $this->clone->setOverwrite(array(
+            'original_id' => $this->team_member->id
+        ));
+
+        $this->clone->cloneObject($this->team_member, $this->findAbstractModel('CoreTeamMember'), $attributes);
+
+        print_r($this->clone->errors());
+        
+    }
+
+
+    /**
+     * @param $name
+     * @return CoreMember|CoreOrganization|CoreScouter|CoreTeam|CoreTeamMember
+     */
+    private function findAbstractModel($name){
+
+        switch ($name){
+            case 'CoreOrganization':
+                return new CoreOrganization;
+            break;
+
+            case 'CoreMember':
+                return new CoreMember;
+            break;
+
+            case 'CoreTeam':
+                return new CoreTeam;
+            break;
+
+            case 'CoreTeamMember':
+                return new CoreTeamMember;
+            break;
+
+            case 'CoreScouter':
+                return new CoreScouter;
+            break;
+
+        }
+
     }
 }

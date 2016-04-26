@@ -1,4 +1,36 @@
 $(document).ready(function(){
+
+    $('#delete-submit').prop('disabled', true);
+
+    $('.check-all').on('change', function () {
+        if ($(this).is(':checked')) {
+            $('.check-row').prop('checked', true);
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+        }
+        else{
+            $('.check-row').prop('checked', false);
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+
+        }
+
+    });
+
+    $('.check-row').on('change', function(){
+        if ($(this).is(':checked')) {
+
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+
+        } else {
+            $('#delete-submit').prop('disabled', $('.check-row:checked').length == 0);
+            return;
+        }
+
+    });
+
+
     $('.adminDeleteCommittee').on("click", function (e) {
 
         var record_id = $(this).attr('data-id');

@@ -13,9 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Illuminate\Auth\Events\Attempting' => [
-//            'App\Listeners\LogAuthenticationAttempt',
-        ],
+//        'Illuminate\Auth\Events\Attempting' => [
+////            'App\Listeners\LogAuthenticationAttempt',
+//        ],
     ];
 
     /**

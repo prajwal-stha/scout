@@ -39,4 +39,10 @@ class Team extends Model
         return $this->hasMany(TeamMember::class);
         
     }
+
+
+    public function get_attributes(){
+        return $this->fillable;
+    }
+
 }

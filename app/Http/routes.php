@@ -40,6 +40,11 @@ Route::group( ['middleware' => ['web']], function () {
         return view('scouter/print');
     });
 
+    Route::get('clone/{id}', array(
+        'as'    => 'clone',
+        'uses'  => 'AdminController@cloneModel'
+    ));
+
     Route::controller( '/', 'ScouterController' );
 
 });
