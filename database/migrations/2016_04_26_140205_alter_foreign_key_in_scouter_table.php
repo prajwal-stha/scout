@@ -13,8 +13,8 @@ class AlterForeignKeyInScouterTable extends Migration
     public function up()
     {
         Schema::table('core_scouters', function(Blueprint $table){
-            $table->dropForeign(['organization_id']);
-            $table->foreign('organization_id')->references('original_id')->on('core_organizations');
+            $table->dropColumn('original_id');
+
 
         });
     }
@@ -27,8 +27,7 @@ class AlterForeignKeyInScouterTable extends Migration
     public function down()
     {
         Schema::table('core_scouters', function(Blueprint $table) {
-            $table->dropForeign(['organization_id']);
-            $table->foreign('organization_id')->references('id')->on('core_organizations');
+            $table->integer('original_id')->unique()->unsigned()->after('id');
         });
     }
 }

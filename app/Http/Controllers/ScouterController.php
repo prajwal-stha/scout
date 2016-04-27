@@ -371,17 +371,28 @@ class ScouterController extends Controller
         $data['title']  = 'Nepal Scout - Print';
         if(session()->has('org_id')) {
 
-            $data['org_id'] = session()->get('org_id');
+            $data['org_id']       = session()->get('org_id');
             $data['organization'] = Organization::findOrFail(session()->get('org_id'));
-            $data['district']   = DB::table('districts')
-                ->join('organizations', function ($join) {
-                    $join->on('organizations.district_id', '=', 'districts.id')
-                        ->where('organizations.id', '=', session()->get('org_id'));
-                })
-                ->selectRaw('districts.name as d_name, organizations.name as o_name')
-                ->get();
-            $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
-            $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+            $data['district']     = $data['organization']->district;
+            $data['member']       = $data['organization']->members->all();
+            $data['team']         = $data['organization']->teams->all();
+            $data['leadScouter']  = Scouter::where('organization_id', session()->get('org_id'))
+                ->where('is_lead', 1)
+                ->first();
+            $data['scouter'] = Scouter::where('organization_id', session()->get('org_id'))
+                ->where('is_lead', 0)
+                ->first();
+//            dd($data['team']);
+
+//            $data['district']   = DB::table('districts')
+//                ->join('organizations', function ($join) {
+//                    $join->on('organizations.district_id', '=', 'districts.id')
+//                        ->where('organizations.id', '=', session()->get('org_id'));
+//                })
+//                ->selectRaw('districts.name as d_name, organizations.name as o_name')
+//                ->get();
+//            $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+//            $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
             $data['team_member'] = DB::table('teams')
                 ->join('team_members', function ($join) {
                     $join->on('teams.id', '=', 'team_members.team_id')

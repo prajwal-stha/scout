@@ -70,8 +70,8 @@
                                     {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -85,8 +85,8 @@
                                     {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
                                     @if ($errors->has('email'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
