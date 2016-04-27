@@ -32,7 +32,7 @@
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
                     </div>
-                    @include('partials/admin_nav')
+                    @include('partials/admin_approved_nav')
                 </div><!-- /. box -->
 
             </div>
@@ -47,7 +47,7 @@
 
                     <div class="box-body">
 
-                        {{ Form::model($leadScouter, ['url' => ['admin/lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal']) }}
+                        {{ Form::model($leadScouter, ['url' => ['admin/approved-lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal']) }}
                         <input type="hidden" name="org_id" id="org_id" value="{{ $organization->id }}">
                             <div class="row">
 
@@ -205,7 +205,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
-                                {{ link_to('admin/scouter/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                {{ link_to('admin/approved-scouter/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                             </div>
 
                         {{ Form::close() }}

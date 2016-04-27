@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d21b9667c0c12d8202ce1fa0d67612b6",
-    "content-hash": "52c409cfe923f0d001449d764add2e1c",
+    "hash": "bff7ca80ef0afec5a2c7a94fec4c1fb2",
+    "content-hash": "e13617d540a00c29e47662fb573c5d58",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -880,6 +880,52 @@
                 "time"
             ],
             "time": "2015-11-04 20:07:17"
+        },
+        {
+            "name": "nicolaslopezj/searchable",
+            "version": "1.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolaslopezj/searchable.git",
+                "reference": "347f76dbe76606fdd99689cb7a125eb2221a3ea1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/347f76dbe76606fdd99689cb7a125eb2221a3ea1",
+                "reference": "347f76dbe76606fdd99689cb7a125eb2221a3ea1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "illuminate/database": "4.2.x|~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nicolaslopezj\\Searchable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Lopez",
+                    "email": "nicolaslopezj@me.com"
+                }
+            ],
+            "description": "Eloquent model search trait.",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "search",
+                "searchable"
+            ],
+            "time": "2016-01-27 20:51:18"
         },
         {
             "name": "nikic/php-parser",

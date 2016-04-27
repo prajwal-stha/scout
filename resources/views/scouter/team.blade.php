@@ -239,6 +239,10 @@
 
                                 @if(isset($team))
                                     <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
+                                    @if(!is_null($team_name))
+                                        <h3> Add Members to: {{ $team_name }}</h3>
+                                        <hr>
+                                    @endif
                                 @endif
                                 <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 

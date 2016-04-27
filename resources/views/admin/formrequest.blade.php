@@ -41,7 +41,7 @@
                                         <td><a class="team-name" href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a> </td>
                                         <td>
                                             <a href="{{ url('admin/view-organization', [$value->id]) }}"><i class="fa fa-eye"></i></a>  |
-                                            <i class="fa fa-print"></i>
+                                            <a href="{{ url('admin/print', [$value->id]) }}"><i class="fa fa-print"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

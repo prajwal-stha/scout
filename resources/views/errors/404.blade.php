@@ -24,14 +24,14 @@
                         We could not find the page you were looking for.
                         Meanwhile, you may <a href="{{ url('/') }}">return to dashboard</a> or try using the search form.
                     </p>
-                    <form class="search-form">
+                    {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'search-form']) }}
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Search">
+                            <input type="text" name="q" class="form-control" placeholder="Search">
                             <div class="input-group-btn">
                                 <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i></button>
                             </div>
                         </div><!-- /.input-group -->
-                    </form>
+                    {{ Form::close() }}
                 </div><!-- /.error-content -->
             </div><!-- /.error-page -->
         </section><!-- /.content -->

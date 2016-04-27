@@ -30,7 +30,7 @@
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             </div>
                         </div>
-                        @include('partials/admin_nav')
+                        @include('partials/admin_approved_nav')
                     </div><!-- /. box -->
 
                 </div>
@@ -43,7 +43,7 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
-                    {{ Form::model($organization, ['url' => ['admin/organization', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
+                    {{ Form::model($organization, ['url' => ['admin/approved-organization', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
                         <input type="hidden" name="id" value="{{ $organization->id }}">
 
                         <div class="box-body">
@@ -236,7 +236,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
-                                {{ link_to('admin/committee/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                {{ link_to('admin/approved-committee/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                             </div>
                         </div>
                     {{ Form::close() }}

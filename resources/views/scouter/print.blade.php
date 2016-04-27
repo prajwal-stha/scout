@@ -6,16 +6,42 @@
             <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
             <meta name="viewport" content="width= device-width, initial-scale=1.0, user-scalable=no, minimal-ui">
             <style>
-                h3{
+                .center-align{
                     text-align: center;
                 }
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                table, th, td {
+                    border: 1px solid black;
+                }
+                th {
+                    height: 50px;
+                }
+
+                .logo-image{
+                    display: inline;
+                }
+                .center-align-inline{
+                    display: inline;
+                    text-align: center;
+                }
+
             </style>
         </head>
     <body>
-        <h3>Nepal Scout</h3>
-        <img src="{{ asset('img/logo.jpg') }}" alt="LOGO" style="width: 50px;">
-        <p><strong>District Scout Office</strong>, {{ $district->name }}</p>
-        <p><strong>District Code</strong>, {{ $district->district_code }}</p>
+        <div class="center-align">
+            <h1>Nepal Scout</h1>
+        </div>
+        <div class="logo-image">
+            <img src="{{ asset('img/logo.jpg') }}" alt="LOGO" style="width: 50px;">
+        </div>
+        <div class="center-align-inline">
+            <p><strong>District Scout Office</strong>, {{ $district->name }}</p>
+            <p><strong>District Code</strong>, {{ $district->district_code }}</p>
+        </div>
         <h4><strong>Scarf</strong></h4>
         <p><strong>Border Colour</strong> {{ $organization->border_colour }}</p>
         <p><strong>Background Colour</strong>{{ $organization->background_colour }}</p>
@@ -26,7 +52,7 @@
         <p><strong>3. Address Line 1.</strong>{{ $organization->tel_no }}</p>
         <p><strong>Address Line 2.</strong>{{ $organization->address_line_2 or '-' }}</p>
         <p><strong>4. Email</strong>{{ $organization->email}}</p>
-        <h4><strong>Organization Committe Member Detail</strong></h4>
+        <h4><strong>5. Organization Committe Member Detail</strong></h4>
         <table>
             <tbody>
                 <tr>
@@ -41,6 +67,7 @@
 
             </tbody>
         </table>
+        <h4><strong>6. Scouter Detail</strong></h4>
 
         <table>
             <thead>
@@ -59,11 +86,11 @@
                     <tr>
                         <td>Lead Scouter</td>
                         <td>{{ $leadScouter->name }}</td>
-                        <td>{{ $leadScouter->permission or '-' }} / {{ $leadScouter->permission_date or '-' }}</td>
-                        <td>{{ $leadScouter->btc_no or '-' }} / {{ $leadScouter->btc_date or '-' }}</td>
-                        <td>{{ $leadScouter->advance_no or '-' }} / {{ $leadScouter->advance_date or '-' }}</td>
-                        <td>{{ $leadScouter->alt_no or '-' }} / {{ $leadScouter->alt_date or '-' }}</td>
-                        <td>{{ $leadScouter->lt_no or '-' }} / {{ $leadScouter->lt_date or '-' }}</td>
+                        <td>{{ $leadScouter->permission or '-' }}  {{ $leadScouter->permission_date or '-' }}</td>
+                        <td>{{ $leadScouter->btc_no or '-' }}  {{ $leadScouter->btc_date or '-' }}</td>
+                        <td>{{ $leadScouter->advance_no or '-' }}  {{ $leadScouter->advance_date or '-' }}</td>
+                        <td>{{ $leadScouter->alt_no or '-' }}  {{ $leadScouter->alt_date or '-' }}</td>
+                        <td>{{ $leadScouter->lt_no or '-' }}  {{ $leadScouter->lt_date or '-' }}</td>
                     </tr>
                 @endif
 
@@ -71,11 +98,11 @@
                     <tr>
                         <td>Assistant-Lead Scouter</td>
                         <td>{{ $scouter->name }}</td>
-                        <td>{{ $scouter->permission or '-' }} / {{ $scouter->permission_date or '-' }}</td>
-                        <td>{{ $scouter->btc_no or '-' }} / {{ $scouter->btc_date or '-' }}</td>
-                        <td>{{ $scouter->advance_no or '-' }} / {{ $scouter->advance_date or '-' }}</td>
-                        <td>{{ $scouter->alt_no or '-' }} / {{ $scouter->alt_date or '-' }}</td>
-                        <td>{{ $scouter->lt_no or '-' }} / {{ $scouter->lt_date or '-' }}</td>
+                        <td>{{ $scouter->permission or '-' }}  {{ $scouter->permission_date or '-' }}</td>
+                        <td>{{ $scouter->btc_no or '-' }}  {{ $scouter->btc_date or '-' }}</td>
+                        <td>{{ $scouter->advance_no or '-' }}  {{ $scouter->advance_date or '-' }}</td>
+                        <td>{{ $scouter->alt_no or '-' }}  {{ $scouter->alt_date or '-' }}</td>
+                        <td>{{ $scouter->lt_no or '-' }}  {{ $scouter->lt_date or '-' }}</td>
                     </tr>
                 @endif
 
@@ -88,23 +115,24 @@
                     <caption>{{ $value->name }}</caption>
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>S.No.</th>
                             <th>Position</th>
                             <th>DOB</th>
                             <th>Entry Date</th>
-                            <th></th>
+                            <th>Current Position</th>
                             <th>Passed Date</th>
                             <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>lorem</td>
+                            <td>lorem</td>
+                            <td>lorem</td>
+                            <td>lorem</td>
+                            <td>lorem</td>
+                            <td>lorem</td>
+                            <td>lorem</td>
                         </tr>
                     </tbody>
                 </table>

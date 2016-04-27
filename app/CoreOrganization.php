@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class CoreOrganization extends Model
 {
+
+    use SearchableTrait;
     protected $table = 'core_organizations';
 
     protected $fillable = [
@@ -27,7 +30,22 @@ class CoreOrganization extends Model
         'border_colour'
     ];
 
-    public function teams(){
+
+    protected $searchable = [
+        'columns' => [
+            'core_organizations.name' => 10,
+            'core_organizations.chairman_f_name' => 10,
+            'core_organizations.chairman_l_name' => 10,
+            'core_organizations.email' => 5,
+            'districts.name'    => 10,
+            'districts.district_code'   => 2
+        ],
+        'joins' => [
+            'districts' => ['districts.id','core_organizations.district_id'],
+        ],
+    ];
+
+    public function core_teams(){
 
         return $this->hasMany(CoreTeam::class);
 
@@ -53,7 +71,6 @@ class CoreOrganization extends Model
      */
     public function district()
     {
-
         return $this->belongsTo(District::class);
 
     }

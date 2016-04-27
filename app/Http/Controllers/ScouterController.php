@@ -183,6 +183,7 @@ class ScouterController extends Controller
                     $data['teamId'] = $data['team']->first()->id;
                     if ($data['teamId']) {
                         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
+                        $data['team_name'] = Team::findOrFail($data['teamId'])->name;
                     }
                 }
 
@@ -193,6 +194,7 @@ class ScouterController extends Controller
                     $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
                     $data['team_member'] = TeamMember::where('team_id', $teamId)->get();
                     $data['teamId'] = $teamId;
+                    $data['team_name'] = Team::findOrFail($teamId)->name;
                 }
 
             }

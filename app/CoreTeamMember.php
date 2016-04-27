@@ -39,4 +39,43 @@ class CoreTeamMember extends Model
         return $this->belongsTo(CoreTeam::class);
 
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getDobAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['dob'] = $value;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getEntryDateAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['entry_date'] = $value;
+        }
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getPassedDateAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['passed_date'] = $value;
+        }
+    }
 }

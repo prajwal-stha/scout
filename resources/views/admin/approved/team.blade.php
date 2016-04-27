@@ -57,7 +57,7 @@
                             </button>
                         </div>
 
-                        {{ Form::open(['url' => 'admin/member', 'method' => 'PATCH', 'class' => 'form-horizontal update-teamMember-form']) }}
+                        {{ Form::open(['url' => 'admin/approved-member', 'method' => 'PATCH', 'class' => 'form-horizontal update-teamMember-form']) }}
                         <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
                         <input type="hidden"  name="id" value="" id="teamMemberId">
 
@@ -149,7 +149,7 @@
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
                     </div>
-                    @include('partials/admin_nav')
+                    @include('partials/admin_approved_nav')
                 </div><!-- /. box -->
 
             </div>
@@ -194,7 +194,7 @@
                                         <tbody>
                                         @foreach($team as $value)
                                             <tr>
-                                                <td><a class="team-name" href="{{ url( 'admin/teams', [$organization->id, $value->id]) }}">{{ $value->name }}</a></td>
+                                                <td><a class="team-name" href="{{ url( 'admin/approved-teams', [$organization->id, $value->id]) }}">{{ $value->name }}</a></td>
                                                 <td><a class="updateTeam" data-id="{{ $value->id }}">
                                                         <i class="fa fa-pencil"></i></a> |
                                                     <a class="deleteTeam" data-id="{{ $value->id }}" href="{{ url( 'team/remove', [$value->id]) }}"><i class="fa fa-trash-o"></i>
@@ -327,7 +327,7 @@
 
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
-                                    {{ link_to('admin/registration/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                    {{ link_to('admin/approved-registration/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                                 </div>
                                 {{ Form::close() }}
 
@@ -386,10 +386,10 @@
 
     @parent
     <script>
-        var update_team_admin_url = "<?php echo url('admin/update-team'); ?>";
-        var delete_team_admin_url = "<?php echo url('admin/delete-teams'); ?>";
-        var update_teamMember_admin_url = "<?php echo url('admin/member'); ?>";
-        var delete_teamMember_admin_url = "<?php echo url('admin/delete-member'); ?>";
+        var update_team_admin_url = "<?php echo url('admin/update-approved-team'); ?>";
+        var delete_team_admin_url = "<?php echo url('admin/delete-approved-teams'); ?>";
+        var update_teamMember_admin_url = "<?php echo url('admin/approved-member'); ?>";
+        var delete_teamMember_admin_url = "<?php echo url('admin/delete-approved-member'); ?>";
     </script>
 
 

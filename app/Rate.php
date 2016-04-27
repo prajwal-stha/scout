@@ -23,9 +23,5 @@ class Rate extends Model
     protected $fillable = array( 'registration_rate', 'scouter_rate', 'team_rate', 'committee_members_rate', 'disaster_mgmt_trust_rate');
 
 
-    public function get_attributes(){
-        return $this->fillable;
-    }
-
 
 }

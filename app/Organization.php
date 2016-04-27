@@ -64,14 +64,14 @@ class Organization extends Model
      * @param $value
      * @return string
      */
-//    public function getRegistrationDateAttribute($value)
-//    {
-//        if(!is_null($value)) {
-//            $value = explode('-', $value);
-//            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
-//            return $this->attributes['registration_date'] = $value;
-//        }
-//    }
+    public function getRegistrationDateAttribute($value)
+    {
+        if(!is_null($value)) {
+            $value = explode('-', $value);
+            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+            return $this->attributes['registration_date'] = $value;
+        }
+    }
 
 
 }
