@@ -59,6 +59,7 @@ class CloneTable
 
             $this->overwrite = array();
 
+
             $this->overwrite = array(
                 'original_id' => $this->multipleOverwrite[$i]
             );
@@ -80,7 +81,6 @@ class CloneTable
 
             $entry_data = $this->data;
         }
-
 
 
         try{

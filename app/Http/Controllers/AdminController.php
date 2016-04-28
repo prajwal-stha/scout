@@ -598,12 +598,12 @@ class AdminController extends Controller
                 $org->registration_no = $request->get('registration_no');
                 $org->save();
             }
+            $this->cloneModel($org->id);
 
             $response = array(
                 'status'   => 'success',
                 'msg'      => 'Organization successfully updated.'
             );
-            $this->cloneModel($org->id);
 
         }
         return response()->json($response);
@@ -678,11 +678,6 @@ class AdminController extends Controller
 
         $this->organization = Organization::find($id);
 
-//        $this->member = Member::where('organization_id', $id)->get();
-//
-//        $this->team = Team::where('organization_id', $id)->get();
-//
-//        $this->scouter = Scouter::where('organization_id', $id)->get();
 
         // Clone organization
         $this->cloneOrganization();
@@ -690,14 +685,14 @@ class AdminController extends Controller
        // Clone Organization Commiitte Member
         $this->cloneMember();
 
+        // Clone Scouter
+        $this->cloneScouter();
+
         // Clone Team
         $this->cloneTeam();
 
-        // Clone Scouter
-        //$this->cloneScouter();
-
         //  Clone Team Member
-        $this->cloneTeammember();
+        $this->cloneTeammember($id);
 
     }
 
@@ -787,20 +782,38 @@ class AdminController extends Controller
     public function cloneTeammember()
     {
 
-        $attributes = $this->team_member->get_attributes();
 
-        //$this->team = Team::where('organization_id', $id)->get();
+        $team_member = new TeamMember;
+//        $team = Team::where('organization_id', $this->organization->id)->get();
+
+        // ===================
+        $teams = $this->organization->teams->all();
+
+        // This will hold array of TeamMember Objects
+        $teamMembers = array();
+
+        foreach($teams as $team){
+            // each team is Team object
+
+            $teamMembers[] = $team->teamMembers->all();
+
+        }
+
+        foreach($teamMembers as $teamMember){
+
+            $overwrites = array();
+
+            foreach($teamMember as $singleTeam){
+                $overwrites[] = $singleTeam->id;
+            }
+
+            $this->clone->cloneMultipleObjects($teamMember, $this->findAbstractModel('CoreTeamMember'), $team_member->get_attributes(), $overwrites);
+
+            //print_r($this->clone->errors());
+
+        }
 
 
-        // new or overwrite data
-        $this->clone->setOverwrite(array(
-            'original_id' => $this->team_member->id
-        ));
-
-        $this->clone->cloneObject($this->team_member, $this->findAbstractModel('CoreTeamMember'), $attributes);
-
-        print_r($this->clone->errors());
-        
     }
 
 
@@ -863,7 +876,7 @@ class AdminController extends Controller
 
     public function getViewApprovedOrganization($id = NULL)
     {
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
         $data['district'] = District::all();
         $data['title'] = 'Nepal Scout';
         return view('admin.approved.organization')->with( $data );
@@ -879,8 +892,7 @@ class AdminController extends Controller
     public function patchApprovedOrganization(CreateOrganizationAdminRequest $request, $id)
     {
 
-        $org = CoreOrganization::findOrFail($id);
-
+        $org = CoreOrganization::where('original_id', $id)->first();
 
         if($org){
             $org->name               = $request->get('name');
@@ -913,7 +925,7 @@ class AdminController extends Controller
     {
         $data['title'] = 'Nepal Scout';
 
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
 
         $data['member'] = CoreMember::where('organization_id', $id)->get();
         return view('admin.approved.member')->with($data);
@@ -943,7 +955,7 @@ class AdminController extends Controller
      */
     public function getApprovedCommitteeMember($id)
     {
-        $member = Member::findOrFail($id);
+        $member = Member::where('original_id', $id)->first();
         $response = array(
             'status'    => 'success',
             'member'    => $member
@@ -1016,7 +1028,7 @@ class AdminController extends Controller
     {
         $data['title'] = 'Nepal Scout';
 
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
         $data['member'] = CoreMember::where('organization_id', $id)->get();
         $data['leadScouter'] = CoreScouter::where('organization_id', $id)
             ->where('is_lead', 1)
@@ -1098,7 +1110,7 @@ class AdminController extends Controller
 
         $data['title'] = 'Nepal Scout';
 
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
         $data['member'] = CoreMember::where('organization_id', $id)->get();
         $data['scouter'] = CoreScouter::where('organization_id', $id)
             ->where('is_lead', 0)
@@ -1116,12 +1128,13 @@ class AdminController extends Controller
     public function getApprovedTeams($id, $team_id = NULL)
     {
         $data['title'] = 'Nepal Scout';
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
         $data['team'] = CoreTeam::where('organization_id', $id)->get();
+
 
         if(is_null($team_id)) {
 
-            $data['teamId'] = $data['team']->first()->id;
+            $data['teamId'] = $data['team']->first()->original_id;
 
         }else{
 
@@ -1291,7 +1304,7 @@ class AdminController extends Controller
 
         $data['title']        = 'Nepal Scout - Registration Cost Detail';
         $data['rates']        = Rate::first();
-        $data['organization'] = CoreOrganization::findOrFail($id);
+        $data['organization'] = CoreOrganization::where('original_id', $id)->first();
 
         $data['scouter']      = intval(CoreScouter::where('organization_id', $id)->count());
         $data['scout']        = intval(DB::table('core_teams')

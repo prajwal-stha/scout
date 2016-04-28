@@ -141,7 +141,7 @@
                             <div class="box-footer">
 
                                 <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i class="fa fa-refresh"></i> Save</button>
-                                {{ link_to('admin/approved-lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                {{ link_to('admin/approved-lead-scouter/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
 
                             </div>
 

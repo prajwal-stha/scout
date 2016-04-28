@@ -236,7 +236,7 @@
 
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
-                                {{ link_to('admin/approved-committee/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                {{ link_to('admin/approved-committee/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                             </div>
                         </div>
                     {{ Form::close() }}

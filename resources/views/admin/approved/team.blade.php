@@ -194,7 +194,7 @@
                                         <tbody>
                                         @foreach($team as $value)
                                             <tr>
-                                                <td><a class="team-name" href="{{ url( 'admin/approved-teams', [$organization->id, $value->id]) }}">{{ $value->name }}</a></td>
+                                                <td><a class="team-name" href="{{ url( 'admin/approved-teams', [$organization->original_id, $value->original_id]) }}">{{ $value->name }}</a></td>
                                                 <td><a class="updateTeam" data-id="{{ $value->id }}">
                                                         <i class="fa fa-pencil"></i></a> |
                                                     <a class="deleteTeam" data-id="{{ $value->id }}" href="{{ url( 'team/remove', [$value->id]) }}"><i class="fa fa-trash-o"></i>

@@ -35,7 +35,7 @@
                         @foreach($organizations as $value)
                             <tr>
                                 <td>{{ $value->registration_no }}</td>
-                                <td><a href="{{ url('admin/view-approved-organization', [$value->id]) }}">{{ $value->name }}</a></td>
+                                <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
                                 <td>{{ $value->type }}</td>
                                 <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>
                                 <td>{{ $value->dist_name }}</td>

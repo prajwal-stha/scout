@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScouterTable extends Migration
+class CreateCoreTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,17 @@ class CreateScouterTable extends Migration
      */
     public function up()
     {
-        Schema::create('scouters', function( Blueprint $table){
+        Schema::create('core_teams', function (Blueprint $table) {
 
             $table->engine = 'InnoDB';
 
             $table->increments('id');
-            $table->string('f_name', 50);
-            $table->string('l_name', 50);
+            $table->integer('original_id')->unique()->unsigned();
+            $table->string('name', 50);
             $table->integer('organization_id')->unsigned();
-            $table->string('email');
-
-            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->timestamps();
+            $table->foreign('organization_id')->references('original_id')->on('core_organizations');
+            $table->unique(['name', 'organization_id']);
 
         });
     }
@@ -34,6 +34,6 @@ class CreateScouterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scouter');
+        Schema::dropIfExists('core_teams');
     }
 }

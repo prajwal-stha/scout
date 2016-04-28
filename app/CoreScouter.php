@@ -28,7 +28,7 @@ class CoreScouter extends Model
 
     public function organization(){
 
-        return $this->belongsTo(CoreOrganization::class, 'organization_id');
+        return $this->belongsTo(CoreOrganization::class, 'original_id');
 
     }
 

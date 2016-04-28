@@ -25,6 +25,7 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'admin', 'AdminController' );
     Route::controller( 'scouter', 'ScouterController' );
     Route::controller( 'member', 'TeamMemberController' );
+    Route::controller( 'term', 'TermController' );
 
 
 
@@ -44,6 +45,7 @@ Route::group( ['middleware' => ['web']], function () {
         'as'    => 'clone',
         'uses'  => 'AdminController@cloneModel'
     ));
+
 
     Route::controller( '/', 'ScouterController' );
 

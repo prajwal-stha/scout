@@ -47,23 +47,23 @@ class CoreOrganization extends Model
 
     public function core_teams(){
 
-        return $this->hasMany(CoreTeam::class);
+        return $this->hasMany(CoreTeam::class, 'original_id');
 
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function members(){
-        return $this->hasMany(CoreMember::class);
+    public function core_members(){
+        return $this->hasMany(CoreMember::class, 'original_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function scouters()
+    public function core_scouters()
     {
-        return $this->hasMany(CoreScouter::class);
+        return $this->hasMany(CoreScouter::class, 'original_id');
     }
 
     /**

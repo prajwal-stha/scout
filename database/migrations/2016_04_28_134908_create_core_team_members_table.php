@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTeamsMemberTable extends Migration
+class CreateCoreTeamMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,14 @@ class CreateTeamsMemberTable extends Migration
      */
     public function up()
     {
-        Schema::create('team_members', function (Blueprint $table) {
+        Schema::create('core_team_members', function (Blueprint $table) {
 
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+            $table->integer('original_id')->unique()->unsigned();
             $table->string('f_name', 50)->index();
+            $table->string('m_name', 50)->index();
             $table->string('l_name', 50)->index();
             $table->date('dob');
             $table->date('entry_date');
@@ -25,8 +27,9 @@ class CreateTeamsMemberTable extends Migration
             $table->date('passed_date');
             $table->text('note');
             $table->integer('team_id')->unsigned();
+            $table->timestamps();
 
-            $table->foreign('team_id')->references('id')->on('teams');
+            $table->foreign('team_id')->references('original_id')->on('core_teams');
 
         });
     }
@@ -38,6 +41,6 @@ class CreateTeamsMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('team_members');
+        Schema::dropIfExists('core_team_members');
     }
 }

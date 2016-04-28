@@ -172,6 +172,12 @@
                         <li><a href="{{ url('admin/declined-organizations') }}"><i class="fa fa-close"></i> Declined Organizations</a></li>
                     </ul>
                 </li>
+
+                <li{!! Request::path() == 'term' ? ' class="active"': '' !!}>
+                    <a href="{{ url('term') }}">
+                        <i class="fa fa-compass"></i> <span>Districts</span>
+                    </a>
+                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationsTable extends Migration
+class CreateCoreOrganizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,12 @@ class CreateOrganizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('core_organizations', function (Blueprint $table) {
 
             $table->engine = 'InnoDB';
-
             $table->increments('id');
-            $table->string('registration_no')->unique()->nullable();
+            $table->integer('original_id')->unique()->unsigned();
+            $table->string('registration_no')->unique();
             $table->integer('district_id')->unsigned();
             $table->date('registration_date')->nullable();
             $table->string('renew_status')->nullable();
@@ -34,7 +34,7 @@ class CreateOrganizationsTable extends Migration
             $table->string('background_colour');
             $table->string('border_colour');
             $table->foreign('district_id')->references('id')->on('districts');
-
+            $table->timestamps();
         });
     }
 
@@ -45,6 +45,6 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organizations');
+        Schema::dropIfExists('core_organizations');
     }
 }

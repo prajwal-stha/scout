@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
             'email'          => 'user@gmail.com',
             'verified'       => 1,
             'token'          => bcrypt(str_random(30)),
-            'level'          => 1,
+            'level'          => 0,
             'username'       => 'user',
             'password'       => bcrypt('123goldkist'),
             'remember_token' => str_random(10)

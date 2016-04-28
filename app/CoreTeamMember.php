@@ -28,15 +28,15 @@ class CoreTeamMember extends Model
         'position',
         'passed_date',
         'note',
-        'core_team_id'
+        'team_id'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function team()
+    public function core_team()
     {
-        return $this->belongsTo(CoreTeam::class);
+        return $this->belongsTo(CoreTeam::class, 'original_id');
 
     }
 

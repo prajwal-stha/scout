@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrganizationCommitteMemberTable extends Migration
+class CreateOrganizationCommitteMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,6 +18,7 @@ class CreateOrganizationCommitteMemberTable extends Migration
 
             $table->increments('id');
             $table->string('f_name', 50);
+            $table->string('m_name', 50);
             $table->string('l_name', 50);
             $table->integer('organization_id')->unsigned();
 
@@ -33,6 +34,6 @@ class CreateOrganizationCommitteMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('organization_commitee_members');
+        Schema:dropIfExists('organization_commitee_members');
     }
 }

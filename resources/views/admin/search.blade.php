@@ -28,9 +28,9 @@
             @endforeach
         @else
             <div class="error-page">
-                <h2 class="headline text-yellow"> 404</h2>
+                <h2 class="headline text-green"> 404</h2>
                 <div class="error-content">
-                    <h3><i class="fa fa-warning text-yellow"></i> Oops! Not found.</h3>
+                    <h3><i class="fa fa-warning text-red"></i> Oops! Not found.</h3>
                     <p>
                         We could not find the result you were looking for.
                         Meanwhile, you may <a href="{{ url('admin') }}">return to dashboard</a> or be precise with the search query.

@@ -130,15 +130,7 @@
                     </div>
                     <div class="box-footer">
 
-                            <button type="submit" class="btn btn-primary register-modal"><i class="fa fa-check-square-o"></i> Approve</button>
-                            @if($organization->is_declined == false)
-                                {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
-                                    <input type="hidden" name="organization_id" value="{{ $organization->id }}">
-                                    <button type="submit" data-id="{{ $organization->id }}" class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline</button>
-                                {{ Form::close() }}
-                            @endif
-
-                            {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}
+                        {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}
 
                     </div>
                 </div>

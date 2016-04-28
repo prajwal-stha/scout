@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddMNameToTeamMembersTable extends Migration
+class CreateTermsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,11 @@ class AddMNameToTeamMembersTable extends Migration
      */
     public function up()
     {
-        Schema::table('team_members', function (Blueprint $table) {
-            $table->string('m_name', 50)->after('f_name')->index();
+        Schema::create('terms', function(Blueprint $table){
+            $table->increments('id');
+            $table->text('terms');
+            $table->timestamps();
+
         });
     }
 
@@ -24,8 +27,6 @@ class AddMNameToTeamMembersTable extends Migration
      */
     public function down()
     {
-        Schema::table('team_members', function (Blueprint $table) {
-            $table->dropColumn('m_name');
-        });
+        Schema::dropIfExists('terms');
     }
 }

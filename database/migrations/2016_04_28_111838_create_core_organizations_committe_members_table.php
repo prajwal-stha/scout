@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCoreTeamMembersTable extends Migration
+class CreateCoreOrganizationsCommitteMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,24 +12,17 @@ class CreateCoreTeamMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('core_team_members', function (Blueprint $table) {
-
+        Schema::create('core_organization_commitee_members', function(Blueprint $table) {
             $table->engine = 'InnoDB';
-
             $table->increments('id');
+            $table->integer('original_id')->unique()->unsigned();
             $table->string('f_name', 50)->index();
             $table->string('m_name', 50)->index();
             $table->string('l_name', 50)->index();
-            $table->date('dob');
-            $table->date('entry_date');
-            $table->string('position', 50);
-            $table->date('passed_date');
-            $table->text('note');
-            $table->integer('team_id')->unsigned();
+            $table->integer('organization_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('team_id')->references('id')->on('core_teams');
-
+            $table->foreign('organization_id')->references('original_id')->on('core_organizations');
         });
     }
 
@@ -40,6 +33,6 @@ class CreateCoreTeamMembersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('core_team_members');
+        Schema::dropIfExists('core_organization_commitee_members');
     }
 }

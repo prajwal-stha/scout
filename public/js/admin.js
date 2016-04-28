@@ -30,42 +30,142 @@ $(document).ready(function(){
 
     });
 
-
-    $('.adminDeleteCommittee').on("click", function (e) {
-
-        var record_id = $(this).attr('data-id');
-        var row       = $(this).closest('tr');
-        var rowIndex  = $('#table-member tr').index(row);
-
+    $('.updateDistrict').on('click', function (e) {
         e.preventDefault();
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this record!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel please!",
-            closeOnConfirm: true,
-            closeOnCancel: true
-        },
-        function () {
-            $.ajax({
-                url: delete_member_admin_url + '/' + record_id
-            }).done(function (data) {
-
-                swal("Deleted!", "Your record was successfully deleted!", "success");
-                if(rowIndex == 1){
-                    $('#remove_many_members').remove();
-                }
-                row.remove();
-
-            }).error(function (data) {
-                swal("Oops", "We couldn't delete your record!", "error");
+        var id = $(this).attr('data-id');
+        var url = update_district_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#name').val(data.district.name);
+                $('#district_code').val(data.district.district_code);
+                $('#update-district-id').val(id);
             });
+            $('#districtModal').modal('show');
             return;
-        });
+        }
     });
+
+    $('#modal-submit').on('click', function () {
+        $('#district-update-form').submit();
+    });
+
+    $('#district-update-form').on('submit', function(e) {
+        e.preventDefault();
+        $('.error-message').each(function () {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $('input').each(function () {
+            $(this).removeClass('errors');
+        });
+        var current_form = $(this);
+        $.ajax({
+                method: "PATCH",
+                url: $(this).prop('action'),
+                data: {
+                    "_token": $(this).find('input[name=_token]').val(),
+                    "id": $('#update-district-id').val(),
+                    "name": $('#name').val(),
+                    "district_code": $('#district_code').val()
+                },
+                dataType: "json"
+            })
+            .done(function (data) {
+                if (data.status == 'success') {
+                    var successMsg = returnSuccess(data);
+
+                    $('#districtModal').modal('hide');
+                    window.location.href = index_district_url;
+                } else {
+                    //var errorMsg = returnAlert(data);
+                    //$('#modal-alert-placeholder').html(errorMsg);
+                    for (var key in data.msg) {
+                        // skip loop if the property is from prototype
+                        if (!data.msg.hasOwnProperty(key)) continue;
+
+                        var error_message = data.msg[key];
+                        current_form.find('#' + key).addClass('errors');
+                        var parent = current_form.find('#' + key).parent();
+                        parent.find('.error-message').addClass('make-visible').html(error_message);
+                    }
+                }
+            });
+        });
+
+        $('.deleteDistrict').on("click", function (e) {
+
+            var record_id = $(this).attr('data-id');
+            var row = $(this).closest('tr');
+            var rowIndex = $('#table-districts tr').index(row);
+
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this record!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel please!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function () {
+                $.ajax({
+                    url: delete_district_url + '/' + record_id
+                }).done(function (data) {
+
+                    swal("Deleted!", "Your record was successfully deleted!", "success");
+                    //if(rowIndex == 1){
+                    //    $('#remove_many_districts').remove();
+                    //}
+                    //row.remove();
+                    window.location.href = index_district_url;
+
+                }).error(function (data) {
+                    swal("Oops", "We couldn't delete your record!", "error");
+                });
+                return;
+            });
+
+        });
+
+        $('.adminDeleteCommittee').on("click", function (e) {
+
+            var record_id = $(this).attr('data-id');
+            var row       = $(this).closest('tr');
+            var rowIndex  = $('#table-member tr').index(row);
+
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this record!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel please!",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function () {
+                $.ajax({
+                    url: delete_member_admin_url + '/' + record_id
+                }).done(function (data) {
+
+                    swal("Deleted!", "Your record was successfully deleted!", "success");
+                    if(rowIndex == 1){
+                        $('#remove_many_members').remove();
+                    }
+                    row.remove();
+
+                }).error(function (data) {
+                    swal("Oops", "We couldn't delete your record!", "error");
+                });
+                return;
+            });
+        });
 
     $('.adminUpdateMember').on('click', function (e) {
 
@@ -384,6 +484,7 @@ $(document).ready(function(){
             dataType: "json"
         })
         .done(function (data) {
+            console.log(data);
 
             if (data.status == 'success') {
 

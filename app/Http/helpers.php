@@ -48,3 +48,14 @@ function formatNameOption( $option )
     return $data;
 }
 
+function pre($data = null, $exit = false){
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+
+    if($exit){
+        exit;
+    }
+
+}
+

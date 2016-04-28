@@ -30,14 +30,14 @@ class CoreTeam extends Model
      */
     public function organization()
     {
-        return $this->belongsTo(CoreOrganization::class);
+        return $this->belongsTo(CoreOrganization::class, 'original_id');
 
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function teammembers()
+    public function core_teammembers()
     {
         return $this->hasMany(CoreTeamMember::class);
 

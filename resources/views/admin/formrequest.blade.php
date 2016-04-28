@@ -61,3 +61,22 @@
 
 
 @stop
+
+@section('scripts')
+
+    @parent
+    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <script>
+        $('#form-requests').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    </script>
+
+@stop
