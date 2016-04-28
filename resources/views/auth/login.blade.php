@@ -35,9 +35,9 @@
         </div>
     @endif
     @if(Session::has('not_verified'))
-        <div class="alert alert-success alert-dismissable">
+        <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
+            <h4><i class="icon fa fa-check"></i> Whoops!</h4>
             {{ Session::get('not_verified') }}
         </div>
     @endif

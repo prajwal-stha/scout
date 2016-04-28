@@ -22,6 +22,12 @@ class TeamMemberController extends Controller
 {
 
 
+    public function __construct(){
+
+        $this->middleware('auth');
+
+    }
+
     /**
      * @param CreateTeamMemberRequest $request
      * @return \Illuminate\Http\RedirectResponse

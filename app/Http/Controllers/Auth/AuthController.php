@@ -86,7 +86,7 @@ class AuthController extends Controller
         return view('auth.login');
 
     }
-//
+
     public function showRegistrationForm()
     {
         return view('auth.register');
@@ -207,6 +207,19 @@ class AuthController extends Controller
 //
 //        return $user;
 //
+//    }
+
+//    protected function authenticated(){
+//        if(Auth::user()->verified == 1) {
+//            if (Auth::user()->level == 1) {
+//                return redirect()->intended('admin');
+//            }
+//            if (Auth::user()->level  == 0) {
+//                return redirect()->intended('scouter');
+//            }
+//        } else {
+//            return view('auth.login')->with(['not_verified', 'Please verify your email address before you can login']);
+//        }
 //    }
 
     public function logout(){

@@ -120,7 +120,7 @@
             </div>
 
             <div class="col-md-7">
-                @if (isset($districts))
+                @if ($districts->count())
 
                     <div class="box box-success">
                         <div class="box-header">

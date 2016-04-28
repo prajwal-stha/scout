@@ -175,7 +175,7 @@
 
                 <li{!! Request::path() == 'term' ? ' class="active"': '' !!}>
                     <a href="{{ url('term') }}">
-                        <i class="fa fa-compass"></i> <span>Districts</span>
+                        <i class="fa fa-tasks"></i> <span>Terms & Conditions</span>
                     </a>
                 </li>
             </ul>

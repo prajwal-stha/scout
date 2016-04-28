@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
             'verified'       => 1,
             'token'          => bcrypt(str_random(30)),
             'level'          => 0,
-            'username'       => 'user',
+            'username'       => 'public',
             'password'       => bcrypt('123goldkist'),
             'remember_token' => str_random(10)
         ]);

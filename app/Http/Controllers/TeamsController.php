@@ -26,10 +26,9 @@ class TeamsController extends Controller
      */
     public function __construct(){
 
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
 
     }
-
     /**
      * @param CreateTeamRequest $request
      * @return \Illuminate\Http\RedirectResponse

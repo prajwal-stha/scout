@@ -93,7 +93,7 @@ class AdminController extends Controller
     protected $something;
 
     public function __construct(CloneTable $clone){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'role']);
         $this->clone = $clone;
 
     }
