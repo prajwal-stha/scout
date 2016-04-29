@@ -48,8 +48,16 @@ class CoreTeamMember extends Model
     {
         if($value) {
             $value = explode('-', $value);
-            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
-            return $this->attributes['dob'] = $value;
+
+            if(count($value) == 3){
+
+                $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+
+                return $this->attributes['dob'] = $value;
+            }
+
+            return '';
+
         }
     }
 
@@ -61,9 +69,18 @@ class CoreTeamMember extends Model
     {
         if($value) {
             $value = explode('-', $value);
-            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
-            return $this->attributes['entry_date'] = $value;
+
+            if(count($value) == 3){
+
+                $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+
+                return $this->attributes['entry_date'] = $value;
+            }
+
+            return '';
+
         }
+
     }
 
     /**
@@ -74,8 +91,17 @@ class CoreTeamMember extends Model
     {
         if($value) {
             $value = explode('-', $value);
-            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
-            return $this->attributes['passed_date'] = $value;
+
+            if(count($value) == 3){
+
+                $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+
+                return $this->attributes['passed_date'] = $value;
+            }
+
+            return '';
+
         }
+
     }
 }

@@ -29,7 +29,7 @@ class CreateTermsRequest extends Request
         return [
             'title' => 'required',
             'terms' => 'required',
-            'display_order' => 'required|unique,terms,display_order'
+            'order' => 'required|unique:terms,order'
         ];
     }
 }

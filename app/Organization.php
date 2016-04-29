@@ -66,10 +66,19 @@ class Organization extends Model
      */
     public function getRegistrationDateAttribute($value)
     {
-        if(!is_null($value)) {
+
+        if($value) {
             $value = explode('-', $value);
-            $value = $value[2] . '/' . $value[1] . '/' . $value[0];
-            return $this->attributes['registration_date'] = $value;
+
+            if(count($value) == 3){
+
+                $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+
+                return $this->attributes['registration_date'] = $value;
+            }
+
+            return '';
+
         }
     }
 

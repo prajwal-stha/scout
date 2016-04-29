@@ -22,7 +22,7 @@
                         <div class="icon">
                             <i class="fa fa-institution"></i>
                         </div>
-                        <a href="{{ url('admin/view-approved-organization', [$value->id]) }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             @endforeach

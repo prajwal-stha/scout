@@ -35,12 +35,7 @@ class TeamsController extends Controller
      */
     public function postCreate(CreateTeamRequest $request){
         if($request->has('org_id')){
-            Team::create([
-                'name'              => $request->get('name'),
-                'organization_id'   => $request->get('org_id')
-            ]);
-            return redirect()->back()->with(['team_created' => 'The team has been created.']);
-        } else {
+
 
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
 

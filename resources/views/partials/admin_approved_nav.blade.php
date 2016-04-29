@@ -22,7 +22,7 @@
 
 
 
-        <li{!! Request::is('admin/scouter/*')  ? ' class="active"': '' !!}>
+        <li{!! Request::is('admin/approved-scouter/*')  ? ' class="active"': '' !!}>
 
             <a href="{{ url('admin/approved-scouter', [$organization->original_id]) }}"><i class="fa fa-user-plus"></i> Assistant-Lead Scouter Detail</a>
 

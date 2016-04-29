@@ -37,6 +37,7 @@ class CoreOrganization extends Model
             'core_organizations.chairman_f_name' => 10,
             'core_organizations.chairman_l_name' => 10,
             'core_organizations.email' => 5,
+            'core_organizations.type' => 5,
             'districts.name'    => 10,
             'districts.district_code'   => 2
         ],
@@ -73,5 +74,22 @@ class CoreOrganization extends Model
     {
         return $this->belongsTo(District::class);
 
+    }
+
+    public function getRegistrationDateAttribute($value)
+    {
+        if($value) {
+            $value = explode('-', $value);
+
+            if(count($value) == 3){
+
+                $value = $value[2] . '/' . $value[1] . '/' . $value[0];
+
+                return $this->attributes['registration_date'] = $value;
+            }
+
+            return '';
+
+        }
     }
 }

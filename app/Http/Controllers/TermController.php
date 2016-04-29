@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Requests\CreateTermsRequest;
 
 use App\Term;
+use Validator;
 
 /**
  * Class TermController
@@ -44,7 +45,7 @@ class TermController extends Controller
             [
                 'title'         => $request->get('title'),
                 'terms'         => $request->get('terms'),
-                'display_order' => $request->get('display_order')
+                'order' => $request->get('order')
             ]
         );
 
@@ -56,20 +57,69 @@ class TermController extends Controller
     /**
      *
      */
-    public function getUpdate()
+    public function getUpdate($id)
     {
+        $term = Term::findOrFail($id);
+        $response = array(
+            'status'    => 'success',
+            'term'  => $term
+        );
+        return response()->json($response);
         
     }
 
-    public function patchUpdate()
+    public function patchUpdate(Request $request)
     {
+        $rules = array(
+            'title' => 'required|unique:terms,title,'.$request->get('id'),
+            'terms'  => 'required',
+            'order' => 'required|unique:terms,order,'.$request->get('id')
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        // process the form
+        if ($validator->fails()) {
+            $response = array(
+                'status' => 'danger',
+                'msg'    => $validator->getMessageBag()->toArray()
+            );
+
+        } else {
+            $id = $request->get('id');
+
+            if($id) {
+                $term = Term::findOrFail($id);
+                $input = $request->all();
+
+                $term->fill($input)->save();
+
+                $response = array(
+                    'status'   => 'success',
+                    'msg'      => 'Term successfully updated.',
+                    'term' => $term
+                );
+            }
+        }
+        return response()->json($response);
         
     }
 
-    public function getDelete()
+    public function getDelete($id)
     {
-        
+        $term = Term::findOrFail($id);
+        if($term){
+            Term::destroy($term->id);
+            $response = array(
+                'status' => 'success'
+            );
+        }else {
+            $response = array(
+                'status' => 'error'
+            );
+        }
+        return response()->json($response);
     }
+
 
     public function postRemove(Request $request)
     {

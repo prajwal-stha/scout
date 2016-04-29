@@ -141,7 +141,7 @@
             <ul class="sidebar-menu">
                 <li class="header">MAIN NAVIGATION</li>
                 <li{!! Request::path() == 'admin/form' ? ' class="active"': '' !!}>
-                    <a href=" {{ url('admin/form') }}">
+                    <a href="{{ $unregistered_registration_no > 0 ? url('admin/form') : 'javscript:;' }}">
                         <i class="fa fa-envelope"></i> <span>Form Requests</span>
                         @if($unregistered_registration_no > 0)
                             <small class="label pull-right bg-yellow">{{ $unregistered_registration_no }}</small>

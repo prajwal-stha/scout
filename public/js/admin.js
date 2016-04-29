@@ -61,15 +61,15 @@ $(document).ready(function(){
         });
         var current_form = $(this);
         $.ajax({
-                method: "PATCH",
-                url: $(this).prop('action'),
-                data: {
-                    "_token": $(this).find('input[name=_token]').val(),
-                    "id": $('#update-district-id').val(),
-                    "name": $('#name').val(),
-                    "district_code": $('#district_code').val()
-                },
-                dataType: "json"
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-district-id').val(),
+                "name": $('#name').val(),
+                "district_code": $('#district_code').val()
+            },
+            dataType: "json"
             })
             .done(function (data) {
                 if (data.status == 'success') {
@@ -539,6 +539,203 @@ $(document).ready(function(){
             });
             return;
         });
+    });
+
+
+
+    $('.deleteTerm').on('click', function(e){
+        e.preventDefault();
+        var record_id = $(this).attr('data-id');
+
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_terms_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                location.reload();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+    });
+
+    $('.updateTerm').on('click', function (e) {
+
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_terms_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#update-term-id').val(id);
+                $('#title').val(data.term.title);
+                $('#terms').val(data.term.terms);
+                $('#order select').val(data.term.order);
+            });
+            $('#termModal').modal('show');
+            return;
+        }
+    });
+
+    $('#modal-terms-submit').on('click', function () {
+        $('#term-update-form').submit();
+    });
+
+    $('#term-update-form').on('submit', function(e){
+        e.preventDefault();
+
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('has-error');
+        });
+        var current_form = $(this);
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-term-id').val(),
+                "title": $('#title').val(),
+                "terms": $('#terms').val(),
+                "order": $('#order').val(),
+            },
+            dataType: "json"
+            })
+            .done(function (data) {
+                if (data.status == 'success') {
+                    //var successMsg = returnSuccess(data);
+
+                    $('#termModal').modal('hide');
+                    location.reload();
+                } else {
+                    //var errorMsg = returnAlert(data);
+                    //$('.alert-placeholder-member').html(errorMsg);
+                    for (var key in data.msg) {
+                        // skip loop if the property is from prototype
+                        if (!data.msg.hasOwnProperty(key)) continue;
+                        var error_message = data.msg[key];
+                        var parent = current_form.find('#' + key).parent();
+                        current_form.find('#' + key).addClass('has-error');
+
+                        parent.find('.error-message').addClass('make-visible').html(error_message);
+                    }
+                }
+            });
 
     });
+
+
+    // Approved Teams
+
+    $('.approvedUpdateTeam').on('click', function (e) {
+
+        e.preventDefault();
+        var id = $(this).attr('data-id');
+        var url = update_approved_team_admin_url + '/' + id;
+        if (id) {
+            $.get(url).done(function (data) {
+                $('#name').val(data.team.name);
+                $('#update-team-org-id').val(data.team.organization_id);
+                $('#update-team-id').val(id);
+            });
+            $('#approvedteamModal').modal('show');
+            return;
+        }
+    });
+
+    $('#modal-team-submit').on('click', function () {
+        $('.update-approved-team-form').submit();
+    });
+
+
+    $('.update-approved-team-form').on('submit', function(e){
+        e.preventDefault();
+        $( '.error-message' ).each(function( ) {
+            $(this).removeClass('make-visible');
+            $(this).html('');
+        });
+
+        $( 'input' ).each(function( ) {
+            $(this).removeClass('has-error');
+        });
+
+        var current_form = $(this);
+
+        $.ajax({
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#update-team-id').val(),
+                "name": $('#name').val(),
+                "organization_id": $('#update-team-org-id').val()
+            },
+            dataType: "json"
+        })
+        .done(function (data) {
+            if (data.status == 'success') {
+                $('#teamModal').modal('hide');
+                location.reload();
+            } else {
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+                    var error_message = data.msg[key];
+                    var parent = current_form.find('#' + key).parent();
+                    current_form.find('#' + key).addClass('has-error');
+
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
+                }
+            }
+        });
+    });
+
+
+    $('.adminDeleteApprovedCommittee').on('click', function(e){
+        e.preventDefault();
+        var record_id = $(this).attr('data-id');
+
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_approved_member_admin_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                location.reload();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+    });
+
 });

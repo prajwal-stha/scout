@@ -19,9 +19,16 @@ function flash($message){
 // Format the input date to mysql format
 function formatDate( $date ){
     $date = explode('/', $date);
-    $date = $date[2].'-'.$date[1].'-'.$date[0];
-    return date('Y-m-d', strtotime($date));
+
+    if(count($date) == 3){
+        $date = $date[2].'-'.$date[1].'-'.$date[0];
+        return date('Y-m-d', strtotime($date));
+    }
+
+    return '';
+
 }
+
 
 //Get the select option
 

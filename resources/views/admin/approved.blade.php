@@ -19,33 +19,36 @@
                         <h3 class="box-title">{{ Request::path() == 'admin/declined-organizations' ? 'Declined Organizations' : 'All Organizations' }}</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-                    <table id="table-approved-organizations" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>Registration No.</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Chairman</th>
-                            <th>District</th>
-                            <th>Contact No.</th>
-                        </tr>
-                        </thead>
-                        <tbody id="list-approved-organizations">
 
-                        @foreach($organizations as $value)
+                    @if(count($organizations) > 0)
+                        <table id="table-approved-organizations" class="table table-bordered table-striped">
+                            <thead>
                             <tr>
-                                <td>{{ $value->registration_no }}</td>
-                                <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
-                                <td>{{ $value->type }}</td>
-                                <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>
-                                <td>{{ $value->dist_name }}</td>
-                                <td>{{ $value->tel_no }}</td>
+                                <th>Registration No.</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Chairman</th>
+                                <th>District</th>
+                                <th>Contact No.</th>
                             </tr>
-                        @endforeach
+                            </thead>
+                            <tbody id="list-approved-organizations">
 
-                        </tbody>
+                                @foreach($organizations as $value)
+                                    <tr>
+                                        <td>{{ $value->registration_no }}</td>
+                                        <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
+                                        <td>{{ $value->type }}</td>
+                                        <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>
+                                        <td>{{ $value->dist_name }}</td>
+                                        <td>{{ $value->tel_no }}</td>
+                                    </tr>
+                                @endforeach
 
-                    </table>
+                            </tbody>
+
+                        </table>
+                    @endif
                 </div><!-- /.box -->
             </div>
         </div>

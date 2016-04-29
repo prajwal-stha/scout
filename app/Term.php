@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Term extends Model
 {
-    protected $fillable = [ 'title', 'terms', 'display_order' ];
+    protected $fillable = [ 'title', 'terms', 'order' ];
 }

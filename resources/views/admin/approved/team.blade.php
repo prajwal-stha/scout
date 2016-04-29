@@ -12,7 +12,7 @@
     </section>
 
     <section class="content">
-        <div class="modal" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">
+        <div class="modal" id="approvedteamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="alert-placeholder"></div>
@@ -22,8 +22,8 @@
                         </button>
                     </div>
 
-                    {{ Form::open(['url' => 'team/update', 'method' => 'PATCH', 'class' => 'update-team-form']) }}
-                        <input type="hidden" name="organization_id" value="{{ $organization->id }}" id="update-team-org-id">
+                    {{ Form::open(['url' => 'admin/approved-teams', 'method' => 'PATCH', 'class' => 'update-approved-team-form']) }}
+                        <input type="hidden" name="organization_id" value="{{ $organization->original_id }}" id="update-team-org-id">
                         <input type="hidden" name="id" value="" id="update-team-id">
 
                         <div class="modal-body">
@@ -163,9 +163,9 @@
                         <div class="row">
                             <div class="col-md-4">
 
-                                {{ Form::open(['url' => 'team/create', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
+                                {{ Form::open(['url' => 'admin/create-approved-team', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
 
-                                <input type="hidden" name="org_id" id="org_id" value="{{  $organization->id }}">
+                                <input type="hidden" name="org_id" id="org_id" value="{{  $organization->original_id }}">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                     {{ Form::label('team-name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
                                     <div class="col-md-8 col-sm-8 col-xs-12">
@@ -195,9 +195,9 @@
                                         @foreach($team as $value)
                                             <tr>
                                                 <td><a class="team-name" href="{{ url( 'admin/approved-teams', [$organization->original_id, $value->original_id]) }}">{{ $value->name }}</a></td>
-                                                <td><a class="updateTeam" data-id="{{ $value->id }}">
+                                                <td><a class="approvedUpdateTeam" data-id="{{ $value->original_id }}">
                                                         <i class="fa fa-pencil"></i></a> |
-                                                    <a class="deleteTeam" data-id="{{ $value->id }}" href="{{ url( 'team/remove', [$value->id]) }}"><i class="fa fa-trash-o"></i>
+                                                    <a class="approvedDeleteTeam" data-id="{{ $value->original_id }}" href="{{ url( 'admin/delete-approved-teams', [$value->id]) }}"><i class="fa fa-trash-o"></i>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -209,7 +209,7 @@
 
                             </div>
                             <div class="col-md-8">
-                                {{ Form::open(['url' => 'member/create', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
+                                {{ Form::open(['url' => 'admin/create-approved-team-member', 'class' => 'form-horizontal', 'id' =>'approved-member-create-form']) }}
 
                                 @if(isset($team))
                                     <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
@@ -364,9 +364,9 @@
                                 <td>{{ $value->dob }}</td>
                                 <td>{{ $value->entry_date }}</td>
                                 <td>{{ $value->passed_date }}</td>
-                                <td><a class="updateTeamMember" data-id="{{ $value->id }}">
+                                <td><a class="updateApprovedTeamMember" data-id="{{ $value->id }}">
                                         <i class="fa fa-pencil"></i></a> |
-                                    <a class="deleteTeamMember" data-id="{{ $value->id }}" href="{{ url( 'member/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i>
+                                    <a class="deleteApprovedTeamMember" data-id="{{ $value->id }}" href="{{ url( 'admin/delete-approved-member', [$value->id]) }}"><i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -386,10 +386,10 @@
 
     @parent
     <script>
-        var update_team_admin_url = "<?php echo url('admin/update-approved-team'); ?>";
-        var delete_team_admin_url = "<?php echo url('admin/delete-approved-teams'); ?>";
-        var update_teamMember_admin_url = "<?php echo url('admin/approved-member'); ?>";
-        var delete_teamMember_admin_url = "<?php echo url('admin/delete-approved-member'); ?>";
+        var update_approved_team_admin_url = "<?php echo url('admin/update-approved-team'); ?>";
+        var delete_approved_team_admin_url = "<?php echo url('admin/delete-approved-teams'); ?>";
+        var update_approved_teamMember_admin_url = "<?php echo url('admin/approved-member'); ?>";
+        var delete_approved_teamMember_admin_url = "<?php echo url('admin/delete-approved-member'); ?>";
     </script>
 
 

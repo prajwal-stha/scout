@@ -1,150 +1,8 @@
-{{--<!DOCTYPE html>--}}
-    {{--<html>--}}
-        {{--<head>--}}
-            {{--<title></title>--}}
-            {{--<meta name="apple-mobile-web-app-capable" content="yes" />--}}
-            {{--<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />--}}
-            {{--<meta name="viewport" content="width= device-width, initial-scale=1.0, user-scalable=no, minimal-ui">--}}
-            {{--<style>--}}
-                {{--.center-align{--}}
-                    {{--text-align: center;--}}
-                {{--}--}}
-                {{--table {--}}
-                    {{--border-collapse: collapse;--}}
-                    {{--width: 100%;--}}
-                {{--}--}}
-
-                {{--table, th, td {--}}
-                    {{--border: 1px solid black;--}}
-                {{--}--}}
-                {{--th {--}}
-                    {{--height: 50px;--}}
-                {{--}--}}
-
-                {{--.logo-image{--}}
-                    {{--display: inline;--}}
-                {{--}--}}
-                {{--.center-align-inline{--}}
-                    {{--display: inline;--}}
-                    {{--text-align: center;--}}
-                {{--}--}}
-
-            {{--</style>--}}
-        {{--</head>--}}
-    {{--<body>--}}
-        {{--<div class="center-align">--}}
-            {{--<h1>Nepal Scout</h1>--}}
-        {{--</div>--}}
-        {{--<div class="logo-image">--}}
-            {{--<img src="{{ asset('img/logo.jpg') }}" alt="LOGO" style="width: 50px;">--}}
-        {{--</div>--}}
-        {{--<div class="center-align-inline">--}}
-            {{--<p><strong>District Scout Office</strong>, {{ $district->name }}</p>--}}
-            {{--<p><strong>District Code</strong>, {{ $district->district_code }}</p>--}}
-        {{--</div>--}}
-        {{--<h4><strong>Scarf</strong></h4>--}}
-        {{--<p><strong>Border Colour</strong> {{ $organization->border_colour }}</p>--}}
-        {{--<p><strong>Background Colour</strong>{{ $organization->background_colour }}</p>--}}
-        {{--<p><strong>1. Organization Name</strong>{{ $organization->name }}</p>--}}
-        {{--<p><strong>2. {{ $organization->type == 'school' ? 'Principal' : 'Chairman' }}</strong> {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</p>--}}
-        {{--<p><strong>Mobile No.</strong>{{ $organization->mobile_no }}</p>--}}
-        {{--<p><strong>Tel No.</strong>{{ $organization->tel_no }}</p>--}}
-        {{--<p><strong>3. Address Line 1.</strong>{{ $organization->tel_no }}</p>--}}
-        {{--<p><strong>Address Line 2.</strong>{{ $organization->address_line_2 or '-' }}</p>--}}
-        {{--<p><strong>4. Email</strong>{{ $organization->email}}</p>--}}
-        {{--<h4><strong>5. Organization Committe Member Detail</strong></h4>--}}
-        {{--<table>--}}
-            {{--<tbody>--}}
-                {{--<tr>--}}
-                    {{--<td>Chairman: {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</td>--}}
-                {{--</tr>--}}
-
-                {{--@if($member)--}}
-                    {{--@foreach($member as $value)--}}
-                        {{--<tr><td> Member: {{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</td></tr>--}}
-                    {{--@endforeach--}}
-                {{--@endif--}}
-
-            {{--</tbody>--}}
-        {{--</table>--}}
-        {{--<h4><strong>6. Scouter Detail</strong></h4>--}}
-
-        {{--<table>--}}
-            {{--<thead>--}}
-                {{--<tr>--}}
-                    {{--<th></th>--}}
-                    {{--<th>Full Name</th>--}}
-                    {{--<th>Permission Letter No./ Date</th>--}}
-                    {{--<th>B.T.C / P.T.C No. / Date</th>--}}
-                    {{--<th>Advance Certificate No. / Date</th>--}}
-                    {{--<th>ALT No. / Date</th>--}}
-                    {{--<th>LT No. / Date</th>--}}
-                {{--</tr>--}}
-            {{--</thead>--}}
-            {{--<tbody>--}}
-                {{--@if($leadScouter)--}}
-                    {{--<tr>--}}
-                        {{--<td>Lead Scouter</td>--}}
-                        {{--<td>{{ $leadScouter->name }}</td>--}}
-                        {{--<td>{{ $leadScouter->permission or '-' }}  {{ $leadScouter->permission_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->btc_no or '-' }}  {{ $leadScouter->btc_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->advance_no or '-' }}  {{ $leadScouter->advance_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->alt_no or '-' }}  {{ $leadScouter->alt_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->lt_no or '-' }}  {{ $leadScouter->lt_date or '-' }}</td>--}}
-                    {{--</tr>--}}
-                {{--@endif--}}
-
-                {{--@if($scouter)--}}
-                    {{--<tr>--}}
-                        {{--<td>Assistant-Lead Scouter</td>--}}
-                        {{--<td>{{ $scouter->name }}</td>--}}
-                        {{--<td>{{ $scouter->permission or '-' }}  {{ $scouter->permission_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->btc_no or '-' }}  {{ $scouter->btc_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->advance_no or '-' }}  {{ $scouter->advance_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->alt_no or '-' }}  {{ $scouter->alt_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->lt_no or '-' }}  {{ $scouter->lt_date or '-' }}</td>--}}
-                    {{--</tr>--}}
-                {{--@endif--}}
-
-            {{--</tbody>--}}
-        {{--</table>--}}
-
-        {{--@if($team)--}}
-            {{--@foreach($team as $value)--}}
-                {{--<table>--}}
-                    {{--<caption>{{ $value->name }}</caption>--}}
-                    {{--<thead>--}}
-                        {{--<tr>--}}
-                            {{--<th>S.No.</th>--}}
-                            {{--<th>Position</th>--}}
-                            {{--<th>DOB</th>--}}
-                            {{--<th>Entry Date</th>--}}
-                            {{--<th>Current Position</th>--}}
-                            {{--<th>Passed Date</th>--}}
-                            {{--<th>Notes</th>--}}
-                        {{--</tr>--}}
-                    {{--</thead>--}}
-                    {{--<tbody>--}}
-                        {{--<tr>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                        {{--</tr>--}}
-                    {{--</tbody>--}}
-                {{--</table>--}}
-            {{--@endforeach--}}
-        {{--@endif--}}
-    {{--</body>--}}
-{{--</html>--}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ $title }}</title>
+    <title>Title</title>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 </head>
 <style media="all">
@@ -499,10 +357,7 @@
         }
     }
 
-
-</style>
-<style media="print">
-
+    @media print {
         * {
             color: #000 !important;
         }
@@ -523,9 +378,6 @@
             font-size: 14px;
         }
 
-        .form-title span {
-            box-shadow: none;
-        }
         .container {
             width: 100%;
             margin: 0;
@@ -556,16 +408,19 @@
         table {
             max-width: 100%;
         }
+    }
+</style>
+<style media="print">
 
 </style>
 <body>
 <div class="container">
     <div class="heading">
-        <div class="left"><img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Scout logo"></div>
+        <div class="left"><img class="logo" src="scout_logo.jpg" alt="Scout logo"></div>
         <div class="middle">
             <h1>NEPAL SCOUT</h1>
-            <h2>District Scout Office. <span>{{ $district->name }}</span></h2>
-            <h2>District Code <span>{{ $district->district_code }}</span></h2>
+            <h2>District Scout Office. <span>.......................</span></h2>
+            <h2>District Code <span>.......................</span></h2>
         </div>
         <div class="right">
             <div class="form-type clearfix">
@@ -574,22 +429,22 @@
             </div>
             <div class="form-info clearfix">
                 <p>Fiscal year <span>...............................</span></p>
-                <p>Registration No.<span>{{ $organization->registration_no }}</span></p>
+                <p>Registration No.. <span>.........................</span></p>
                 <p>Code No. <span>...............................</span></p>
-                <p>Start date <span>{{ $organization->registration_date }}</span></p>
+                <p>Start date <span>...............................</span></p>
             </div>
         </div>
     </div>
     <div class="heading-bottom clearfix">
         <div class="scaft">
-            <div class="title">Scarf Color</div>
+            <div class="title">Scaft Color and sample</div>
             <div class="box clearfix">
                 <div class="text">
                     <div>
-                        Border : <span>{{ $organization->border_colour }}</span>
+                        Border : <span>....................................</span>
                     </div>
                     <div>
-                        Background : <span>{{ $organization->background_colour }}</span>
+                        Background : <span>...........................</span>
                     </div>
                 </div>
                 <!--    <div class="scaft-img">
@@ -604,40 +459,40 @@
     </div>
     <div class="form">
         <ol>
-            <li><span class="title">School/Institute : </span>
-                <span class="input">{{ $organization->name }}</span>
+            <li><span class="title">School/Institute : </1span>
+                <span class="input">............................................................................................................</span>
             </li>
             <li class="clearfix">
 
                 <div class="col-2">
                     <span class="title">Principal/Chairman Name : </span>
-                    <span class="input"> {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span>
+                    <span class="input">....................................</span>
                 </div>
                 <div class="col-2">
                     <span class="title">Mobile No. : </span>
-                    <span class="input">{{ $organization->chairman_mobile_no }}</span>
+                    <span class="input">....................................</span>
                 </div>
 
             </li>
             <li class="clearfix">
                 <div class="col-2">
                     <span class="title">Address : </span>
-                    <span class="input">{{ $organization->address_line_1 }} {{ $organization->address_line_2 }}</span>
+                    <span class="input">....................................</span>
                 </div>
                 <div class="col-2">
                     <span class="title">Phone NO. : </span>
-                    <span class="input">{{ $organization->tel_no }}</span>
+                    <span class="input">....................................</span>
                 </div>
 
             </li>
             <li class="clearfix">
                 <div class="col-2">
-                    <span class="title">Email (School/Institute)  </span>
-                    <span class="input">{{ $organization->email}}</span>
+                    <span class="title">Email(School/Institute)  </span>
+                    <span class="input">....................................</span>
                 </div>
                 <div class="col-2">
-                    <span class="title">Email (Scouter)</span>
-                    <span class="input">{{ $leadScouter->email or '-' }}</span>
+                    <span class="title">Email(Scouter)</span>
+                    <span class="input">....................................</span>
                 </div>
 
             </li>
@@ -645,18 +500,29 @@
                 <div class="title">Committee Member</div>
                 <div class="member-list clearfix">
                     <div>
-                        <div>Chairman: <span class="input">{{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span></div>
+                        <div>Chairman: <span class="input">....................................</span></div>
                     </div>
-                    @if($member)
-                        @foreach($member as $value)
-                    {{--<tr><td> Member: {{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</td></tr>--}}
-
-                            <div>
-                                <div>Member: <span class="input">{{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</span></div>
-                            </div>
-                        @endforeach
-                    @endif
-
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
+                    <div>
+                        <div>Member: <span class="input">....................................</span></div>
+                    </div>
 
                 </div>
             </li>
@@ -667,34 +533,22 @@
                         <tr>
                             <th></th>
                             <th>Full Name</th>
-                            <th>Permission letter / Date</th>
-                            <th>B.T.C/ P.T.C. / Date</th>
-                            <th>Advance / Date</th>
-                            <th>A.L.T / Date</th>
-                            <th>LT / Date</th>
+                            <th>Permission letter Date</th>
+                            <th>B.T.C/ P.T.C.</th>
+                            <th>Advance</th>
+                            <th>A.L.T</th>
+                            <th>LT</th>
                         </tr>
-                        @if($leadScouter)
-                            <tr>
-                                <th>Lead Scouter</th>
-                                <td>{{ $leadScouter->name }}</td>
-                                <td>{{ $leadScouter->permission or '-' }}  {{ $leadScouter->permission_date or '-' }}</td>
-                                <td>{{ $leadScouter->btc_no or '-' }}  {{ $leadScouter->btc_date or '-' }}</td>
-                                <td>{{ $leadScouter->advance_no or '-' }}  {{ $leadScouter->advance_date or '-' }}</td>
-                                <td>{{ $leadScouter->alt_no or '-' }}  {{ $leadScouter->alt_date or '-' }}</td>
-                                <td>{{ $leadScouter->lt_no or '-' }}  {{ $leadScouter->lt_date or '-' }}</td>
-                            </tr>
-                        @endif
-                        @if($scouter)
-                            <tr>
-                                <th>Assistant-Lead Scouter</th>
-                                <td>{{ $scouter->name }}</td>
-                                <td>{{ $scouter->permission or '-' }}  {{ $scouter->permission_date or '-' }}</td>
-                                <td>{{ $scouter->btc_no or '-' }}  {{ $scouter->btc_date or '-' }}</td>
-                                <td>{{ $scouter->advance_no or '-' }}  {{ $scouter->advance_date or '-' }}</td>
-                                <td>{{ $scouter->alt_no or '-' }}  {{ $scouter->alt_date or '-' }}</td>
-                                <td>{{ $scouter->lt_no or '-' }}  {{ $scouter->lt_date or '-' }}</td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <td>Secretary</td>
+                            <td>Helper ScouterHelper ScouterHelper ScouterHelper ScouterHelper Scouter</td>
+
+                            <td>Helper ScouterHelper Scouter</td>
+                            <td>Helper ScouterHelper Scouter</td>
+                            <td>Helper Scouter</td>
+                            <td>Helper Scouter</td>
+                            <td>Helper Scouter</td>
+                        </tr>
                     </table>
                 </div>
             </li>
@@ -710,38 +564,38 @@
 
                         </tr>
                         <tr>
-                            <th>Unit Registration / Renew</th>
-                            <td>-</td>
-                            <td>{{ 'Rs. '. $rates->registration_rate }}</td>
-                            <td>{{ 'Rs. '. $rates->registration_rate }}</td>
+                            <td>Registration/ Renew</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <th>Scouter (M / F)</th>
-                            <td>{{ $scouter_no }}</td>
-                            <td>{{ 'Rs. '. $rates->scouter_rate }}</td>
-                            <td>{{ 'Rs. ' . ($scouter_no * $rates->scouter_rate) }}</td>
-                        </tr>
-                        <tr>
-
-                            <th>Scout</th>
-                            <td>{{ $scout_no }}</td>
-                            <td>{{ 'Rs. '. $rates->team_rate }}</td>
-                            <td>{{ 'Rs. '. ($scout_no * $rates->team_rate) }}</td>
-                        </tr>
-
-                        <tr>
-
-                            <th>Organization Commitee Member</th>
-                            <td>{{ $member_no }}</td>
-                            <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
-                            <td>{{ 'Rs. ' . ($member_no * $rates->committee_members_rate) }}</td>
+                            <td>Scouter(M / F)</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr>
 
-                            <th>Disaster Management Trust</th>
-                            <td>{{ $total }}</td>
-                            <td>{{ 'Rs. ' . $rates->disaster_mgmt_trust_rate }}</td>
-                            <td>{{ 'Rs. ' . ($total * $rates->disaster_mgmt_trust_rate) }}</td>
+                            <td>Scout</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+
+                            <td>Sub committee member</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+
+                            <td>Crisis Management Fund</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                     </table>
                 </div>
             </li>
@@ -986,13 +840,14 @@
     </div>
 
     <div class="footer">
-        @if($terms)
-            <ol>
-                @foreach($terms as $value)
-                    <li>{{ $value->terms }}</li>
-                @endforeach
-            </ol>
-        @endif
+        <ol>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Lorem ipsum dolor sillo natus officiis sapiente?</li>
+            <li>Lorem ipsum dolor siofficiis sapiente?</li>
+            <li>Lorem ipsum dolor sit lores illo natus officiis sapiente?</li>
+            <li>Lorem ipsum dolor site?</li>
+            <li>Lorem ipsum ciis sapiente?</li>
+        </ol>
     </div>
 </div>
 </body>

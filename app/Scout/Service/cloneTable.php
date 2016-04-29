@@ -17,7 +17,6 @@ class CloneTable
     protected $to;
     protected $data;
     protected $overwrite;
-    protected $multipleOverwrite;
     protected $errors = array();
 
     public function __construct(){
@@ -51,22 +50,19 @@ class CloneTable
      */
     public function cloneMultipleObjects($models = array(), Model $to, $attributes = array(), $overwrite = array()){
 
-        $this->setMultipleOverwrite($overwrite);
-
-        $count = count($this->multipleOverwrite);
-
-        for($i = 0; $i < $count; $i++){
+        $count = 0;
+        foreach($models as $model){
 
             $this->overwrite = array();
 
+            $this->overwrite = $overwrite[$count];
 
-            $this->overwrite = array(
-                'original_id' => $this->multipleOverwrite[$i]
-            );
+            $this->cloneObject($model, $to, $attributes);
 
-            $this->cloneObject($models[$i], $to, $attributes);
+            $count++;
 
         }
+
 
     }
 
@@ -109,12 +105,6 @@ class CloneTable
     public function setOverwrite($overwrite = array()){
 
         $this->overwrite = $overwrite;
-
-    }
-
-    protected function setMultipleOverwrite($overwrites = array()){
-
-        $this->multipleOverwrite = $overwrites;
 
     }
 

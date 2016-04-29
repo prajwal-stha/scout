@@ -5,9 +5,9 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 
 use Auth;
-use App\TeamMember;
+use App\CoreTeamMember;
 
-class CreateTeamMemberRequest extends Request
+class CreateApprovedTeamMemberRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,7 +17,7 @@ class CreateTeamMemberRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(TeamMember::where('team_id', $this->get('team_id'))->count() < 8) {
+            if(CoreTeamMember::where('team_id', $this->get('team_id'))->count() < 8) {
                 return TRUE;
             }
         } else {
@@ -43,5 +43,4 @@ class CreateTeamMemberRequest extends Request
             'team_id'       => 'required|exists:teams,id'
         ];
     }
-
 }

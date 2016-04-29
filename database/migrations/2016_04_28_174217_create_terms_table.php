@@ -16,7 +16,7 @@ class CreateTermsTable extends Migration
             $table->increments('id');
             $table->string('title', 100);
             $table->text('terms');
-            $table->integer('display_order')->unsigned();
+            $table->integer('order')->unsigned();
             $table->timestamps();
 
         });

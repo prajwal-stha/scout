@@ -43,7 +43,7 @@
                     </div>
 
                     {{ Form::open(['url' => 'admin/approved-committee', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
-                        <input type="hidden" name="organization_id" value="{{ $organization->id }}" id="update-member-org-id">
+                        <input type="hidden" name="organization_id" value="" id="update-member-org-id">
                         <input type="hidden" name="id" value="" id="update-member-id">
 
                         <div class="modal-body">
@@ -98,8 +98,8 @@
                     </div><!-- /.box-header -->
 
                     <div class="box-body">
-                        {{ Form::open(['url' => 'admin/committee', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
-                        <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->id }}">
+                        {{ Form::open(['url' => 'admin/approved-committee', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
+                        <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->original_id }}">
                         <div class="box-body">
                             <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
                                 {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
@@ -164,9 +164,9 @@
                                                 <td>{{ $value->m_name }}</td>
                                                 <td>{{ $value->l_name }}</td>
                                                 <td>
-                                                    <a class="adminUpdateMember" data-id="{{ $value->id }}">
+                                                    <a class="adminUpdateApprovedMember" data-id="{{ $value->original_id }}">
                                                         <i class="fa fa-pencil"></i></a> |
-                                                    <a class="adminDeleteCommittee" data-id="{{ $value->id }}" href="{{ url( 'admin/delete-approved-committee', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
+                                                    <a class="adminDeleteApprovedCommittee" data-id="{{ $value->original_id }}" href="{{ url( 'admin/delete-approved-committee', [$value->original_id]) }}"><i class="fa fa-trash-o"></i></a>
                                             </tr>
                                         @endforeach
 
@@ -190,8 +190,8 @@
 
     @parent
     <script>
-        var delete_member_admin_url =  "<?php echo url('admin/delete-approved-committee'); ?>";
-        var update_member_admin_url = "<?php echo url('admin/approved-committee-member'); ?>";
+        var delete_approved_member_admin_url =  "<?php echo url('admin/delete-approved-committee'); ?>";
+        var update_approved_member_admin_url = "<?php echo url('admin/approved-committee-member'); ?>";
 
     </script>
 

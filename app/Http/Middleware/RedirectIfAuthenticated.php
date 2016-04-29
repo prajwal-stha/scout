@@ -17,12 +17,12 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/');
+        if ($this->auth->check())
+        {
+            return new RedirectResponse(url('/home')); // change to whatever you like
         }
 
-            return $next($request);
-
+        return $next($request);
 
 
     }

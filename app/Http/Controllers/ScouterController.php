@@ -370,6 +370,7 @@ class ScouterController extends Controller
      */
     public function getPrint()
     {
+
         $data['title']  = 'Nepal Scout - Print';
         if(session()->has('org_id')) {
 
