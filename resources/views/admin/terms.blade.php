@@ -87,9 +87,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('terms') ? ' has-error' : '' }}">
                                 <label for="create-terms">Terms</label>
-                                <textarea class="textarea terms-textarea" id="create-terms" name="terms">
-                                    {{ old('terms') }}
-                                </textarea>
+                                <textarea class="textarea terms-textarea" id="create-terms" name="terms">{{ old('terms') }}</textarea>
                                 @if ($errors->has('terms'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('terms') }}</strong>
