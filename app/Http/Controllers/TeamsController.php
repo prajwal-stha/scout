@@ -26,7 +26,7 @@ class TeamsController extends Controller
      */
     public function __construct(){
 
-        $this->middleware(['auth', 'verified']);
+        $this->middleware('auth');
 
     }
     /**
@@ -36,8 +36,21 @@ class TeamsController extends Controller
     public function postCreate(CreateTeamRequest $request){
         if($request->has('org_id')){
 
+            Team::create(
+                [
+                    'name'          => $request->get('name'),
+
+                ]
+            );
+
+            return redirect()->back()
+                ->with('team_created', 'One more team has been added.' );
+
+
+        } else {
 
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+
 
         }
 
