@@ -27,12 +27,10 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/skins/_all-skins.min.css' ) }}">
     <!-- iCheck -->
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset( 'iCheck/all.css' ) }}">
-=======
+
     <link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
->>>>>>> edf1ae919c70d576d60e0aa5dbc35733f8776715
 
 
 

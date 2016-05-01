@@ -1,15 +1,17 @@
 @extends('layouts.admin')
 
 @section('content')
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">{{ $user->f_name }} {{ $user->l_name }}</li>
-
-        </ol>
-    </section>
 
     <section class="content">
+        @if(Session::has('user_update'))
+
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Great!</h4>
+                {{ Session::get('user_update') }}
+            </div>
+
+        @endif
         <div class="row">
             <div class="col-md-6">
                 <!-- general form elements -->

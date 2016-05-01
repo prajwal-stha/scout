@@ -14,6 +14,7 @@ use App\Http\Requests\CreateRegisterRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\CreateApprovedTeamMemberRequest;
 use App\Http\Requests\CreateAdminTeamRequest;
+use App\Http\Requests\UpdateProfileRequest;
 
 use App\Http\Controllers\Controller;
 
@@ -103,8 +104,21 @@ class AdminController extends Controller
     }
 
 
-    public function patchProfile()
+    public function patchProfile(UpdateProfileRequest $request, $id)
     {
+        if($id){
+            $user = User::findOrFail($id);
+            if($user){
+                $user->f_name               = $request->get('f_name');
+                $user->l_name               = $request->get('l_name');
+                $user->password             = $request->has('password') ? bcrypt($request->get('password')) : '';
+                $user->save();
+            }
+
+            return redirect()->back()
+                ->with(['user_update' => 'User successfully updated']);
+
+        }
         
     }
 

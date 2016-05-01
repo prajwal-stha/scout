@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+
 class UpdateProfileRequest extends Request
 {
     /**
@@ -14,7 +15,10 @@ class UpdateProfileRequest extends Request
     public function authorize()
     {
         if(is_admin()){
-            return true;
+            if(auth()->user()->id == $this->user()->id){
+                return true;
+            }
+
         }
         return false;
     }
@@ -27,7 +31,9 @@ class UpdateProfileRequest extends Request
     public function rules()
     {
         return [
-
+            'f_name'    => 'required|max:255',
+            'l_name'    => 'required|max:255',
+            'password'  => 'min:6|confirmed',
         ];
     }
 }

@@ -155,7 +155,7 @@ class AuthController extends Controller
             'email'    => $request->get('email'),
             'token'    => bcrypt($request->get('email'). time()),
             'username' => $request->get('username'),
-            'password' => $request->get('password'),
+            'password' => bcrypt($request->get('password')),
         ]);
         Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
             $m->from('noreply@nepalscout.org.np', 'Your Application');
