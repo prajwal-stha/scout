@@ -66,4 +66,97 @@
 
 
 
+/* Basant */
 
+input[type="text"].form-control{
+    border-radius:2px;
+    min-height: 40px;
+}
+textarea.form-control,
+textarea{
+    border-radius:2px;
+}
+
+.form-control:focus,
+textarea.textarea:focus{
+    border-color:#00a65a;
+    outline: 0;
+}
+
+.box-body{
+    padding: 20px;
+}
+
+button[type="submit"],
+.btn-primary{
+    background: #00a65a;
+    border-color:#00a65a;
+    border-radius: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight:600;
+    min-height: 40px;
+    padding:0 15px;
+
+}
+button[type="submit"] i{
+    margin-right:5px;
+}
+label{
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.box{
+    border-top:0;
+}
+
+.box-header,
+.box-footer{
+    padding: 15px 20px;
+}
+.box-header > .fa,
+.box-header > .glyphicon,
+.box-header > .ion,
+.box-header .box-title{
+    font-weight: 600;
+}
+
+
+.sidebar-menu > li{
+    box-shadow: 0 1px 0 #273238;
+    border-bottom: 1px solid #1D272B;
+}
+
+.skin-green .main-header .logo{
+    background-color:transparent !important;
+    box-shadow: 0 1px 0 #273238;
+    border-bottom: 1px solid #1D272B;
+}
+.skin-green .sidebar-form{
+    border:0 !important;
+}
+.main-header .logo .logo-lg{
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+.logo-lg{
+    position:relative;
+}
+.logo-lg:before{
+    content:"";
+    display: inline-block;
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+    border:2px solid #00a65a;
+    background: #fff url("../img/logo.jpg") no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+.skin-green .sidebar-menu>li.header{
+    background: transparent !important;
+}
