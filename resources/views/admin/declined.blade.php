@@ -1,14 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Organizations</li>
-        </ol>
-    </section>
-
-
 
     <section class="content">
         <div class="row">
@@ -62,5 +54,20 @@
 
 @section('scripts')
     @parent
+
+    <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <script>
+
+        $('#table-approved-organizations').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    </script>
 
 @stop

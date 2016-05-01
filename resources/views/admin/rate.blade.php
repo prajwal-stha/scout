@@ -2,15 +2,6 @@
 
 @section('content')
 
-
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Rate</li>
-        </ol>
-    </section>
-
-
     <section class="content">
 
         @if(Session::has('rate_created'))

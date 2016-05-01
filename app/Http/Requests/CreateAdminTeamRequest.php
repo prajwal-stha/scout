@@ -3,12 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-
 use Auth;
 
 use App\Team;
 
-class CreateTeamRequest extends Request
+class CreateAdminTeamRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +17,7 @@ class CreateTeamRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(Team::where('organization_id', session()->get('org_id'))->count() < 4) {
+            if(Team::where('organization_id', $this->get('org_id'))->count() < 4) {
                 return TRUE;
             }
         } else {
@@ -41,7 +40,7 @@ class CreateTeamRequest extends Request
 
     public function forbiddenResponse()
     {
-        return $this->redirector->to('scouter/team')->withErrors('Team limit has reached');
+        return $this->redirector->back()->withErrors('Team limit has reached');
 
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Http\Requests\CreateRegisterRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\CreateApprovedTeamMemberRequest;
+use App\Http\Requests\CreateAdminTeamRequest;
 
 use App\Http\Controllers\Controller;
 
@@ -91,6 +92,22 @@ class AdminController extends Controller
         return view( 'admin.dashboard')->with( $data);
     }
 
+    public function getProfile( $id )
+    {
+        $data['title'] = 'Nepal Scout - Profile';
+        $data['user'] = User::findOrFail($id);
+        if($data['user']->level == 1 ){
+            return view('admin.profile')->with( $data );
+
+        }
+    }
+
+
+    public function patchProfile()
+    {
+        
+    }
+
     /**
      * @return $this
      */
@@ -107,6 +124,7 @@ class AdminController extends Controller
      */
     public function getViewOrganization($id = NULL)
     {
+
         $data['organization'] = Organization::findOrFail($id);
         $data['district'] = District::all();
         $data['title'] = 'Nepal Scout';
@@ -375,6 +393,22 @@ class AdminController extends Controller
         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
 
         return view('admin.team')->with($data);
+
+    }
+
+    public function postTeams(CreateAdminTeamRequest $request){
+        if($request->has('org_id')){
+            Team::create(
+                [
+                    'name'            => $request->get('name'),
+                    'organization_id' => $request->get('org_id')
+
+                ]
+            );
+            return redirect()->back()
+                ->with('team_created', 'One more team has been added.' );
+
+        }
 
     }
 
@@ -1423,6 +1457,36 @@ class AdminController extends Controller
                             ->get();
 
         return view('admin.search')->with($data);
+
+    }
+
+
+    public function getSearch()
+    {
+        $data['title'] = 'Nepal Scout - Search';
+        return view('admin.searchform')->with( $data );
+
+    }
+
+    public function postAdvancedSearch(Request $request)
+    {
+        if($request->has('chairman') || $request->has('principle') || $request->has('committe') || $request->has('scouter') || $request->has('team_member')){
+
+            $results = CoreOrganization::where(function($q) use ($request) {
+                $q->orWhere('email', 'like', '%john@example.org%');
+                $q->orWhere('first_name', 'like', '%John%');
+                $q->orWhere('last_name', 'like', '%Doe%');
+            })->toSql();
+        }
+
+        if($request->has('school') || $request->has('organization')){
+
+        }
+
+        if($request->has('team')){
+
+        }
+        
 
     }
 

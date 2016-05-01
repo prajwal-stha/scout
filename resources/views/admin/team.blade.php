@@ -2,14 +2,6 @@
 
 
 @section('content')
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>{{ $organization->name }}</li>
-            <li class="active">Teams</li>
-
-        </ol>
-    </section>
 
     <section class="content">
         <div class="modal" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">
@@ -163,7 +155,7 @@
                         <div class="row">
                             <div class="col-md-4">
 
-                                {{ Form::open(['url' => 'team/create', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
+                                {{ Form::open(['url' => 'admin/teams', 'class' => 'form-horizontal', 'id' =>'team-create-form']) }}
 
                                 <input type="hidden" name="org_id" id="org_id" value="{{  $organization->id }}">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

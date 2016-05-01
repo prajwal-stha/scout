@@ -13,13 +13,6 @@
 
     @endif
 
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>{{ $organization->name }}</li>
-            <li class="active">Registration</li>
-        </ol>
-    </section>
 
     <!-- Main content -->
     <section class="content">

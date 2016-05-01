@@ -2,14 +2,6 @@
 
 
 @section('content')
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>{{ $organization->name }}</li>
-            <li class="active">Teams</li>
-
-        </ol>
-    </section>
 
     <section class="content">
         <div class="modal" id="approvedteamModal" tabindex="-1" role="dialog" aria-labelledby="teamModalLabel">

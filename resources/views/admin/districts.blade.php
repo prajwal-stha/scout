@@ -1,12 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-    <section class="content-header">
-        <ol class="breadcrumb">
-            <li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Districts</li>
-        </ol>
-    </section>
 
 
     <section class="content">
