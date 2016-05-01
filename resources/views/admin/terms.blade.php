@@ -2,6 +2,16 @@
 
 
 @section('content')
+<<<<<<< HEAD
+=======
+    <section class="content-header">
+        {{--<ol class="breadcrumb">--}}
+            {{--<li><a href="{{ url('/admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>--}}
+            {{--<li class="active">Terms & Conditions</li>--}}
+
+        {{--</ol>--}}
+    </section>
+>>>>>>> edf1ae919c70d576d60e0aa5dbc35733f8776715
 
     <section class="content">
 

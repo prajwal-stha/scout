@@ -23,13 +23,16 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css' ) }}">
 
-
-    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/skins/_all-skins.min.css' ) }}">
     <!-- iCheck -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="{{ asset( 'iCheck/all.css' ) }}">
+=======
+    <link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">
+    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
+>>>>>>> edf1ae919c70d576d60e0aa5dbc35733f8776715
 
 
 
@@ -147,7 +150,7 @@
                 <li class="header">MAIN NAVIGATION</li>
                 <li{!! Request::path() == 'admin/form' ? ' class="active"': '' !!}>
                     <a href="{{ $unregistered_registration_no > 0 ? url('admin/form') : 'javscript:;' }}">
-                        <i class="fa fa-envelope"></i> <span>Form Requests</span>
+                        <i class="fa fa-envelope-o"></i> <span>Form Requests</span>
                         @if($unregistered_registration_no > 0)
                             <small class="label pull-right bg-yellow">{{ $unregistered_registration_no }}</small>
                         @endif
@@ -194,11 +197,7 @@
         @yield('content')
 
     </div><!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-        </div>
-        <strong>Copyright &copy; {{ Carbon\Carbon::now()->year }} <a href="http://www.nepalscouts.org.np">Nepal Scout</a>.</strong> All rights reserved.
-    </footer>
+
 
 </div><!-- ./wrapper -->
 @section('scripts')
