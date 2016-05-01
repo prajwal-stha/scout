@@ -9,6 +9,7 @@ class CoreOrganization extends Model
 {
 
     use SearchableTrait;
+
     protected $table = 'core_organizations';
 
     protected $fillable = [
@@ -48,7 +49,7 @@ class CoreOrganization extends Model
 
     public function core_teams(){
 
-        return $this->hasMany(CoreTeam::class, 'original_id');
+        return $this->hasMany(CoreTeam::class, 'organization_id', 'original_id');
 
     }
 
@@ -56,7 +57,7 @@ class CoreOrganization extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function core_members(){
-        return $this->hasMany(CoreMember::class, 'original_id');
+        return $this->hasMany(CoreMember::class, 'organization_id', 'original_id');
     }
 
     /**
@@ -64,7 +65,7 @@ class CoreOrganization extends Model
      */
     public function core_scouters()
     {
-        return $this->hasMany(CoreScouter::class, 'original_id');
+        return $this->hasMany(CoreScouter::class, 'organization_id', 'original_id');
     }
 
     /**
@@ -73,7 +74,6 @@ class CoreOrganization extends Model
     public function district()
     {
         return $this->belongsTo(District::class);
-
     }
 
     public function getRegistrationDateAttribute($value)

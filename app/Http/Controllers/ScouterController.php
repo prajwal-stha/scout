@@ -163,8 +163,6 @@ class ScouterController extends Controller
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
 
-
-
     }
 
     /**
@@ -385,27 +383,20 @@ class ScouterController extends Controller
             $data['scouter'] = Scouter::where('organization_id', session()->get('org_id'))
                 ->where('is_lead', 0)
                 ->first();
-//            dd($data['team']);
-
-//            $data['district']   = DB::table('districts')
-//                ->join('organizations', function ($join) {
-//                    $join->on('organizations.district_id', '=', 'districts.id')
-//                        ->where('organizations.id', '=', session()->get('org_id'));
-//                })
-//                ->selectRaw('districts.name as d_name, organizations.name as o_name')
-//                ->get();
-//            $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
-//            $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
             $data['team_member'] = DB::table('teams')
-                ->join('team_members', function ($join) {
-                    $join->on('teams.id', '=', 'team_members.team_id')
-                        ->where('teams.organization_id', '=', session()->get('org_id'));
-                })
+                ->where('organization_id', $data['org_id'])
+                ->join('team_members', 'teams.id', '=', 'team_members.team_id')
+                ->select('teams.name as team_name', 'team_members.*')
                 ->get();
+            $data['rates']        = Rate::first();
+            $data['scouter_no']   = intval(Scouter::where('organization_id', $data['org_id'])->count());
+            $data['scout_no']     = intval(count($data['team']));
+            $data['member_no']    = intval(Member::where('organization_id', $data['org_id'])->count());
+            $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
+            $data['terms']        = Term::orderBy('order', 'ASC')->get();
 
+            return view('scouter.print')->with( $data );
 
-            $pdf = PDF::loadView('scouter.print', $data);
-            return $pdf->download('scouter.pdf');
         }
     }
 

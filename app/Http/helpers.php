@@ -66,3 +66,8 @@ function pre($data = null, $exit = false){
 
 }
 
+function generateUniqueId(){
+    $random = round(microtime(true) * 100 + mt_rand());
+    return intval($random);
+}
+

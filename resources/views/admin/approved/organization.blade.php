@@ -271,12 +271,10 @@
             }
         });
         $( "#registration_date" ).datepicker({
-            format:'dd/mm/yyyy',
-            changeMonth: true,
-            changeYear: true,
-            yearRange: '1930:2030',
-            inline: true,
-            dy:true,
+            format: 'dd/mm/yyyy',
+            viewMode: 'years',
+            minViewMode: 'days',
+            autoclose: true
         });
     </script>
 

@@ -32,7 +32,7 @@
 
         @endif
 
-        <div class="modal" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
+        <div class="modal" id="approvedmemberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="alert-placeholder"></div>
@@ -42,7 +42,7 @@
                         </button>
                     </div>
 
-                    {{ Form::open(['url' => 'admin/approved-committee', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
+                    {{ Form::open(['url' => 'admin/approved-committee', 'method' => 'PATCH', 'class' => 'update-approved-member-form']) }}
                         <input type="hidden" name="organization_id" value="" id="update-member-org-id">
                         <input type="hidden" name="id" value="" id="update-member-id">
 
@@ -67,7 +67,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="modal-member-submit">Update</button>
+                            <button type="button" class="btn btn-primary" id="modal-approved-member-submit">Update</button>
                         </div>
 
                     {{ Form::close() }}

@@ -1,145 +1,3 @@
-{{--<!DOCTYPE html>--}}
-    {{--<html>--}}
-        {{--<head>--}}
-            {{--<title></title>--}}
-            {{--<meta name="apple-mobile-web-app-capable" content="yes" />--}}
-            {{--<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />--}}
-            {{--<meta name="viewport" content="width= device-width, initial-scale=1.0, user-scalable=no, minimal-ui">--}}
-            {{--<style>--}}
-                {{--.center-align{--}}
-                    {{--text-align: center;--}}
-                {{--}--}}
-                {{--table {--}}
-                    {{--border-collapse: collapse;--}}
-                    {{--width: 100%;--}}
-                {{--}--}}
-
-                {{--table, th, td {--}}
-                    {{--border: 1px solid black;--}}
-                {{--}--}}
-                {{--th {--}}
-                    {{--height: 50px;--}}
-                {{--}--}}
-
-                {{--.logo-image{--}}
-                    {{--display: inline;--}}
-                {{--}--}}
-                {{--.center-align-inline{--}}
-                    {{--display: inline;--}}
-                    {{--text-align: center;--}}
-                {{--}--}}
-
-            {{--</style>--}}
-        {{--</head>--}}
-    {{--<body>--}}
-        {{--<div class="center-align">--}}
-            {{--<h1>Nepal Scout</h1>--}}
-        {{--</div>--}}
-        {{--<div class="logo-image">--}}
-            {{--<img src="{{ asset('img/logo.jpg') }}" alt="LOGO" style="width: 50px;">--}}
-        {{--</div>--}}
-        {{--<div class="center-align-inline">--}}
-            {{--<p><strong>District Scout Office</strong>, {{ $district->name }}</p>--}}
-            {{--<p><strong>District Code</strong>, {{ $district->district_code }}</p>--}}
-        {{--</div>--}}
-        {{--<h4><strong>Scarf</strong></h4>--}}
-        {{--<p><strong>Border Colour</strong> {{ $organization->border_colour }}</p>--}}
-        {{--<p><strong>Background Colour</strong>{{ $organization->background_colour }}</p>--}}
-        {{--<p><strong>1. Organization Name</strong>{{ $organization->name }}</p>--}}
-        {{--<p><strong>2. {{ $organization->type == 'school' ? 'Principal' : 'Chairman' }}</strong> {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</p>--}}
-        {{--<p><strong>Mobile No.</strong>{{ $organization->mobile_no }}</p>--}}
-        {{--<p><strong>Tel No.</strong>{{ $organization->tel_no }}</p>--}}
-        {{--<p><strong>3. Address Line 1.</strong>{{ $organization->tel_no }}</p>--}}
-        {{--<p><strong>Address Line 2.</strong>{{ $organization->address_line_2 or '-' }}</p>--}}
-        {{--<p><strong>4. Email</strong>{{ $organization->email}}</p>--}}
-        {{--<h4><strong>5. Organization Committe Member Detail</strong></h4>--}}
-        {{--<table>--}}
-            {{--<tbody>--}}
-                {{--<tr>--}}
-                    {{--<td>Chairman: {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</td>--}}
-                {{--</tr>--}}
-
-                {{--@if($member)--}}
-                    {{--@foreach($member as $value)--}}
-                        {{--<tr><td> Member: {{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</td></tr>--}}
-                    {{--@endforeach--}}
-                {{--@endif--}}
-
-            {{--</tbody>--}}
-        {{--</table>--}}
-        {{--<h4><strong>6. Scouter Detail</strong></h4>--}}
-
-        {{--<table>--}}
-            {{--<thead>--}}
-                {{--<tr>--}}
-                    {{--<th></th>--}}
-                    {{--<th>Full Name</th>--}}
-                    {{--<th>Permission Letter No./ Date</th>--}}
-                    {{--<th>B.T.C / P.T.C No. / Date</th>--}}
-                    {{--<th>Advance Certificate No. / Date</th>--}}
-                    {{--<th>ALT No. / Date</th>--}}
-                    {{--<th>LT No. / Date</th>--}}
-                {{--</tr>--}}
-            {{--</thead>--}}
-            {{--<tbody>--}}
-                {{--@if($leadScouter)--}}
-                    {{--<tr>--}}
-                        {{--<td>Lead Scouter</td>--}}
-                        {{--<td>{{ $leadScouter->name }}</td>--}}
-                        {{--<td>{{ $leadScouter->permission or '-' }}  {{ $leadScouter->permission_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->btc_no or '-' }}  {{ $leadScouter->btc_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->advance_no or '-' }}  {{ $leadScouter->advance_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->alt_no or '-' }}  {{ $leadScouter->alt_date or '-' }}</td>--}}
-                        {{--<td>{{ $leadScouter->lt_no or '-' }}  {{ $leadScouter->lt_date or '-' }}</td>--}}
-                    {{--</tr>--}}
-                {{--@endif--}}
-
-                {{--@if($scouter)--}}
-                    {{--<tr>--}}
-                        {{--<td>Assistant-Lead Scouter</td>--}}
-                        {{--<td>{{ $scouter->name }}</td>--}}
-                        {{--<td>{{ $scouter->permission or '-' }}  {{ $scouter->permission_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->btc_no or '-' }}  {{ $scouter->btc_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->advance_no or '-' }}  {{ $scouter->advance_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->alt_no or '-' }}  {{ $scouter->alt_date or '-' }}</td>--}}
-                        {{--<td>{{ $scouter->lt_no or '-' }}  {{ $scouter->lt_date or '-' }}</td>--}}
-                    {{--</tr>--}}
-                {{--@endif--}}
-
-            {{--</tbody>--}}
-        {{--</table>--}}
-
-        {{--@if($team)--}}
-            {{--@foreach($team as $value)--}}
-                {{--<table>--}}
-                    {{--<caption>{{ $value->name }}</caption>--}}
-                    {{--<thead>--}}
-                        {{--<tr>--}}
-                            {{--<th>S.No.</th>--}}
-                            {{--<th>Position</th>--}}
-                            {{--<th>DOB</th>--}}
-                            {{--<th>Entry Date</th>--}}
-                            {{--<th>Current Position</th>--}}
-                            {{--<th>Passed Date</th>--}}
-                            {{--<th>Notes</th>--}}
-                        {{--</tr>--}}
-                    {{--</thead>--}}
-                    {{--<tbody>--}}
-                        {{--<tr>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                            {{--<td>lorem</td>--}}
-                        {{--</tr>--}}
-                    {{--</tbody>--}}
-                {{--</table>--}}
-            {{--@endforeach--}}
-        {{--@endif--}}
-    {{--</body>--}}
-{{--</html>--}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -396,6 +254,11 @@
         display: block;
     }
 
+    .pull-right {
+        text-align: center;
+    }
+
+
     @media screen and (max-width: 992px) {
         .heading {
             overflow: hidden;
@@ -463,6 +326,7 @@
         .table-wrap {
             overflow-x: scroll;
         }
+
     }
 
     @media screen and (max-width: 700px) {
@@ -561,7 +425,7 @@
 <body>
 <div class="container">
     <div class="heading">
-        <div class="left"><img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Scout logo"></div>
+        <div class="left"><img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout"></div>
         <div class="middle">
             <h1>NEPAL SCOUT</h1>
             <h2>District Scout Office. <span>{{ $district->name }}</span></h2>
@@ -611,7 +475,7 @@
 
                 <div class="col-2">
                     <span class="title">Principal/Chairman Name : </span>
-                    <span class="input"> {{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span>
+                    <span class="input">{{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span>
                 </div>
                 <div class="col-2">
                     <span class="title">Mobile No. : </span>
@@ -649,8 +513,6 @@
                     </div>
                     @if($member)
                         @foreach($member as $value)
-                    {{--<tr><td> Member: {{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</td></tr>--}}
-
                             <div>
                                 <div>Member: <span class="input">{{ $value->f_name }} {{ $value->m_name or '' }} {{ ' ' .$value->l_name }}</span></div>
                             </div>
@@ -698,6 +560,52 @@
                     </table>
                 </div>
             </li>
+
+            @if(count($team_member) && count($team) > 0)
+
+                @foreach($team as $value)
+                    <?php $i = 1; ?>
+
+                    <li>
+                        <div class="title">{{ $value->name }} </div>
+                        <div class="table-wrap">
+                            <table>
+                                <tr>
+                                    <th>SN.</th>
+                                    <th>Position</th>
+                                    <th>Name</th>
+                                    <th>DOB</th>
+                                    <th>Entry Date</th>
+                                    <th>Current Position</th>
+                                    <th>Passed Date</th>
+                                    <th>Remark</th>
+                                </tr>
+                                <?php
+
+                                foreach($team_member as $member){
+                                    if($value->name !== $member->team_name){
+                                        continue;
+                                    }  ?>
+
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>{{ $member->position }} </td>
+                                        <td>{{ $member->f_name }} {{ $member->m_name }} {{ $member->l_name  }}</td>
+                                        <td>{{ $member->dob }}</td>
+                                        <td>{{ $member->entry_date }}</td>
+                                        <td></td>
+                                        <td>{{ $member->passed_date }}</td>
+                                        <td>{{ $member->note }}</td>
+                                    </tr>
+
+                                <?php
+                                $i++; } ?>
+                            </table>
+                        </div>
+                    </li>
+                @endforeach
+
+            @endif
             <li>
                 <div class="title">Cost</div>
                 <div class="table-wrap">
@@ -745,228 +653,6 @@
                     </table>
                 </div>
             </li>
-            <li>
-                <div class="title"> Cost</div>
-                <div class="table-wrap">
-                    <table>
-                        <tr>
-                            <th>SN.</th>
-                            <th>Reg.</th>
-                            <th>Name</th>
-                            <th>Date of birth</th>
-                            <th>Entance Date</th>
-                            <th>Current Position</th>
-                            <th>Pass Date</th>
-                            <th>Remark</th>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>12</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="title"> Cost</div>
-                <div class="table-wrap">
-                    <table>
-                        <tr>
-                            <th>SN.</th>
-                            <th>Reg.</th>
-                            <th>Name</th>
-                            <th>Date of birth</th>
-                            <th>Entance Date</th>
-                            <th>Current Position</th>
-                            <th>Pass Date</th>
-                            <th>Remark</th>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>12</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="title"> Cost</div>
-                <div class="table-wrap">
-                    <table>
-                        <tr>
-                            <th>SN.</th>
-                            <th>Reg.</th>
-                            <th>Name</th>
-                            <th>Date of birth</th>
-                            <th>Entance Date</th>
-                            <th>Current Position</th>
-                            <th>Pass Date</th>
-                            <th>Remark</th>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>12</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="title"> Cost</div>
-                <div class="table-wrap">
-                    <table>
-                        <tr>
-                            <th>SN.</th>
-                            <th>Reg.</th>
-                            <th>Name</th>
-                            <th>Date of birth</th>
-                            <th>Entance Date</th>
-                            <th>Current Position</th>
-                            <th>Pass Date</th>
-                            <th>Remark</th>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>12</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>xyz</td>
-                            <td>xyz</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
         </ol>
     </div>
 
@@ -994,6 +680,12 @@
             </ol>
         @endif
     </div>
+    <div id="pull-right">
+        <form>
+            <input type="button" onclick="window.print()" value="PRINT"/>
+        </form>
+    </div>
+
 </div>
 </body>
 </html>

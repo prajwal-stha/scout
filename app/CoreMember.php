@@ -17,7 +17,4 @@ class CoreMember extends Model
 
     }
 
-    public function get_table(){
-        return $this->table;
-    }
 }

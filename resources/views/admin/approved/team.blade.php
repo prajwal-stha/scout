@@ -47,7 +47,7 @@
 
         @if(isset($team))
 
-            <div class="modal" id="teamMemberModal" tabindex="-1" role="dialog" aria-labelledby="teamMemberModalLabel">
+            <div class="modal" id="approvedteamMemberModal" tabindex="-1" role="dialog" aria-labelledby="teamMemberModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="alert-placeholder-member"></div>
                     <div class="modal-content">
@@ -57,7 +57,7 @@
                             </button>
                         </div>
 
-                        {{ Form::open(['url' => 'admin/approved-member', 'method' => 'PATCH', 'class' => 'form-horizontal update-teamMember-form']) }}
+                        {{ Form::open(['url' => 'admin/approved-member', 'method' => 'PATCH', 'class' => 'form-horizontal update-approvedteamMember-form']) }}
                         <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
                         <input type="hidden"  name="id" value="" id="teamMemberId">
 
@@ -130,7 +130,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="modal-teamMember-submit">Update</button>
+                            <button type="button" class="btn btn-primary" id="modal-approvedteamMember-submit">Update</button>
                         </div>
 
                         {{ Form::close() }}
@@ -252,7 +252,7 @@
                                     {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
 
                                     <div class="col-sm-9">
-                                        {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        {{ Form::text('dob', null, array('class' => 'form-control date', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                         @if ($errors->has('dob'))
                                             <span class="help-block">
@@ -269,7 +269,7 @@
                                     {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
 
                                     <div class="col-sm-9">
-                                        {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        {{ Form::text('entry_date', null, array('class' => 'form-control date', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                         @if ($errors->has('entry_date'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('entry_date') }}</strong>
@@ -305,7 +305,7 @@
                                     {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
 
                                     <div class="col-sm-9">
-                                        {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                        {{ Form::text('passed_date', null, array('class' => 'form-control date', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                         @if ($errors->has('passed_date'))
                                             <span class="help-block">
@@ -327,7 +327,7 @@
 
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
-                                    {{ link_to('admin/approved-registration/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                    {{ link_to('admin/approved-registration/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                                 </div>
                                 {{ Form::close() }}
 
@@ -364,9 +364,9 @@
                                 <td>{{ $value->dob }}</td>
                                 <td>{{ $value->entry_date }}</td>
                                 <td>{{ $value->passed_date }}</td>
-                                <td><a class="updateApprovedTeamMember" data-id="{{ $value->id }}">
+                                <td><a class="updateApprovedTeamMember" data-id="{{ $value->original_id }}">
                                         <i class="fa fa-pencil"></i></a> |
-                                    <a class="deleteApprovedTeamMember" data-id="{{ $value->id }}" href="{{ url( 'admin/delete-approved-member', [$value->id]) }}"><i class="fa fa-trash-o"></i>
+                                    <a class="deleteApprovedTeamMember" data-id="{{ $value->original_id }}" href="{{ url( 'admin/delete-approved-member', [$value->original_id]) }}"><i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -390,6 +390,13 @@
         var delete_approved_team_admin_url = "<?php echo url('admin/delete-approved-teams'); ?>";
         var update_approved_teamMember_admin_url = "<?php echo url('admin/approved-member'); ?>";
         var delete_approved_teamMember_admin_url = "<?php echo url('admin/delete-approved-member'); ?>";
+        $(".date").inputmask();
+        $( ".date" ).datepicker({
+            format: 'dd/mm/yyyy',
+            viewMode: 'years',
+            minViewMode: 'days',
+            autoclose: true
+        });
     </script>
 
 

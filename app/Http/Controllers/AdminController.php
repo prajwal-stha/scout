@@ -63,33 +63,6 @@ class AdminController extends Controller
     protected $organization;
 
 
-
-    /**
-     * @var
-     */
-//    protected $team;
-
-    /**
-     * @var
-     */
-    //protected $member;
-
-    /**
-     * @var
-     */
-    //protected $team_member;
-
-    /**
-     * @var
-     */
-    //protected $scouter;
-
-    /**
-     * AdminController constructor.
-     * @param CloneTable $clone
-     */
-
-
     protected $something;
 
     /**
@@ -109,8 +82,12 @@ class AdminController extends Controller
      */
     public function getIndex()
     {
-        $data['title']     = 'Nepal Scout - Dashboard';
-        $data['org'] = Organization::whereNull('registration_no')->count();
+        $data['title']                  = 'Nepal Scout - Dashboard';
+        $data['registered_users']       = User::where('verified', 1)
+                                         ->where('level', 0)->count();
+        $data['approved_organizations'] = CoreOrganization::all()->count();
+        $data['declined_organizations'] = Organization::where('is_declined', 1)->count();
+
         return view( 'admin.dashboard')->with( $data);
     }
 
@@ -633,10 +610,9 @@ class AdminController extends Controller
                 ->where('is_lead', 0)
                 ->first();
             $data['team_member'] = DB::table('teams')
-                ->join('team_members', function ($join) {
-                    $join->on('teams.id', '=', 'team_members.team_id')
-                        ->where('teams.organization_id', '=', '$id');
-                })
+                ->where('organization_id', $id)
+                ->join('team_members', 'teams.id', '=', 'team_members.team_id')
+                ->select('teams.name as team_name', 'teams.id as teamId', 'team_members.*')
                 ->get();
             $data['rates']        = Rate::first();
             $data['scouter_no']   = intval(Scouter::where('organization_id', $id)->count());
@@ -646,10 +622,45 @@ class AdminController extends Controller
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
             return view('scouter.print')->with( $data );
 
+
 //            $pdf = PDF::loadView('scouter.print', $data);
 //            return $pdf->download('scouter.pdf');
         }
     }
+
+    public function getApprovedPrint($id)
+    {
+        $data['title']  = 'Nepal Scout - Print';
+        if ($id){
+
+            $data['organization'] = CoreOrganization::where('original_id', $id)->firstOrFail();
+            $data['district']     = $data['organization']->district;
+            $data['member']       = $data['organization']->core_members->all();
+            $data['team']         = $data['organization']->core_teams->all();
+
+            $data['leadScouter']  = CoreScouter::where('organization_id', $id)
+                ->where('is_lead', 1)
+                ->first();
+            $data['scouter'] = CoreScouter::where('organization_id', $id)
+                ->where('is_lead', 0)
+                ->first();
+            $data['team_member'] = DB::table('core_teams')
+                ->where('organization_id', $id)
+                ->join('core_team_members', 'core_teams.original_id', '=', 'core_team_members.team_id')
+                ->select('core_teams.name as team_name', 'core_teams.original_id as teamId', 'core_team_members.*')
+                ->get();
+            $data['rates']        = Rate::first();
+            $data['scouter_no']   = intval(Scouter::where('organization_id', $id)->count());
+            $data['scout_no']     = intval(count($data['team']));
+            $data['member_no']    = intval(Member::where('organization_id', $id)->count());
+            $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
+            $data['terms']        = Term::orderBy('order', 'ASC')->get();
+            return view('scouter.print')->with( $data );
+
+        }
+        
+    }
+
 
     /**
      * Declines Form Requests
@@ -675,7 +686,7 @@ class AdminController extends Controller
             }
 
         }
-        return redirect()->back()->with('organization_deleted', 'The organizaton has been declined.');
+        return redirect()->back()->with('organization_declined', 'The organizaton has been declined.');
     }
 
 
@@ -895,12 +906,13 @@ class AdminController extends Controller
     {
         $data['title']     = 'Nepal Scout - Organizations';
         $data['organizations'] = DB::table('organizations')
-            ->whereNotNull('registration_no')
+//            ->whereNotNull('registration_no')
             ->where('is_declined', true)
             ->join('districts', 'district_id', '=', 'districts.id')
             ->select('organizations.*', 'districts.name as dist_name')
             ->get();
-        return view( 'admin.approved')->with( $data);
+//        dd($data);
+        return view( 'admin.declined')->with( $data);
         
     }
 
@@ -978,7 +990,7 @@ class AdminController extends Controller
             'm_name'            => $request->get('m_name'),
             'l_name'            => $request->get('l_name'),
             'organization_id'   => $request->get('organization_id'),
-            'original_id'       => mt_rand()
+            'original_id'       => generateUniqueId()
         ]);
 
         return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
@@ -1192,7 +1204,7 @@ class AdminController extends Controller
         CoreTeam::create([
             'name'              => $request->get('name'),
             'organization_id'   => $request->get('org_id'),
-            'original_id'       => mt_rand()
+            'original_id'       => generateUniqueId()
         ]);
         return redirect()->back()->with(['team_created' => 'The team has been created.']);
     }
@@ -1273,7 +1285,7 @@ class AdminController extends Controller
      */
     public function getApprovedMember($id)
     {
-        $teamMember = CoreTeamMember::findOrFail($id);
+        $teamMember = CoreTeamMember::where('original_id', $id)->firstOrFail();
         $response = array(
             'status'        => 'success',
             'teamMember'    => $teamMember
@@ -1310,7 +1322,7 @@ class AdminController extends Controller
         } else {
             $id = $request->get('id');
             if($id){
-                $teamMember = CoreTeamMember::findOrFail($id);
+                $teamMember = CoreTeamMember::where('original_id', $id)->firstOrFail();
                 if($teamMember){
                     $teamMember->f_name            = $request->get('f_name');
                     $teamMember->m_name            = $request->get('m_name');

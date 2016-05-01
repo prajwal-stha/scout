@@ -3,12 +3,12 @@
 
 @section('content')
 
-    @if(Session::has('organization_deleted'))
+    @if(Session::has('organization_declined'))
 
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('organization_deleted') }}
+            {{ Session::get('organization_declined') }}
         </div>
 
     @endif

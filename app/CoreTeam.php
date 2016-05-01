@@ -30,7 +30,7 @@ class CoreTeam extends Model
      */
     public function organization()
     {
-        return $this->belongsTo(CoreOrganization::class, 'original_id');
+        return $this->belongsTo(CoreOrganization::class, 'organization_id', 'original_id');
 
     }
 
@@ -39,7 +39,7 @@ class CoreTeam extends Model
      */
     public function core_teammembers()
     {
-        return $this->hasMany(CoreTeamMember::class);
+        return $this->hasMany(CoreTeamMember::class, 'teams_id', 'original_id');
 
     }
 

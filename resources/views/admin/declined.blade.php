@@ -16,7 +16,7 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Organizations </h3>
+                        <h3 class="box-title">Declined Organizations</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
@@ -34,16 +34,16 @@
                             </thead>
                             <tbody id="list-approved-organizations">
 
-                                @foreach($organizations as $value)
-                                    <tr>
-                                        <td>{{ $value->registration_no }}</td>
-                                        <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
-                                        <td>{{ $value->type }}</td>
-                                        <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>
-                                        <td>{{ $value->dist_name }}</td>
-                                        <td>{{ $value->tel_no }}</td>
-                                    </tr>
-                                @endforeach
+                            @foreach($organizations as $value)
+                                <tr>
+                                    <td>{{ $value->registration_no }}</td>
+                                    <td><a href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a></td>
+                                    <td>{{ $value->type }}</td>
+                                    <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>
+                                    <td>{{ $value->dist_name }}</td>
+                                    <td>{{ $value->tel_no }}</td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
 
