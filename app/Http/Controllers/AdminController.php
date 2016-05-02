@@ -108,12 +108,10 @@ class AdminController extends Controller
     {
         if($id){
             $user = User::findOrFail($id);
-            if($user){
-                $user->f_name               = $request->get('f_name');
-                $user->l_name               = $request->get('l_name');
-                $user->password             = $request->has('password') ? bcrypt($request->get('password')) : '';
-                $user->save();
-            }
+
+            $input = $request->all();
+
+            $user->fill($input)->save();
 
             return redirect()->back()
                 ->with(['user_update' => 'User successfully updated']);
@@ -1249,12 +1247,22 @@ class AdminController extends Controller
      */
     public function postCreateApprovedTeam(Request $request)
     {
-        CoreTeam::create([
-            'name'              => $request->get('name'),
-            'organization_id'   => $request->get('org_id'),
-            'original_id'       => generateUniqueId()
-        ]);
-        return redirect()->back()->with(['team_created' => 'The team has been created.']);
+        $rules = array(
+            'name'              => 'required|unique:core_teams,name,NULL,organization_id'.$request->get('org_id'),
+            'organization_id'   => 'required|exists:core_organizations,original_id'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->passes()) {
+            CoreTeam::create([
+                'name' => $request->get('name'),
+                'organization_id' => $request->get('org_id'),
+                'original_id' => generateUniqueId()
+            ]);
+            return redirect()->back()->with(['team_created' => 'The team has been created.']);
+        } else {
+            return redirect()->back()->withErrors($validator)
+                ->withInput();
+        }
     }
 
 
@@ -1281,7 +1289,7 @@ class AdminController extends Controller
     {
 
         $rules = array(
-            'name'              => 'required|unique:teams,name,'.$request->get('original_id'),
+            'name'              => 'required|unique:core_teams,name,'.$request->get('original_id'),
             'organization_id'   => 'required|exists:core_organizations,original_id'
         );
 
@@ -1484,21 +1492,36 @@ class AdminController extends Controller
 
     public function postAdvancedSearch(Request $request)
     {
-        if($request->has('chairman') || $request->has('principle') || $request->has('committe') || $request->has('scouter') || $request->has('team_member')){
+        $rules = [
+            'q' => 'required'
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        $q = $request->get('q');
+        $data['title']  = 'Nepal Scout - Advanced Search Results';
+        if($validator->passes()) {
+            if ($request->has('chairman') || $request->has('committe') || $request->has('scouter') || $request->has('team_member')) {
 
-            $results = CoreOrganization::where(function($q) use ($request) {
-                $q->orWhere('email', 'like', '%john@example.org%');
-                $q->orWhere('first_name', 'like', '%John%');
-                $q->orWhere('last_name', 'like', '%Doe%');
-            })->toSql();
-        }
+                $results = CoreOrganization::where(function ($q) use ($request) {
+                    $q->orWhere('email', 'like', '%john@example.org%');
+                    $q->orWhere('first_name', 'like', '%John%');
+                    $q->orWhere('last_name', 'like', '%Doe%');
+                })->toSql();
+            }
 
-        if($request->has('school') || $request->has('organization')){
+            if ($request->has('school') || $request->has('organization')) {
+                $data['searchorg'] = CoreOrganization::search($q, null, true)
+                    ->orderBy('relevance', 'desc');
+                return view('admin.search')->with($data);
 
-        }
+            }
 
-        if($request->has('team')){
+            if ($request->has('team')) {
+                $data['search'] = CoreOrganization::search($q, null, true)
+                    ->with('teams')
+                    ->orderBy('relevance', 'desc');
+                return view('admin.search')->with($data);
 
+            }
         }
         
 

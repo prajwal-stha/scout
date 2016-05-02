@@ -40,8 +40,6 @@ class TeamsController extends Controller
                 [
                     'name'            => $request->get('name'),
                     'organization_id' => $request->get('org_id')
-
-
                 ]
             );
             return redirect()->back()
@@ -49,8 +47,6 @@ class TeamsController extends Controller
 
         } else {
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
-
-
         }
 
     }

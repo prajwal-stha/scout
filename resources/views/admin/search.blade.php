@@ -4,21 +4,35 @@
 
     <section class="content">
         @if($search->count())
-            @foreach($search as $value)
-                <div class="col-lg-3 col-xs-6">
-                    <!-- small box -->
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>{{ ucfirst($value->type) }}</h3>
-                            <p>{{ $value->name }}</p>
+            <div class="row">
+                <div class="col-md-9">
+                    <!-- general form elements -->
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Search Results</h3>
+                        </div><!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
+                            <table id="search-result" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Organizations</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($search as $value)
+                                        <tr>
+                                            <td>{{ ucfirst($value->type) }}</td>
+                                            <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="icon">
-                            <i class="fa fa-institution"></i>
-                        </div>
-                        <a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-            @endforeach
+            </div>
         @else
             <div class="error-page">
                 <h2 class="headline text-green"> 404</h2>

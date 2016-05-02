@@ -34,17 +34,32 @@ class CoreOrganization extends Model
 
     protected $searchable = [
         'columns' => [
-            'core_organizations.name' => 10,
+            'core_organizations.name'            => 10,
             'core_organizations.chairman_f_name' => 10,
             'core_organizations.chairman_l_name' => 10,
-            'core_organizations.email' => 5,
-            'core_organizations.type' => 5,
-            'districts.name'    => 10,
-            'districts.district_code'   => 2
+            'core_organizations.email'           => 5,
+            'core_organizations.type'            => 5,
+            'districts.name'                     => 10,
+            'districts.district_code'            => 2,
+//            'core_teams.name'                    => 10,
+//            'core_scouters.name'                 => 10,
+//            'core_scouters.email'                => 5,
+//            'core_organization_commitee_members.f_name' => 10,
+//            'core_organization_commitee_members.m_name' => 10,
+//            'core_organization_commitee_members.l_name' => 10
         ],
         'joins' => [
             'districts' => ['districts.id','core_organizations.district_id'],
         ],
+//        'joins' => [
+//            'core_teams'     => ['core_teams.organization_id', 'core_organizations.original_id']
+//        ],
+//        'joins' => [
+//            'core_scouters'  => ['core_scouters.organization_id', 'core_organizations.original_id']
+//        ],
+//        'joins' => [
+//            'core_organization_commitee_members'   => ['core_organization_commitee_members.organization_id', 'core_organizations.original_id']
+//        ]
     ];
 
     public function core_teams(){

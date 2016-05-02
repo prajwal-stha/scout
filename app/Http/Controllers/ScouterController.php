@@ -25,6 +25,8 @@ use App\Team;
 
 use App\Rate;
 
+use App\Term;
+
 use DB;
 
 use PDF;

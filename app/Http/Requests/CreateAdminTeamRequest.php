@@ -33,7 +33,7 @@ class CreateAdminTeamRequest extends Request
     public function rules()
     {
         return [
-            'name'              => 'required|unique:teams,name,'.$this->get('org_id'),
+            'name'              => 'required|unique:teams,name,NULL,id,organization_id,'.$this->get('org_id'),
             'org_id'            => 'required|exists:organizations,id'
         ];
     }
