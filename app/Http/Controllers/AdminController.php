@@ -402,6 +402,7 @@ class AdminController extends Controller
             $data['teamId'] = $team_id;
         }
 
+
         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
 
         return view('admin.team')->with($data);

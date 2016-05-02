@@ -255,7 +255,18 @@
     }
 
     .pull-right {
-        text-align: center;
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+
+    }
+
+    .pull-right input[type="button"] {
+        display: inline-block;
+        padding: 10px 15px;
+        background: #fff;
+        border-radius: 2px;
+        border: 1px solid #333;
     }
 
 
@@ -419,6 +430,10 @@
 
         table {
             max-width: 100%;
+        }
+
+        .pull-right input[type="button"] {
+            display: none;
         }
 
 </style>
@@ -680,7 +695,7 @@
             </ol>
         @endif
     </div>
-    <div id="pull-right">
+    <div class="pull-right">
         <form>
             <input type="button" onclick="window.print()" value="PRINT"/>
         </form>

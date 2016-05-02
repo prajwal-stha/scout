@@ -131,7 +131,7 @@
     <!-- FastClick -->
     <script src="{{ asset( 'fastclick/fastclick.min.js' ) }}"></script>
     <!-- AdminLTE App -->
-    <script src="{{ asset( 'js/app.min.js' ) }}"></script>
+    {{--<script src="{{ asset( 'js/app.min.js' ) }}"></script>--}}
 
     <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
