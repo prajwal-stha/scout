@@ -33,9 +33,9 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div id="modal-alert-placeholder"></div>
-                    <div class="modal-header">
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
+
                     <form action="{{ url('districts/update') }}" method="post" id="district-update-form">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="id" value="" id="update-district-id">
@@ -106,7 +106,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary" id="create-submit"><i class="fa fa-refresh"></i> Submit</button>
+                            <button type="submit" class="btn btn-primary" id="create-submit">Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->

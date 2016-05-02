@@ -123,7 +123,7 @@
                     <div class="box-footer">
 
                         {{--{{ link_to('admin/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}--}}
-                        <a class="pull-right" href="{{ url('admin/approved-print', [$organization->original_id]) }}"><i class="fa fa-print"></i></a>
+                        <a class="btn btn-info pull-right" href="{{ url('admin/approved-print', [$organization->original_id]) }}"><i class="fa fa-print"></i> Print</a>
                     </div>
                 </div>
             </div>

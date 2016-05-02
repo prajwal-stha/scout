@@ -40,7 +40,7 @@
 
                         <div class="box-body">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {{ Form::label('organization-name', 'Name of Organization *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('organization-name', 'Name of Organization *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name')) }}
                                     @if ($errors->has('name'))
@@ -53,7 +53,7 @@
 
                             <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
-                                {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::select('type', array(
                                         'school'      => 'School',
@@ -68,10 +68,9 @@
 
                             </div>
 
-
                             <div class="form-group{{ $errors->has('registration_date') ? ' has-error' : '' }}">
 
-                                {{ Form::label('registration_date', 'Organization Start Date *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('registration_date', 'Organization Start Date *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('registration_date'))
@@ -85,7 +84,7 @@
 
                             <div class="form-group{{ $errors->has('address_line_1') ? ' has-error' : '' }}">
 
-                                {{ Form::label('organization-address-1', 'Address Line 1 *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('organization-address-1', 'Address Line 1 *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('address_line_1', null, array('class' => 'form-control', 'id' => 'address_line_1')) }}
 
@@ -99,7 +98,7 @@
 
                             <div class="form-group{{ $errors->has('address_line_2') ? ' has-error' : '' }}">
 
-                                {{ Form::label('organization-address-2', 'Address Line 2', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('organization-address-2', 'Address Line 2', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('address_line_2', null, array('class' => 'form-control', 'id' => 'address_line_2')) }}
                                     @if ($errors->has('address_line_2'))
@@ -113,7 +112,7 @@
 
                             <div class="form-group{{ $errors->has('district') ? ' has-error' : '' }}">
 
-                                {{ Form::label('district', 'District *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('district', 'District *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::select('district',formatOption($district) , null, array('class' => 'form-control')) }}
 
@@ -128,7 +127,7 @@
 
                             <div class="form-group{{ $errors->has('chairman_f_name') || $errors->has('chairman_l_name') ? ' has-error' : '' }}">
 
-                                {{ Form::label('chairman', 'Chairman / Principal *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('chairman', 'Chairman / Principal *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
 
                                     {{ Form::text('chairman_f_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
@@ -154,7 +153,7 @@
 
                             <div class="form-group{{ $errors->has('chairman_mobile_no') ? ' has-error' : '' }}">
 
-                                {{ Form::label('chairman-mobile', 'Chairman Mobile No. *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('chairman-mobile', 'Chairman Mobile No. *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile')) }}
 
@@ -169,7 +168,7 @@
 
                             <div class="form-group{{ $errors->has('tel_no') ? ' has-error' : '' }}">
 
-                                {{ Form::label( 'organization-tel', 'Organization Tel No. *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label( 'organization-tel', 'Organization Tel No. *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('tel_no', null, array('class' => 'form-control', 'id' => 'organization-tel')) }}
 
@@ -184,7 +183,7 @@
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
-                                {{ Form::label( 'organization-email', 'Organization Email *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label( 'organization-email', 'Organization Email *', array( 'class' => 'control-label col-sm-4')) }}
 
                                 <div class="col-sm-4">
                                     {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'organization-email')) }}
@@ -198,7 +197,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('background_colour') ? ' has-error' : '' }}">
-                                {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
                                     {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
                                     @if ($errors->has('background_colour'))
@@ -211,7 +210,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('border_colour') ? ' has-error' : '' }}">
-                                {{ Form::label('border-colour', 'Border Colour *', array( 'class' => 'control-label col-sm-3')) }}
+                                {{ Form::label('border-colour', 'Border Colour *', array( 'class' => 'control-label col-sm-4')) }}
                                 <div class="col-sm-4">
 
                                     {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour')) }}
@@ -225,12 +224,12 @@
                                 </div>
 
                             </div>
-
+                        </div>
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
                                 {{ link_to('admin/approved-committee/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                             </div>
-                        </div>
+
                     {{ Form::close() }}
                 </div><!-- /.box -->
             </div>

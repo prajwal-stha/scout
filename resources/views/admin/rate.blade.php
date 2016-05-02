@@ -106,7 +106,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     {{ Form::close() }}
 
