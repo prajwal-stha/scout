@@ -13,6 +13,9 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
+
+                    <div class="box-body">
+
                     @if(count($organizations) > 0)
                         <table id="table-approved-organizations" class="table table-bordered table-striped">
                             <thead>
@@ -42,6 +45,7 @@
 
                         </table>
                     @endif
+                    </div>
                 </div><!-- /.box -->
             </div>
         </div>

@@ -132,14 +132,14 @@
             <!-- search form -->
             {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'sidebar-form']) }}
                 <div class="input-group{{ $errors->has('q') ? ' has-error' : '' }}">
-                    <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ old('q') }}">
+                    <input type="text" name="q" class="form-control" placeholder="Search Organization" value="{{ old('q') }}">
                     <span class="input-group-btn">
                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
                     </span>
                 </div>
             {{ Form::close() }}
 
-            <div class="pull-right info">
+            <div>
                 <p><a href="{{ url('admin/search') }}"> Advanced Search</a></p>
             </div>
             <!-- /.search form -->
@@ -169,7 +169,7 @@
                 </li>
 
                 <li class="treeview">
-                    <a href="javscript:;">
+                    <a href="#">
                         <i class="fa fa-institution"></i> <span>Organizations</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
@@ -229,8 +229,8 @@
 
 <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
 <script src="{{ asset( 'js/jquery.validate.js') }}"></script>
-<script src="{{ asset( '/js/app.min.js') }}"></script>
-<script src="{{ asset( '/js/demo.js') }}"></script>
+{{--<script src="{{ asset( '/js/app.min.js') }}"></script>--}}
+{{--<script src="{{ asset( '/js/demo.js') }}"></script>--}}
 <script src="{{ asset( 'js/admin.js') }}"></script>
 <script>
     //iCheck for checkbox and radio inputs

@@ -396,10 +396,12 @@ class AdminController extends Controller
         if(is_null($team_id)) {
 
             $data['teamId'] = $data['team']->first()->id;
+            $data['team_name'] = Team::findOrFail($data['teamId'])->name;
 
         }else{
 
             $data['teamId'] = $team_id;
+            $data['team_name'] = Team::findOrFail($team_id)->name;
         }
 
 
@@ -1230,10 +1232,12 @@ class AdminController extends Controller
         if(is_null($team_id)) {
 
             $data['teamId'] = $data['team']->first()->original_id;
+            $data['team_name'] = Team::findOrFail($data['teamId'])->name;
 
         }else{
 
             $data['teamId'] = $team_id;
+            $data['team_name'] = Team::findOrFail($team_id)->name;
         }
 
         $data['team_member'] = CoreTeamMember::where('team_id', $data['teamId'])->get();

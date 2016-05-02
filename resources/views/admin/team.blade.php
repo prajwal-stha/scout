@@ -205,6 +205,7 @@
 
                                 @if(isset($team))
                                     <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
+
                                 @endif
                                 <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 
