@@ -162,12 +162,12 @@
                             {{ Form::label('team-name', 'Name', array( 'class' => 'col-md-2')) }}
 
                             <div class="col-md-6">
-                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
-                            @if ($errors->has('name'))
-                                <span class="help-block">
+                                {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
                                         </span>
-                            @endif
+                                @endif
                             </div>
 
                             <button type="submit" class="btn btn-primary" id="team-submit"><i
@@ -180,7 +180,7 @@
 
                         {{ Form::close() }}
 
-                        @if(isset($team))
+                        @if(isset($team) && $team->count())
                             <table class="table table-bordered table-striped" id="teams-list">
                                 <thead align="center">
                                 <tr>

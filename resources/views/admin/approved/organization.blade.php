@@ -35,8 +35,8 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
-                    {{ Form::model($organization, ['url' => ['admin/approved-organization', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
-                        <input type="hidden" name="id" value="{{ $organization->id }}">
+                    {{ Form::model($organization, ['url' => ['admin/approved-organization', $organization->original_id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
+                        <input type="hidden" name="organization_id" value="{{ $organization->original_id }}">
 
                         <div class="box-body">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">

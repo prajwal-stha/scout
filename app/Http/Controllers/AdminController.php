@@ -7,6 +7,7 @@ use App\Scout\Service\CloneTable;
 use App\Http\Requests;
 
 use App\Http\Requests\CreateOrganizationAdminRequest;
+use App\Http\Requests\UpdateOrganizationsRequest;
 use App\Http\Requests\UpdateScouterRequest;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
@@ -65,6 +66,9 @@ class AdminController extends Controller
     protected $organization;
 
 
+    /**
+     * @var
+     */
     protected $something;
 
     /**
@@ -93,7 +97,11 @@ class AdminController extends Controller
         return view( 'admin.dashboard')->with( $data);
     }
 
-    public function getProfile( $id )
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function getProfile($id )
     {
         $data['title'] = 'Nepal Scout - Profile';
         $data['user'] = User::findOrFail($id);
@@ -104,6 +112,11 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @param UpdateProfileRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function patchProfile(UpdateProfileRequest $request, $id)
     {
         if($id){
@@ -146,15 +159,14 @@ class AdminController extends Controller
 
 
     /**
-     * @param CreateOrganizationAdminRequest $request
+     * @param UpdateOrganizationsRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function patchOrganization(CreateOrganizationAdminRequest $request, $id)
+    public function patchOrganization(UpdateOrganizationsRequest $request, $id)
     {
 
         $org = Organization::findOrFail($id);
-
 
         if($org){
             $org->name               = $request->get('name');
@@ -391,26 +403,29 @@ class AdminController extends Controller
     {
         $data['title'] = 'Nepal Scout';
         $data['organization'] = Organization::findOrFail($id);
-        $data['team'] = Team::where('organization_id', $id)->get();
+        if(Team::where('organization_id', $id)->count() > 0 ) {
+            $data['team'] = Team::where('organization_id', $id)->get();
+            if(is_null($team_id)) {
+                $data['teamId'] = $data['team']->first()->id;
+                $data['team_name'] = Team::findOrFail($data['teamId'])->name;
 
-        if(is_null($team_id)) {
+            }else{
 
-            $data['teamId'] = $data['team']->first()->id;
-            $data['team_name'] = Team::findOrFail($data['teamId'])->name;
-
-        }else{
-
-            $data['teamId'] = $team_id;
-            $data['team_name'] = Team::findOrFail($team_id)->name;
+                $data['teamId'] = $team_id;
+                $data['team_name'] = Team::findOrFail($team_id)->name;
+            }
+            $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
         }
 
-
-        $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
 
         return view('admin.team')->with($data);
 
     }
 
+    /**
+     * @param CreateAdminTeamRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postTeams(CreateAdminTeamRequest $request){
         if($request->has('org_id')){
             Team::create(
@@ -677,6 +692,10 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getApprovedPrint($id)
     {
         $data['title']  = 'Nepal Scout - Print';
@@ -754,19 +773,19 @@ class AdminController extends Controller
 
 
         // Clone organization
-        $this->cloneOrganization();
+//        $this->cloneOrganization();
 
        // Clone Organization Commiitte Member
-        $this->cloneMember();
+//        $this->cloneMember();
 
         // Clone Scouter
         $this->cloneScouter();
 
         // Clone Team
-        $this->cloneTeam();
+//        $this->cloneTeam();
 
         //  Clone Team Member
-        $this->cloneTeammember($id);
+//        $this->cloneTeammember($id);
 
     }
 
@@ -847,7 +866,7 @@ class AdminController extends Controller
 
         foreach($cloningData as $data){
             $overwrites[] = array('original_id' => $data->id);
-            $overwrites[] = array('permission_date' => is_null($data->permission_date) ? '' : formatDate($data->permission_date));
+            $overwrites[] = array('permission_date' => formatDate($data->permission_date));
             $overwrites[] = array('btc_date' => is_null($data->permission_date) ? NULL : formatDate($data->btc_date));
             $overwrites[] = array('advance_date' => is_null($data->advance_date) ? NULL : formatDate($data->advance_date));
             $overwrites[] = array('alt_date' => is_null($data->alt_date) ? NULL : formatDate($data->alt_date));
@@ -1033,16 +1052,30 @@ class AdminController extends Controller
      */
     public function postApprovedCommittee(Request $request)
     {
+        $rules = [
+            'f_name'            => 'required',
+            'l_name'            => 'required',
+            'organization_id'   => 'required|exists:core_organizations,original_id'
+        ];
 
-        $member = CoreMember::create([
-            'f_name'            => $request->get('f_name'),
-            'm_name'            => $request->get('m_name'),
-            'l_name'            => $request->get('l_name'),
-            'organization_id'   => $request->get('organization_id'),
-            'original_id'       => generateUniqueId()
-        ]);
+        $validator = Validator::make($request->all(), $rules);
 
-        return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+        if($validator->passes()){
+            $member = CoreMember::create([
+                'f_name'            => $request->get('f_name'),
+                'm_name'            => $request->get('m_name'),
+                'l_name'            => $request->get('l_name'),
+                'organization_id'   => $request->get('organization_id'),
+                'original_id'       => generateUniqueId()
+            ]);
+
+            return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+
+        } else {
+            return redirect()->back()->withErrors($validator)
+                ->withInput();
+
+        }
 
     }
 
@@ -1226,22 +1259,22 @@ class AdminController extends Controller
     {
         $data['title'] = 'Nepal Scout';
         $data['organization'] = CoreOrganization::where('original_id', $id)->first();
-        $data['team'] = CoreTeam::where('organization_id', $id)->get();
 
+        if(CoreTeam::where( 'organization_id', $id)->count() > 0 ) {
+            $data['team'] = CoreTeam::where('organization_id', $id)->get();
+            if(is_null($team_id)) {
 
-        if(is_null($team_id)) {
+                $data['teamId'] = $data['team']->first()->original_id;
+                $data['team_name'] = Team::findOrFail($data['teamId'])->name;
 
-            $data['teamId'] = $data['team']->first()->original_id;
-            $data['team_name'] = Team::findOrFail($data['teamId'])->name;
+            }else{
 
-        }else{
+                $data['teamId'] = $team_id;
+                $data['team_name'] = Team::findOrFail($team_id)->name;
+            }
 
-            $data['teamId'] = $team_id;
-            $data['team_name'] = Team::findOrFail($team_id)->name;
+            $data['team_member'] = CoreTeamMember::where('team_id', $data['teamId'])->get();
         }
-
-        $data['team_member'] = CoreTeamMember::where('team_id', $data['teamId'])->get();
-
         return view('admin.approved.team')->with($data);
 
     }
@@ -1476,9 +1509,9 @@ class AdminController extends Controller
     public function postSearch(SearchRequest $request)
     {
 
-        $q = $request->get('q');
+        $data['query'] = $request->get('q');
         $data['title']  = 'Nepal Scout - Search Results';
-        $data['search'] = CoreOrganization::search($q, null, true)
+        $data['search'] = CoreOrganization::search($data['query'], null, true)
                             ->with('district')
                             ->orderBy('relevance', 'desc')
                             ->get();
@@ -1488,6 +1521,9 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @return $this
+     */
     public function getSearch()
     {
         $data['title'] = 'Nepal Scout - Search';
@@ -1495,15 +1531,20 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return $this
+     */
     public function postAdvancedSearch(Request $request)
     {
         $rules = [
             'q' => 'required'
         ];
         $validator = Validator::make($request->all(), $rules);
-        $q = $request->get('q');
+        $data['query'] = $q = $request->get('q');
         $data['title']  = 'Nepal Scout - Advanced Search Results';
         if($validator->passes()) {
+
             if ($request->has('chairman') || $request->has('committe') || $request->has('scouter') || $request->has('team_member')) {
 
                 $results = CoreOrganization::where(function ($q) use ($request) {
@@ -1514,21 +1555,20 @@ class AdminController extends Controller
             }
 
             if ($request->has('school') || $request->has('organization')) {
-                $data['searchorg'] = CoreOrganization::search($q, null, true)
-                    ->orderBy('relevance', 'desc');
+                $data['search'] = CoreOrganization::search($data['query'], null, true)
+                    ->orderBy('relevance', 'desc')->get();
                 return view('admin.search')->with($data);
 
             }
 
             if ($request->has('team')) {
-                $data['search'] = CoreOrganization::search($q, null, true)
+                $data['search'] = CoreOrganization::search($data['query'], null, true)
                     ->with('teams')
                     ->orderBy('relevance', 'desc');
                 return view('admin.search')->with($data);
 
             }
         }
-        
 
     }
 

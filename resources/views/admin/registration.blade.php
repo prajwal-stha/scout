@@ -57,7 +57,7 @@
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
                     </div>
-                    @include('partials/admin_approved_nav')
+                    @include('partials/admin_nav')
                 </div><!-- /. box -->
 
             </div>

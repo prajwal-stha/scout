@@ -138,7 +138,7 @@
                             </div>
 
                             {{ Form::close() }}
-                            @if($member->count() > 0)
+                            @if(isset($member) && $member->count() > 0)
 
                                 <table id="table-admin-member" class="table table-bordered table-striped">
                                     <thead>

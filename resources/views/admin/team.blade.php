@@ -174,7 +174,7 @@
                                 </div>
                                 {{ Form::close() }}
 
-                                @if(isset($team))
+                                @if(isset($team) && $team->count())
 
                                     <table class="table table-bordered table-striped" id="teams-list">
                                         <thead align="center">
@@ -205,6 +205,9 @@
 
                                 @if(isset($team))
                                     <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
+                                    @if(isset($team_name) && !is_null($team_name))
+                                        <h3 class="box-subtitle"> Add Members to: {{ $team_name }}</h3>
+                                    @endif
 
                                 @endif
                                 <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">

@@ -18,9 +18,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div id="modal-alert-placeholder"></div>
-                    <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
                     <form action="{{ url('term/update') }}" method="post" id="term-update-form">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="id" value="" id="update-term-id">
@@ -145,8 +143,8 @@
                                             <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
                                             <td>{{ $value->title }}</td>
                                             <td>{{ $value->order }}</td>
-                                            <td><a class="updateTerm" data-id="{{ $value->id }}" href="{{ url('term/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a> |
-                                                <a class="deleteTerm" data-id="{{ $value->id }}" href="{{ url( 'term/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
+                                            <td><a class="btn btn-success updateTerm" data-id="{{ $value->id }}" href="{{ url('term/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-danger deleteTerm" data-id="{{ $value->id }}" href="{{ url( 'term/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

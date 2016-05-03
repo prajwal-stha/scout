@@ -29,7 +29,7 @@ class CreateOrganizationAdminRequest extends Request
         return [
             'registration_date'     => 'required|date_format:"d/m/Y"',
             'type'                  => 'required|string',
-            'name'                  => 'required|unique:organizations,name,'.$this->get('id'),
+            'name'                  => 'required|unique:core_organizations,name,'.$this->get('organization_id').',original_id',
             'district'              => 'required|exists:districts,id',
             'chairman_f_name'       => 'required|string',
             'chairman_l_name'       => 'required|string',
@@ -37,7 +37,7 @@ class CreateOrganizationAdminRequest extends Request
             'tel_no'                => 'required|string',
             'address_line_1'        => 'required|string',
             'address_line_2'        => 'string',
-            'email'                 => 'required|email|unique:organizations,email,'.$this->get('id'),
+            'email'                 => 'required|email|unique:core_organizations,email,'.$this->get('organization_id').',original_id',
             'background_colour'     => 'required',
             'border_colour'         => 'required',
         ];

@@ -27,9 +27,9 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/skins/_all-skins.min.css' ) }}">
     <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset( 'iCheck/all.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'iCheck/all.css' ) }}">--}}
 
-    <link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'iCheck/flat/blue.css' ) }}">--}}
     <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
 
 
@@ -218,31 +218,16 @@
 <!-- FastClick -->
 <script src="{{ asset( 'fastclick/fastclick.min.js' ) }}"></script>
 
-<script src="{{ asset( 'iCheck/icheck.min.js' ) }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset( 'js/app.min.js' ) }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{{--<script src="{{ asset( 'js/pages/dashboard.js' ) }}"></script>--}}
-        <!-- AdminLTE for demo purposes -->
-{{--<script src="{{ asset( 'js/demo.js') }}"></script>--}}
+
 <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
 
 <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
 <script src="{{ asset( 'js/jquery.validate.js') }}"></script>
-{{--<script src="{{ asset( '/js/app.min.js') }}"></script>--}}
-{{--<script src="{{ asset( '/js/demo.js') }}"></script>--}}
+
 <script src="{{ asset( 'js/admin.js') }}"></script>
-<script>
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-        checkboxClass: 'icheckbox_minimal-blue',
-        radioClass: 'iradio_minimal-blue'
-    });
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-        checkboxClass: 'icheckbox_flat-green',
-        radioClass: 'iradio_flat-green'
-    });
-</script>
+
 
 @show
 </body>

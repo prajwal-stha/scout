@@ -77,6 +77,7 @@ class CloneTable
 
             $entry_data = $this->data;
         }
+        dd($entry_data);
 
 
         try{

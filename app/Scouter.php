@@ -40,11 +40,14 @@ class Scouter extends Model
         if($value) {
             $value = explode('-', $value);
 
+
             if(count($value) == 3){
+
 
                 $value = $value[2] . '/' . $value[1] . '/' . $value[0];
 
                 return $this->attributes['permission_date'] = $value;
+
             }
 
             return '';

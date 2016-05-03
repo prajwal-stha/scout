@@ -20,7 +20,9 @@ function flash($message){
 function formatDate( $date ){
     $date = explode('/', $date);
 
+
     if(count($date) == 3){
+
         $date = $date[2].'-'.$date[1].'-'.$date[0];
         return date('Y-m-d', strtotime($date));
     }
