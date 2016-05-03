@@ -71,9 +71,6 @@
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ $organization->name }}</h3>
-                        <div class="box-tools">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
                     </div>
                     @include('partials/admin_approved_nav')
                 </div><!-- /. box -->

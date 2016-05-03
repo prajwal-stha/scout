@@ -2,48 +2,16 @@
 
 
 @section('content')
-    @if(Session::has('member_created'))
-
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('member_created') }}
-        </div>
-
-    @endif
-
-
-    @if(Session::has('member_not_filled'))
-
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('member_not_filled') }}
-        </div>
-
-    @endif
-
-
-    @if ($errors->has(0))
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="modal" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="alert-placeholder"></div>
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
 
                 {{ Form::open(['url' => 'organizations/update-member', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
                 <input type="hidden" name="organization_id" value="" id="update-member-org-id">
@@ -84,9 +52,6 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Registration</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 @include('partials/nav')
             </div><!-- /. box -->
@@ -99,96 +64,135 @@
                     <h3 class="box-title">Committee Member Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
+                @if(Session::has('member_created'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('member_created') }}
+                    </div>
+
+                @endif
+
+
+                @if(Session::has('member_not_filled'))
+
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('member_not_filled') }}
+                    </div>
+
+                @endif
+
+
+                @if ($errors->has(0))
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 {{ Form::open(['url' => 'organizations/member', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
-                    <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
-                    <div class="box-body">
-                        <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
-                            {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
-                                @if ($errors->has('f_name'))
-                                    <span class="help-block">
+                <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
+                <div class="box-body">
+                    <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
+                        {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
+                        <div class="col-sm-4">
+                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                            @if ($errors->has('f_name'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('f_name') }}</strong>
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                         </div>
+                    </div>
 
-                        <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
-                            {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
-                                @if ($errors->has('m_name'))
-                                    <span class="help-block">
+                    <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
+                        {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
+                        <div class="col-sm-4">
+                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                            @if ($errors->has('m_name'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('m_name') }}</strong>
                                     </span>
-                                @endif
+                            @endif
 
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
-                            {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
-                                @if ($errors->has('l_name'))
-                                    <span class="help-block">
+                    <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
+                        {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
+                        <div class="col-sm-4">
+                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                            @if ($errors->has('l_name'))
+                                <span class="help-block">
                                         <strong>{{ $errors->first('l_name') }}</strong>
                                     </span>
-                                @endif
-                            </div>
+                            @endif
                         </div>
+                    </div>
+                </div>
+                <div class="box-footer border-bottom">
 
-                        <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i
+                                class="fa fa-refresh"></i> Save
+                    </button>
+                    {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                    {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}
 
-                            <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i class="fa fa-refresh"></i> Save</button>
-                            {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-                            {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}
-
-                        </div>
+                </div>
 
                 {{ Form::close() }}
-                    @if(!empty($member))
+                @if(!empty($member))
 
-                        <div class="box-footer">
-                            <form action="{{ url('organizations/remove') }}" method="post" id="remove_many_members">
-                                {{ csrf_field() }}
-                                <table id="table-member" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th><input name="action_to_all" type="checkbox" class="check-all"></th>
-                                            <th>First Name</th>
-                                            <th>Middle Name</th>
-                                            <th>Last Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="list-member">
-                                        @foreach($member as $value)
-                                            <tr>
-                                                <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
-                                                <td>{{ $value->f_name }}</td>
-                                                <td>{{ $value->m_name }}</td>
-                                                <td>{{ $value->l_name }}</td>
-                                                <td>
-                                                    <a class="updateMember" data-id="{{ $value->id }}">
-                                                        <i class="fa fa-pencil"></i></a> |
-                                                    <a class="deleteMember" data-id="{{ $value->id }}" href="{{ url( 'organizations/delete-member', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
-                                            </tr>
-                                        @endforeach
+                    <div class="box-body">
+                        <form action="{{ url('organizations/remove') }}" method="post" id="remove_many_members">
+                            {{ csrf_field() }}
+                            <table id="table-member" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th><input name="action_to_all" type="checkbox" class="check-all"></th>
+                                    <th>First Name</th>
+                                    <th>Middle Name</th>
+                                    <th>Last Name</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="list-member">
+                                @foreach($member as $value)
+                                    <tr>
+                                        <td><input class="check-row" name="action_to[]" type="checkbox"
+                                                   value="{{ $value->id }}"></td>
+                                        <td>{{ $value->f_name }}</td>
+                                        <td>{{ $value->m_name }}</td>
+                                        <td>{{ $value->l_name }}</td>
+                                        <td>
+                                            <a class="btn btn-success updateMember" data-id="{{ $value->id }}">
+                                                <i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-danger deleteMember" data-id="{{ $value->id }}"
+                                               href="{{ url( 'organizations/delete-member', [$value->id]) }}"><i
+                                                        class="fa fa-trash-o"></i></a>
+                                    </tr>
+                                @endforeach
 
-                                    </tbody>
+                                </tbody>
 
-                                </table>
-                                <div class="btn-toolbar list-toolbar">
-                                    <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit"><i class="fa fa-trash-o"></i>Delete</button>
-                                </div>
-                            </form>
-                        </div>
-                    @endif
-
+                            </table>
+                            <div class="btn-toolbar list-toolbar">
+                                <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">
+                                    <i class="fa fa-trash-o"></i>Delete
+                                </button>
+                            </div>
+                        </form>
                     </div>
+                @endif
+
+
             </div><!-- /.box -->
 
         </div>
@@ -200,7 +204,7 @@
 
     @parent
     <script>
-        var index_member_url  = "<?php echo url('scouter/committe'); ?>"
+        var index_member_url = "<?php echo url('scouter/committe'); ?>"
         var update_member_url = "<?php echo url('organizations/update-member'); ?>";
         var delete_member_url = "<?php echo url('organizations/delete-member'); ?>";
     </script>

@@ -52,9 +52,6 @@
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ $organization->name }}</h3>
-                        <div class="box-tools">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
                     </div>
                     @include('partials/admin_approved_nav')
                 </div><!-- /. box -->
@@ -123,7 +120,7 @@
                     <div class="box-footer">
 
                         {{--{{ link_to('admin/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}--}}
-                        <a class="btn btn-info pull-right" href="{{ url('admin/approved-print', [$organization->original_id]) }}"><i class="fa fa-print"></i> Print</a>
+                        <a class="btn btn-info pull-right" target="_blank" href="{{ url('admin/approved-print', [$organization->original_id]) }}"><i class="fa fa-print"></i> Print</a>
                     </div>
                 </div>
             </div>

@@ -137,32 +137,26 @@
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ $organization->name }}</h3>
-                        <div class="box-tools">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
                     </div>
                     @include('partials/admin_approved_nav')
                 </div><!-- /. box -->
-
-            </div>
-            <div class="col-md-8">
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Team</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
-                    <div class="col-md-12">
+                    <div class="box-body">
 
                         {{ Form::open(['url' => 'admin/create-approved-team', 'class' => 'add-team-area', 'id' =>'team-create-form']) }}
 
                         <input type="hidden" name="org_id" id="org_id"
                                value="{{  $organization->original_id }}">
-                        <div class="{{ $errors->has('name') ? ' has-error' : '' }}">
-                            {{ Form::label('team-name', 'Name', array( 'class' => 'col-md-2')) }}
+                        <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
+                            {{--{{ Form::label('team-name', 'Name', array( 'class' => 'col-md-2')) }}--}}
 
-                            <div class="col-md-6">
-                                {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
+                            <div class="col-md-7">
+                                {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name', 'placeholder' => 'Name')) }}
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -211,16 +205,31 @@
                         @endif
 
                     </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-8">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+
+                        @if(isset($team))
+                            @if(!is_null($team_name))
+                                <h3 class="box-title"> Add Members to: {{ $team_name }}</h3>
+
+                            @endif
+                        @endif
+
+
+                    </div><!-- /.box-header -->
+                    <!-- form start -->
+
 
                     <div class="box-body">
                         {{ Form::open(['url' => 'admin/create-approved-team-member', 'class' => 'form-horizontal', 'id' =>'approved-member-create-form']) }}
 
                         @if(isset($team))
                             <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
-                            @if(!is_null($team_name))
-                                <h3 class="box-subtitle"> Add Members to: {{ $team_name }}</h3>
-
-                            @endif
                         @endif
                         <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 
@@ -328,7 +337,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary" id="create_team_member"><i
                                     class="fa fa-plus-circle"></i> Add Member

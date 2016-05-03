@@ -20,9 +20,6 @@
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">{{ $organization->name }}</h3>
-                        <div class="box-tools">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
                     </div>
                     @include('partials/admin_nav')
                 </div><!-- /. box -->
@@ -37,15 +34,15 @@
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
-                    <div class="box-body">
 
-                        {{ Form::model($scouter, ['url' => ['admin/scouter', $scouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal']) }}
+                    {{ Form::model($scouter, ['url' => ['admin/scouter', $scouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal']) }}
+                    <div class="box-body">
                         <input type="hidden" name="org_id" id="org_id" value="{{ $organization->id }}">
                         <div class="row">
 
-                            <div class="col-md-5">
+                            <div class="col-md-12">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-4')) }}
+                                    {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
                                     <div class="col-sm-6">
                                         {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                         @if ($errors->has('name'))
@@ -56,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-12">
 
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     {{ Form::label('lead_email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
@@ -195,14 +192,15 @@
                             </div>
 
                         </div>
-
-                        <div class="box-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
-                            {{ link_to('admin/teams/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-                        </div>
-
-                        {{ Form::close() }}
                     </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
+                        {{ link_to('admin/teams/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                    </div>
+
+                    {{ Form::close() }}
+
 
                 </div><!-- /.box -->
             </div>
@@ -220,13 +218,13 @@
     @parent
     <script>
         $(".date").inputmask();
-        $( ".date" ).datepicker({
-            format:'dd/mm/yyyy',
+        $(".date").datepicker({
+            format: 'dd/mm/yyyy',
             changeMonth: true,
             changeYear: true,
             yearRange: '1930:2030',
             inline: true,
-            dy:true,
+            dy: true,
         });
 
     </script>

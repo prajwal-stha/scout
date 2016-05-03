@@ -59,8 +59,21 @@
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'main-search col-sm-3 no-padding pull-left']) }}
+            <div class="input-group{{ $errors->has('q') ? ' has-error' : '' }}">
+                <input type="text" name="q" class="form-control" placeholder="Search Organization" value="{{ old('q') }}">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    </span>
+            </div>
+            {{ Form::close() }}
+
+            <a class="btn btn-success btn-outline btn-advance-search" href="{{ url('admin/search') }}"> Advanced Search</a>
+
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+
+
                     <!-- Notifications: style can be found in dropdown.less -->
                     {{--<li class="dropdown notifications-menu">--}}
                         {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown">--}}
@@ -102,10 +115,10 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('admin/profile', [Auth::user()->id]) }}" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="{{ url('admin/profile', [Auth::user()->id]) }}" class="btn btn-default">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{ url( '/logout' ) }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i>Sign out</a>
+                                    <a href="{{ url( '/logout' ) }}" class="btn btn-default"><i class="fa fa-sign-out"></i>Sign out</a>
                                 </div>
                             </li>
                         </ul>
@@ -130,18 +143,18 @@
             {{--</div>--}}
             {{--</div>--}}
             <!-- search form -->
-            {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'sidebar-form']) }}
-                <div class="input-group{{ $errors->has('q') ? ' has-error' : '' }}">
-                    <input type="text" name="q" class="form-control" placeholder="Search Organization" value="{{ old('q') }}">
-                    <span class="input-group-btn">
-                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-                    </span>
-                </div>
-            {{ Form::close() }}
+            {{--{{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'sidebar-form']) }}--}}
+                {{--<div class="input-group{{ $errors->has('q') ? ' has-error' : '' }}">--}}
+                    {{--<input type="text" name="q" class="form-control" placeholder="Search Organization" value="{{ old('q') }}">--}}
+                    {{--<span class="input-group-btn">--}}
+                        {{--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>--}}
+                    {{--</span>--}}
+                {{--</div>--}}
+            {{--{{ Form::close() }}--}}
 
-            <div>
-                <p><a href="{{ url('admin/search') }}"> Advanced Search</a></p>
-            </div>
+            {{--<div>--}}
+                {{--<a href="{{ url('admin/search') }}"> Advanced Search</a>--}}
+            {{--</div>--}}
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
@@ -174,8 +187,8 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('admin/approved-organizations') }}"><i class="fa fa-check-square-o"></i> Approved Organizations</a></li>
-                        <li><a href="{{ url('admin/declined-organizations') }}"><i class="fa fa-close"></i> Declined Organizations</a></li>
+                        <li><a href="{{ url('admin/approved-organizations') }}">Approved Organizations</a></li>
+                        <li><a href="{{ url('admin/declined-organizations') }}">Declined Organizations</a></li>
                     </ul>
                 </li>
 

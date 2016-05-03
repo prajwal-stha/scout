@@ -7,6 +7,24 @@
  *   -------------------------
  */
 
+body{
+    background-color: #141414;
+}
+
+a{
+    color:#00a65a;
+}
+
+.default-welcome-message{
+    float:right;
+    color: #fff;
+    margin: 15px;
+}
+.default-welcome-message a{
+    color: #fff;
+}
+
+
 .content-header {
     padding-bottom: 30px;
 }
@@ -39,6 +57,16 @@
     margin-top: 5px;
     margin-bottom: 10px;
 }
+.skin-green .sidebar a,
+.skin-green .treeview-menu>li>a{
+    color: #ccc;
+}
+.skin-green .sidebar-menu>li>.treeview-menu{
+    margin: 0;
+    background: #1c1c1c;
+    box-shadow: 0 1px 0px #000 inset;
+}
+
 
 .make-visible {
     display: block;
@@ -155,7 +183,14 @@ textarea.textarea:focus {
     border-bottom:0;
     box-shadow: none;
 }
-
+.nav-stacked > li.active > a, .nav-stacked > li.active > a:hover{
+    color:#00a65a;
+}
+.nav > li > a:hover, .nav > li > a:active, .nav > li > a:focus,
+.skin-green .sidebar-menu>li:hover>a, .skin-green .sidebar-menu>li.active>a{
+    color: #fff;
+    background:#1c1c1c;
+}
 
 .nav-stacked > li > a{
     color:#666;
@@ -166,14 +201,11 @@ a.btn{
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 600;
-    min-height: 30px;
-    line-height: 30px;
+    min-height: 35px;
+    line-height: 33px;
     padding: 0 15px;
 }
-/*button[type="submit"]{*/
-    /*background: #00a65a;*/
-    /*border-color: #00a65a;*/
-/*}*/
+
 
 button[type="submit"] i {
     outline: 0;
@@ -460,7 +492,7 @@ label {
 
 .add-team-area{
     background: #1c1c1c;
-    margin: 0 -15px;
+    margin: -20px;
     padding: 15px;
     margin-bottom: 20px;
     border-bottom: 1px solid #000;
@@ -479,23 +511,25 @@ label {
     font-weight: 600;
 }
 
-.help-block{
+.help-block,
+.error-message{
     background: #dd4b39;
     color: #fff !important;
     font-size: 11px;
-    font-weight: 100;
+    font-weight: 600;
     padding: 5px;
     position: relative;
     z-index: 1;
     top: 5px;
     left: 0;
-    min-width: 180px;
+    min-width: 150px;
     border-radius: 2px;
 }
 .help-block strong{
     font-weight: 600;
 }
-.help-block:after{
+.help-block:after,
+.error-message:after{
     content: "";
     border-left: 6px solid transparent;
     position: absolute;
@@ -503,4 +537,65 @@ label {
     border-right: 6px solid transparent;
     left: 12px;
     top: -5px;
+}
+
+.search-engine{
+    margin-bottom: 30px;
+}
+.search-engine input[type="text"],
+.search-engine button[type="submit"]{
+    min-height: 50px;
+}
+
+
+.circle-stroke-icon{
+    background: #e8ab18;
+    width:120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    padding:35px;
+}
+.circle-stroke-icon img{
+    max-width: 100%;
+    height: auto;
+}
+
+
+.skin-green .sidebar-form input[type="text"],
+.skin-green .sidebar-form .btn{
+    background:#222;
+}
+.skin-green .sidebar-form input[type="text"]:focus+.input-group-btn .btn{
+    border-left-color:transparent;
+}
+.btn-advance-search{
+    margin: 7px 0;
+}
+.main-search{
+    margin: 7px;
+}
+
+.btn-success.btn-outline{
+    border-color:#00a65a;
+
+}
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group{
+    line-height: 31px;
+    min-height: 31px;
+}
+.box .alert{
+    margin: 20px;
+}
+.main-footer{
+    background: #141414;
+    border-top: 1px solid #000;
+    box-shadow: 0 1px 0 #222 inset;
+}
+
+
+@media screen and (max-width:767px){
+    .form-group .col-sm-3{
+        margin-bottom: 15px;
+    }
 }

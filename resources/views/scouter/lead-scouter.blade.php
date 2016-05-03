@@ -3,27 +3,6 @@
 
 @section('content')
 
-    @if(Session::has('lead_created'))
-
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('lead_created') }}
-        </div>
-
-    @endif
-
-
-    @if(Session::has('lead_scouter_updated'))
-
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('lead_scouter_updated') }}
-        </div>
-
-    @endif
-
 
     <div class="row">
         <div class="col-md-3">
@@ -31,9 +10,6 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Registration</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 @include('partials/nav')
             </div><!-- /. box -->
@@ -47,6 +23,27 @@
                     <h3 class="box-title">Lead Scouter Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
+
+                @if(Session::has('lead_created'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('lead_created') }}
+                    </div>
+
+                @endif
+
+
+                @if(Session::has('lead_scouter_updated'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('lead_scouter_updated') }}
+                    </div>
+
+                @endif
 
                 <div class="box-body">
 
@@ -62,11 +59,10 @@
 
                     <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
                     <div class="row">
-
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-4')) }}
-                                <div class="col-sm-8">
+                                {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
+                                <div class="col-sm-6">
                                     {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -76,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-12">
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 {{ Form::label('lead_email', 'Email *', array( 'class' => 'control-label col-sm-6')) }}
@@ -212,16 +208,16 @@
                             </div>
 
                         </div>
-
                     </div>
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
-                        {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-                    </div>
-
-                    {{ Form::close() }}
                 </div>
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
+                    {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                </div>
+
+                {{ Form::close() }}
+
 
             </div><!-- /.box -->
 
@@ -235,13 +231,13 @@
     @parent
     <script>
         $(".date").inputmask();
-        $( ".date" ).datepicker({
-            format:'dd/mm/yyyy',
+        $(".date").datepicker({
+            format: 'dd/mm/yyyy',
             changeMonth: true,
             changeYear: true,
             yearRange: '1930:2030',
             inline: true,
-            dy:true,
+            dy: true,
         });
 
     </script>

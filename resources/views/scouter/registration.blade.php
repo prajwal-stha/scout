@@ -8,9 +8,6 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Registration</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 @include('partials/nav')
             </div><!-- /. box -->
@@ -77,7 +74,7 @@
 
                 </div>
                 <div class="box-footer">
-                    {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}
+                    {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info pull-right')) }}
                 </div>
             </div>
 

@@ -9,40 +9,39 @@
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Registration</h3>
-                    <div class="box-tools">
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    </div>
                 </div>
                 @include('partials/nav')
             </div><!-- /. box -->
 
         </div>
         <div class="col-md-9">
-            @if(Session::has('district_updated'))
 
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-check"></i> Great!</h4>
-                    {{ Session::get('district_updated') }}
-                </div>
-
-            @endif
-
-            @if(Session::has('scarf_update'))
-
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h4><i class="icon fa fa-check"></i> Great!</h4>
-                    {{ Session::get('scarf_update') }}
-                </div>
-
-            @endif
 
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Scarf Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
+
+                @if(Session::has('district_updated'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('district_updated') }}
+                    </div>
+
+                @endif
+
+                @if(Session::has('scarf_update'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('scarf_update') }}
+                    </div>
+
+                @endif
 
                 @if(isset($org_id))
 
@@ -83,11 +82,11 @@
                             </div>
 
                         </div>
-
+                    </div>
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-refresh"></i> Save</button>
                         </div>
-                    </div>
+
                 </form>
             </div><!-- /.box -->
 

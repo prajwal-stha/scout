@@ -464,6 +464,7 @@ class AdminController extends Controller
      */
     public function patchTeams(Request $request)
     {
+        dd($request->all());
         $rules = array(
             'name'              => 'required|unique:teams,name,'.$request->get('id'),
             'organization_id'   => 'required|exists:organizations,id'

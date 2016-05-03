@@ -11,23 +11,24 @@
             {{ Session::get('organization_declined') }}
         </div>
 
-    @endif
+        @endif
 
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="alert-placeholder"></div>
-                    <div class="modal-header">
+                <!-- Main content -->
+        <section class="content">
+            <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="alert-placeholder"></div>
+
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
 
-                    {{ Form::model($organization, ['url' => ['admin/register', $organization->id], 'method' => 'PATCH', 'class' => 'register-form']) }}
-                        <input type="hidden" name="organization_id" value="{{ $organization->id }}" id="organization_id">
+
+                        {{ Form::model($organization, ['url' => ['admin/register', $organization->id], 'method' => 'PATCH', 'class' => 'register-form']) }}
+                        <input type="hidden" name="organization_id" value="{{ $organization->id }}"
+                               id="organization_id">
 
 
                         <div class="modal-body">
@@ -43,103 +44,104 @@
                             <button type="button" class="btn btn-primary" id="modal-register-submit">Register</button>
                         </div>
 
-                    {{ Form::close() }}
+                        {{ Form::close() }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4">
 
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{ $organization->name }}</h3>
-                        <div class="box-tools">
-                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">{{ $organization->name }}</h3>
                         </div>
-                    </div>
-                    @include('partials/admin_nav')
-                </div><!-- /. box -->
+                        @include('partials/admin_nav')
+                    </div><!-- /. box -->
 
-            </div>
-            <div class="col-md-8">
+                </div>
+                <div class="col-md-8">
 
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Registration Cost Detail</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
-                    <div class="box-body">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Registration Cost Detail</h3>
+                        </div><!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
 
-                        <table id="table-registration-detail" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Number</th>
-                                <th>Rate</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody id="list-registration-detail">
+                            <table id="table-registration-detail" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Number</th>
+                                    <th>Rate</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody id="list-registration-detail">
 
-                            <tr>
-                                <th>Unit Registration/Registration</th>
-                                <td>-</td>
-                                <td>{{ 'Rs. '. $rates->registration_rate }}</td>
-                                <td>{{ 'Rs. '. $rates->registration_rate }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Unit Registration/Registration</th>
+                                    <td>-</td>
+                                    <td>{{ 'Rs. '. $rates->registration_rate }}</td>
+                                    <td>{{ 'Rs. '. $rates->registration_rate }}</td>
+                                </tr>
 
-                            <tr>
-                                <th>Scouter</th>
-                                <td>{{ $scouter }}</td>
-                                <td>{{ 'Rs. '. $rates->scouter_rate }}</td>
-                                <td>{{ 'Rs. ' . ($scouter * $rates->scouter_rate) }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Scouter</th>
+                                    <td>{{ $scouter }}</td>
+                                    <td>{{ 'Rs. '. $rates->scouter_rate }}</td>
+                                    <td>{{ 'Rs. ' . ($scouter * $rates->scouter_rate) }}</td>
+                                </tr>
 
-                            <tr>
-                                <th>Scout</th>
-                                <td>{{ $scout }}</td>
-                                <td>{{ 'Rs. '. $rates->team_rate }}</td>
-                                <td>{{ 'Rs. '. ($scout * $rates->team_rate) }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Scout</th>
+                                    <td>{{ $scout }}</td>
+                                    <td>{{ 'Rs. '. $rates->team_rate }}</td>
+                                    <td>{{ 'Rs. '. ($scout * $rates->team_rate) }}</td>
+                                </tr>
 
-                            <tr>
-                                <th>Organization Commitee Member</th>
-                                <td>{{ $member }}</td>
-                                <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
-                                <td>{{ 'Rs. ' . ($member * $rates->committee_members_rate) }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Organization Commitee Member</th>
+                                    <td>{{ $member }}</td>
+                                    <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
+                                    <td>{{ 'Rs. ' . ($member * $rates->committee_members_rate) }}</td>
+                                </tr>
 
-                            <tr>
-                                <th>Disaster Management Trust</th>
-                                <td>{{ $total }}</td>
-                                <td>{{ 'Rs. ' . $rates->disaster_mgmt_trust_rate }}</td>
-                                <td>{{ 'Rs. ' . ($total * $rates->disaster_mgmt_trust_rate) }}</td>
-                            </tr>
+                                <tr>
+                                    <th>Disaster Management Trust</th>
+                                    <td>{{ $total }}</td>
+                                    <td>{{ 'Rs. ' . $rates->disaster_mgmt_trust_rate }}</td>
+                                    <td>{{ 'Rs. ' . ($total * $rates->disaster_mgmt_trust_rate) }}</td>
+                                </tr>
 
-                            </tbody>
+                                </tbody>
 
-                        </table>
+                            </table>
 
-                    </div>
-                    <div class="box-footer">
+                        </div>
+                        <div class="box-footer">
                             @if(is_null($organization->registration_no) && empty($organization->registration_no))
-                                <button type="submit" class="btn btn-primary register-modal"><i class="fa fa-check-square-o"></i> Approve</button>
+                                <button type="submit" class="btn btn-success register-modal"><i
+                                            class="fa fa-check-square-o"></i> Approve
+                                </button>
                             @endif
                             @if(is_null($organization->registration_no) && empty($organization->registration_no) && $organization->is_declined == false)
                                 {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
-                                    <input type="hidden" name="organization_id" value="{{ $organization->id }}">
-                                    <button type="submit" data-id="{{ $organization->id }}" class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline</button>
+                                <input type="hidden" name="organization_id" value="{{ $organization->id }}">
+                                <button type="submit" data-id="{{ $organization->id }}"
+                                        class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline
+                                </button>
                                 {{ Form::close() }}
                             @endif
 
                             {{--{{ link_to('admin/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}--}}
-                            <a href="{{ url('admin/print', [$organization->id]) }}"><i class="fa fa-print"></i></a>
+                            <a class="btn btn-info pull-right" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
 @stop
