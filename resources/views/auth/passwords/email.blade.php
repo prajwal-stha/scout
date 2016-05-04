@@ -15,7 +15,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
 
-    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
+    {{--<link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">--}}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,8 +31,17 @@
     <div class="login-box reset-password">
         {{--<div class="panel-heading">Reset Password</div>--}}
         {{--<div class="panel-body">--}}
+
+        <div class="login-logo">
+            <a class="logo-circle-stroke" href="{{ url('/') }}">
+                <img src="../../public/img/logo.jpg" alt="">
+            </a>
+        </div><!-- /.login-logo -->
+
+
+        <div class="login-box-msg style-normal">Reset Password</div>
         <div class="login-box-body">
-            <p class="login-box-msg">Reset Password</p>
+
             @if (session('status'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -44,10 +53,10 @@
                 {!! csrf_field() !!}
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">E-Mail Address</label>
+                    {{--<label class="col-md-12">E-Mail Address</label>--}}
 
-                    <div class="col-md-8">
-                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                    <div class="col-md-12">
+                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email Address">
 
                         @if ($errors->has('email'))
                             <span class="help-block">
@@ -56,14 +65,11 @@
                         @endif
                     </div>
                 </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-btn fa-envelope"></i> Submit
+                </button>
 
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
-                        </button>
-                    </div>
-                </div>
+
             </form>
         </div>
     </div>

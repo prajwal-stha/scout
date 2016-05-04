@@ -59,7 +59,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="modal-member-submit">Update</button>
+                        <button type="button" class="btn btn-success" id="modal-member-submit">Update</button>
                     </div>
 
                     {{ Form::close() }}
@@ -126,8 +126,7 @@
                         </div>
                     </div>
                     <div class="box-footer border-bottom">
-                        <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i
-                                    class="fa fa-refresh"></i> Save
+                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
                         </button>
                         {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
 

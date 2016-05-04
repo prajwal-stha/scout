@@ -203,7 +203,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-refresh"></i> Save</button>
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
                 </div>
 
                 {{ Form::close() }}

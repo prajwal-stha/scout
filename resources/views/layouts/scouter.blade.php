@@ -41,7 +41,7 @@
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header pull-left">
                     <a href="{{ url('/') }}" class="navbar-brand"><b>Nepal</b> Scout</a>
                     {{--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">--}}
                         {{--<i class="fa fa-bars"></i>--}}
@@ -49,13 +49,6 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-                    {{--<form class="navbar-form navbar-left" role="search">--}}
-                        {{--<div class="form-group">--}}
-                            {{--<input type="text" class="form-control" id="navbar-search-input" placeholder="Search" name="search">--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                </div><!-- /.navbar-collapse -->
                <div class="default-welcome-message">
                    <span>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</span> / <a href="{{ url( '/logout' ) }}">Sign out <i class="fa fa-sign-out"></i></a>
                </div>
@@ -65,10 +58,6 @@
     <!-- Full Width Column -->
     <div class="content-wrapper">
         <div class="container">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-
-            </section>
 
             <!-- Main content -->
             <section class="content">

@@ -29,10 +29,9 @@
 <!-- Main Content -->
 
     <div class="login-box reset-password">
+        <div class="login-box-msg">Reset Password</div>
 
         <div class="login-box-body">
-
-            <p class="login-box-msg">Reset Password</p>
 
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
                 {!! csrf_field() !!}
@@ -42,7 +41,7 @@
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label class="col-md-4 control-label">E-Mail Address</label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
 
                         @if ($errors->has('email'))

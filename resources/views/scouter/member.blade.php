@@ -139,8 +139,7 @@
                 </div>
                 <div class="box-footer border-bottom">
 
-                    <button type="submit" class="btn btn-primary pull-left" id="member-submit"><i
-                                class="fa fa-refresh"></i> Save
+                    <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
                     </button>
                     {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                     {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}

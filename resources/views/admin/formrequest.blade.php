@@ -32,7 +32,7 @@
                                     <td>
                                         <a class="btn btn-primary" href="{{ url('admin/view-organization', [$value->id]) }}"><i
                                                     class="fa fa-eye"></i></a>
-                                        <a class="btn btn-primary" target="_blank" href="{{ url('admin/print', [$value->id]) }}"><i class="fa fa-print"></i></a>
+                                        <a class="btn btn-info" target="_blank" href="{{ url('admin/print', [$value->id]) }}"><i class="fa fa-print"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

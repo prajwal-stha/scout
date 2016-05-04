@@ -212,7 +212,7 @@
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary "><i class="fa fa-refresh"></i> Save</button>
+                    <button type="submit" class="btn btn-success ">Save</button>
                     {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                 </div>
 

@@ -52,7 +52,7 @@
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
                             {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-4')) }}
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 scout-selection">
                                 {{ Form::select('type', array(
                                     'school'      => 'School',
                                     'organization'=> 'Organization'
@@ -225,7 +225,7 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                         {{ link_to('admin/committee/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                     </div>
 

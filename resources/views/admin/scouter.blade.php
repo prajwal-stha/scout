@@ -195,7 +195,7 @@
                     </div>
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Save</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                         {{ link_to('admin/teams/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
                     </div>
 

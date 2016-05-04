@@ -27,7 +27,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="modal-team-submit">Update</button>
+                        <button type="button" class="btn btn-success" id="modal-team-submit">Update</button>
                     </div>
 
                     {{ Form::close() }}
@@ -120,7 +120,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="modal-teamMember-submit">Update</button>
+                            <button type="button" class="btn btn-success" id="modal-teamMember-submit">Update</button>
                         </div>
 
                         {{ Form::close() }}
@@ -154,7 +154,7 @@
                         <input type="hidden" name="org_id" id="org_id" value="{{  $organization->id }}">
                         <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                             {{--{{ Form::label('team-name', 'Name', array( 'class' => 'col-md-2')) }}--}}
-                            <div class="col-md-7">
+                            <div class="col-xs-7">
                                 {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name', 'placeholder' => 'Name')) }}
 
                                 @if ($errors->has('name'))
@@ -164,7 +164,7 @@
                                 @endif
                             </div>
 
-                            <button type="submit" class="btn btn-primary" id="team-submit"><i
+                            <button type="submit" class="btn btn-success" id="team-submit"><i
                                         class="fa fa-plus-circle"></i> Add Team
                             </button>
 
@@ -336,7 +336,7 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" id="create_team_member"><i
+                        <button type="submit" class="btn btn-success" id="create_team_member"><i
                                     class="fa fa-plus-circle"></i> Add Member
                         </button>
                         {{ link_to('admin/registration/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}

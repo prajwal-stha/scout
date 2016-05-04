@@ -13,7 +13,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
 
@@ -27,15 +27,19 @@
 <body class="hold-transition register-page">
 <div class="register-box">
     <div class="register-logo">
-        <a href="{{ url('/') }}">Nepal <b>Scout</b></a>
+        <a class="logo-circle-stroke" href="{{ url('/') }}">
+            <img src="../public/img/logo.jpg" alt="">
+        </a>
     </div>
+    <div class="login-box-msg style-normal">Register for a new account</div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register for a new account</p>
+
         <form action="{{ url('/register') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group has-feedback{{ $errors->has('f_name') ? ' has-error' : '' }}">
-                <input type="text" class="form-control" placeholder="First name" name="f_name" value="{{ old('f_name') }}">
+                <input type="text" class="form-control" placeholder="First name" name="f_name"
+                       value="{{ old('f_name') }}">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 @if ($errors->has('name'))
                     <span class="help-block">
@@ -45,7 +49,8 @@
             </div>
 
             <div class="form-group has-feedback{{ $errors->has('l_name') ? ' has-error' : '' }}">
-                <input type="text" class="form-control" placeholder="Last name" name="l_name" value="{{ old('l_name') }}">
+                <input type="text" class="form-control" placeholder="Last name" name="l_name"
+                       value="{{ old('l_name') }}">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
                 @if ($errors->has('name'))
                     <span class="help-block">
@@ -65,7 +70,8 @@
             </div>
 
             <div class="form-group has-feedback{{ $errors->has('username') ? ' has-error' : '' }}">
-                <input type="text" class="form-control" placeholder="User Name" name="username" value="{{ old( 'username') }}">
+                <input type="text" class="form-control" placeholder="User Name" name="username"
+                       value="{{ old( 'username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 @if ($errors->has('username'))
                     <span class="help-block">
@@ -92,21 +98,16 @@
                 @endif
             </div>
             <div class="row">
-                <div class="col-xs-8">
-                    {{--<div class="checkbox icheck">--}}
-                        {{--<label>--}}
-                            {{--<input type="checkbox"> I agree to the <a href="#">terms</a>--}}
-                        {{--</label>--}}
-                    {{--</div>--}}
-                </div><!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                <div class="col-xs-12 text-right">
+                    <button type="submit" class="btn btn-success">Register</button>
                 </div><!-- /.col -->
             </div>
         </form>
+        <div class="register-footer-style">
+            <a href="{{ url( '/login') }}" class="text-center">I already have a membership</a>
+        </div>
 
 
-        <a href="{{ url( '/login') }}" class="text-center">I already have a membership</a>
     </div><!-- /.form-box -->
 </div><!-- /.register-box -->
 

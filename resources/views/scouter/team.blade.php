@@ -207,7 +207,7 @@
                                         </span>
                             @endif
                         </div>
-                        <button type="submit" class="btn btn-primary" id="team-submit"><i
+                        <button type="submit" class="btn btn-success" id="team-submit"><i
                                     class="fa fa-plus-circle"></i> Add Team
                         </button>
 
@@ -364,7 +364,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" id="create_team_member"><i
+                    <button type="submit" class="btn btn-success" id="create_team_member"><i
                                 class="fa fa-plus-circle"></i> Add Member
                     </button>
                     {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default pull-right')) }}

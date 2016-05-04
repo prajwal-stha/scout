@@ -55,7 +55,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="modal-submit">Submit</button>
+                            <button type="button" class="btn btn-success" id="modal-submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -106,7 +106,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary" id="create-submit">Submit</button>
+                            <button type="submit" class="btn btn-success" id="create-submit">Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->

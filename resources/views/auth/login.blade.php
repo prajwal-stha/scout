@@ -25,7 +25,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ url('/') }}">Nepal <b>Scout</b> </a>
+        <a class="logo-circle-stroke" href="{{ url('/') }}">
+            <img src="../public/img/logo.jpg" alt="">
+        </a>
     </div><!-- /.login-logo -->
     @if(Session::has('confirmed'))
         <div class="alert alert-success alert-dismissable">
@@ -41,9 +43,8 @@
             {{ Session::get('not_verified') }}
         </div>
     @endif
-
+    <div class="login-box-msg">Welcome <span class="color-green">back!</span> <span class="small-text">Please login to your account</span></div>
     <div class="login-box-body">
-        <p class="login-box-msg">Sign In</p>
         <form action="{{ url('/login') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -65,21 +66,31 @@
                 @endif
             </div>
             <div class="row">
-                <div class="col-xs-8">
+                <div class="col-xs-6">
                     <div class="checkbox icheck">
                         <label>
                             <input type="checkbox" name="remember"> Remember Me
                         </label>
                     </div>
                 </div><!-- /.col -->
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-sign-in"></i>  Sign In</button>
+                <div class="col-xs-6 text-right">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i>  Sign In</button>
                 </div><!-- /.col -->
             </div>
         </form>
 
-        <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
-        <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+        <div class="login-footer-style text-center">
+            <div class="row">
+                <div class="col-xs-6 text-left">
+                    <a href="{{ url('/password/reset') }}">I forgot my password</a>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <strong><a href="{{ url('/register') }}">Register</a></strong>
+                </div>
+            </div>
+
+
+        </div>
 
     </div><!-- /.login-box-body -->
 </div><!-- /.login-box -->

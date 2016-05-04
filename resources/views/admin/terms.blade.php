@@ -50,7 +50,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="modal-terms-submit">Submit</button>
+                            <button type="button" class="btn btn-success" id="modal-terms-submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -109,7 +109,7 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary" id="create-submit"><i class="fa fa-refresh"></i> Submit</button>
+                            <button type="submit" class="btn btn-success" id="create-submit">Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->
