@@ -27,6 +27,15 @@
         </div>
     @endif
 
+
+    @if(Session::has('team_not_filled'))
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i>Error!!</h4>
+            {{ Session::get('team_not_filled') }}
+        </div>
+    @endif
+
     @if ($errors->has(0))
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

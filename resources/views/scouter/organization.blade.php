@@ -27,15 +27,11 @@
 
                 @if(Session::has('no_org'))
 
-
-                        <div class="alert alert-danger alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-check"></i> Error!</h4>
-                            {{ Session::get('no_org') }}
-                        </div>
-
-
-
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                        {{ Session::get('no_org') }}
+                    </div>
 
                 @endif
 
@@ -55,8 +51,8 @@
                             {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name')) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>

@@ -120,10 +120,10 @@ class OrganizationsController extends Controller
      *
      * Post updated details of scarf
      * @param $id
-     * @param Request $request
+     * @param CreateScarfRequest $request
      * @return $this
      */
-    public function patchEditScarf($id, Request $request)
+    public function patchEditScarf($id, CreateScarfRequest $request)
     {
         $org = Organization::findOrFail($id);
 

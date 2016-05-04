@@ -215,21 +215,35 @@ class ScouterController extends Controller
         $data['rates']      = Rate::first();
 
         if(session()->has('org_id')) {
-            $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
-            $data['scout'] = intval(DB::table('teams')
+            if (Member::where('organization_id', session()->get('org_id'))->distinct()->count() < 3) {
+
+                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+            }
+
+            $team_member_count = DB::table('teams')
                 ->join('team_members', function ($join) {
                     $join->on('teams.id', '=', 'team_members.team_id')
-                    ->where('teams.organization_id', '=', session()->get('org_id'));
+                        ->where('teams.organization_id', '=', session()->get('org_id'));
                 })
-                ->count());
+                ->count();
+
+
+            if (Team::where('organization_id', session()->get('org_id'))->count() < 4 || $team_member_count < 24) {
+
+                return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
+
+            }
+
+
+            $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
+            $data['scout'] = $team_member_count;
             $data['member'] = intval(Member::where('organization_id', session()->get('org_id'))->count());
             $data['total']  = $data['scouter'] + $data['scout'] + $data['member'];
             return view('scouter.registration')->with($data);
 
         }
-        else {
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
-        }
+        return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+
 
 
         

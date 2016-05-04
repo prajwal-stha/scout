@@ -13,7 +13,6 @@
 
         @endif
 
-
                 <!-- Main content -->
         <section class="content">
             <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
@@ -133,16 +132,14 @@
                                 </button>
                                 {{ Form::close() }}
                             @endif
-
-                            {{--{{ link_to('admin/print', 'PRINT', array('class' => 'btn btn-default pull-right')) }}--}}
-                            <a class="btn btn-info pull-right" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
+                                
+                            <a class="btn btn-info pull-right" target="_blank" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
 
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
 @stop
 

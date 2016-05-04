@@ -12,8 +12,6 @@
                         <h3 class="box-title">All Organizations </h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
-
-
                     <div class="box-body">
 
                     @if(count($organizations) > 0)
@@ -49,13 +47,9 @@
                 </div><!-- /.box -->
             </div>
         </div>
-
     </section>
 
-
-
 @stop
-
 
 @section('scripts')
     @parent

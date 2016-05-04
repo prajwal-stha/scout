@@ -235,8 +235,8 @@
 
                                 @if ($errors->has('f_name'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('f_name') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('f_name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
@@ -244,8 +244,8 @@
 
                                 @if ($errors->has('m_name'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('m_name') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('m_name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                             <div class="col-sm-3">
@@ -253,8 +253,8 @@
 
                                 @if ($errors->has('l_name'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('l_name') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('l_name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -268,8 +268,8 @@
 
                                 @if ($errors->has('dob'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('dob') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -284,8 +284,8 @@
                                 {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('entry_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('entry_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('entry_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -303,8 +303,8 @@
                                 ), null, array('class' => 'form-control', 'id' => 'position' )) }}
                                 @if ($errors->has('position'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('position') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('position') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 
@@ -320,8 +320,8 @@
 
                                 @if ($errors->has('passed_date'))
                                     <span class="help-block">
-                                                <strong>{{ $errors->first('passed_date') }}</strong>
-                                            </span>
+                                        <strong>{{ $errors->first('passed_date') }}</strong>
+                                    </span>
                                 @endif
                             </div>
 

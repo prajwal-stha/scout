@@ -201,7 +201,6 @@
 
                     {{ Form::close() }}
 
-
                 </div><!-- /.box -->
             </div>
         </div>

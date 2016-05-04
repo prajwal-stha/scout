@@ -267,6 +267,7 @@
         background: #fff;
         border-radius: 2px;
         border: 1px solid #333;
+        cursor: pointer;
     }
 
 

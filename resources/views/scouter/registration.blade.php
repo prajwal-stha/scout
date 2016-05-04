@@ -82,9 +82,6 @@
 
     </div>
 
-
-
-
 @stop
 
 @section('scripts')
