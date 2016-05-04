@@ -81,12 +81,12 @@
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('name')? ' has-error' : '' }}">
                                 {{ Form::label('asst-lead-scouter', 'Assistant Lead Scouter', array( 'class' => 'control-label col-sm-6')) }}
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 scout-selection">
                                     {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>

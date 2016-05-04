@@ -89,7 +89,7 @@
 
                             <div class="form-group">
                                 {{ Form::label('position', 'Current Level *', array( 'class' => 'control-label col-sm-3')) }}
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 scout-selection">
                                     {{ Form::select('position',
                                         array(
                                             'alpha'      => 'Alpha',
@@ -174,31 +174,33 @@
                         {{ Form::close() }}
 
                         @if(isset($team) && $team->count())
-                            <table class="table table-bordered table-striped" id="teams-list">
-                                <thead align="center">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($team as $value)
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="teams-list">
+                                    <thead align="center">
                                     <tr>
-                                        <td><a class="team-name"
-                                               href="{{ url( 'admin/teams', [$organization->id, $value->id]) }}">{{ $value->name }}</a>
-                                        </td>
-                                        <td><a class="btn btn-success updateTeam" data-id="{{ $value->id }}">
-                                                <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger deleteTeam" data-id="{{ $value->id }}"
-                                               href="{{ url( 'team/remove', [$value->id]) }}"><i
-                                                        class="fa fa-trash-o"></i>
-                                            </a>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
+                                    </thead>
+                                    <tbody>
+                                    @foreach($team as $value)
+                                        <tr>
+                                            <td><a class="team-name"
+                                                   href="{{ url( 'admin/teams', [$organization->id, $value->id]) }}">{{ $value->name }}</a>
+                                            </td>
+                                            <td><a class="btn btn-success updateTeam" data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-danger deleteTeam" data-id="{{ $value->id }}"
+                                                   href="{{ url( 'team/remove', [$value->id]) }}"><i
+                                                            class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
 
                     </div>
@@ -296,7 +298,7 @@
                             {{ Form::label('position', 'Current Level', array( 'class' => 'control-label col-sm-3')) }}
 
 
-                            <div class="col-sm-9">
+                            <div class="col-sm-9 scout-selection">
                                 {{ Form::select('position', array(
                                     'alpha'      => 'Alpha',
                                     'beta'       => 'Beta'
