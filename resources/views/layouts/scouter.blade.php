@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Nepal Scout</title>
+    <title>{{$title or '404 Error Page' }}</title>
 
     <link rel="shortcut icon" type="image/png" sizes="32x32" href="{{ asset('favicon.ico/favicon-32x32.png') }}">
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('favicon.ico/favicon-16x16.png') }}">
@@ -43,9 +43,6 @@
             <div class="container">
                 <div class="navbar-header pull-left">
                     <a href="{{ url('/') }}" class="navbar-brand"><b>Nepal</b> Scout</a>
-                    {{--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">--}}
-                        {{--<i class="fa fa-bars"></i>--}}
-                    {{--</button>--}}
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -86,8 +83,6 @@
     <script src="{{ asset( 'slimScroll/jquery.slimscroll.min.js' ) }}"></script>
     <!-- FastClick -->
     <script src="{{ asset( 'fastclick/fastclick.min.js' ) }}"></script>
-    <!-- AdminLTE App -->
-    {{--<script src="{{ asset( 'js/app.min.js' ) }}"></script>--}}
 
     <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->

@@ -661,7 +661,9 @@ label {
 .col-sm-5.scout-selection:after,
 .col-md-5.scout-selection:after,
 .col-sm-6.scout-selection:after,
-.col-md-6.scout-selection:after{
+.col-md-6.scout-selection:after,
+.col-sm-9.scout-selection:after,
+.col-md-9.scout-selection:after{
     content: "\f123";
     font-family: "Ionicons";
     right: 30px;

@@ -194,8 +194,12 @@
                         </div>
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-success ">Save</button>
-                            {{ link_to('admin/scouter/'.$organization->id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success ">Save</button>
+                                {{ link_to('admin/scouter/'.$organization->id, 'NEXT', array('class' => 'btn btn-default')) }}
+                            </div>
+
                         </div>
 
                     {{ Form::close() }}

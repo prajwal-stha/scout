@@ -118,8 +118,8 @@
                             {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
                             @if ($errors->has('m_name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('m_name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('m_name') }}</strong>
+                                </span>
                             @endif
 
                         </div>
@@ -131,18 +131,18 @@
                             {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
                             @if ($errors->has('l_name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('l_name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('l_name') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>
                 </div>
                 <div class="box-footer border-bottom">
 
-                    <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
-                    </button>
-                    {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-                    {{--<button type="button" href="{{ url('scouter/scouter') }}" class="btn btn-grey pull-right">NEXT</button>--}}
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save</button>
+                        {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default')) }}
+                    </div>
 
                 </div>
 
@@ -171,9 +171,9 @@
                                         <td>{{ $value->m_name }}</td>
                                         <td>{{ $value->l_name }}</td>
                                         <td>
-                                            <a class="btn btn-success updateMember" data-id="{{ $value->id }}">
+                                            <a data-toggle="tooltip" title="EDIT" class="btn btn-success updateMember" data-id="{{ $value->id }}">
                                                 <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger deleteMember" data-id="{{ $value->id }}"
+                                            <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteMember" data-id="{{ $value->id }}"
                                                href="{{ url( 'organizations/delete-member', [$value->id]) }}"><i
                                                         class="fa fa-trash-o"></i></a>
                                     </tr>

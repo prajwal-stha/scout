@@ -189,10 +189,10 @@
                                             <td><a class="team-name"
                                                    href="{{ url( 'admin/approved-teams', [$organization->original_id, $value->original_id]) }}">{{ $value->name }}</a>
                                             </td>
-                                            <td><a class="btn btn-success approvedUpdateTeam"
+                                            <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success approvedUpdateTeam"
                                                    data-id="{{ $value->original_id }}">
                                                     <i class="fa fa-pencil"></i></a>
-                                                <a class="btn btn-danger approvedDeleteTeam"
+                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger approvedDeleteTeam"
                                                    data-id="{{ $value->original_id }}"
                                                    href="{{ url( 'admin/delete-approved-teams', [$value->id]) }}"><i
                                                             class="fa fa-trash-o"></i>
@@ -340,10 +340,11 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success" id="create_team_member"><i
-                                    class="fa fa-plus-circle"></i> Add Member
-                        </button>
-                        {{ link_to('admin/approved-registration/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
+                            {{ link_to('admin/approved-registration/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
                     </div>
                     {{ Form::close() }}
                 </div>
@@ -376,10 +377,10 @@
                                     <td>{{ $value->dob }}</td>
                                     <td>{{ $value->entry_date }}</td>
                                     <td>{{ $value->passed_date }}</td>
-                                    <td><a class="btn btn-success updateApprovedTeamMember"
+                                    <td><a data-toggle="tooltip" title="UPDATE" class="btn btn-success updateApprovedTeamMember"
                                            data-id="{{ $value->original_id }}">
                                             <i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-danger deleteApprovedTeamMember"
+                                        <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteApprovedTeamMember"
                                            data-id="{{ $value->original_id }}"
                                            href="{{ url( 'admin/delete-approved-member', [$value->original_id]) }}"><i
                                                     class="fa fa-trash-o"></i>

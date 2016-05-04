@@ -74,7 +74,9 @@
 
                 </div>
                 <div class="box-footer">
-                    {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info pull-right')) }}
+                    <div class="pull-right">
+                        {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info')) }}
+                    </div>
                 </div>
             </div>
 

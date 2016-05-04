@@ -30,7 +30,7 @@
                                     @foreach($organizations as $value)
                                         <tr>
                                             <td>
-                                                <a href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
+                                                <a data-toggle="tooltip" title="VIEW" href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                             </td>
                                             <td>{{ $value->type }}</td>
                                             <td>{{ $value->chairman_f_name . ' ' . $value->chairman_l_name }}</td>

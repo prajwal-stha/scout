@@ -126,10 +126,10 @@
                         </div>
                     </div>
                     <div class="box-footer border-bottom">
-                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
-                        </button>
-                        {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                            {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
                     </div>
 
                     {{ Form::close() }}
@@ -152,9 +152,9 @@
                                             <td>{{ $value->m_name }}</td>
                                             <td>{{ $value->l_name }}</td>
                                             <td>
-                                                <a class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
+                                                <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil"></i></a>
-                                                <a class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
+                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
                                                    href="{{ url( 'admin/delete-committee', [$value->id]) }}"><i
                                                             class="fa fa-trash-o"></i></a>
                                         </tr>

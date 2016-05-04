@@ -125,10 +125,12 @@
                         </div>
                     </div>
                     <div class="box-footer border-bottom">
+                        <div class="pull-right">
 
-                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
-                        </button>
-                        {{ link_to('admin/approved-lead-scouter/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                            {{ link_to('admin/approved-lead-scouter/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default')) }}
+
+                        </div>
 
                     </div>
 
@@ -146,19 +148,19 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-admin-member">
-                                    @foreach($member as $value)
-                                        <tr>
-                                            <td>{{ $value->f_name }}</td>
-                                            <td>{{ $value->m_name }}</td>
-                                            <td>{{ $value->l_name }}</td>
-                                            <td>
-                                                <a class="btn btn-success adminUpdateApprovedMember" data-id="{{ $value->original_id }}">
-                                                    <i class="fa fa-pencil"></i></a>
-                                                <a class="btn btn-danger adminDeleteApprovedCommittee" data-id="{{ $value->original_id }}"
-                                                   href="{{ url( 'admin/delete-approved-committee', [$value->original_id]) }}"><i
-                                                            class="fa fa-trash-o"></i></a>
-                                        </tr>
-                                    @endforeach
+                                        @foreach($member as $value)
+                                            <tr>
+                                                <td>{{ $value->f_name }}</td>
+                                                <td>{{ $value->m_name }}</td>
+                                                <td>{{ $value->l_name }}</td>
+                                                <td>
+                                                    <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateApprovedMember" data-id="{{ $value->original_id }}">
+                                                        <i class="fa fa-pencil"></i></a>
+                                                    <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteApprovedCommittee" data-id="{{ $value->original_id }}"
+                                                       href="{{ url( 'admin/delete-approved-committee', [$value->original_id]) }}"><i
+                                                                class="fa fa-trash-o"></i></a>
+                                            </tr>
+                                        @endforeach
 
                                     </tbody>
 

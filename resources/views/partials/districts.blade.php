@@ -17,8 +17,8 @@
                     <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
                     <td>{{ $value->name }}</td>
                     <td>{{ $value->district_code }}</td>
-                    <td><a class="btn btn-success updateDistrict" data-id="{{ $value->id }}" href="{{ url('districts/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-danger deleteDistrict" data-id="{{ $value->id }}" href="{{ url( 'districts/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
+                    <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateDistrict" data-id="{{ $value->id }}" href="{{ url('districts/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
+                        <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteDistrict" data-id="{{ $value->id }}" href="{{ url( 'districts/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
                     </td>
                 </tr>
             @endforeach

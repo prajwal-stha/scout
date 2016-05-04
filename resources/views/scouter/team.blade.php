@@ -366,10 +366,10 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success" id="create_team_member"><i
-                                    class="fa fa-plus-circle"></i> Add Member
-                        </button>
-                        {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
+                            {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
                     </div>
                 {{ Form::close() }}
 
@@ -399,9 +399,9 @@
                                             <td>{{ $value->dob }}</td>
                                             <td>{{ $value->entry_date }}</td>
                                             <td>{{ $value->passed_date }}</td>
-                                            <td><a class="btn btn-success updateTeamMember" data-id="{{ $value->id }}">
+                                            <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateTeamMember" data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil"></i></a>
-                                                <a class="btn btn-danger deleteTeamMember" data-id="{{ $value->id }}"
+                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteTeamMember" data-id="{{ $value->id }}"
                                                    href="{{ url( 'member/delete', [$value->id]) }}"><i
                                                             class="fa fa-trash-o"></i>
                                                 </a>
