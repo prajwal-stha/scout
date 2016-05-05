@@ -71,7 +71,7 @@
                         <div class="pull-right">
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>
-                        <a href="{{ url('/login') }}">Back</a>
+                        <a class="link-spacing" href="{{ url('/login') }}">Back</a>
                     </div>
 
                 </div>
