@@ -87,6 +87,7 @@
     <script src="{{ asset( 'sweetalert/sweetalert.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset( 'js/demo.js') }}"></script>
+    <script src="{{ asset( 'js/app.min.js' ) }}"></script>
     <script src="{{  asset('input-mask/jquery.inputmask.bundle.js') }}"></script>
     <script src="{{ asset( 'js/scout.js') }}"></script>
 

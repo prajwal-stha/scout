@@ -35,6 +35,16 @@
 
                 @endif
 
+                @if(Session::has('org_submitted'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('org_submitted') }}
+                    </div>
+
+                @endif
+
                 @if(isset($org_id))
 
                     {{ Form::model($organization, ['url' => ['organizations/edit', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
@@ -203,7 +213,10 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-success pull-right">Save</button>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        {{ link_to('scouter/scarf', 'NEXT', array('class' => 'btn btn-default')) }}
+                    </div>
                 </div>
 
                 {{ Form::close() }}

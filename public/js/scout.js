@@ -1,4 +1,6 @@
 jQuery(document).ready(function() {
+
+    $('[data-toggle="tooltip"]').tooltip();
     $('#delete-submit').prop('disabled', true);
 
     $('.check-all').on('change', function () {
@@ -461,7 +463,7 @@ jQuery(document).ready(function() {
                 var successMsg = returnSuccess(data);
 
                 $('#teamMemberModal').modal('hide');
-                window.location.href = index_team_url;
+                window.location.reload(true);
             } else {
                 //var errorMsg = returnAlert(data);
                 //$('.alert-placeholder-member').html(errorMsg);

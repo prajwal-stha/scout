@@ -52,6 +52,16 @@
 
                 @endif
 
+                @if(Session::has('scouter_not_filled'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('scouter_not_filled') }}
+                    </div>
+
+                @endif
+
                 @if(Session::has('lead_scouter_updated'))
 
                     <div class="alert alert-success alert-dismissable">

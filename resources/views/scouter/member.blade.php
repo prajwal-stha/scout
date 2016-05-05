@@ -140,7 +140,7 @@
                 <div class="box-footer border-bottom">
 
                     <div class="pull-right">
-                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save</button>
+                        <button type="submit" class="btn btn-success" id="member-submit">Save</button>
                         {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default')) }}
                     </div>
 

@@ -84,7 +84,10 @@
                         </div>
                     </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-success pull-right">Save</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success">Save</button>
+                                {{ link_to('scouter/committe', 'NEXT', array('class' => 'btn btn-default')) }}
+                            </div>
                         </div>
 
                 </form>

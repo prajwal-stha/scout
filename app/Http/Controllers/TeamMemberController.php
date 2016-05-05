@@ -88,7 +88,7 @@ class TeamMemberController extends Controller
             'f_name'        => 'required',
             'l_name'        => 'required',
             'dob'           => 'required|date_format:"d/m/Y"',
-            'entry_date'    => 'required|date_format:"d/m/Y"',
+            'entry_date'    => 'required|date_format:"d/m/Y"|after:dob',
             'position'      => 'required',
             'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',

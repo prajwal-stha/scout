@@ -45,6 +45,17 @@
 
                 @endif
 
+
+                @if(Session::has('lead_not_filled'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('lead_not_filled') }}
+                    </div>
+
+                @endif
+
                 <div class="box-body">
 
                     @if(isset($leadScouter))
