@@ -18,6 +18,7 @@
                         <table id="form-requests" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>User</th>
                                 <th>Organizations</th>
                                 <th>Action</th>
                             </tr>
@@ -26,6 +27,7 @@
 
                             @foreach( $organizations as $value)
                                 <tr>
+                                    <td><a href="{{ url('admin/profile', [$value->user->id]) }}">{{ $value->user->f_name }} {{ $value->user->l_name  }}</a></td>
                                     <td><a data-toggle="tooltip" title="VIEW" class="team-name"
                                            href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                     </td>

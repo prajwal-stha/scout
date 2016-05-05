@@ -89,12 +89,14 @@ class AdminController extends Controller
     public function getIndex()
     {
         $data['title']                  = 'Nepal Scout - Dashboard';
+        $data['rates']                  = Rate::first();
         $data['registered_users']       = User::where('verified', 1)
                                          ->where('level', 0)->count();
         $data['approved_organizations'] = CoreOrganization::all()->count();
         $data['declined_organizations'] = Organization::where('is_declined', 1)->count();
+        $data['users']                  = User::where('level', 0)->get();
 
-        return view( 'admin.dashboard')->with( $data);
+        return view( 'admin.dashboard')->with( $data );
     }
 
     /**
@@ -105,10 +107,32 @@ class AdminController extends Controller
     {
         $data['title'] = 'Nepal Scout - Profile';
         $data['user'] = User::findOrFail($id);
-        if($data['user']->level == 1 ){
-            return view('admin.profile')->with( $data );
 
+        return view('admin.profile')->with( $data );
+
+
+    }
+
+
+    public function getUsers()
+    {
+        $data['title']  = 'Nepal Scout - All Users';
+        $data['user']   = User::where('verified', 1)
+                            ->where('level', 0)
+                            ->get();
+        return view('admin.user')->with( $data );
+        
+    }
+
+    public function patchBlock(Request $request, $id)
+    {
+        $user = User::findOrFail( $id );
+
+        if ($user){
+            User::destroy($id);
         }
+        return redirect('admin')->with(['user_deleted' => 'One of the user have been blocked']);
+        
     }
 
 
@@ -130,6 +154,7 @@ class AdminController extends Controller
                 ->with(['user_update' => 'User successfully updated']);
 
         }
+
         
     }
 
@@ -325,18 +350,18 @@ class AdminController extends Controller
 
             $scouter = Scouter::findOrFail($scouter_id);
             if ($scouter) {
-                $scouter->name = $request->get('name');
-                $scouter->email = $request->get('email');
-                $scouter->permission = $request->get('permission');
+                $scouter->name            = $request->get('name');
+                $scouter->email           = $request->get('email');
+                $scouter->permission      = $request->get('permission');
                 $scouter->permission_date = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
-                $scouter->btc_no = $request->get('btc_no');
-                $scouter->btc_date = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
-                $scouter->advance_no = $request->get('advance_no');
-                $scouter->advance_date = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
-                $scouter->alt_no = $request->get('alt_no');
-                $scouter->alt_date = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
-                $scouter->lt_no = $request->get('lt_no');
-                $scouter->lt_date = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->btc_no          = $request->get('btc_no');
+                $scouter->btc_date        = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no      = $request->get('advance_no');
+                $scouter->advance_date    = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no          = $request->get('alt_no');
+                $scouter->alt_date        = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no           = $request->get('lt_no');
+                $scouter->lt_date         = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
                 $scouter->save();
             }
 
@@ -758,6 +783,42 @@ class AdminController extends Controller
 
         }
         return redirect()->back()->with('organization_declined', 'The organizaton has been declined.');
+    }
+
+    public function getDeleteDeclinedOrg($id)
+    {
+        $organization = Organization::findOrFail($id);
+        $delete_org = DB::transaction(function($organization) use ($organization)
+        {
+            $team = Team::where('organization_id', $organization->id)->get();
+            foreach($team as $value){
+
+                TeamMember::where('team_id', $value->id)->delete();
+
+            }
+            Team::where('organization_id', $organization->id)->delete();
+            Scouter::where('organization_id', $organization->id)->delete();
+            Member::where('organization_id', $organization->id)->delete();
+            Organization::destroy( $organization->id );
+
+        });
+        if($delete_org){
+            return redirect()->back()->with(['org_deleted' => 'The organizations has been permanently deleted from the record']);
+        }
+
+        
+    }
+
+    public function postRemoveDeclined(Request $request)
+    {
+        if ( is_array($request->get('action_to')) ){
+            Organization::destroy($request->get('action_to'));
+            return redirect()->back();
+        } else {
+
+            return redirect()->back();
+        }
+        
     }
 
 

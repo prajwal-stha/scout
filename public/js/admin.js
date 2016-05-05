@@ -521,13 +521,7 @@ $(document).ready(function(){
         },
         function () {
             $.ajax({
-                //method: "PATCH",
                 url:  $(this).prop('action'),
-                //data: {
-                //    "_token": $(this).find('input[name=_token]').val(),
-                //    "organization_id": $('#organization_id').val(),
-                //},
-                //dataType: "json"
             }).done(function (data) {
                 $(this).submit();
 
@@ -875,44 +869,76 @@ $(document).ready(function(){
         });
         var current_form = $(this);
         $.ajax({
-                method: "PATCH",
-                url: $(this).prop('action'),
-                data: {
-                    "_token": $(this).find('input[name=_token]').val(),
-                    "id": $('#teamMemberId').val(),
-                    "f_name": $('#f_name').val(),
-                    "m_name": $('#m_name').val(),
-                    "l_name": $('#l_name').val(),
-                    "dob": $('#dob').val(),
-                    "entry_date": $('#entry_date').val(),
-                    "position": $('#position').val(),
-                    "passed_date": $('#passed_date').val(),
-                    "note": $('#note').val(),
-                    "team_id": $('#team_id').val()
-                },
-                dataType: "json"
-            })
-            .done(function (data) {
-                if (data.status == 'success') {
-                    //var successMsg = returnSuccess(data);
+            method: "PATCH",
+            url: $(this).prop('action'),
+            data: {
+                "_token": $(this).find('input[name=_token]').val(),
+                "id": $('#teamMemberId').val(),
+                "f_name": $('#f_name').val(),
+                "m_name": $('#m_name').val(),
+                "l_name": $('#l_name').val(),
+                "dob": $('#dob').val(),
+                "entry_date": $('#entry_date').val(),
+                "position": $('#position').val(),
+                "passed_date": $('#passed_date').val(),
+                "note": $('#note').val(),
+                "team_id": $('#team_id').val()
+            },
+            dataType: "json"
+        })
+        .done(function (data) {
+            if (data.status == 'success') {
+                //var successMsg = returnSuccess(data);
 
-                    $('#approvedteamMemberModal').modal('hide');
-                    location.reload();
-                } else {
-                    //var errorMsg = returnAlert(data);
-                    //$('.alert-placeholder-member').html(errorMsg);
-                    for (var key in data.msg) {
-                        // skip loop if the property is from prototype
-                        if (!data.msg.hasOwnProperty(key)) continue;
-                        var error_message = data.msg[key];
-                        var parent = current_form.find('#' + key).parent();
-                        current_form.find('#' + key).addClass('has-error');
+                $('#approvedteamMemberModal').modal('hide');
+                location.reload();
+            } else {
+                //var errorMsg = returnAlert(data);
+                //$('.alert-placeholder-member').html(errorMsg);
+                for (var key in data.msg) {
+                    // skip loop if the property is from prototype
+                    if (!data.msg.hasOwnProperty(key)) continue;
+                    var error_message = data.msg[key];
+                    var parent = current_form.find('#' + key).parent();
+                    current_form.find('#' + key).addClass('has-error');
 
-                        parent.find('.error-message').addClass('make-visible').html(error_message);
-                    }
+                    parent.find('.error-message').addClass('make-visible').html(error_message);
                 }
-            });
+            }
+        });
 
     });
+
+    $('.deleteDeclinedOrg').on('click', function(e){
+        e.preventDefault();
+        var record_id = $(this).attr('data-id');
+
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function () {
+            $.ajax({
+                url: delete_declined_url + '/' + record_id
+            }).done(function (data) {
+
+                swal("Deleted!", "Your record was successfully deleted!", "success");
+                location.reload();
+
+            }).error(function (data) {
+                swal("Oops", "We couldn't delete your record!", "error");
+            });
+            return;
+        });
+
+    });
+
 
 });

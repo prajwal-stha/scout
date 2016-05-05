@@ -97,9 +97,6 @@
 
     </div>
 
-
-
-
 @stop
 
 @section('scripts')

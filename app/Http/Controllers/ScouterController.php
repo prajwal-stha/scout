@@ -9,6 +9,7 @@ use App\Http\Requests;
 
 use App\Http\Requests\CreateScouterRequest;
 use App\Http\Requests\UpdateScouterRequest;
+use App\Http\Requests\UpdateScouterProfileRequest;
 
 use Auth;
 
@@ -416,5 +417,33 @@ class ScouterController extends Controller
         }
     }
 
+
+    public function getProfile($id)
+    {
+       if (Auth::user()->id == User::find($id)->id){
+           $data['title'] = 'Nepal Scout - Profile';
+           $data['user'] = User::findOrFail($id);
+           if($data['user']->verified == 1){
+               return view('scouter.profile')->with( $data );
+           }
+       }
+        
+    }
+
+    public function patchProfile(UpdateScouterProfileRequest $request, $id)
+    {
+        if($id){
+            $user = User::findOrFail($id);
+
+            $input = $request->all();
+
+            $user->fill($input)->save();
+
+            return redirect()->back()
+                ->with(['user_update' => 'User successfully updated']);
+
+        }
+        
+    }
 
 }

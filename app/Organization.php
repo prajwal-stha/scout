@@ -59,6 +59,12 @@ class Organization extends Model
         return $this->fillable;
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+
+    }
     /**
      * Accessor for Registration Date Attribute
      * @param $value

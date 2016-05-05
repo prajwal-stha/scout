@@ -87,9 +87,6 @@
                         {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info')) }}
                     </div>
 
-
-
-
                     </div>
                 </div>
             </div>

@@ -66,7 +66,7 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="{{ url('admin/profile', [Auth::user()->id]) }}" class="btn btn-default">Profile</a>
+                                        <a href="{{ url('scouter/profile', [Auth::user()->id]) }}" class="btn btn-default">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{{ url( '/logout' ) }}" class="btn btn-default"><i class="fa fa-sign-out"></i>Sign out</a>

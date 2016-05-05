@@ -802,3 +802,8 @@ label {
 .block-user {
     display: inline;
 }
+
+.rate-new {
+    clear: both;
+}
+

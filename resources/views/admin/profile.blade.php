@@ -49,7 +49,7 @@
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : ''}}">
 
                                 {{ Form::label('email', 'Email') }}
-                                {{ Form::text('email', null, array('class' => 'form-control', 'readonly')) }}
+                                {{ Form::text('email', null, array('class' => 'form-control', 'readonly', 'disabled')) }}
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -62,7 +62,7 @@
                             <div class="form-group{{ $errors->has('username') ? ' has-error' : ''}}">
 
                                 {{ Form::label('username', 'Username') }}
-                                {{ Form::text('username', null, array('class' => 'form-control', 'readonly')) }}
+                                {{ Form::text('username', null, array('class' => 'form-control', 'readonly', 'disabled')) }}
 
                                 @if ($errors->has('username'))
                                     <span class="help-block">
@@ -101,9 +101,19 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-success"> Submit</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success">Update</button>
+                                {{ Form::close() }}
+                                @if($user->level != 1 )
+                                    {{ Form::open(['url' => ['admin/block', $user->id], 'method' => 'PATCH', 'class' => 'block-user']) }}
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-user-times"></i> Block</button>
+                                    {{ Form::close() }}
+
+                                @endif
+                            </div>
+
                         </div>
-                    {{ Form::close() }}
+
 
                 </div><!-- /.box -->
 

@@ -121,6 +121,17 @@
                     </a>
                 </li>
 
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-institution"></i> <span>Organizations</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('admin/approved-organizations') }}">Approved Organizations</a></li>
+                        <li><a href="{{ url('admin/declined-organizations') }}">Declined Organizations</a></li>
+                    </ul>
+                </li>
+
                 <li{!! Request::path() == 'rate' ? ' class="active"' : '' !!}>
                     <a href="{{ url('rate') }}">
                         <i class="fa fa-calculator"></i> <span>Rates</span>
@@ -131,17 +142,6 @@
                     <a href="{{ url('districts') }}">
                         <i class="fa fa-compass"></i> <span>Districts</span>
                     </a>
-                </li>
-
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-institution"></i> <span>Organizations</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ url('admin/approved-organizations') }}">Approved Organizations</a></li>
-                        <li><a href="{{ url('admin/declined-organizations') }}">Declined Organizations</a></li>
-                    </ul>
                 </li>
 
                 <li{!! Request::path() == 'term' ? ' class="active"': '' !!}>
