@@ -98,10 +98,9 @@ input[type="password"].form-control,
 textarea.form-control,
 textarea {
     border-radius: 2px;
-    background: #222;
+    background: #2b2b2b;
     border-color: #111;
     color: #fff;
-
 }
 
 input[type="text"].form-control,
@@ -115,7 +114,6 @@ input[type="password"].form-control {
     position: relative;
 }
 
-.dataTables_length label:before,
 .dataTables_filter label:before {
     position: absolute;
     font-family: "Ionicons";
@@ -123,17 +121,18 @@ input[type="password"].form-control {
     font-size: 8px;
 }
 
-.dataTables_length label:before {
-    content: "\f123";
-    left: 50%;
-    top: 14px;
-}
 
 .dataTables_filter label:before {
     content: "\f21f";
     right: 10px;
     top: 8px;
     font-size: 14px;
+}
+
+.dataTables_length select{
+    background: #2b2b2b url("../img/dropdown-arrow.png") no-repeat !important;
+    background-position: 85% 50% !important;
+    background-size: 8px !important;
 }
 
 .form-inline .form-control {
@@ -155,9 +154,9 @@ input[type="password"].form-control {
 select,
 select.form-control,
 .form-control {
-    -webkit-appearance: button;
+    -webkit-appearance: none;
     border-radius: 2px;
-    background: #222;
+    background: #2b2b2b;
     border-color: #111;
     color: #fff;
     min-height: 35px;
@@ -177,7 +176,7 @@ textarea.textarea:focus {
 
 .box-body .nav.nav-pills.nav-stacked > li {
     border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 #1d1d1d;
+    box-shadow: 0 1px 0 #2D2D2D;
 }
 
 .box-body .nav.nav-pills.nav-stacked > li:last-child {
@@ -235,8 +234,7 @@ label {
 .box {
     border: 1px solid #000;
     border-top-color: #000 !important;
-    background: rgb(25, 25, 25);
-    box-shadow: 0 0 1px #222;
+    background: #222;
 }
 
 .box-header,
@@ -246,14 +244,14 @@ label {
 
 .box-header,
 .box-header.with-border {
-    background: #222;
+    background: #2d2d2d;
     color: #fff;
     border-bottom: 1px solid #000;
     clear: both;
 }
 
 .box-footer {
-    background: #1c1c1c;
+    background: #2d2d2d;
     color: #fff;
     border-top: 1px solid #000;
 }
@@ -279,20 +277,21 @@ label {
 .skin-green .wrapper,
 .skin-green .main-sidebar,
 .skin-green .left-side {
-    background: #111;
+    background: #222;
     border-right: 1px solid black;
-    box-shadow: 1px 1px 0 #151414;
+    box-shadow: 1px 0px 0 #333;
 }
 
 .sidebar-menu > li {
-    box-shadow: 0 1px 0 #171717;
-    border-bottom: 1px solid #000000;
+    box-shadow: 0 1px 0 #333;
+    border-bottom: 1px solid #111;
 }
 
 .skin-green .main-header .logo {
-    background-color: transparent !important;
-    box-shadow: 0 1px 0 #171717;
+    background-color: #171717 !important;
+    box-shadow: 0 1px 0 #272626, -1px 0 0 #000 inset;
     border-bottom: 1px solid #000000;
+    border-right: 1px solid #222;
 }
 
 .skin-green .sidebar-form {
@@ -353,17 +352,16 @@ label {
 }
 
 .content-wrapper, .right-side {
-    background: #141414;
-    /*background: #141414 url('../img/Pattern/black_denim/black_denim.png');*/
-    /*background: #141414 url('../img/Pattern/black_linen_v2/black_linen_v2.png');*/
-    /*background: #141414 url('../img/Pattern/dark_dotted/dark_dotted.png');*/
-    /*background: #141414 url('../img/Pattern/darth_stripe/darth_stripe.png');*/
-    /*background: #141414 url('../img/Pattern/fake_brick/fake_brick.png');*/
-    /*background: #141414 url('../img/Pattern/binding_dark/binding_dark.png');*/
-    /*background: #141414 url('../img/Pattern/simple_dashed/simple_dashed.png');*/
-    /*background: #141414 url('../img/Pattern/stressed_linen/stressed_linen.png');*/
-    /*background: #141414 url('../img/Pattern/blackorchid/blackorchid.png');*/
-
+    background: #2a2a2a;
+    /* background: #141414 url('../img/Pattern/black_denim/black_denim.png'); */
+    /* background: #141414 url('../img/Pattern/black_linen_v2/black_linen_v2.png'); */
+    /* background: #141414 url('../img/Pattern/dark_dotted/dark_dotted.png'); */
+    /* background: #141414 url('../img/Pattern/darth_stripe/darth_stripe.png'); */
+    /* background: #141414 url('../img/Pattern/fake_brick/fake_brick.png'); */
+    /* background: #141414 url('../img/Pattern/binding_dark/binding_dark.png'); */
+    /* background: #141414 url('../img/Pattern/simple_dashed/simple_dashed.png'); */
+    /* background: #141414 url('../img/Pattern/stressed_linen/stressed_linen.png'); */
+    /* background: #141414 url('../img/Pattern/blackorchid/blackorchid.png'); */
 }
 
 .box-body .form-control + .box-footer {
@@ -390,7 +388,7 @@ label {
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #181818;
+    background-color: #292929;
 }
 
 .table .btn {
@@ -635,47 +633,48 @@ label {
 }
 
 .main-footer {
-    background: #141414;
+    background: #222;
     border-top: 1px solid #000;
-    box-shadow: 0 1px 0 #222 inset;
+    box-shadow: 0 1px 0 #333 inset;
 }
 
 
 
-.scout-selection{
-    position:relative;
+.scout-selection select{
+    background: #2b2b2b url("../img/dropdown-arrow.png") no-repeat;
+    background-position: 95% 50%;
+    background-size: 8px;
 }
-.scout-selection:after{
-    content: "\f123";
-    font-family: "Ionicons";
-    right: 15px;
-    top: 10px;
-    position: absolute;
-    color: #ccc;
-    font-size: 10px;
-}
-.col-sm-3.scout-selection:after,
-.col-md-3.scout-selection:after,
-.col-sm-4.scout-selection:after,
-.col-md-4.scout-selection:after,
-.col-sm-5.scout-selection:after,
-.col-md-5.scout-selection:after,
-.col-sm-6.scout-selection:after,
-.col-md-6.scout-selection:after,
-.col-sm-9.scout-selection:after,
-.col-md-9.scout-selection:after{
-    content: "\f123";
-    font-family: "Ionicons";
-    right: 30px;
-    top: 10px;
-    position: absolute;
-    color: #ccc;
-    font-size: 10px;
+
+.col-sm-3.scout-selection select,
+.col-md-3.scout-selection select,
+.col-sm-4.scout-selection select,
+.col-md-4.scout-selection select,
+.col-sm-5.scout-selection select,
+.col-md-5.scout-selection select,
+.col-sm-6.scout-selection select,
+.col-md-6.scout-selection select,
+.col-sm-9.scout-selection select,
+.col-md-9.scout-selection select{
+    background: #2b2b2b url("../img/dropdown-arrow.png") no-repeat;
+    background-position: 95% 50%;
+    background-size: 8px;
 }
 
 
 .table-responsive{
     overflow-x:hidden;
+}
+
+
+
+@media screen and (min-width: 767px) {
+    .dataTables_wrapper .col-sm-6{
+        width:40%;
+    }
+    .dataTables_wrapper .col-sm-6 + .col-sm-6{
+        width:60%;
+    }
 }
 
 
@@ -720,12 +719,7 @@ label {
         text-align: right;
     }
 
-    .dataTables_length label:before {
-        content: "\f123";
-        left: auto;
-        right: 12px;
-        top: 34px;
-    }
+
 
     .dataTables_filter label:before {
         content: "\f21f";
@@ -805,3 +799,6 @@ label {
     display: inline;
 }
 
+.block-user {
+    display: inline;
+}
