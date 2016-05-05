@@ -760,6 +760,9 @@ label {
         top: -50px;
         right: 0;
     }
+    .dropdown.user.user-menu.front{
+        position:static;
+    }
     input[type="text"].form-control,
     input[type="email"].form-control,
     input[type="password"].form-control {
@@ -777,6 +780,7 @@ label {
         float: none;
         margin: 20px auto;
     }
+
 
 }
 @media screen and (max-width: 376px) {

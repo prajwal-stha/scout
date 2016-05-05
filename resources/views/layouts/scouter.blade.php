@@ -45,10 +45,43 @@
                     <a href="{{ url('/') }}" class="navbar-brand"><b>Nepal</b> Scout</a>
                 </div>
 
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu front">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ asset( 'img/user2-160x160.jpg' ) }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{{ Auth::user()->f_name }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="{{ asset( 'img/user2-160x160.jpg' ) }}" class="img-circle" alt="User Image">
+                                    <p>
+                                        {{ Auth::user()->f_name }} {{ Auth::user()->l_name }}
+                                        <small>@if (Auth::user()->created_at != null) {{ 'Member since ' . Auth::user()->created_at->toFormattedDateString() }} @endif</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="{{ url('admin/profile', [Auth::user()->id]) }}" class="btn btn-default">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="{{ url( '/logout' ) }}" class="btn btn-default"><i class="fa fa-sign-out"></i>Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+
                 <!-- Collect the nav links, forms, and other content for toggling -->
-               <div class="default-welcome-message">
-                   <span>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</span> / <a href="{{ url( '/logout' ) }}">Sign out <i class="fa fa-sign-out"></i></a>
-               </div>
+               {{--<div class="default-welcome-message">--}}
+                   {{--<span>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</span> / <a href="{{ url( '/logout' ) }}">Sign out <i class="fa fa-sign-out"></i></a>--}}
+               {{--</div>--}}
             </div><!-- /.container-fluid -->
         </nav>
     </header>
