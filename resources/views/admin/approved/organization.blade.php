@@ -51,7 +51,7 @@
                             <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
                                 {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-4')) }}
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 scout-selection">
                                     {{ Form::select('type', array(
                                         'school'      => 'School',
                                         'organization'=> 'Organization'
@@ -110,7 +110,7 @@
                             <div class="form-group{{ $errors->has('district') ? ' has-error' : '' }}">
 
                                 {{ Form::label('district', 'District *', array( 'class' => 'control-label col-sm-4')) }}
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 scout-selection">
                                     {{ Form::select('district',formatOption($district) , null, array('class' => 'form-control')) }}
 
                                     @if ($errors->has('district'))
@@ -223,8 +223,12 @@
                             </div>
                         </div>
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-success">Save</button>
-                                {{ link_to('admin/approved-committee/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                                <div class="pull-right">
+
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    {{ link_to('admin/approved-committee/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default')) }}
+
+                                </div>
                             </div>
 
                     {{ Form::close() }}

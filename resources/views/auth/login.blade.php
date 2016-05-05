@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Nepal Scout | Log in</title>
+
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="{{ asset('favicon.ico/favicon-32x32.png') }}">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('favicon.ico/favicon-16x16.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -26,7 +29,7 @@
 <div class="login-box">
     <div class="login-logo">
         <a class="logo-circle-stroke" href="{{ url('/') }}">
-            <img src="../public/img/logo.jpg" alt="">
+            <img src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout">
         </a>
     </div><!-- /.login-logo -->
     @if(Session::has('confirmed'))

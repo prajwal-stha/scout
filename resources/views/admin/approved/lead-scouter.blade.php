@@ -43,12 +43,12 @@
                             <div class="col-md-12">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                     {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 scout-selection">
                                         {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                         @if ($errors->has('name'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -62,8 +62,8 @@
                                         {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'lead_email')) }}
                                         @if ($errors->has('email'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -76,16 +76,16 @@
                                         {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'lead_perm_letter_no')) }}
                                         @if ($errors->has('permission'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('permission') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('permission') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                     <div class="col-sm-3">
                                         {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'lead_perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                         @if ($errors->has('permission_date'))
                                             <span class="help-block">
-                                                    <strong>{{ $errors->first('permission_date') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('permission_date') }}</strong>
+                                            </span>
                                         @endif
                                     </div>
 
@@ -193,8 +193,10 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success ">Save</button>
-                        {{ link_to('admin/approved-scouter/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            {{ link_to('admin/approved-scouter/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
                     </div>
 
                     {{ Form::close() }}

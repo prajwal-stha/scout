@@ -44,7 +44,7 @@
                             <div class="col-md-12">
                                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                     {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 scout-selection">
                                         {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                         @if ($errors->has('name'))
                                             <span class="help-block">
@@ -195,8 +195,12 @@
                         </div>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        {{ link_to('admin/approved-teams/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            {{ link_to('admin/approved-teams/'.$organization->original_id, 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
+
                     </div>
 
                     {{ Form::close() }}

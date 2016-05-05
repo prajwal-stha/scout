@@ -45,6 +45,17 @@
 
                 @endif
 
+
+                @if(Session::has('lead_not_filled'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('lead_not_filled') }}
+                    </div>
+
+                @endif
+
                 <div class="box-body">
 
                     @if(isset($leadScouter))
@@ -62,7 +73,7 @@
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 scout-selection">
                                     {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
@@ -95,16 +106,16 @@
                                     {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'lead_perm_letter_no')) }}
                                     @if ($errors->has('permission'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('permission') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('permission') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
                                     {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'lead_perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('permission_date'))
                                         <span class="help-block">
-                                                <strong>{{ $errors->first('permission_date') }}</strong>
-                                            </span>
+                                            <strong>{{ $errors->first('permission_date') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
 
@@ -212,12 +223,13 @@
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-success ">Save</button>
-                    {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success ">Save</button>
+                        {{ link_to('scouter/scouter', 'NEXT', array('class' => 'btn btn-default')) }}
+                    </div>
                 </div>
 
                 {{ Form::close() }}
-
 
             </div><!-- /.box -->
 

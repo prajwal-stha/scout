@@ -106,7 +106,9 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
                         </div>
                     {{ Form::close() }}
 

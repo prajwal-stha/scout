@@ -66,8 +66,9 @@
                         </div><!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
+                            <div class="table-responsive">
 
-                            <table id="table-registration-detail" class="table table-bordered table-striped">
+                                <table id="table-registration-detail" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th></th>
@@ -116,25 +117,31 @@
                                 </tbody>
 
                             </table>
+                            </div>
 
                         </div>
                         <div class="box-footer">
                             @if(is_null($organization->registration_no) && empty($organization->registration_no))
-                                <button type="submit" class="btn btn-success register-modal"><i
-                                            class="fa fa-check-square-o"></i> Approve
-                                </button>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-success register-modal"><i
+                                                class="fa fa-check-square-o"></i> Approve
+                                    </button>
+                                </div>
                             @endif
                             @if(is_null($organization->registration_no) && empty($organization->registration_no) && $organization->is_declined == false)
                                 {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
                                 <input type="hidden" name="organization_id" value="{{ $organization->id }}">
-                                <button type="submit" data-id="{{ $organization->id }}"
-                                        class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline
-                                </button>
+                                <div class="pull-right">
+                                    <button type="submit" data-id="{{ $organization->id }}"
+                                            class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline
+                                    </button>
+                                </div>
                                 {{ Form::close() }}
                             @endif
-                                
-                            <a class="btn btn-info pull-right" target="_blank" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
+                            <div class="pull-right">
+                                <a class="btn btn-info" target="_blank" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
 
+                            </div>
                         </div>
                     </div>
                 </div>

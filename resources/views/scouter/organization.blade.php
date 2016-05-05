@@ -35,6 +35,16 @@
 
                 @endif
 
+                @if(Session::has('org_submitted'))
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('org_submitted') }}
+                    </div>
+
+                @endif
+
                 @if(isset($org_id))
 
                     {{ Form::model($organization, ['url' => ['organizations/edit', $organization->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' => 'organization-create-form']) }}
@@ -60,15 +70,15 @@
                     <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
 
                         {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 scout-selection">
                             {{ Form::select('type', array(
                                 'school'      => 'School',
                                 'organization'=> 'Organization'
                             ), null, array('class' => 'form-control')) }}
                             @if ($errors->has('type'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('type') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('type') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -81,8 +91,8 @@
                             {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                             @if ($errors->has('registration_date'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('registration_date') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('registration_date') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -119,13 +129,13 @@
                     <div class="form-group{{ $errors->has('district') ? ' has-error' : '' }}">
 
                         {{ Form::label('district', 'District *', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
+                        <div class="col-sm-4 scout-selection">
                             {{ Form::select('district',formatOption($district) , null, array('class' => 'form-control')) }}
 
                             @if ($errors->has('district'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('district') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('district') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -203,7 +213,10 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-success pull-right">Save</button>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        {{ link_to('scouter/scarf', 'NEXT', array('class' => 'btn btn-default')) }}
+                    </div>
                 </div>
 
                 {{ Form::close() }}

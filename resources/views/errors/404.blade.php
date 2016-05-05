@@ -17,15 +17,13 @@
     <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset( 'ionicons/css/ionicons.min.css') }}">
-
-    <link rel="stylesheet" href="{{ asset( 'sweetalert/sweetalert.css' ) }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css' ) }}">
-    <link rel="stylesheet" href="{{ asset( 'datepicker/datepicker3.css' ) }}">
-    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/skins/_all-skins.min.css' ) }}">
+
+    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,7 +53,7 @@
                         <div class="input-group">
                             <input type="text" name="q" class="form-control" placeholder="Search">
                             <div class="input-group-btn">
-                                <button type="submit" name="submit" class="btn btn-warning btn-flat"><i class="fa fa-search"></i></button>
+                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
                             </div>
                         </div><!-- /.input-group -->
                     {{ Form::close() }}
@@ -68,17 +66,12 @@
     <script src="{{ asset( 'jQuery/jQuery-2.1.4.min.js' ) }}"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset( 'bootstrap/js/bootstrap.min.js') }}"></script>
-
-    <script src="{{ asset( 'datepicker/bootstrap-datepicker.js') }}"></script>
     <!-- SlimScroll -->
     <script src="{{ asset( 'slimScroll/jquery.slimscroll.min.js' ) }}"></script>
     <!-- FastClick -->
     <script src="{{ asset( 'fastclick/fastclick.min.js' ) }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset( 'js/app.min.js' ) }}"></script>
-
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset( 'js/demo.js') }}"></script>
 
     <script src="{{ asset( 'js/scout.js') }}"></script>
 

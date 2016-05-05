@@ -94,8 +94,8 @@
                                 {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
                                 @if ($errors->has('f_name'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('f_name') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('f_name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
@@ -106,8 +106,8 @@
                                 {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
                                 @if ($errors->has('m_name'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('m_name') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('m_name') }}</strong>
+                                    </span>
                                 @endif
 
                             </div>
@@ -119,49 +119,51 @@
                                 {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
                                 @if ($errors->has('l_name'))
                                     <span class="help-block">
-                                            <strong>{{ $errors->first('l_name') }}</strong>
-                                        </span>
+                                        <strong>{{ $errors->first('l_name') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
                     </div>
                     <div class="box-footer border-bottom">
-                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
-                        </button>
-                        {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                            {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default')) }}
+                        </div>
                     </div>
 
                     {{ Form::close() }}
                     @if(isset($member) && $member->count() > 0)
                         <div class="box-body">
-                            <table id="table-admin-member" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Middle Name</th>
-                                    <th>Last Name</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody id="list-admin-member">
-                                @foreach($member as $value)
+                            <div class="table-responsive">
+                                <table id="table-admin-member" class="table table-bordered table-striped">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $value->f_name }}</td>
-                                        <td>{{ $value->m_name }}</td>
-                                        <td>{{ $value->l_name }}</td>
-                                        <td>
-                                            <a class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
-                                                <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
-                                               href="{{ url( 'admin/delete-committee', [$value->id]) }}"><i
-                                                        class="fa fa-trash-o"></i></a>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
+                                    </thead>
+                                    <tbody id="list-admin-member">
+                                    @foreach($member as $value)
+                                        <tr>
+                                            <td>{{ $value->f_name }}</td>
+                                            <td>{{ $value->m_name }}</td>
+                                            <td>{{ $value->l_name }}</td>
+                                            <td>
+                                                <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
+                                                   href="{{ url( 'admin/delete-committee', [$value->id]) }}"><i
+                                                            class="fa fa-trash-o"></i></a>
+                                        </tr>
+                                    @endforeach
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     @endif
 

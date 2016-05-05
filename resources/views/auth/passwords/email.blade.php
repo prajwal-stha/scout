@@ -4,18 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Nepal Scout | Reset Password</title>
+
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="{{ asset('favicon.ico/favicon-32x32.png') }}">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('favicon.ico/favicon-16x16.png') }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset( 'bootstrap/css/bootstrap.min.css' ) }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
+
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
 
-    {{--<link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">--}}
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -29,13 +33,9 @@
     <!-- Main Content -->
 
     <div class="login-box reset-password">
-        {{--<div class="panel-heading">Reset Password</div>--}}
-        {{--<div class="panel-body">--}}
 
         <div class="login-logo">
-            <a class="logo-circle-stroke" href="{{ url('/') }}">
-                <img src="../../public/img/logo.jpg" alt="">
-            </a>
+            <a class="logo-circle-stroke" href="{{ url('/') }}"><img src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout"></a>
         </div><!-- /.login-logo -->
 
 
@@ -65,9 +65,16 @@
                         @endif
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">
-                    <i class="fa fa-btn fa-envelope"></i> Submit
-                </button>
+                <div class="form-group">
+
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                        <a class="link-spacing" href="{{ url('/login') }}">Back</a>
+                    </div>
+
+                </div>
 
 
             </form>

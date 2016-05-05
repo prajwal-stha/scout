@@ -125,43 +125,47 @@
                         </div>
                     </div>
                     <div class="box-footer border-bottom">
+                        <div class="pull-right">
 
-                        <button type="submit" class="btn btn-success pull-left" id="member-submit">Save
-                        </button>
-                        {{ link_to('admin/approved-lead-scouter/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default pull-right')) }}
+                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                            {{ link_to('admin/approved-lead-scouter/'.$organization->original_id , 'NEXT', array('class' => 'btn btn-default')) }}
+
+                        </div>
 
                     </div>
 
                     {{ Form::close() }}
                     @if($member->count() > 0)
                         <div class="box-body">
-                            <table id="table-admin-member" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Middle Name</th>
-                                    <th>Last Name</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody id="list-admin-member">
-                                @foreach($member as $value)
+                            <div class="table-responsive">
+                                <table id="table-admin-member" class="table table-bordered table-striped">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $value->f_name }}</td>
-                                        <td>{{ $value->m_name }}</td>
-                                        <td>{{ $value->l_name }}</td>
-                                        <td>
-                                            <a class="btn btn-success adminUpdateApprovedMember" data-id="{{ $value->original_id }}">
-                                                <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger adminDeleteApprovedCommittee" data-id="{{ $value->original_id }}"
-                                               href="{{ url( 'admin/delete-approved-committee', [$value->original_id]) }}"><i
-                                                        class="fa fa-trash-o"></i></a>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
+                                    </thead>
+                                    <tbody id="list-admin-member">
+                                        @foreach($member as $value)
+                                            <tr>
+                                                <td>{{ $value->f_name }}</td>
+                                                <td>{{ $value->m_name }}</td>
+                                                <td>{{ $value->l_name }}</td>
+                                                <td>
+                                                    <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateApprovedMember" data-id="{{ $value->original_id }}">
+                                                        <i class="fa fa-pencil"></i></a>
+                                                    <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteApprovedCommittee" data-id="{{ $value->original_id }}"
+                                                       href="{{ url( 'admin/delete-approved-committee', [$value->original_id]) }}"><i
+                                                                class="fa fa-trash-o"></i></a>
+                                            </tr>
+                                        @endforeach
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     @endif
 

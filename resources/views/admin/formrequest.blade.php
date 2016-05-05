@@ -26,13 +26,13 @@
 
                             @foreach( $organizations as $value)
                                 <tr>
-                                    <td><a class="team-name"
+                                    <td><a data-toggle="tooltip" title="VIEW" class="team-name"
                                            href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary" href="{{ url('admin/view-organization', [$value->id]) }}"><i
+                                        <a data-toggle="tooltip" title="VIEW" class="btn btn-primary" href="{{ url('admin/view-organization', [$value->id]) }}"><i
                                                     class="fa fa-eye"></i></a>
-                                        <a class="btn btn-info" target="_blank" href="{{ url('admin/print', [$value->id]) }}"><i class="fa fa-print"></i></a>
+                                        <a data-toggle="tooltip" title="PRINT" class="btn btn-info" target="_blank" href="{{ url('admin/print', [$value->id]) }}"><i class="fa fa-print"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -76,8 +76,6 @@ class ScouterController extends Controller
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
 
         }
-
-
         
     }
 
@@ -233,6 +231,7 @@ class ScouterController extends Controller
                 return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
 
             }
+            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
 
 
             $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
@@ -242,6 +241,7 @@ class ScouterController extends Controller
             return view('scouter.registration')->with($data);
 
         }
+
         return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
 
 
@@ -415,5 +415,6 @@ class ScouterController extends Controller
 
         }
     }
+
 
 }

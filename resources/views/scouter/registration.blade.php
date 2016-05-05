@@ -74,7 +74,23 @@
 
                 </div>
                 <div class="box-footer">
-                    {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info pull-right')) }}
+
+                    <div class="pull-right">
+                        @if ($organization->is_submitted == false)
+
+                            {{ Form::open(['url' => 'organizations/submit', 'method' => 'PATCH', 'class' => 'submit-membership']) }}
+                                <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
+                                <button type="submit" class="btn btn-primary final-submit"></i> Submit</button>
+                            {{ Form::close() }}
+
+                        @endif
+                        {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info')) }}
+                    </div>
+
+
+
+
+                    </div>
                 </div>
             </div>
 

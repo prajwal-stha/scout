@@ -648,11 +648,34 @@ label {
 .scout-selection:after{
     content: "\f123";
     font-family: "Ionicons";
+    right: 15px;
+    top: 10px;
+    position: absolute;
+    color: #ccc;
+    font-size: 10px;
+}
+.col-sm-3.scout-selection:after,
+.col-md-3.scout-selection:after,
+.col-sm-4.scout-selection:after,
+.col-md-4.scout-selection:after,
+.col-sm-5.scout-selection:after,
+.col-md-5.scout-selection:after,
+.col-sm-6.scout-selection:after,
+.col-md-6.scout-selection:after,
+.col-sm-9.scout-selection:after,
+.col-md-9.scout-selection:after{
+    content: "\f123";
+    font-family: "Ionicons";
     right: 30px;
     top: 10px;
     position: absolute;
     color: #ccc;
     font-size: 10px;
+}
+
+
+.table-responsive{
+    overflow-x:hidden;
 }
 
 
@@ -769,5 +792,12 @@ label {
     .main-sidebar, .left-side {
         padding-top: 150px;
     }
+}
+.error-page {
+    color:#fff;
+}
+
+.submit-membership {
+    display: inline;
 }
 

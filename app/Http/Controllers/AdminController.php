@@ -138,7 +138,9 @@ class AdminController extends Controller
      */
     public function getForm(){
         $data['organizations'] = Organization::whereNull('registration_no')
-                ->where('is_declined', false)->get();
+                ->where('is_declined', false)
+                ->where('is_submitted', true)
+                ->get();
         $data['title'] = 'Nepal Scout - New Form Requests';
         return view( 'admin.formrequest')->with($data);
     }

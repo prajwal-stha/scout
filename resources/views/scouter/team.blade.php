@@ -134,7 +134,7 @@
 
                         <div class="form-group">
                             {{ Form::label('position', 'Current Level *', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-9">
+                            <div class="col-sm-9 scout-selection">
                                 {{ Form::select('position',
                                     array(
                                         'alpha'      => 'Alpha',
@@ -203,8 +203,8 @@
                             {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
                             @endif
                         </div>
                         <button type="submit" class="btn btn-success" id="team-submit"><i
@@ -216,199 +216,201 @@
                     {{ Form::close() }}
 
                     @if(isset($team))
+                        <div class="table-responsive">
 
-                        <table class="table table-bordered table-striped" id="teams-list">
-                            <thead align="center">
-                            <tr>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($team as $value)
+                            <table class="table table-bordered table-striped" id="teams-list">
+                                <thead align="center">
                                 <tr>
-                                    <td><a class="team-name"
-                                           href="{{ url( 'scouter/team', [$value->id]) }}">{{ $value->name }}</a>
-                                    </td>
-                                    <td><a class="btn btn-success updateTeam" data-id="{{ $value->id }}">
-                                            <i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-danger deleteTeam" data-id="{{ $value->id }}"
-                                           href="{{ url( 'team/remove', [$value->id]) }}"><i
-                                                    class="fa fa-trash-o"></i>
-                                        </a>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
+                                </thead>
+                                <tbody>
+                                @foreach($team as $value)
+                                    <tr>
+                                        <td><a class="team-name"
+                                               href="{{ url( 'scouter/team', [$value->id]) }}">{{ $value->name }}</a>
+                                        </td>
+                                        <td><a class="btn btn-success updateTeam" data-id="{{ $value->id }}">
+                                                <i class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-danger deleteTeam" data-id="{{ $value->id }}"
+                                               href="{{ url( 'team/remove', [$value->id]) }}"><i
+                                                        class="fa fa-trash-o"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
 
                 </div>
                 <div class="box-body">
                     {{ Form::open(['url' => 'member/create', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
 
-                    @if(isset($team))
-                        <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
-                        @if(!is_null($team_name))
-                            <h3 class="box-subtitle border-bottom"> Add Members to: {{ $team_name }}</h3>
+                        @if(isset($team))
+                            <input type="hidden" name="team_id" value="{{ $teamId or null }}" id="team_id">
+                            @if(!is_null($team_name))
+                                <h3 class="box-subtitle border-bottom"> Add Members to: {{ $team_name }}</h3>
 
+                            @endif
                         @endif
-                    @endif
-                    <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 
-                        {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-3">
-                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'First')) }}
+                            {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-3">
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'First')) }}
 
-                            @if ($errors->has('f_name'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('f_name') }}</strong>
-                                                </span>
-                            @endif
+                                @if ($errors->has('f_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('f_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-3">
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder' => 'Middle')) }}
+
+                                @if ($errors->has('m_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('m_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-sm-3">
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder' => 'Last')) }}
+
+                                @if ($errors->has('l_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('l_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder' => 'Middle')) }}
 
-                            @if ($errors->has('m_name'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('m_name') }}</strong>
-                                                </span>
-                            @endif
+                        <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+
+                            {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
+
+                            <div class="col-sm-9">
+                                {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                @if ($errors->has('dob'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dob') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
                         </div>
-                        <div class="col-sm-3">
-                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder' => 'Last')) }}
 
-                            @if ($errors->has('l_name'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('l_name') }}</strong>
-                                                </span>
-                            @endif
+                        <div class="form-group{{ $errors->has('entry_date') ? ' has-error' : '' }}">
+
+                            {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
+
+                            <div class="col-sm-9">
+                                {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                @if ($errors->has('entry_date'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('entry_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
+
+                            {{ Form::label('position', 'Current Level', array( 'class' => 'control-label col-sm-3')) }}
+
+
+                            <div class="col-sm-9 scout-selection">
+                                {{ Form::select('position', array(
+                                    'alpha'      => 'Alpha',
+                                    'beta'       => 'Beta'
+                                ), null, array('class' => 'form-control', 'id' => 'position' )) }}
+                                @if ($errors->has('position'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('position') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group{{ $errors->has('passed_date') ? ' has-error' : '' }}">
+
+                            {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
+
+                            <div class="col-sm-9">
+                                {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+
+                                @if ($errors->has('passed_date'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('passed_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
+
+                            {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-9">
+                                {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'size' => '30x5']) }}
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
-
-                        {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
-
-                        <div class="col-sm-9">
-                            {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
-
-                            @if ($errors->has('dob'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('dob') }}</strong>
-                                                </span>
-                            @endif
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group{{ $errors->has('entry_date') ? ' has-error' : '' }}">
-
-                        {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
-
-                        <div class="col-sm-9">
-                            {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
-                            @if ($errors->has('entry_date'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('entry_date') }}</strong>
-                                                </span>
-                            @endif
-                        </div>
-
-                    </div>
-
-                    <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
-
-                        {{ Form::label('position', 'Current Level', array( 'class' => 'control-label col-sm-3')) }}
-
-
-                        <div class="col-sm-9">
-                            {{ Form::select('position', array(
-                                'alpha'      => 'Alpha',
-                                'beta'       => 'Beta'
-                            ), null, array('class' => 'form-control', 'id' => 'position' )) }}
-                            @if ($errors->has('position'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('position') }}</strong>
-                                                </span>
-                            @endif
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group{{ $errors->has('passed_date') ? ' has-error' : '' }}">
-
-                        {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
-
-                        <div class="col-sm-9">
-                            {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
-
-                            @if ($errors->has('passed_date'))
-                                <span class="help-block">
-                                                    <strong>{{ $errors->first('passed_date') }}</strong>
-                                                </span>
-                            @endif
-                        </div>
-
-                    </div>
-
-                    <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
-
-                        {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-9">
-                            {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'size' => '30x5']) }}
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="create_team_member"><i class="fa fa-plus-circle"></i> Add Member</button>
+                            {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default')) }}
                         </div>
                     </div>
-                </div>
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-success" id="create_team_member"><i
-                                class="fa fa-plus-circle"></i> Add Member
-                    </button>
-                    {{ link_to('scouter/registration', 'NEXT', array('class' => 'btn btn-default pull-right')) }}
-                </div>
                 {{ Form::close() }}
-
-
 
                 @if(isset($team_member) && $team_member->count())
 
                     <div class="row">
                         <hr>
                         <div class="col-md-12">
+                            <div class="table-responsive">
 
-                            <table class="table table-bordered table-striped" id="team-member-list">
-                                <thead>
-                                <tr>
-                                    <th>Level</th>
-                                    <th>Name</th>
-                                    <th>DOB</th>
-                                    <th>Date of Join</th>
-                                    <th>Passed Date</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($team_member as $value)
+                                <table class="table table-bordered table-striped" id="team-member-list">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $value->position }}</td>
-                                        <td>{{ $value->f_name. ' ' . $value->l_name }}</td>
-                                        <td>{{ $value->dob }}</td>
-                                        <td>{{ $value->entry_date }}</td>
-                                        <td>{{ $value->passed_date }}</td>
-                                        <td><a class="btn btn-success updateTeamMember" data-id="{{ $value->id }}">
-                                                <i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger deleteTeamMember" data-id="{{ $value->id }}"
-                                               href="{{ url( 'member/delete', [$value->id]) }}"><i
-                                                        class="fa fa-trash-o"></i>
-                                            </a>
-                                        </td>
+                                        <th>Level</th>
+                                        <th>Name</th>
+                                        <th>DOB</th>
+                                        <th>Date of Join</th>
+                                        <th>Passed Date</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($team_member as $value)
+                                        <tr>
+                                            <td>{{ $value->position }}</td>
+                                            <td>{{ $value->f_name. ' ' . $value->l_name }}</td>
+                                            <td>{{ $value->dob }}</td>
+                                            <td>{{ $value->entry_date }}</td>
+                                            <td>{{ $value->passed_date }}</td>
+                                            <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateTeamMember" data-id="{{ $value->id }}">
+                                                    <i class="fa fa-pencil"></i></a>
+                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteTeamMember" data-id="{{ $value->id }}"
+                                                   href="{{ url( 'member/delete', [$value->id]) }}"><i
+                                                            class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 @endif

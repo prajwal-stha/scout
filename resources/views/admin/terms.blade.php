@@ -37,15 +37,18 @@
 
                             <div class="form-group">
                                 <label for="order">Display Order</label>
-                                <select class="form-control" name="order" id="order">
+                                <div class="scout-selection">
+                                    <select class="form-control" name="order" id="order">
 
-                                    <?php $count = $terms->count(); ?>
-                                    @for ($i = 1; $i <= $count+1; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
+                                        <?php $count = $terms->count(); ?>
+                                        @for ($i = 1; $i <= $count+1; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
 
-                                </select>
+                                    </select>
+                                </div>
                             </div>
+
 
                         </div>
                         <div class="modal-footer">
@@ -88,17 +91,18 @@
 
                             <div class="form-group{{ $errors->has('order') ? ' has-error' : '' }}">
                                 <label for="create-display">Display Order</label>
-                                <select class="form-control" name="order" id="create-display">
-                                    @if($terms->count() == 0)
-                                        <option value="1">1</option>
-                                    @else
-                                        <?php $count = $terms->count(); ?>
-                                            @for ($i = 1; $i <= $count+1; $i++)
-                                                <option value="{{ $i }}">{{ $i }}</option>
-
-                                            @endfor
-                                    @endif
-                                </select>
+                                <div class="scout-selection">
+                                    <select class="form-control" name="order" id="create-display">
+                                        @if($terms->count() == 0)
+                                            <option value="1">1</option>
+                                        @else
+                                            <?php $count = $terms->count(); ?>
+                                                @for ($i = 1; $i <= $count+1; $i++)
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                        @endif
+                                    </select>
+                                </div>
                                 @if ($errors->has('order'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('order') }}</strong>
@@ -109,7 +113,9 @@
                         </div><!-- /.box-body -->
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-success" id="create-submit">Submit</button>
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" id="create-submit">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div><!-- /.box -->
@@ -127,31 +133,33 @@
                         <div class="box-body table-list-districts">
                             <form action="{{ url('term/remove') }}" method="post" id="remove_terms">
                                 {{ csrf_field() }}
-                                <table id="table-terms" class="table table-bordered table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th><input name="action_to_all" type="checkbox" class="check-all"></th>
-                                        <th>Title</th>
-                                        <th>Display Order</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="list-terms">
-
-                                    @foreach($terms as $value)
+                                <div class="table-responsive">
+                                    <table id="table-terms" class="table table-bordered table-striped">
+                                        <thead>
                                         <tr>
-                                            <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
-                                            <td>{{ $value->title }}</td>
-                                            <td>{{ $value->order }}</td>
-                                            <td><a class="btn btn-success updateTerm" data-id="{{ $value->id }}" href="{{ url('term/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
-                                                <a class="btn btn-danger deleteTerm" data-id="{{ $value->id }}" href="{{ url( 'term/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
-                                            </td>
+                                            <th><input name="action_to_all" type="checkbox" class="check-all"></th>
+                                            <th>Title</th>
+                                            <th>Display Order</th>
+                                            <th>Action</th>
                                         </tr>
-                                    @endforeach
+                                        </thead>
+                                        <tbody id="list-terms">
 
-                                    </tbody>
+                                        @foreach($terms as $value)
+                                            <tr>
+                                                <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
+                                                <td>{{ $value->title }}</td>
+                                                <td>{{ $value->order }}</td>
+                                                <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateTerm" data-id="{{ $value->id }}" href="{{ url('term/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
+                                                    <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteTerm" data-id="{{ $value->id }}" href="{{ url( 'term/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
-                                </table>
+                                        </tbody>
+
+                                    </table>
+                                </div>
 
                                 <div class="btn-toolbar list-toolbar">
                                     <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit"><i class="fa fa-trash-o"></i> Delete</button>
