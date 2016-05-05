@@ -640,9 +640,7 @@ label {
     box-shadow: 0 1px 0 #222 inset;
 }
 
-.table-responsive{
-    border-color:#333;
-}
+
 
 .scout-selection{
     position:relative;
@@ -719,6 +717,12 @@ label {
 
     .dataTables_wrapper input[type="search"] {
         margin-left: 0;
+    }
+    .table-responsive{
+        border-color:#333;
+    }
+    .table-responsive table{
+        overflow-x:scroll;
     }
 }
 
