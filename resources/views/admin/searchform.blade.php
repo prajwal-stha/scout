@@ -69,7 +69,7 @@
                         <li class="list-group-item">
                             <div class="checkbox" name="school">
                                 <label>
-                                    <input type="checkbox"> School
+                                    <input type="checkbox" name="school"> School
                                 </label>
                             </div>
                         </li>

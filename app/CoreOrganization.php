@@ -39,27 +39,12 @@ class CoreOrganization extends Model
             'core_organizations.chairman_l_name' => 10,
             'core_organizations.email'           => 5,
             'core_organizations.type'            => 5,
-            'districts.name'                     => 10,
-            'districts.district_code'            => 2,
-//            'core_teams.name'                    => 10,
-//            'core_scouters.name'                 => 10,
-//            'core_scouters.email'                => 5,
-//            'core_organization_commitee_members.f_name' => 10,
-//            'core_organization_commitee_members.m_name' => 10,
-//            'core_organization_commitee_members.l_name' => 10
+            'districts.name'                     => 2,
+            'districts.district_code'            => 2
         ],
         'joins' => [
-            'districts' => ['districts.id','core_organizations.district_id'],
+            'districts'      => ['core_organizations.district_id','districts.id'],
         ],
-//        'joins' => [
-//            'core_teams'     => ['core_teams.organization_id', 'core_organizations.original_id']
-//        ],
-//        'joins' => [
-//            'core_scouters'  => ['core_scouters.organization_id', 'core_organizations.original_id']
-//        ],
-//        'joins' => [
-//            'core_organization_commitee_members'   => ['core_organization_commitee_members.organization_id', 'core_organizations.original_id']
-//        ]
     ];
 
     public function core_teams(){

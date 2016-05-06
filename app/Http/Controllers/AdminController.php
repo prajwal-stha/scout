@@ -43,9 +43,6 @@ use App\Term;
 
 
 use DB;
-
-use PDF;
-
 use Validator;
 
 /**
@@ -93,9 +90,10 @@ class AdminController extends Controller
         $data['registered_users']       = User::where('verified', 1)
                                          ->where('level', 0)->count();
         $data['approved_organizations'] = CoreOrganization::all()->count();
-        $data['declined_organizations'] = Organization::where('is_declined', 1)->count();
+        $data['declined_organizations'] = Organization::where('is_declined', 1)
+                                            ->where('is_submitted', 1)
+                                            ->count();
         $data['users']                  = User::where('level', 0)->get();
-
         return view( 'admin.dashboard')->with( $data );
     }
 
@@ -710,7 +708,7 @@ class AdminController extends Controller
             $data['rates']        = Rate::first();
             $data['scouter_no']   = intval(Scouter::where('organization_id', $id)->count());
             $data['scout_no']     = intval(count($data['team']));
-            $data['member_no']    = intval(Member::where('organization_id', $id)->count());
+            $data['member_no']    = intval(Member::where('organization_id', $id)->count() + 1);
             $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
             return view('scouter.print')->with( $data );
@@ -749,7 +747,7 @@ class AdminController extends Controller
             $data['rates']        = Rate::first();
             $data['scouter_no']   = $data['organization']->core_scouters->count();
             $data['scout_no']     = intval(count($data['team']));
-            $data['member_no']    = intval($data['organization']->core_members->count());
+            $data['member_no']    = intval($data['organization']->core_members->count() + 1);
             $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
             return view('scouter.print')->with( $data );
@@ -836,20 +834,19 @@ class AdminController extends Controller
 
         $this->organization = Organization::find($id);
 
-
         // Clone organization
 //        $this->cloneOrganization();
 
        // Clone Organization Commiitte Member
-//        $this->cloneMember();
+        $this->cloneMember();
 
         // Clone Scouter
-        $this->cloneScouter();
+//        $this->cloneScouter();
 
         // Clone Team
 //        $this->cloneTeam();
-
-        //  Clone Team Member
+//
+//        //  Clone Team Member
 //        $this->cloneTeammember($id);
 
     }
@@ -887,14 +884,20 @@ class AdminController extends Controller
 
         $member = new Member;
         $cloningData = $this->organization->members->all();
-
-        $overwrites = array();
+        pre($cloningData);
+        $finalOverwrite = array();
 
         foreach($cloningData as $data){
+            pre($data);
+            $overwrites = array();
             $overwrites[] =  array('original_id' => $data->id);
+            $finalOverwrite[] = $overwrites;
         }
 
-        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreMember'), $member->get_attributes(), $overwrites);
+        pre($finalOverwrite);
+        exit;
+
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreMember'), $member->get_attributes(), $finalOverwrite);
 
         pre($this->clone->errors());
         
@@ -908,13 +911,15 @@ class AdminController extends Controller
 
         $team = new Team;
         $cloningData = $this->organization->teams->all();
-        $overwrites = array();
+        $finalOverwrite = array();
 
         foreach($cloningData as $data){
+            $overwrites = array();
             $overwrites[] = array('original_id' => $data->id);
+            $finalOverwrite[] = $overwrites;
         }
 
-        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreTeam'), $team->get_attributes(), $overwrites);
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreTeam'), $team->get_attributes(), $finalOverwrite);
 
         pre($this->clone->errors());
         
@@ -927,18 +932,25 @@ class AdminController extends Controller
     {
         $scouter = new Scouter;
         $cloningData = $this->organization->scouters->all();
-        $overwrites = array();
+
+        $finalOverwrite = array();
 
         foreach($cloningData as $data){
+
+            $overwrites = array();
+
             $overwrites[] = array('original_id' => $data->id);
             $overwrites[] = array('permission_date' => formatDate($data->permission_date));
-            $overwrites[] = array('btc_date' => is_null($data->permission_date) ? NULL : formatDate($data->btc_date));
-            $overwrites[] = array('advance_date' => is_null($data->advance_date) ? NULL : formatDate($data->advance_date));
-            $overwrites[] = array('alt_date' => is_null($data->alt_date) ? NULL : formatDate($data->alt_date));
-            $overwrites[] = array('lt_date' => is_null($data->lt_date) ? NULL : formatDate($data->lt_date));
+            $overwrites[] = array('btc_date' => is_null($data->btc_date) ? null : formatDate($data->btc_date));
+            $overwrites[] = array('advance_date' => is_null($data->advance_date) ? null : formatDate($data->advance_date));
+            $overwrites[] = array('alt_date' => is_null($data->alt_date) ? null : formatDate($data->alt_date));
+            $overwrites[] = array('lt_date' => is_null($data->lt_date) ? null : formatDate($data->lt_date));
+
+            $finalOverwrite[] = $overwrites;
+
         }
 
-        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreScouter'), $scouter->get_attributes(), $overwrites);
+        $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreScouter'), $scouter->get_attributes(), $finalOverwrite);
 
         pre($this->clone->errors());
 
@@ -968,16 +980,20 @@ class AdminController extends Controller
 
         foreach($teamMembers as $teamMember){
 
-            $overwrites = array();
+            $final_overwrite = array();
 
             foreach($teamMember as $singleTeam){
+                $overwrites = array();
                 $overwrites[] = array('original_id' => $singleTeam->id);
                 $overwrites[] = array('dob' => formatDate($singleTeam->dob));
                 $overwrites[] = array('entry_date' => formatDate($singleTeam->entry_date));
                 $overwrites[] = array('passed_date' => formatDate($singleTeam->passed_date));
+
+                $final_overwrite[] = $overwrites;
+
             }
 
-            $this->clone->cloneMultipleObjects($teamMember, $this->findAbstractModel('CoreTeamMember'), $team_member->get_attributes(), $overwrites);
+            $this->clone->cloneMultipleObjects($teamMember, $this->findAbstractModel('CoreTeamMember'), $team_member->get_attributes(), $final_overwrite);
 
             pre($this->clone->errors());
 
@@ -1581,6 +1597,7 @@ class AdminController extends Controller
                             ->with('district')
                             ->orderBy('relevance', 'desc')
                             ->get();
+        $data['search_type']    = 'school';
 
         return view('admin.search')->with($data);
 
@@ -1606,34 +1623,50 @@ class AdminController extends Controller
         $rules = [
             'q' => 'required'
         ];
-        $validator = Validator::make($request->all(), $rules);
-        $data['query'] = $q = $request->get('q');
+        $validator      = Validator::make($request->all(), $rules);
+        $data['query']  = $q = strtolower($request->get('q'));
         $data['title']  = 'Nepal Scout - Advanced Search Results';
         if($validator->passes()) {
 
-            if ($request->has('chairman') || $request->has('committe') || $request->has('scouter') || $request->has('team_member')) {
-
-                $results = CoreOrganization::where(function ($q) use ($request) {
-                    $q->orWhere('email', 'like', '%john@example.org%');
-                    $q->orWhere('first_name', 'like', '%John%');
-                    $q->orWhere('last_name', 'like', '%Doe%');
-                })->toSql();
+            if ($request->has('member')) {
+                $data['search'] = CoreMember::search($data['query'], null, true)
+                                    ->with('core_organization')
+                                    ->orderBy('relevance', 'desc')->get();
+                $data['search_type'] = 'member';
+                return view('admin.search', $data);
             }
 
-            if ($request->has('school') || $request->has('organization')) {
+            if($request->has('scouter')){
+                $data['search'] = CoreScouter::search($data['query'], null, true)
+                                    ->with('core_organizations')
+                                    ->orderBy('relevance', 'desc')->get();
+                $data['search_type'] = 'scouter';
+
+                return view('admin.search', $data);
+            }
+
+            if ($request->has('school') || $request->has('organization') || $request->has('chairman')) {
                 $data['search'] = CoreOrganization::search($data['query'], null, true)
-                    ->orderBy('relevance', 'desc')->get();
-                return view('admin.search')->with($data);
+                                    ->orderBy('relevance', 'desc')->get();
+                $data['search_type'] = 'school';
+                return view('admin.search', $data);
+            }
+
+            if ($request->has('team') || $request->has('team_member')) {
+                $data['search'] = CoreTeam::search($data['query'])
+                                    ->with('core_team_members')
+                                    ->orderBy('relevance', 'desc')->get();
+                $data['search_type']  = 'team';
+                return view('admin.search', $data);
 
             }
 
-            if ($request->has('team')) {
-                $data['search'] = CoreOrganization::search($data['query'], null, true)
-                    ->with('teams')
-                    ->orderBy('relevance', 'desc');
-                return view('admin.search')->with($data);
+            $data['search'] = CoreOrganization::search($data['query'], null, true)
+                                ->with('district')
+                                ->orderBy('relevance', 'desc')->get();
+            $data['search_type'] = 'school';
+            return view('admin.search', $data);
 
-            }
         }
 
     }

@@ -9,25 +9,83 @@
                     <!-- general form elements -->
                     <div class="box box-success">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Search Results for: {{ $query }}</h3>
+                            <h3 class="box-title">{{ isset($query) ? $search->count() . ' Results found for: '. $query : '' }} </h3>
                         </div><!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
                             <table id="search-result" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Organizations</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                                @if($search_type == 'school')
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Organizations</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($search as $value)
+                                            <tr>
+                                                <td>{{ ucfirst($value->type) }}</td>
+                                                <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                @elseif($search_type == 'member')
+                                    <thead>
+                                        <tr>
+                                            <th>Organizations</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     @foreach($search as $value)
                                         <tr>
-                                            <td>{{ ucfirst($value->type) }}</td>
-                                            <td><a href="{{ url('admin/view-approved-organization', [$value->original_id]) }}">{{ $value->name }}</a></td>
+                                            <td><a href="{{ url('admin/view-approved-organization', [$value->organization_id]) }}">{{ $value->core_organization->name }}</a></td>
+                                            <td>{{ $value->f_name }} {{ $value->m_name }} {{ $value->l_name }}</td>
                                         </tr>
                                     @endforeach
-                                </tbody>
+                                    </tbody>
+
+                                @elseif($search_type == 'scouter')
+                                    <thead>
+                                    <tr>
+                                        <th>Organizations</th>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($search as $value)
+                                        <tr>
+                                            <td><a href="{{ url('admin/view-approved-organization', [$value->organization_id]) }}">{{ $value->core_organization->name }}</a></td>
+                                            <td>{{ $value->name }}</td>
+                                            <td>{{ $value->is_lead == 1 ? 'Lead Scouter' : 'Assistant-Lead Scouter' }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                @elseif($search_type == 'team')
+                                    <thead>
+                                    <tr>
+                                        <th>Organizations</th>
+                                        <th>Team</th>
+                                        <th>Team Member</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($search as $value)
+                                        <tr>
+                                            <td><a href="{{ url('admin/view-approved-organization', [$value->organization_id]) }}">{{ $value->core_organization->name }}</a></td>
+                                            <td>{{ $value->name }}</td>
+                                            <td>
+                                                @foreach($value->core_team_members as $team_member)
+                                                    {{ $team_member->f_name }} {{ $team_member->m_name }} {{ $team_member->l_name }}
+                                                @endforeach
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                @endif
                             </table>
                         </div>
                     </div>

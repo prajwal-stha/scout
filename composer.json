@@ -10,7 +10,6 @@
         "laravelcollective/html": "~5.0",
         "lord/laroute" : "2.*",
         "nesbot/carbon": "~1.14",
-        "barryvdh/laravel-dompdf": "0.6.*",
         "nicolaslopezj/searchable": "1.*",
         "filp/whoops": "~1.0."
     },

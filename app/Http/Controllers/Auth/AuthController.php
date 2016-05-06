@@ -98,11 +98,13 @@ class AuthController extends Controller
         // Set login attempts and login time
         $loginAttempts = 1;
 
+
         // If session has login attempts, retrieve attempts counter and attempts time
         if (Session::has('loginAttempts'))
         {
             $loginAttempts = Session::get('loginAttempts');
             $loginAttemptTime = Session::get('loginAttemptTime');
+
 
             // If attempts > 3 and time < 10 minutes
             if ($loginAttempts > 3 && (time() - $loginAttemptTime <= 600))

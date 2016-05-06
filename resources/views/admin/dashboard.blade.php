@@ -7,22 +7,7 @@
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Approved Organizations</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-shopping-basket"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-
-
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
@@ -36,7 +21,7 @@
                                 class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
@@ -51,7 +36,7 @@
                 </div>
             </div><!-- ./col -->
 
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-4 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
@@ -84,7 +69,6 @@
                                 </tr>
                                 </thead>
                                 <tbody id="list-user-orgs">
-
 
                                     @foreach($users as $user)
                                         @if(count($user->core_organizations) > 0)
@@ -186,43 +170,34 @@
                                 </thead>
                                 <tbody id="list-user-orgs">
 
+                                    @foreach($users as $user)
+                                        @if(count($user->organizations) > 0 )
 
-                                @foreach($users as $user)
-                                    @if(count($user->organizations) > 0 && $organization->is_submitted == 1 && $organization->is_declined == 1)
+                                            <tr>
+                                                <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
+                                                <td>
+                                                    <?php $i = 0; ?>
+                                                    @foreach($user->organizations as $organization)
+                                                        <?php
+                                                        $i++;
+                                                        $count = count($user->organizations);?>
+                                                        <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}{{ $i != $count ? ', ' : '' }}</a>
 
-                                        <tr>
-                                            <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
-                                            <td>
-                                                <?php $i = 0; ?>
-                                                @foreach($user->organizations as $organization)
-                                                    <?php
-                                                    $i++;
-                                                    $count = count($user->core_organizations); ?>
-                                                    <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}{{ $i != $count ? ', ' : '' }}</a>
+                                                    @endforeach
 
+                                                </td>
+                                            </tr>
 
-
-                                                @endforeach
-
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
 
                                 </tbody>
-
                             </table>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
-
         </div>
-
-
     </section><!-- /.content -->
 
 @stop

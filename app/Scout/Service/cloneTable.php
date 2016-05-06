@@ -50,19 +50,23 @@ class CloneTable
      */
     public function cloneMultipleObjects($models = array(), Model $to, $attributes = array(), $overwrite = array()){
 
-        $count = 0;
-        foreach($models as $model){
+        $count = count($models ) - 1;
+
+        for($i = 0; $i <= $count ; $i++){
 
             $this->overwrite = array();
 
-            $this->overwrite = $overwrite[$count];
+            foreach($overwrite[$i] as  $value){
 
-            $this->cloneObject($model, $to, $attributes);
+                foreach($value as $key => $value){
+                    $this->overwrite[$key] = $value;
+                }
 
-            $count++;
+            }
+
+            $this->cloneObject($models[$i], $to, $attributes);
 
         }
-
 
     }
 
@@ -77,8 +81,6 @@ class CloneTable
 
             $entry_data = $this->data;
         }
-        dd($entry_data);
-
 
         try{
 

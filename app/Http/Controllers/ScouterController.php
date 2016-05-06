@@ -408,7 +408,7 @@ class ScouterController extends Controller
             $data['rates']        = Rate::first();
             $data['scouter_no']   = intval(Scouter::where('organization_id', $data['org_id'])->count());
             $data['scout_no']     = intval(count($data['team']));
-            $data['member_no']    = intval(Member::where('organization_id', $data['org_id'])->count());
+            $data['member_no']    = intval(Member::where('organization_id', $data['org_id'])->count() + 1);
             $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
 

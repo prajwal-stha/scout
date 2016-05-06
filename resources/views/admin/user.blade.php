@@ -18,8 +18,7 @@
                                 <table id="table-registerd-users" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Email</th>
                                         <th>User Name</th>
                                     </tr>
@@ -28,8 +27,7 @@
 
                                         @foreach($user as $value)
                                             <tr>
-                                                <td>{{ $value->f_name }}</td>
-                                                <td>{{ $value->l_name }}</td>
+                                                <td><a data-toggle="tooltip" title="VIEW" href="{{ url('admin/profile', [$value->id]) }}">{{ $value->f_name }} {{ $value->l_name }}</a></td>
                                                 <td>{{ $value->email }}</td>
                                                 <td>{{ $value->username }}</td>
                                             </tr>

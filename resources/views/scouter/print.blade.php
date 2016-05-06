@@ -609,7 +609,7 @@
                                         <td>{{ $member->f_name }} {{ $member->m_name }} {{ $member->l_name  }}</td>
                                         <td>{{ $member->dob }}</td>
                                         <td>{{ $member->entry_date }}</td>
-                                        <td></td>
+                                        <td>{{ $member->position }}</td>
                                         <td>{{ $member->passed_date }}</td>
                                         <td>{{ $member->note }}</td>
                                     </tr>

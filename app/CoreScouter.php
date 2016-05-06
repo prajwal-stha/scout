@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class CoreScouter extends Model
 {
+    use SearchableTrait;
     protected $table = 'core_scouters';
 
     protected $fillable = [
@@ -26,9 +28,20 @@ class CoreScouter extends Model
         'organization_id'
     ];
 
-    public function organization(){
+    protected $searchable = [
+        'columns' => [
+            'core_scouters.name'        => 10,
+            'core_scouters.email'       => 10,
+            'core_organizations.name' => 10
+        ],
+        'joins' => [
+            'core_organizations'      => ['core_scouters.organization_id','core_organizations.original_id'],
+        ],
+    ];
 
-        return $this->belongsTo(CoreOrganization::class, 'original_id');
+    public function core_organization(){
+
+        return $this->belongsTo(CoreOrganization::class, 'organization_id', 'original_id');
 
     }
 

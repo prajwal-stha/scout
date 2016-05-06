@@ -84,7 +84,7 @@
                             {{ Form::close() }}
 
                         @endif
-                        {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info')) }}
+                        {{ link_to('scouter/print', 'PRINT', array('class' => 'btn btn-info', 'target'  => '_blank')) }}
                     </div>
 
                     </div>
