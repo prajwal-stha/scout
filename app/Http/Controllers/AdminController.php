@@ -330,10 +330,11 @@ class AdminController extends Controller
         $data['title'] = 'Nepal Scout';
 
         $data['organization'] = Organization::findOrFail($id);
-        $data['member'] = Member::where('organization_id', $id)->get();
+        $data['member'] = $data['organization']->members;
         $data['leadScouter'] = Scouter::where('organization_id', $id)
             ->where('is_lead', 1)
             ->first();
+
 
         return view('admin/lead-scouter')->with( $data );
         
@@ -412,7 +413,7 @@ class AdminController extends Controller
         $data['title'] = 'Nepal Scout';
 
         $data['organization'] = Organization::findOrFail($id);
-        $data['member'] = Member::where('organization_id', $id)->get();
+        $data['member'] = $data['organization']->members;
         $data['scouter'] = Scouter::where('organization_id', $id)
             ->where('is_lead', 0)
             ->first();
@@ -431,7 +432,7 @@ class AdminController extends Controller
         $data['title'] = 'Nepal Scout';
         $data['organization'] = Organization::findOrFail($id);
         if(Team::where('organization_id', $id)->count() > 0 ) {
-            $data['team'] = Team::where('organization_id', $id)->get();
+            $data['team'] = $data['organization']->teams;
             if(is_null($team_id)) {
                 $data['teamId'] = $data['team']->first()->id;
                 $data['team_name'] = Team::findOrFail($data['teamId'])->name;
@@ -636,7 +637,7 @@ class AdminController extends Controller
                     ->where('teams.organization_id', '=', '$id');
             })
             ->count());
-        $data['member'] = intval(Member::where('organization_id', $id)->count());
+        $data['member'] = $data['organization']->members->count();
         $data['total']  = $data['scouter'] + $data['scout'] + $data['member'];
 
         return view('admin.registration')->with($data);
@@ -746,9 +747,9 @@ class AdminController extends Controller
                 ->select('core_teams.name as team_name', 'core_teams.original_id as teamId', 'core_team_members.*')
                 ->get();
             $data['rates']        = Rate::first();
-            $data['scouter_no']   = intval(Scouter::where('organization_id', $id)->count());
+            $data['scouter_no']   = $data['organization']->core_scouters->count();
             $data['scout_no']     = intval(count($data['team']));
-            $data['member_no']    = intval(Member::where('organization_id', $id)->count());
+            $data['member_no']    = intval($data['organization']->core_members->count());
             $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
             return view('scouter.print')->with( $data );
@@ -1329,12 +1330,13 @@ class AdminController extends Controller
             if(is_null($team_id)) {
 
                 $data['teamId'] = $data['team']->first()->original_id;
-                $data['team_name'] = Team::findOrFail($data['teamId'])->name;
+                $data['team_name'] = CoreTeam::where('original_id', $data['teamId'])->first()->name;
+
 
             }else{
 
                 $data['teamId'] = $team_id;
-                $data['team_name'] = Team::findOrFail($team_id)->name;
+                $data['team_name'] = CoreTeam::where('original_id', $team_id)->first()->name;
             }
 
             $data['team_member'] = CoreTeamMember::where('team_id', $data['teamId'])->get();

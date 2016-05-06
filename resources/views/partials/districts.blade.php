@@ -28,6 +28,6 @@
         </table>
     </div>
     <div class="btn-toolbar list-toolbar">
-        <button class="btn btn-danger" name="mass-delete" type="submit" id="delete-submit">Delete</button>
+        <button class="btn btn-danger delete-district" name="mass-delete" type="submit" id="delete-submit">Delete</button>
     </div>
 </form>

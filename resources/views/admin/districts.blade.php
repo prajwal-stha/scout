@@ -18,7 +18,6 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div id="modal-alert-placeholder"></div>
-
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                     <form action="{{ url('districts/update') }}" method="post" id="district-update-form">

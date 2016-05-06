@@ -169,11 +169,8 @@ class DistrictsController extends Controller
     {
         if ( is_array($request->get('action_to')) ){
             District::destroy($request->get('action_to'));
-            return redirect()->back();
-        } else {
-
-            return redirect()->back();
         }
+        return redirect()->back();
     }
 
     public function getAllDistricts()

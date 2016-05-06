@@ -69,30 +69,7 @@ jQuery(document).ready(function() {
     //    return false;
     //});
 
-    $('#delete-submit').on('click', function (event) {
 
-        event.preventDefault();
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this record!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel please!",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function (isConfirm) {
-            if (isConfirm) {
-                swal("Deleted!", "The record has been deleted.", "success");
-                $('#remove_many_districts').submit();
-
-            } else {
-                swal("Cancelled", "The record is safe.)", "error");
-            }
-        });
-    });
 
 
         //$.post(

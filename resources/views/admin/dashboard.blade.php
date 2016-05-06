@@ -86,22 +86,26 @@
                                 <tbody id="list-user-orgs">
 
 
-                                @foreach($users as $user)
+                                    @foreach($users as $user)
+                                        @if(count($user->core_organizations) > 0)
 
-                                    <tr>
-                                        <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
-                                        <td>
-                                            @foreach($user->organizations as $organization)
-                                                @if($organization->is_submitted == 1)
-                                                    <div>
-                                                        <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}</a>
+                                            <tr>
+                                                <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
+                                                <td>
+                                                    <?php $i = 0; ?>
 
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                    @foreach($user->core_organizations as $organization)
+                                                        <?php
+                                                            $i++;
+                                                            $count = count($user->core_organizations); ?>
+
+                                                        <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-approved-organization', [$organization->original_id]) }}">{{ $organization->name }} {{ $i != $count ? ', ' : '' }}</a>
+
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
 
                                 </tbody>
 
@@ -184,20 +188,25 @@
 
 
                                 @foreach($users as $user)
+                                    @if(count($user->organizations) > 0 && $organization->is_submitted == 1 && $organization->is_declined == 1)
 
-                                    <tr>
-                                        <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
-                                        <td>
-                                            @foreach($user->core_organizations as $organization)
+                                        <tr>
+                                            <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
+                                            <td>
+                                                <?php $i = 0; ?>
+                                                @foreach($user->organizations as $organization)
+                                                    <?php
+                                                    $i++;
+                                                    $count = count($user->core_organizations); ?>
+                                                    <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}{{ $i != $count ? ', ' : '' }}</a>
 
-                                                <div>
-                                                    <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}</a>
 
-                                                </div>
 
-                                            @endforeach
-                                        </td>
-                                    </tr>
+                                                @endforeach
+
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
 
                                 </tbody>
