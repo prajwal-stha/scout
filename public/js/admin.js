@@ -463,6 +463,7 @@ $(document).ready(function(){
 
     $('.register-form').on('submit', function(e){
         e.preventDefault();
+        var id = $('#organization_id').val();
 
         $( '.error-message' ).each(function( ) {
             $(this).removeClass('make-visible');
@@ -484,13 +485,15 @@ $(document).ready(function(){
             dataType: "json"
         })
         .done(function (data) {
-            console.log(data);
 
             if (data.status == 'success') {
 
                 $('#registerModal').modal('hide');
-                location.reload();
+                window.location.href = clone_url + '/' + id;
+
+                //location.reload();
             } else if (data.status == 'danger' ){
+
                 for (var key in data.msg) {
                     // skip loop if the property is from prototype
                     if (!data.msg.hasOwnProperty(key)) continue;

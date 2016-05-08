@@ -55,7 +55,7 @@
                                 <div class="col-sm-4 scout-selection">
                                     {{ Form::select('type', array(
                                         'school'      => 'School',
-                                        'organization'=> 'Organization'
+                                        'other'       => 'Organization'
                                     ), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('type'))
                                         <span class="help-block">

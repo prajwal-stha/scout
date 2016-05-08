@@ -10,6 +10,7 @@ class RateTest extends TestCase
 
     public function test_create_rate(){
 
+
         $this->visit('/rate')
             ->type(10 , 'registration_rate')
             ->type(20, 'scouter_rate')

@@ -60,7 +60,7 @@
 
                     @if(isset($leadScouter))
 
-                        {{ Form::model($leadScouter, ['url' => ['scouter/edit-lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
+                        {{ Form::model($leadScouter, ['url' => ['scouter/lead', $leadScouter['id']], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-lead-scouter-form']) }}
 
                     @else
 

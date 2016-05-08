@@ -121,19 +121,19 @@
 
                         </div>
                         <div class="box-footer">
+                            @if(is_null($organization->registration_no) && empty($organization->registration_no) && $organization->is_declined == false)
+                                {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
+                                <input type="hidden" name="organization_id" value="{{ $organization->id }}">
+                                <button type="submit" data-id="{{ $organization->id }}"
+                                        class="btn btn-danger decline-button"><i class="fa fa-user-times"></i> Decline
+                                </button>
+                                {{ Form::close() }}
+                            @endif
                             <div class="pull-right">
                                 @if(is_null($organization->registration_no) && empty($organization->registration_no))
 
                                     <button type="submit" class="btn btn-success register-modal"><i class="fa fa-check-square-o"></i> Approve</button>
 
-                                @endif
-                                @if(is_null($organization->registration_no) && empty($organization->registration_no) && $organization->is_declined == false)
-                                    {{ Form::open(['url' => ['admin/decline', $organization->id], 'method' => 'PATCH', 'class' => 'decline-organization']) }}
-                                        <input type="hidden" name="organization_id" value="{{ $organization->id }}">
-                                        <button type="submit" data-id="{{ $organization->id }}"
-                                                class="btn btn-primary decline-button"><i class="fa fa-user-times"></i> Decline
-                                        </button>
-                                    {{ Form::close() }}
                                 @endif
                                 <a class="btn btn-info" target="_blank" href="{{ url('admin/print', [$organization->id]) }}">Print <i class="fa fa-print"></i></a>
 
@@ -151,6 +151,7 @@
     @parent
     <script>
         var decline_url = "<?php echo url('admin/decline'); ?>";
+        var clone_url   = "<?php echo url('admin/clone-model'); ?>";
     </script>
 
 

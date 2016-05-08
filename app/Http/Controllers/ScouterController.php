@@ -56,7 +56,7 @@ class ScouterController extends Controller
         $data['district'] = District::all();
         $data['title']    = 'Nepal Scout - Organizations';
         if(session()->has('org_id')){
-            $data['org_id'] = session()->get('org_id');
+            $data['org_id']       = session()->get('org_id');
             $data['organization'] = Organization::findOrFail(session()->get('org_id'));
         }
         return view('scouter.organization')->with($data);
@@ -70,7 +70,7 @@ class ScouterController extends Controller
         $data['title']   = 'Nepal Scout - Scarf';
         if(session()->has('org_id')){
 
-            $data['org_id'] = session()->get('org_id');
+            $data['org_id']       = session()->get('org_id');
             $data['organization'] = Organization::findOrFail(session()->get('org_id'));
             return view('scouter.scarf')->with($data);
         }else{
@@ -182,7 +182,7 @@ class ScouterController extends Controller
                     $data['teamId'] = $data['team']->first()->id;
                     if ($data['teamId']) {
                         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
-                        $data['team_name'] = Team::findOrFail($data['teamId'])->name;
+                        $data['team_name']   = Team::findOrFail($data['teamId'])->name;
                     }
                 }
 
@@ -190,10 +190,10 @@ class ScouterController extends Controller
 
                 $data['org_id'] = session()->get('org_id');
                 if (Team::where('organization_id', session()->get('org_id'))->count() > 0) {
-                    $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+                    $data['team']        = Team::where('organization_id', session()->get('org_id'))->get();
                     $data['team_member'] = TeamMember::where('team_id', $teamId)->get();
-                    $data['teamId'] = $teamId;
-                    $data['team_name'] = Team::findOrFail($teamId)->name;
+                    $data['teamId']      = $teamId;
+                    $data['team_name']   = Team::findOrFail($teamId)->name;
                 }
 
             }
@@ -235,10 +235,10 @@ class ScouterController extends Controller
             $data['organization'] = Organization::findOrFail(session()->get('org_id'));
 
 
-            $data['scouter'] = intval(Scouter::where('organization_id', session()->get('org_id'))->count());
-            $data['scout'] = $team_member_count;
-            $data['member'] = intval(Member::where('organization_id', session()->get('org_id'))->count());
-            $data['total']  = $data['scouter'] + $data['scout'] + $data['member'];
+            $data['scouter'] = $data['organization']->scouters->count();
+            $data['scout']   = $team_member_count;
+            $data['member']  = intval($data['organization']->members->count() + 1);
+            $data['total']   = $data['scouter'] + $data['scout'] + $data['member'];
             return view('scouter.registration')->with($data);
 
         }
@@ -394,21 +394,17 @@ class ScouterController extends Controller
             $data['district']     = $data['organization']->district;
             $data['member']       = $data['organization']->members->all();
             $data['team']         = $data['organization']->teams->all();
-            $data['leadScouter']  = Scouter::where('organization_id', session()->get('org_id'))
-                ->where('is_lead', 1)
-                ->first();
-            $data['scouter'] = Scouter::where('organization_id', session()->get('org_id'))
-                ->where('is_lead', 0)
-                ->first();
-            $data['team_member'] = DB::table('teams')
+            $data['leadScouter']  = $data['organization']->scouters->where('is_lead', 1)->first();
+            $data['scouter']      = $data['organization']->scouters->where('is_lead', 0)->first();
+            $data['team_member']  = DB::table('teams')
                 ->where('organization_id', $data['org_id'])
                 ->join('team_members', 'teams.id', '=', 'team_members.team_id')
                 ->select('teams.name as team_name', 'team_members.*')
                 ->get();
             $data['rates']        = Rate::first();
-            $data['scouter_no']   = intval(Scouter::where('organization_id', $data['org_id'])->count());
-            $data['scout_no']     = intval(count($data['team']));
-            $data['member_no']    = intval(Member::where('organization_id', $data['org_id'])->count() + 1);
+            $data['scouter_no']   = $data['organization']->scouters->count();
+            $data['scout_no']     = count($data['team']);
+            $data['member_no']    = intval($data['organization']->members->count() + 1);
             $data['total']        = intval($data['scouter_no'] + $data['scout_no'] + $data['member_no']);
             $data['terms']        = Term::orderBy('order', 'ASC')->get();
 
@@ -422,7 +418,7 @@ class ScouterController extends Controller
     {
        if (Auth::user()->id == User::find($id)->id){
            $data['title'] = 'Nepal Scout - Profile';
-           $data['user'] = User::findOrFail($id);
+           $data['user']  = User::findOrFail($id);
            if($data['user']->verified == 1){
                return view('scouter.profile')->with( $data );
            }

@@ -77,7 +77,7 @@
                     {{--Lead scouter form end --}}
                     @if(isset($scouter) && $scouter->count())
 
-                        {{ Form::model($scouter, ['url' => ['scouter/edit', $scouter->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-scouter-form']) }}
+                        {{ Form::model($scouter, ['url' => ['scouter/scouter', $scouter->id], 'method' => 'PATCH', 'class' => 'form-horizontal', 'id' =>'create-scouter-form']) }}
 
 
                     @else

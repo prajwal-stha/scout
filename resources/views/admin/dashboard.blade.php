@@ -171,16 +171,16 @@
                                 <tbody id="list-user-orgs">
 
                                     @foreach($users as $user)
-                                        @if(count($user->organizations) > 0 )
+                                        @if(count($user->organizations->where('is_declined', 1)) > 0 )
 
                                             <tr>
                                                 <td><a data-toggle="tooltip" title="VIEW USER" class="" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
                                                 <td>
                                                     <?php $i = 0; ?>
-                                                    @foreach($user->organizations as $organization)
+                                                    @foreach($user->organizations->where('is_declined', 1) as $organization)
                                                         <?php
                                                         $i++;
-                                                        $count = count($user->organizations);?>
+                                                        $count = count($user->organizations->where('is_declined', 1)); ?>
                                                         <a data-toggle="tooltip" title="VIEW ORG" href="{{ url('admin/view-organization', [$organization->id]) }}">{{ $organization->name }}{{ $i != $count ? ', ' : '' }}</a>
 
                                                     @endforeach

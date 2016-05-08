@@ -18,8 +18,8 @@
                         <table id="form-requests" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>User</th>
                                 <th>Organizations</th>
+                                <th>User</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -27,10 +27,10 @@
 
                             @foreach( $organizations as $value)
                                 <tr>
-                                    <td><a href="{{ url('admin/profile', [$value->user->id]) }}">{{ $value->user->f_name }} {{ $value->user->l_name  }}</a></td>
-                                    <td><a data-toggle="tooltip" title="VIEW" class="team-name"
+                                    <td><a data-toggle="tooltip" title="VIEW ORGANIZATION" class="team-name"
                                            href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                     </td>
+                                    <td><a data-toggle="tooltip" title="VIEW USER" href="{{ url('admin/profile', [$value->user->id]) }}">{{ $value->user->f_name }} {{ $value->user->l_name  }}</a></td>
                                     <td>
                                         <a data-toggle="tooltip" title="VIEW" class="btn btn-primary" href="{{ url('admin/view-organization', [$value->id]) }}"><i
                                                     class="fa fa-eye"></i></a>

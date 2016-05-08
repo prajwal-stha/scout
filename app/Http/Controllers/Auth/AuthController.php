@@ -121,6 +121,7 @@ class AuthController extends Controller
         {
             Session::put('loginAttempts', $loginAttempts);
             Session::put('loginAttemptTime', time());
+
         }
         // If auth ok, redirect to restricted area
         if (Auth::attempt([
@@ -129,12 +130,13 @@ class AuthController extends Controller
             'verified'  => 1
         ], $request->get('remember')))
         {
-            if(Auth::user()->level == 1){
-                return redirect()->intended('admin');
-            }
             if(Auth::user()->level != 1){
                 return redirect()->intended('scouter');
             }
+            if(Auth::user()->level == 1){
+                return redirect()->intended('admin');
+            }
+
 
         }else{
             return redirect()->back()->with(['not_verified', 'Please verify your email address before you can login']);
