@@ -73,7 +73,7 @@ class AdminController extends Controller
      * @param CloneTable $clone
      */
     public function __construct(CloneTable $clone){
-        $this->middleware(['auth', 'role']);
+        $this->middleware( ['auth', 'role', 'xss'] );
         $this->clone = $clone;
 
     }
@@ -1533,7 +1533,7 @@ class AdminController extends Controller
             'note'           => $request->get('note'),
             'team_id'        => $request->get('team_id'),
             'position'       => $request->get('position'),
-            'original_id'    => mt_rand()
+            'original_id'    => generateUniqueId()
         ]);
 
         return redirect()->back()->with(['team_member_created' => 'One of the team member has been created']);

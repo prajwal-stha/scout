@@ -14,24 +14,17 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'email' => $faker->safeEmail,
+        'email'   => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
     ];
 });
 
 
-$factory->define(App\Document::class, function (Faker\Generator $faker) {
-    return [
-        'title' => $faker->sentence,
-        'body' => $faker->paragraph
-    ];
-});
-
 $factory->define(App\District::class, function (Faker\Generator $faker) {
     return [
         'district_code' => str_random(5),
-        'name' => str_random(10),
+        'name'          => str_random(10),
     ];
 });
 
