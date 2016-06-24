@@ -26,6 +26,7 @@ class CoreTeam extends Model
         'name',
         'organization_id'
     ];
+    
     protected $searchable = [
         'columns' => [
             'core_teams.name'           => 10,

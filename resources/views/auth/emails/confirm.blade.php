@@ -5,10 +5,10 @@
     <title>Sign Up Confirmation</title>
 </head>
 <body>
-<h1>Thanks for signing up!</h1>
+<h1>Welcome aboard!! </h1>
 
 <p>
-    We just need you to <a href='{{ url("/confirm/{$user->token}") }}'>confirm your email address</a> real quick!
+    Welcome to Nepal Scout. Before you can proceed for registration, We need you to <a href='{{ url("/confirm/{$user->token}") }}'>confirm your email address</a> real quick!
 </p>
 </body>
 </html>

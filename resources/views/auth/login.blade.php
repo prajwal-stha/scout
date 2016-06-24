@@ -32,22 +32,35 @@
             <img src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout">
         </a>
     </div><!-- /.login-logo -->
-    @if(Session::has('confirmed'))
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Great!</h4>
-            {{ Session::get('confirmed') }}
-        </div>
-    @endif
-    @if(Session::has('not_verified'))
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h4><i class="icon fa fa-check"></i> Whoops!</h4>
-            {{ Session::get('not_verified') }}
-        </div>
-    @endif
+
     <div class="login-box-msg">Welcome <span class="color-green">back!</span> <span class="small-text">Please login to your account</span></div>
     <div class="login-box-body">
+        @if(session('confirmed'))
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ session('confirmed') }}
+            </div>
+        @endif
+        @if(session('not_verified'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+                {{ session('not_verified') }}
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ session('error') }}
+            </div>
+        @endif
+        @if(session('verified'))
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ session('verified') }}
+            </div>
+        @endif
+
         <form action="{{ url('/login') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">

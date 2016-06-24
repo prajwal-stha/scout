@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Scout\Service\CloneTable;
+//use App\Jobs\CloneTableJob;
 
 use App\Http\Requests;
 
@@ -87,8 +88,7 @@ class AdminController extends Controller
     {
         $data['title']                  = 'Nepal Scout - Dashboard';
         $data['rates']                  = Rate::first();
-        $data['registered_users']       = User::where('verified', 1)
-                                         ->where('level', 0)->count();
+        $data['registered_users']       = User::verified()->public()->count();
         $data['approved_organizations'] = CoreOrganization::all()->count();
         $data['declined_organizations'] = Organization::where('is_declined', 1)
                                             ->where('is_submitted', 1)
@@ -115,9 +115,7 @@ class AdminController extends Controller
     public function getUsers()
     {
         $data['title']  = 'Nepal Scout - All Users';
-        $data['user']   = User::where('verified', 1)
-                            ->where('level', 0)
-                            ->get();
+        $data['user']   = User::verified()->public()->get();
         return view('admin.user')->with( $data );
         
     }
@@ -150,10 +148,7 @@ class AdminController extends Controller
 
             return redirect()->back()
                 ->with(['user_update' => 'User successfully updated']);
-
         }
-
-        
     }
 
     /**
@@ -669,6 +664,7 @@ class AdminController extends Controller
 
                 $org->registration_no = $request->get('registration_no');
                 $org->save();
+                $this->dispatch(new CloneTableJob($org));
             }
 
             $response = array(
@@ -886,7 +882,7 @@ class AdminController extends Controller
         $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreMember'), $member->get_attributes(), $finalOverwrite);
 
         pre($this->clone->errors());
-        
+
     }
 
     /**
@@ -908,7 +904,7 @@ class AdminController extends Controller
         $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreTeam'), $team->get_attributes(), $finalOverwrite);
 
         pre($this->clone->errors());
-        
+
     }
 
     /**

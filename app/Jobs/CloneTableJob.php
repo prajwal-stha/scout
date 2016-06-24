@@ -113,7 +113,7 @@ class CloneTableJob extends Job implements ShouldQueue
         //  Clone Team Member
         $this->cloneTeammember($id);
 
-        return redirect()->back();
+//        return redirect()->back();
 
     }
 
@@ -257,7 +257,7 @@ class CloneTableJob extends Job implements ShouldQueue
 
             $this->clone->cloneMultipleObjects($teamMember, $this->findAbstractModel('CoreTeamMember'), $team_member->get_attributes(), $final_overwrite);
 
-            pre($this->clone->errors());
+//            pre($this->clone->errors());
 
         }
     }

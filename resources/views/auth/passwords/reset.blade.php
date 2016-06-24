@@ -15,10 +15,7 @@
     <link rel="stylesheet" href="{{ asset( 'font-awesome/css/font-awesome.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
 
-    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,7 +29,10 @@
 <!-- Main Content -->
 
     <div class="login-box reset-password">
-        <div class="login-box-msg">Reset Password</div>
+        <div class="login-logo">
+            <a class="logo-circle-stroke" href="{{ url('/') }}"><img src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout"></a>
+        </div><!-- /.login-logo -->
+        <div class="login-box-msg style-normal">Reset Password</div>
 
         <div class="login-box-body">
 
@@ -41,25 +41,23 @@
 
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">E-Mail Address</label>
+                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
 
                     <div class="col-md-12">
-                        <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}">
-
+                        <input type="email" class="form-control" name="email" value="{{ $email or old('email') }}" placeholder="Email Address">
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
                         @endif
                     </div>
+
                 </div>
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">Password</label>
 
-                    <div class="col-md-8">
-                        <input type="password" class="form-control" name="password">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
 
                         @if ($errors->has('password'))
                             <span class="help-block">
@@ -70,9 +68,8 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                    <label class="col-md-4 control-label">Confirm Password</label>
-                    <div class="col-md-8">
-                        <input type="password" class="form-control" name="password_confirmation">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password">
 
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">
@@ -83,9 +80,9 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
+                    <div class="col-md-12">
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-primary"></i> Reset Password</button>
+                            <button type="submit" class="btn btn-success"></i> Reset Password</button>
                         </div>
                     </div>
                 </div>

@@ -806,4 +806,9 @@ label {
 .rate-new {
     clear: both;
 }
+select {
+    -moz-appearance : none;
+
+}
+
 

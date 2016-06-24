@@ -109,7 +109,7 @@ class AuthController extends Controller
             // If attempts > 3 and time < 10 minutes
             if ($loginAttempts > 3 && (time() - $loginAttemptTime <= 600))
             {
-                return redirect()-back()->with('error', 'Maximum login attempts reached. Try again in a while');
+                return redirect()->back()->with('error', 'Maximum login attempts reached. Try again in a while');
             }
             // If time > 10 minutes, reset attempts counter and time in session
             if (time() - $loginAttemptTime > 600)
@@ -130,19 +130,19 @@ class AuthController extends Controller
             'verified'  => 1
         ], $request->get('remember')))
         {
-            if(Auth::user()->level != 1){
+            $user = Auth::user();
+            if($user->level == 1) {
+                return redirect()->intended('admin');
+            } else {
                 return redirect()->intended('scouter');
             }
-            if(Auth::user()->level == 1){
-                return redirect()->intended('admin');
-            }
-
 
         }else{
-            return redirect()->back()->with(['not_verified', 'Please verify your email address before you can login']);
+            // Increment login attempts
+            Session::put('loginAttempts', $loginAttempts + 1);
+            return redirect()->back()->with('not_verified', 'It seems like you haven\'t registered with us  or verified your email address.');
         }
-        // Increment login attempts
-        Session::put('loginAttempts', $loginAttempts + 1);
+
     }
 
     public function register(Request $request){
@@ -167,7 +167,7 @@ class AuthController extends Controller
             $m->to($user->email, $user->name)->subject('Email Confirmation');
         });
 
-        return redirect()->back()->with('user_created', 'You are now registered');
+        return redirect()->back()->with('user_created', 'You are now registered with us. Please Check your email before you can login.');
 
     }
 

@@ -2,8 +2,6 @@
 
 namespace App;
 
-
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -45,8 +43,16 @@ class User extends Authenticatable
         return $this->hasMany(CoreOrganization::class);
     }
 
+    public function scopePublic($query)
+    {
+        return $query->where('level', 0);
+    }
 
 
+    public function scopeVerified($query)
+    {
+        return $query->where('verified', 1);
+    }
 
 
 }

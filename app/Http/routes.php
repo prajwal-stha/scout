@@ -31,10 +31,10 @@ Route::group( ['middleware' => ['web']], function () {
 
     Route::get('/confirm/{token?}', function($token){
         $user = App\User::whereToken($token)->firstOrFail();
-        $user->verified = true;
+        $user->verified = 1;
         $user->token = null;
         $user->save();
-        return redirect('/login');
+        return redirect('/login')->with('verified', 'Thanks for verifying your email-address. Now, you can continue to login');
     });
 
     Route::get('test', function(){

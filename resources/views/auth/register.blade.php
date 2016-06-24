@@ -12,9 +12,6 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset( 'bootstrap/css/bootstrap.min.css' ) }}">
     <!-- Theme style -->
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset( 'iCheck/square/blue.css') }}">
-
     <link rel="stylesheet" href="{{ asset( 'css/AdminLTE.css') }}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,6 +31,13 @@
     <div class="login-box-msg style-normal">Register for a new account</div>
 
     <div class="register-box-body">
+
+        @if(session('user_created'))
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ session('user_created') }}
+            </div>
+        @endif
 
         <form action="{{ url('/register') }}" method="post">
             {{ csrf_field() }}
@@ -103,11 +107,10 @@
                 </div><!-- /.col -->
             </div>
         </form>
+
         <div class="register-footer-style">
             <a href="{{ url( '/login') }}" class="text-center">I already have a membership</a>
         </div>
-
-
     </div><!-- /.form-box -->
 </div><!-- /.register-box -->
 
@@ -117,15 +120,6 @@
 <script src="{{ asset( 'bootstrap/js/bootstrap.min.js' ) }}"></script>
 <!-- iCheck -->
 <script src="{{ asset( 'iCheck/icheck.min.js' ) }}"></script>
-<script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-        });
-    });
-</script>
 </body>
 </html>
 
