@@ -108,6 +108,7 @@
                     <div class="box-body">
 
                         <div class="table-responsive">
+                            @if($rates)
                             <table id="table-rates" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -115,36 +116,41 @@
                                     <th>Rate</th>
                                 </tr>
                                 </thead>
+
                                 <tbody id="list-rates">
 
-                                <tr>
-                                    <th>Unit Registration / Registration</th>
-                                    <td>{{ 'Rs. '. $rates->registration_rate }}</td>
-                                </tr>
+                                    <tr>
+                                        <th>Unit Registration / Registration</th>
+                                        <td>{{ 'Rs. '. $rates->registration_rate }}</td>
+                                    </tr>
 
-                                <tr>
-                                    <th>Scouter (Male / Female)</th>
-                                    <td>{{ 'Rs. '. $rates->scouter_rate }}</td>
-                                </tr>
+                                    <tr>
+                                        <th>Scouter (Male / Female)</th>
+                                        <td>{{ 'Rs. '. $rates->scouter_rate }}</td>
+                                    </tr>
 
-                                <tr>
-                                    <th>Scout</th>
-                                    <td>{{ 'Rs. '. $rates->team_rate }}</td>
-                                </tr>
+                                    <tr>
+                                        <th>Scout</th>
+                                        <td>{{ 'Rs. '. $rates->team_rate }}</td>
+                                    </tr>
 
-                                <tr>
-                                    <th>Organization Commitee Member</th>
-                                    <td>{{ 'Rs. '. $rates->committee_members_rate }}</td>
-                                </tr>
+                                    <tr>
+                                        <th>Organization Commitee Member</th>
+                                        <td>{{ 'Rs. '. $rates->committee_members_rate }}</td>
+                                    </tr>
 
-                                <tr>
-                                    <th>Disaster Management Trust</th>
-                                    <td>{{ 'Rs. '. $rates->disaster_mgmt_trust_rate }}</td>
-                                </tr>
+                                    <tr>
+                                        <th>Disaster Management Trust</th>
+                                        <td>{{ 'Rs. '. $rates->disaster_mgmt_trust_rate }}</td>
+                                    </tr>
 
                                 </tbody>
-
                             </table>
+                            @else
+                                <div style="color: #fff;">
+                                    No rates defined yet.
+                                </div>
+                            @endif
                         </div>
 
                     </div>

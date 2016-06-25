@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+//use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Validator;
 use App\Http\Controllers\Controller;
 use Mail;
@@ -18,6 +19,10 @@ use Session;
 //use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers\Auth
+ */
 class AuthController extends Controller
 {
     /*
@@ -48,11 +53,11 @@ class AuthController extends Controller
      * Create a new authentication controller instance.
      *
      */
-//    public function __construct()
-//    {
-//        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
-//
-//    }
+    public function __construct()
+    {
+        $this->middleware('guest', ['only' => 'showLoginForm']);
+
+    }
 
 //    public static function boot()
 //    {
@@ -81,25 +86,38 @@ class AuthController extends Controller
 //
 //    }
 
+    /**
+     * Renders Login Form
+     * @return mixed
+     */
     public function showLoginForm()
     {
         return view('auth.login');
 
     }
 
+    /**
+     * Renders register form
+     * @return mixed
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
 
     }
 
+    /**
+     * Process the login request
+     * @param Request $request
+     * @return mixed
+     */
     public function login(Request $request)
     {
         // Set login attempts and login time
         $loginAttempts = 1;
 
 
-        // If session has login attempts, retrieve attempts counter and attempts time
+         // If session has login attempts, retrieve attempts counter and attempts time
         if (Session::has('loginAttempts'))
         {
             $loginAttempts = Session::get('loginAttempts');
@@ -107,9 +125,9 @@ class AuthController extends Controller
 
 
             // If attempts > 3 and time < 10 minutes
-            if ($loginAttempts > 3 && (time() - $loginAttemptTime <= 600))
+            if ($loginAttempts > 6 && (time() - $loginAttemptTime <= 600))
             {
-                return redirect()->back()->with('error', 'Maximum login attempts reached. Try again in a while');
+                return redirect()->back()->with('error', 'Maximum login attempts reached. Try again later.');
             }
             // If time > 10 minutes, reset attempts counter and time in session
             if (time() - $loginAttemptTime > 600)
@@ -128,14 +146,17 @@ class AuthController extends Controller
             'username'  => $request->get('username'),
             'password'  => $request->get('password'),
             'verified'  => 1
-        ], $request->get('remember')))
-        {
-            $user = Auth::user();
-            if($user->level == 1) {
-                return redirect()->intended('admin');
-            } else {
-                return redirect()->intended('scouter');
-            }
+        ], $request->get('remember')) && Auth::user()->level == 1){
+            // Redirect to admin dashboard if the user level is 1
+            return redirect()->intended('admin');
+        } elseif (Auth::attempt([
+            'username'  => $request->get('username'),
+            'password'  => $request->get('password'),
+            'verified'  => 1
+        ], $request->get('remember')) && Auth::user()->level == 0){
+            // Redirect to public interface if the user level is 0
+
+            return redirect()->intended('scouter');
 
         }else{
             // Increment login attempts
@@ -145,6 +166,11 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * Register a new user
+     * @param Request $request
+     * @return mixed
+     */
     public function register(Request $request){
         $this->validate($request,[
             'f_name'    => 'required|max:255',
@@ -226,10 +252,12 @@ class AuthController extends Controller
 //        }
 //    }
 
+    /**
+     * Logout from the system and destroy auth session
+     * @return mixed
+     */
     public function logout(){
         Auth::logout();
         return redirect('/login');
     }
-
-
 }

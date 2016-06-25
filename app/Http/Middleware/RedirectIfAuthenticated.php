@@ -18,7 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/');
+            if(Auth::user()->level == 1){
+                return redirect()->intended('admin');
+            } elseif(Auth::user()->level == 0){
+                return redirect()->intended('scouter');
+            }
         }
 
         return $next($request);

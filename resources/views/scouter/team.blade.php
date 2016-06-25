@@ -58,22 +58,22 @@
 
 
                 {{ Form::open(['url' => 'team/update', 'method' => 'PATCH', 'class' => 'update-team-form']) }}
-                <input type="hidden" name="organization_id" value="" id="update-team-org-id">
-                <input type="hidden" name="id" value="" id="update-team-id">
+                    <input type="hidden" name="organization_id" value="" id="update-team-org-id">
+                    <input type="hidden" name="id" value="" id="update-team-id">
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        {{ Form::label('name', 'Name *') }}
-                        {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
-                        <span class="error-message"></span>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ Form::label('name', 'Name *') }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
+                            <span class="error-message"></span>
+                        </div>
+
                     </div>
 
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="modal-team-submit">Update</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="modal-team-submit">Update</button>
+                    </div>
 
                 {{ Form::close() }}
             </div>
@@ -196,9 +196,9 @@
 
                     {{ Form::open(['url' => 'team/create', 'class' => 'add-team-area', 'id' =>'team-create-form']) }}
 
-                    <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+                    <input type="hidden" name="org_id" id="org_id" value="{{ $org_id or null }}">
                     <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
-                        {{ Form::label('team-name', 'Name', array( 'class' => 'control-label col-sm-2')) }}
+                        {{ Form::label('team-name', 'Name *', array( 'class' => 'control-label col-sm-2')) }}
                         <div class="col-md-7 col-sm-7 col-xs-12">
                             {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
                             @if ($errors->has('name'))
@@ -259,7 +259,7 @@
                         @endif
                         <div class="form-group{{ $errors->has('f_name') || $errors->has('m_name') || $errors->has('l_name') ? ' has-error' : '' }}">
 
-                            {{ Form::label('name', 'Name', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-3">
                                 {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'First')) }}
 
@@ -291,7 +291,7 @@
 
                         <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
 
-                            {{ Form::label('dob', 'DOB', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('dob', 'DOB *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
                                 {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
@@ -308,7 +308,7 @@
 
                         <div class="form-group{{ $errors->has('entry_date') ? ' has-error' : '' }}">
 
-                            {{ Form::label('entry_date', 'Date of Join', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('entry_date', 'Date of Join *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
                                 {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
@@ -323,7 +323,7 @@
 
                         <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
 
-                            {{ Form::label('position', 'Current Level', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('position', 'Current Level *', array( 'class' => 'control-label col-sm-3')) }}
 
 
                             <div class="col-sm-9 scout-selection">
@@ -343,7 +343,7 @@
 
                         <div class="form-group{{ $errors->has('passed_date') ? ' has-error' : '' }}">
 
-                            {{ Form::label('passed_date', 'Passed Date', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('passed_date', 'Passed Date *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
                                 {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}

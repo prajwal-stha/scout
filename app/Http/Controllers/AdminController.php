@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Scout\Service\CloneTable;
-//use App\Jobs\CloneTableJob;
 
 use App\Http\Requests;
 
@@ -74,7 +73,7 @@ class AdminController extends Controller
      * @param CloneTable $clone
      */
     public function __construct(CloneTable $clone){
-        $this->middleware( ['auth', 'role', 'xss'] );
+        $this->middleware( ['auth', 'role', 'xss'], ['except' => 'uncloneModel'] );
         $this->clone = $clone;
 
     }
@@ -112,6 +111,9 @@ class AdminController extends Controller
     }
 
 
+    /**
+     * @return mixed
+     */
     public function getUsers()
     {
         $data['title']  = 'Nepal Scout - All Users';
@@ -120,6 +122,11 @@ class AdminController extends Controller
         
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function patchBlock(Request $request, $id)
     {
         $user = User::findOrFail( $id );
@@ -660,20 +667,21 @@ class AdminController extends Controller
             $id = $request->get('organization_id');
 
             $org = Organization::findOrFail($id);
-            if($org){
+            if ($org) {
 
                 $org->registration_no = $request->get('registration_no');
                 $org->save();
-                $this->dispatch(new CloneTableJob($org));
+                $this->getCloneModel($id);
             }
 
             $response = array(
-                'status'   => 'success',
-                'msg'      => 'Organization successfully updated.'
+                'status' => 'success',
+                'msg' => 'Organization successfully updated.'
             );
 
         }
         return response()->json($response);
+
     }
 
     /**
@@ -768,6 +776,10 @@ class AdminController extends Controller
         return redirect()->back()->with('organization_declined', 'The organizaton has been declined.');
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getDeleteDeclinedOrg($id)
     {
         $organization = Organization::findOrFail($id);
@@ -792,6 +804,10 @@ class AdminController extends Controller
         
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function postRemoveDeclined(Request $request)
     {
         if ( is_array($request->get('action_to')) ){
@@ -857,7 +873,7 @@ class AdminController extends Controller
 
         $this->clone->cloneObject($this->organization, $this->findAbstractModel('CoreOrganization'), $attributes);
 
-        pre($this->clone->errors());
+//        pre($this->clone->errors());
 
     }
 
@@ -881,7 +897,7 @@ class AdminController extends Controller
 
         $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreMember'), $member->get_attributes(), $finalOverwrite);
 
-        pre($this->clone->errors());
+//        pre($this->clone->errors());
 
     }
 
@@ -903,7 +919,7 @@ class AdminController extends Controller
 
         $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreTeam'), $team->get_attributes(), $finalOverwrite);
 
-        pre($this->clone->errors());
+//        pre($this->clone->errors());
 
     }
 
@@ -934,7 +950,7 @@ class AdminController extends Controller
 
         $this->clone->cloneMultipleObjects($cloningData, $this->findAbstractModel('CoreScouter'), $scouter->get_attributes(), $finalOverwrite);
 
-        pre($this->clone->errors());
+//        pre($this->clone->errors());
 
     }
 
@@ -977,7 +993,7 @@ class AdminController extends Controller
 
             $this->clone->cloneMultipleObjects($teamMember, $this->findAbstractModel('CoreTeamMember'), $team_member->get_attributes(), $final_overwrite);
 
-            pre($this->clone->errors());
+//            pre($this->clone->errors());
 
         }
     }
@@ -1122,7 +1138,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if($validator->passes()){
-            $member = CoreMember::create([
+            CoreMember::create([
                 'f_name'            => $request->get('f_name'),
                 'm_name'            => $request->get('m_name'),
                 'l_name'            => $request->get('l_name'),
@@ -1582,6 +1598,7 @@ class AdminController extends Controller
 
 
     /**
+     * Renders the adnvanced search form view
      * @return $this
      */
     public function getSearch()
@@ -1592,6 +1609,7 @@ class AdminController extends Controller
     }
 
     /**
+     * Post the advanced search form
      * @param Request $request
      * @return $this
      */
@@ -1645,6 +1663,38 @@ class AdminController extends Controller
             return view('admin.search', $data);
 
         }
+
+    }
+
+
+    /**
+     * Reverse back all the cloned database record associated with given id
+     * Can be removed in production
+     * @param $id
+     */
+    public function uncloneModel($id )
+    {
+        $org = Organization::findOrFail($id);
+        $core_org = CoreOrganization::where('original_id', $org->id)->first();
+
+        DB::transaction(function() use ($org, $core_org)
+        {
+            $team = $core_org->core_teams()->get();
+            foreach($team as $value){
+
+                CoreTeamMember::where('team_id', $value->original_id)->delete();
+
+            }
+            $core_org->core_teams()->delete();
+            $core_org->core_scouters()->delete();
+            $core_org->core_members()->delete();
+            $core_org->delete();
+            $org->registration_no = null;
+            $org->save();
+
+        });
+
+        echo "Uncloning Table Successful for " . $org->id;
 
     }
 

@@ -44,4 +44,10 @@ class CreateTeamMemberRequest extends Request
         ];
     }
 
+    public function forbiddenResponse()
+    {
+        return $this->redirector->to('scouter/team')->withErrors('You can\'t add more than eight members in a team.');
+
+    }
+
 }

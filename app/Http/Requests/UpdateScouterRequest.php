@@ -32,7 +32,7 @@ class UpdateScouterRequest extends Request
         return [
             'name'                 => 'required',
             'permission'           => 'required_with:permission_date',
-            'permission_date'      => 'required_with:btc_no|date_format:"d/m/Y"',
+            'permission_date'      => 'required_with:permission|date_format:"d/m/Y"',
             'btc_no'               => 'required_with:btc_date',
             'btc_date'             => 'required_with:btc_no|date_format:"d/m/Y"',
             'advance_no'           => 'required_with:advance_date',

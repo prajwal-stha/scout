@@ -46,6 +46,10 @@ Route::group( ['middleware' => ['web']], function () {
         'uses'  => 'AdminController@cloneModel'
     ));
 
+    Route::get('unclone/{id}', array(
+        'as'    => 'unclone',
+        'uses'  => 'AdminController@uncloneModel'
+    ));
 
     Route::controller( '/', 'ScouterController' );
 

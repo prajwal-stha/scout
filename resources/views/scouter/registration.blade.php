@@ -79,7 +79,7 @@
                         @if ($organization->is_submitted == false)
 
                             {{ Form::open(['url' => 'organizations/submit', 'method' => 'PATCH', 'class' => 'submit-membership']) }}
-                                <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
+                                <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->id or null }}">
                                 <button type="submit" class="btn btn-primary final-submit"></i> Submit</button>
                             {{ Form::close() }}
 

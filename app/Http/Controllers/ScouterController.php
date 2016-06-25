@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\TeamMember;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -39,12 +40,15 @@ use PDF;
 class ScouterController extends Controller
 {
 
+    protected $user;
     /**
      * ScouterController constructor.
+     * @param $auth
      */
-    public function __construct(){
+    public function __construct(Guard $auth){
 
         $this->middleware( ['auth', 'xss'] );
+        $this->user = $auth->user();
 
     }
 
@@ -55,9 +59,13 @@ class ScouterController extends Controller
     public function getIndex(){
         $data['district'] = District::all();
         $data['title']    = 'Nepal Scout - Organizations';
-        if(session()->has('org_id')){
-            $data['org_id']       = session()->get('org_id');
-            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+//        if(session()->has('org_id')){
+        if($org){
+//            $data['org_id']       = session()->get('org_id');
+            $data['org_id']       = $org->id;
+//            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+            $data['organization'] = $org;
         }
         return view('scouter.organization')->with($data);
 
@@ -68,10 +76,10 @@ class ScouterController extends Controller
      */
     public function getScarf(){
         $data['title']   = 'Nepal Scout - Scarf';
-        if(session()->has('org_id')){
-
-            $data['org_id']       = session()->get('org_id');
-            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($org){
+            $data['org_id']       = $org->id;
+            $data['organization'] = $org;
             return view('scouter.scarf')->with($data);
         }else{
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
@@ -86,12 +94,15 @@ class ScouterController extends Controller
     public function getCommitte()
     {
         $data['title']  = 'Nepal Scout - Member';
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
 
-        if(session()->has('org_id')){
-
-            $data['org_id']        = session()->get('org_id');
-            if(Member::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
-                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+        if($org){
+            $data['org_id']       = $org->id;
+//            if(Member::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
+//                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+//            }
+            if(Member::where( 'organization_id', $org->id)->count() > 0){
+                $data['member'] = Member::where('organization_id', $org->id)->get();
             }
             return view('scouter.member')->with($data);
 
@@ -108,11 +119,12 @@ class ScouterController extends Controller
     public function getScouter()
     {
         $data['title'] = 'Nepal Scout - Scouter';
-        if(session()->has('org_id')) {
-            $data['org_id']        = session()->get('org_id');
-            if(Member::where( 'organization_id', session()->get('org_id'))->distinct()->count() >= 3) {
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($org){
+            $data['org_id']       = $org->id;
+            if(Member::where( 'organization_id', $org->id)->distinct()->count() >= 3) {
 
-                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+                $data['member'] = Member::where('organization_id', $org->id)->get();
 
             } else {
 
@@ -120,8 +132,8 @@ class ScouterController extends Controller
 
             }
 
-            if(Scouter::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
-                $data['scouter']  = Scouter::where('organization_id', session()->get('org_id'))
+            if(Scouter::where( 'organization_id', $org->id)->count() > 0 ) {
+                $data['scouter']  = Scouter::where('organization_id', $org->id)
                                     ->where('is_lead', 0)
                                     ->first();
             }
@@ -142,19 +154,20 @@ class ScouterController extends Controller
     {
         $data['title'] = 'Nepal Scout - Scouter';
 
-        if(session()->has('org_id')) {
-            $data['org_id'] = session()->get('org_id');
-            if (Member::where('organization_id', session()->get('org_id'))->distinct()->count() >= 3) {
-                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($org){
+            $data['org_id']       = $org->id;
+            if (Member::where('organization_id', $org->id)->distinct()->count() >= 3) {
+                $data['member'] = Member::where('organization_id', $org->id)->get();
             }else{
 
                 return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
 
             }
 
-            if (Scouter::where('organization_id', session()->get('org_id'))
+            if (Scouter::where('organization_id', $org->id)
                     ->where('is_lead', true)->count() > 0) {
-                $data['leadScouter'] = Scouter::where('organization_id', session()->get('org_id'))
+                $data['leadScouter'] = Scouter::where('organization_id', $org->id)
                     ->where('is_lead', 1)
                     ->first();
             }
@@ -173,12 +186,13 @@ class ScouterController extends Controller
     public function getTeam($teamId = null)
     {
         $data['title'] = 'Nepal Scout - Scouter';
-        if(session()->has('org_id')) {
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($org){
+            $data['org_id'] = $org->id;
             if (is_null($teamId)) {
 
-                $data['org_id'] = session()->get('org_id');
-                if (Team::where('organization_id', session()->get('org_id'))->count() > 0) {
-                    $data['team'] = Team::where('organization_id', session()->get('org_id'))->get();
+                if (Team::where('organization_id', $org->id)->count() > 0) {
+                    $data['team'] = Team::where('organization_id', $org->id)->get();
                     $data['teamId'] = $data['team']->first()->id;
                     if ($data['teamId']) {
                         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
@@ -188,9 +202,8 @@ class ScouterController extends Controller
 
             } else {
 
-                $data['org_id'] = session()->get('org_id');
-                if (Team::where('organization_id', session()->get('org_id'))->count() > 0) {
-                    $data['team']        = Team::where('organization_id', session()->get('org_id'))->get();
+                if (Team::where('organization_id', $org->id)->count() > 0) {
+                    $data['team']        = Team::where('organization_id', $org->id)->get();
                     $data['team_member'] = TeamMember::where('team_id', $teamId)->get();
                     $data['teamId']      = $teamId;
                     $data['team_name']   = Team::findOrFail($teamId)->name;
@@ -212,27 +225,29 @@ class ScouterController extends Controller
     {
         $data['title']      = 'Registration Cost Detail';
         $data['rates']      = Rate::first();
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
 
-        if(session()->has('org_id')) {
-            if (Member::where('organization_id', session()->get('org_id'))->distinct()->count() < 3) {
+        if($org) {
+            if (Member::where('organization_id', $org->id)->distinct()->count() < 3) {
 
                 return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
             }
 
             $team_member_count = DB::table('teams')
-                ->join('team_members', function ($join) {
+                ->join('team_members', function($join) use ($org)  {
+
                     $join->on('teams.id', '=', 'team_members.team_id')
-                        ->where('teams.organization_id', '=', session()->get('org_id'));
+                        ->where('teams.organization_id', '=', $org->id);
                 })
                 ->count();
 
 
-            if (Team::where('organization_id', session()->get('org_id'))->count() < 4 || $team_member_count < 24) {
+            if (Team::where('organization_id', $org->id)->count() < 4 || $team_member_count < 24) {
 
                 return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
 
             }
-            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+            $data['organization'] = $org;
 
 
             $data['scouter'] = $data['organization']->scouters->count();
@@ -387,10 +402,11 @@ class ScouterController extends Controller
     {
 
         $data['title']  = 'Nepal Scout - Print';
-        if(session()->has('org_id')) {
+        $org = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($org) {
 
-            $data['org_id']       = session()->get('org_id');
-            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+            $data['org_id']       = $org->id;
+            $data['organization'] = Organization::findOrFail($org->id);
             $data['district']     = $data['organization']->district;
             $data['member']       = $data['organization']->members->all();
             $data['team']         = $data['organization']->teams->all();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -30,10 +31,16 @@ use DB;
 class OrganizationsController extends Controller
 {
     /**
-     * OrganizationsController constructor.
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function __construct(){
+    protected $user;
+    /**
+     * OrganizationsController constructor.
+     * @param $auth
+     */
+    public function __construct(Guard $auth){
         $this->middleware( ['auth', 'xss'] );
+        $this->user = $auth->user();
     }
 
     /**
@@ -45,7 +52,7 @@ class OrganizationsController extends Controller
     public function postCreate(CreateOrganizationsRequest $request)
     {
 
-        $org = Organization::create([
+        Organization::create([
             'name'                  => $request->get('name'),
             'type'                  => $request->get('type'),
             'registration_date'     => formatDate($request->get('registration_date')),
@@ -60,7 +67,7 @@ class OrganizationsController extends Controller
             'user_id'               => Auth::user()->id,
 
         ]);
-        session()->put('org_id', $org->id);
+//        session()->put('org_id', $org->id);
         return redirect('scouter/scarf')->with([
             'org_created'   => 'The organizations is succesfully created',
             'title'         => 'Nepal Scouts - Scarf'
@@ -277,35 +284,43 @@ class OrganizationsController extends Controller
         
     }
 
+
+    /**
+     * Submit the membership form
+     * @param Request $request
+     * @return mixed
+     */
     public function patchSubmit(Request $request)
     {
-        if(session()->has('org_id')) {
-            if (Member::where('organization_id', session()->get('org_id'))->distinct()->count() < 3) {
+
+        $organization = Organization::where('user_id', $this->user->id)->firstOrFail();
+        if($organization) {
+            if (Member::where('organization_id', $organization->id)->distinct()->count() < 3) {
 
                 return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at least three committe members.');
             }
 
-            if (Scouter::where('organization_id', session()->get('org_id'))
+            if (Scouter::where('organization_id', $organization->id)
                     ->where('is_lead', 1)->count() != 1){
                 return redirect('/lead-scouter')->with('lead_not_filled', 'Please Enter the details of the Lead Scouter first.');
 
             }
 
-            if (Scouter::where('organization_id', session()->get('org_id'))
+            if (Scouter::where('organization_id', $organization->id)
                     ->where('is_lead', 0)->count() != 1){
                 return redirect('/scouter')->with('scouter_not_filled', 'Please Enter the details of the Assistant-Lead Scouter');
 
             }
 
             $team_member_count = DB::table('teams')
-                ->join('team_members', function ($join) {
+                ->join('team_members', function ($join) use ($organization) {
                     $join->on('teams.id', '=', 'team_members.team_id')
-                        ->where('teams.organization_id', '=', session()->get('org_id'));
+                        ->where('teams.organization_id', '=', $organization->id);
                 })
                 ->count();
 
 
-            if (Team::where('organization_id', session()->get('org_id'))->count() < 4 || $team_member_count < 24) {
+            if (Team::where('organization_id', $organization->id)->count() < 4 || $team_member_count < 24) {
 
                 return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
 
@@ -323,10 +338,6 @@ class OrganizationsController extends Controller
 
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
 
-
         }
-
-
     }
-
 }

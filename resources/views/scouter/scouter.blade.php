@@ -86,7 +86,7 @@
 
                     @endif
 
-                    <input type="hidden" name="org_id" id="org_id" value="{{ Session::get('org_id') }}">
+                    <input type="hidden" name="org_id" id="org_id" value="{{ $org_id or null }}">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('name')? ' has-error' : '' }}">
