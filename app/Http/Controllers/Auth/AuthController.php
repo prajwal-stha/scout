@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-//use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Validator;
 use App\Http\Controllers\Controller;
 use Mail;
@@ -45,9 +44,11 @@ class AuthController extends Controller
      *
      * @var string
      */
-//    protected $redirectTo = 'scouter';
+//    protected $redirectTo = '/login';
 
 //    protected $redirectAfterLogout = '/login';
+
+//    protected $loginPath = '/login';
 
     /**
      * Create a new authentication controller instance.
@@ -55,25 +56,26 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+//        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
         $this->middleware('guest', ['only' => 'showLoginForm']);
-
     }
 
-//    public static function boot()
+//    public function getCredentials($request){
+//
+//        $credentials = $request->only($this->loginUsername(), 'password');
+//
+//        return array_add($credentials, 'verified', '1');
+//
+//    }
+
+//    protected function getFailedLoginMessage()
 //    {
-//        parent::boot();
-//        static::creating(function($user){
-//
-//            $user->token = str_random(30);
-//
-//        });
-//
+//        return 'It seems like you haven\'t registered with us or verified your email address.';
 //    }
 
 
 //    protected function postLogin(Request $request)
 //    {
-//        dd($request);
 //        if (Auth::attempt([
 //            'username'  => $request->get('username'),
 //            'password'  => $request->get('password'),
@@ -82,8 +84,6 @@ class AuthController extends Controller
 //        {
 //            return redirect()->intended('dashboard');
 //        }
-//
-//
 //    }
 
     /**
@@ -111,13 +111,19 @@ class AuthController extends Controller
      * @param Request $request
      * @return mixed
      */
+
+    /**
+     * Register a new user
+     * @param Request $request
+     * @return mixed
+     */
     public function login(Request $request)
     {
         // Set login attempts and login time
         $loginAttempts = 1;
 
 
-         // If session has login attempts, retrieve attempts counter and attempts time
+        // If session has login attempts, retrieve attempts counter and attempts time
         if (Session::has('loginAttempts'))
         {
             $loginAttempts = Session::get('loginAttempts');
@@ -143,17 +149,17 @@ class AuthController extends Controller
         }
         // If auth ok, redirect to restricted area
         if (Auth::attempt([
-            'username'  => $request->get('username'),
-            'password'  => $request->get('password'),
-            'verified'  => 1
-        ], $request->get('remember')) && Auth::user()->level == 1){
+                'username'  => $request->get('username'),
+                'password'  => $request->get('password'),
+                'verified'  => 1
+            ], $request->get('remember')) && Auth::user()->level == 1){
             // Redirect to admin dashboard if the user level is 1
             return redirect()->intended('admin');
         } elseif (Auth::attempt([
-            'username'  => $request->get('username'),
-            'password'  => $request->get('password'),
-            'verified'  => 1
-        ], $request->get('remember')) && Auth::user()->level == 0){
+                'username'  => $request->get('username'),
+                'password'  => $request->get('password'),
+                'verified'  => 1
+            ], $request->get('remember')) && Auth::user()->level == 0){
             // Redirect to public interface if the user level is 0
 
             return redirect()->intended('scouter');
@@ -166,11 +172,7 @@ class AuthController extends Controller
 
     }
 
-    /**
-     * Register a new user
-     * @param Request $request
-     * @return mixed
-     */
+
     public function register(Request $request){
         $this->validate($request,[
             'f_name'    => 'required|max:255',
@@ -183,9 +185,9 @@ class AuthController extends Controller
             'f_name'   => $request->get('f_name'),
             'l_name'   => $request->get('l_name'),
             'email'    => $request->get('email'),
-            'token'    => bcrypt($request->get('email'). time()),
+            'token'    => generateUniqueId(),
             'username' => $request->get('username'),
-            'password' => $request->get('password'),
+            'password' => bcrypt($request->get('password')),
         ]);
         Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
             $m->from('noreply@nepalscout.org.np', 'Your Application');
@@ -216,7 +218,7 @@ class AuthController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
+     * @param $data
      * @return User
      */
 //    protected function create(array $data)
@@ -225,30 +227,30 @@ class AuthController extends Controller
 //            'f_name'   => $data['f_name'],
 //            'l_name'   => $data['l_name'],
 //            'email'    => $data['email'],
-//            'token'    => bcrypt(str_random(30)),
+//            'token'    => generateUniqueId(),
 //            'username' => $data['username'],
 //            'password' => bcrypt($data['password']),
 //        ]);
 //        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
 //            $m->from('noreply@nepalscout.org.np', 'Your Application');
 //
-//            $m->to($user->email, $user->name)->subject('Your Reminder!');
+//            $m->to($user->email, $user->name)->subject('Email Confirmation');
 //        });
 //
 //        return $user;
 //
 //    }
 
-//    protected function authenticated(){
-//        if(Auth::user()->verified == 1) {
-//            if (Auth::user()->level == 1) {
+//    protected function authenticated(Request $request, User $user){
+//        if($user->verified == 1) {
+//            if ($user->level == 1) {
 //                return redirect()->intended('admin');
 //            }
-//            if (Auth::user()->level  == 0) {
+//            if ($user->level  == 0) {
 //                return redirect()->intended('scouter');
 //            }
 //        } else {
-//            return view('auth.login')->with(['not_verified', 'Please verify your email address before you can login']);
+//            return view('auth.login')->with(['not_verified', 'Please verify your email address before you can login.']);
 //        }
 //    }
 

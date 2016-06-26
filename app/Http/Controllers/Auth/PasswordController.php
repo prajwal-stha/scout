@@ -20,7 +20,7 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
-    protected $redirectPath = 'scouter';
+    protected $redirectPath = '/login';
 
     /**
      * Create a new password controller instance.

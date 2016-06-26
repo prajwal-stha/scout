@@ -12,6 +12,8 @@
 */
 
 //Auth::loginUsingId(1);
+//Auth::logout();
+
 
 Route::group( ['middleware' => ['web']], function () {
 
@@ -27,15 +29,16 @@ Route::group( ['middleware' => ['web']], function () {
     Route::controller( 'member', 'TeamMemberController' );
     Route::controller( 'term', 'TermController' );
 
-
-
-    Route::get('/confirm/{token?}', function($token){
+    Route::get('confirm/{token}', function($token){
         $user = App\User::whereToken($token)->firstOrFail();
         $user->verified = 1;
         $user->token = null;
         $user->save();
+//        Auth::logout();
+
         return redirect('/login')->with('verified', 'Thanks for verifying your email-address. Now, you can continue to login');
     });
+
 
     Route::get('test', function(){
         return view('scouter/print');

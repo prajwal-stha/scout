@@ -38,7 +38,6 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
-
         <!-- Main content -->
         <section class="content">
             <div class="error-page">
@@ -47,16 +46,8 @@
                     <h3><i class="fa fa-warning text-red"></i> Oops! Page not found.</h3>
                     <p>
                         We could not find the page you were looking for.
-                        Meanwhile, you may <a href="{{ url('/') }}">return to homepage</a> or try using the search form.
+
                     </p>
-                    {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'search-form']) }}
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" name="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div><!-- /.input-group -->
-                    {{ Form::close() }}
                 </div><!-- /.error-content -->
             </div><!-- /.error-page -->
         </section><!-- /.content -->

@@ -30,10 +30,10 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
 
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+//    public function setPasswordAttribute($value)
+//    {
+//        $this->attributes['password'] = bcrypt($value);
+//    }
 
     public function organizations(){
         return $this->hasMany(Organization::class);

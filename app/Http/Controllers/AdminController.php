@@ -149,9 +149,12 @@ class AdminController extends Controller
         if($id){
             $user = User::findOrFail($id);
 
-            $input = $request->all();
-
-            $user->fill($input)->save();
+            if($user){
+                $user->f_name = $request->get('f_name');
+                $user->l_name = $request->get('l_name');
+                $user->password = bcrypt($request->get('password'));
+                $user->save();
+            }
 
             return redirect()->back()
                 ->with(['user_update' => 'User successfully updated']);
