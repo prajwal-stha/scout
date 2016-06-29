@@ -24,8 +24,6 @@ use App\CoreTeam;
 use App\CoreTeamMember;
 use App\CoreScouter;
 
-
-
 class CloneTableJob extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
