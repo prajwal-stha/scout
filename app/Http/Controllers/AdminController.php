@@ -1701,4 +1701,12 @@ class AdminController extends Controller
 
     }
 
+    public function getSearchTerms(Request $request)
+    {
+        $query = $request->input('q', '');
+        $organizations = Organization::where('name','LIKE','%'.$query.'%')->get();
+        return response()->json($organizations);
+        
+    }
+
 }

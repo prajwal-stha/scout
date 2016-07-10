@@ -993,4 +993,13 @@ $(document).ready(function(){
             }
         });
     });
+
+    // AutoComplete Suggestion for Search Field
+    $('#search-organization').typeahead({
+        source:  function (query, process) {
+            return $.get(searchTermsUrl, { query: query }, function (data) {
+                return process(data);
+            });
+        }
+    });
 });
