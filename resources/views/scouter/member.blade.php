@@ -14,32 +14,32 @@
 
 
                 {{ Form::open(['url' => 'organizations/update-member', 'method' => 'PATCH', 'class' => 'update-member-form']) }}
-                <input type="hidden" name="organization_id" value="" id="update-member-org-id">
-                <input type="hidden" name="id" value="" id="update-member-id">
+                    <input type="hidden" name="organization_id" value="" id="update-member-org-id">
+                    <input type="hidden" name="id" value="" id="update-member-id">
 
-                <div class="modal-body">
-                    <div class="form-group">
-                        {{ Form::label('f_name', 'First Name *') }}
-                        {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
-                        <span class="error-message"></span>
-                    </div>
-                    <div class="form-group">
-                        {{ Form::label('m_name', 'Middle Name') }}
-                        {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
-                        <span class="error-message"></span>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ Form::label('f_name', 'First Name *') }}
+                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('m_name', 'Middle Name') }}
+                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                            <span class="error-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            {{ Form::label('l_name', 'Last Name *') }}
+                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                            <span class="error-message"></span>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        {{ Form::label('l_name', 'Last Name *') }}
-                        {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
-                        <span class="error-message"></span>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="modal-member-submit">Update</button>
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="modal-member-submit">Update</button>
-                </div>
 
                 {{ Form::close() }}
             </div>
@@ -98,53 +98,53 @@
                 @endif
 
                 {{ Form::open(['url' => 'organizations/member', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
-                <input type="hidden" name="organization_id" id="org_id" value="{{ Session::get('org_id') }}">
-                <div class="box-body">
-                    <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
-                        {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
-                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
-                            @if ($errors->has('f_name'))
-                                <span class="help-block">
+                    <input type="hidden" name="organization_id" id="org_id" value="{{ $org_id or null }}">
+                    <div class="box-body">
+                        <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
+                            {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4">
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                                @if ($errors->has('f_name'))
+                                    <span class="help-block">
                                         <strong>{{ $errors->first('f_name') }}</strong>
                                     </span>
-                            @endif
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
+                            {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4">
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                                @if ($errors->has('m_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('m_name') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
+                            {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4">
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                                @if ($errors->has('l_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('l_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
+                    <div class="box-footer border-bottom">
 
-                    <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
-                        {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
-                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
-                            @if ($errors->has('m_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('m_name') }}</strong>
-                                </span>
-                            @endif
-
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                            {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default')) }}
                         </div>
-                    </div>
 
-                    <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
-                        {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
-                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
-                            @if ($errors->has('l_name'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('l_name') }}</strong>
-                                </span>
-                            @endif
-                        </div>
                     </div>
-                </div>
-                <div class="box-footer border-bottom">
-
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-success" id="member-submit">Save</button>
-                        {{ link_to('scouter/lead-scouter', 'NEXT', array('class' => 'btn btn-default')) }}
-                    </div>
-
-                </div>
 
                 {{ Form::close() }}
                 @if(!empty($member))

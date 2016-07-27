@@ -485,15 +485,8 @@ $(document).ready(function(){
             dataType: "json"
         })
         .done(function (data) {
-
-            if (data.status == 'success') {
-
-                $('#registerModal').modal('hide');
-                window.location.href = clone_url + '/' + id;
-
-                //location.reload();
-            } else if (data.status == 'danger' ){
-
+            
+            if (data.status == 'danger') {
                 for (var key in data.msg) {
                     // skip loop if the property is from prototype
                     if (!data.msg.hasOwnProperty(key)) continue;
@@ -503,6 +496,12 @@ $(document).ready(function(){
 
                     parent.find('.error-message').addClass('make-visible').html(error_message);
                 }
+
+            } else {
+                $('#registerModal').modal('hide');
+                window.location.href = clone_url + '/' + id;
+                // location.reload();
+
             }
         });
     });
@@ -993,5 +992,14 @@ $(document).ready(function(){
                 swal("Cancelled", "The record is safe.)", "error");
             }
         });
+    });
+
+    // AutoComplete Suggestion for Search Field
+    $('#search-organization').typeahead({
+        source:  function (query, process) {
+            return $.get(searchTermsUrl, { query: query }, function (data) {
+                return process(data);
+            });
+        }
     });
 });
