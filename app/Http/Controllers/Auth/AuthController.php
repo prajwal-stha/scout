@@ -161,11 +161,11 @@ class AuthController extends Controller
             'username' => $request->get('username'),
             'password' => $request->get('password'),
         ]);
-        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
-            $m->from('noreply@nepalscout.org.np', 'Your Application');
-
-            $m->to($user->email, $user->name)->subject('Email Confirmation');
-        });
+//        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
+//            $m->from('noreply@nepalscout.org.np', 'Your Application');
+//
+//            $m->to($user->email, $user->name)->subject('Email Confirmation');
+//        });
 
         return redirect()->back()->with('user_created', 'You are now registered with us. Please Check your email before you can login.');
 
