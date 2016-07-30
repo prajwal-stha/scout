@@ -20,20 +20,30 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {{ Form::label('f_name', 'First Name *') }}
-                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name', 'placeholder'  => 'First Name')) }}
                             <span class="error-message"></span>
                         </div>
                         <div class="form-group">
                             {{ Form::label('m_name', 'Middle Name') }}
-                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name', 'placeholder'  => 'Middle Name')) }}
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             {{ Form::label('l_name', 'Last Name *') }}
-                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name', 'placeholder'  => 'Last Name')) }}
                             <span class="error-message"></span>
                         </div>
+                        <div class="form-group scout-selection">
+                            {{ Form::label('gender', 'Gender *') }}
+                            {{ Form::select('gender',array(
+                                    'Male'       => 'Male',
+                                    'Female'     => 'Female',
+                                    'Other'      => 'Other'
+                                ), null, array('class' => 'form-control', 'id' => 'gender')) }}
+                            <span class="error-message"></span>
+                        </div>
+
                     </div>
 
                     <div class="modal-footer">
@@ -103,7 +113,7 @@
                         <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
                             {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name', 'placeholder'  => 'First Name')) }}
                                 @if ($errors->has('f_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('f_name') }}</strong>
@@ -115,7 +125,7 @@
                         <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
                             {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder'  => 'Middle Name')) }}
                                 @if ($errors->has('m_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('m_name') }}</strong>
@@ -128,12 +138,29 @@
                         <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
                             {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder'  => 'Last Name')) }}
                                 @if ($errors->has('l_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('l_name') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                            {{ Form::label('member-gender', 'Gender *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-4 scout-selection">
+                                {{ Form::select('gender',array(
+                                        'Male'       => 'Male',
+                                        'Female'     => 'Female',
+                                        'Other'      => 'Other'
+                                    ), null, array('class' => 'form-control', 'id' => 'member-gender')) }}
+
+                                @if ($errors->has('gender'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('gender') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
                     </div>

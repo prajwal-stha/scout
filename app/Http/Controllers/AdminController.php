@@ -10,8 +10,7 @@ use App\Http\Requests\CreateOrganizationAdminRequest;
 use App\Http\Requests\UpdateOrganizationsRequest;
 use App\Http\Requests\UpdateScouterRequest;
 use App\Http\Requests\CreateMemberRequest;
-use App\Http\Requests\UpdateMemberRequest;
-use App\Http\Requests\CreateRegisterRequest;
+use App\Http\Requests\UpdateApprovedScouterRequest;
 use App\Http\Requests\SearchRequest;
 use App\Http\Requests\CreateApprovedTeamMemberRequest;
 use App\Http\Requests\CreateAdminTeamRequest;
@@ -181,8 +180,8 @@ class AdminController extends Controller
     {
 
         $data['organization'] = Organization::findOrFail($id);
-        $data['district'] = District::all();
-        $data['title'] = 'Nepal Scout';
+        $data['district']     = District::all();
+        $data['title']        = 'Nepal Scout';
         return view('admin.organization')->with( $data );
 
     }
@@ -208,6 +207,7 @@ class AdminController extends Controller
             $org->chairman_f_name    = $request->get('chairman_f_name');
             $org->chairman_l_name    = $request->get('chairman_f_name');
             $org->chairman_mobile_no = $request->get('chairman_mobile_no');
+            $org->chairman_gender    = $request->get('chairman_gender');
             $org->tel_no             = $request->get('tel_no');
             $org->email              = $request->get('email');
             $org->background_colour  = $request->get('background_colour');
@@ -216,7 +216,7 @@ class AdminController extends Controller
         }
 
         return redirect()->back()
-            ->with(['org_update' => 'Organization successfully updated']);
+            ->with(['org_update' => 'Unit successfully updated']);
         
     }
 
@@ -232,6 +232,7 @@ class AdminController extends Controller
         $data['organization'] = Organization::findOrFail($id);
 
         $data['member'] = $data['organization']->members;
+
         return view('admin.member')->with($data);
 
     }
@@ -246,10 +247,11 @@ class AdminController extends Controller
             'f_name'            => $request->get('f_name'),
             'm_name'            => $request->get('m_name'),
             'l_name'            => $request->get('l_name'),
+            'gender'            => $request->get('gender'),
             'organization_id'   => $request->get('organization_id')
         ]);
 
-        return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+        return redirect()->back()->with(['member_created' => 'One of the member has been added to your unit.']);
 
     }
 
@@ -278,6 +280,7 @@ class AdminController extends Controller
         $rules = array(
             'f_name'            => 'required',
             'l_name'            => 'required',
+            'gender'            => 'required',
             'organization_id'   => 'required|exists:organizations,id'
         );
 
@@ -320,7 +323,7 @@ class AdminController extends Controller
             Member::destroy($member->id);
         }
         return redirect()->back()
-            ->with('committee_member_deleted', 'One of the committe member has been removed from the organization.');
+            ->with('committee_member_deleted', 'One of the committe member has been removed from the unit.');
         
     }
 
@@ -370,7 +373,7 @@ class AdminController extends Controller
             }
 
             return redirect()->back()
-                ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
+                ->with(['lead_scouter_updated' => 'Scout Master successfully updated']);
         }
 
     }
@@ -401,7 +404,7 @@ class AdminController extends Controller
             }
 
             return redirect()->back()
-                ->with(['scouter_updated' => 'Assistant Lead Scouter successfully updated']);
+                ->with(['scouter_updated' => 'Assistant Scout Master successfully updated']);
         }
     }
 
@@ -439,11 +442,13 @@ class AdminController extends Controller
             if(is_null($team_id)) {
                 $data['teamId']    = $data['team']->first()->id;
                 $data['team_name'] = Team::findOrFail($data['teamId'])->name;
+                $data['team_type'] = Team::findOrFail($data['teamId'])->type;
 
             }else{
 
                 $data['teamId']    = $team_id;
                 $data['team_name'] = Team::findOrFail($team_id)->name;
+                $data['team_type'] = Team::findOrFail($team_id)->type;
             }
             $data['team_member']   = TeamMember::where('team_id', $data['teamId'])->get();
         }
@@ -467,7 +472,7 @@ class AdminController extends Controller
                 ]
             );
             return redirect()->back()
-                ->with('team_created', 'One more team has been added.' );
+                ->with('team_created', 'One more unit has been added.' );
 
         }
 
@@ -495,9 +500,10 @@ class AdminController extends Controller
      */
     public function patchTeams(Request $request)
     {
-        dd($request->all());
         $rules = array(
             'name'              => 'required|unique:teams,name,'.$request->get('id'),
+            'gender'            => 'required|string',
+            'type'              => 'required|string',
             'organization_id'   => 'required|exists:organizations,id'
         );
 
@@ -519,7 +525,7 @@ class AdminController extends Controller
 
                 $response = array(
                     'status'   => 'success',
-                    'msg'      => 'Team successfully updated.',
+                    'msg'      => 'Unit successfully updated.',
                     'team'     => $team
                 );
             }
@@ -538,7 +544,7 @@ class AdminController extends Controller
         if($team){
             Team::destroy($team->id);
         }
-        return redirect()->back()->with('team_deleted', 'One of the team has been removed');
+        return redirect()->back()->with('team_deleted', 'One of the unit has been removed');
     }
 
     /**
@@ -568,6 +574,7 @@ class AdminController extends Controller
             'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"',
             'position'      => 'required',
+            'post'          => 'required|string',
             'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',
             'team_id'       => 'required|exists:teams,id'
@@ -592,6 +599,7 @@ class AdminController extends Controller
                     $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
                     $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
                     $teamMember->position          = $request->get('position');
+                    $teamMember->post              = $request->get('post');
                     $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
                     $teamMember->note              = $request->get('note');
                     $teamMember->team_id           = $request->get('team_id');
@@ -600,7 +608,7 @@ class AdminController extends Controller
 
                 $response = array(
                     'status'         => 'success',
-                    'msg'            => 'Team Member successfully updated successfully updated.',
+                    'msg'            => 'Unit Member successfully updated.',
                     'teamMember'     => $teamMember
                 );
             }
@@ -679,7 +687,7 @@ class AdminController extends Controller
 
             $response = array(
                 'status' => 'success',
-                'msg' => 'Organization successfully updated.'
+                'msg' => 'Unit successfully updated.'
             );
 
         }
@@ -776,7 +784,7 @@ class AdminController extends Controller
             }
 
         }
-        return redirect()->back()->with('organization_declined', 'The organizaton has been declined.');
+        return redirect()->back()->with('organization_declined', 'The unit has been declined.');
     }
 
     /**
@@ -801,7 +809,7 @@ class AdminController extends Controller
 
         });
         if($delete_org){
-            return redirect()->back()->with(['org_deleted' => 'The organizations has been permanently deleted from the record']);
+            return redirect()->back()->with(['org_deleted' => 'The unit has been permanently deleted from the record']);
         }
 
         
@@ -826,6 +834,7 @@ class AdminController extends Controller
 
     /**
      * @param $id
+     * @return mixed
      */
     public function getCloneModel($id){
 
@@ -1056,7 +1065,6 @@ class AdminController extends Controller
     {
         $data['title']     = 'Nepal Scout - Organizations';
         $data['organizations'] = DB::table('organizations')
-//            ->whereNotNull('registration_no')
             ->where('is_declined', true)
             ->join('districts', 'district_id', '=', 'districts.id')
             ->select('organizations.*', 'districts.name as dist_name')
@@ -1098,7 +1106,9 @@ class AdminController extends Controller
             $org->district_id        = $request->get('district');
             $org->chairman_f_name    = $request->get('chairman_f_name');
             $org->chairman_l_name    = $request->get('chairman_f_name');
+            $org->chairman_gender    = $request->get('chairman_gender');
             $org->chairman_mobile_no = $request->get('chairman_mobile_no');
+            $org->chairman_gender    = $request->get('chairman_gender');
             $org->tel_no             = $request->get('tel_no');
             $org->email              = $request->get('email');
             $org->background_colour  = $request->get('background_colour');
@@ -1106,7 +1116,7 @@ class AdminController extends Controller
             $org->save();
         }
         return redirect()->back()
-            ->with(['org_update' => 'Organization successfully updated']);
+            ->with(['org_update' => 'Unit successfully updated']);
 
     }
 
@@ -1135,6 +1145,7 @@ class AdminController extends Controller
         $rules = [
             'f_name'            => 'required',
             'l_name'            => 'required',
+            'gender'            => 'required|string',
             'organization_id'   => 'required|exists:core_organizations,original_id'
         ];
 
@@ -1149,7 +1160,7 @@ class AdminController extends Controller
                 'original_id'       => generateUniqueId()
             ]);
 
-            return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+            return redirect()->back()->with(['member_created' => 'One of the member has been added to your unit']);
 
         } else {
             return redirect()->back()->withErrors($validator)
@@ -1184,6 +1195,7 @@ class AdminController extends Controller
         $rules = array(
             'f_name'            => 'required',
             'l_name'            => 'required',
+            'gender'            => 'required|string',
             'organization_id'   => 'required|exists:core_organizations,original_id'
         );
 
@@ -1226,7 +1238,7 @@ class AdminController extends Controller
             CoreMember::destroy($member->id);
         }
         return redirect()->back()
-            ->with('committee_member_deleted', 'One of the committe member has been removed from the organization.');
+            ->with('committee_member_deleted', 'One of the committe member has been removed from the unit.');
 
     }
 
@@ -1247,11 +1259,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param UpdateScouterRequest $request
+     * @param UpdateApprovedScouterRequest $request
      * @param $scouter_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function patchApprovedLead(UpdateScouterRequest $request, $scouter_id)
+    public function patchApprovedLead(UpdateApprovedScouterRequest $request, $scouter_id)
     {
         if($scouter_id) {
 
@@ -1273,7 +1285,7 @@ class AdminController extends Controller
             }
 
             return redirect()->back()
-                ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
+                ->with(['lead_scouter_updated' => 'Scout Master successfully updated']);
         }
 
     }
@@ -1284,9 +1296,7 @@ class AdminController extends Controller
      */
     public function getApprovedScouter($id)
     {
-
         $data['title'] = 'Nepal Scout';
-
         $data['organization'] = CoreOrganization::where('original_id', $id)->first();
         $data['member']       = CoreMember::where('organization_id', $id)->get();
         $data['scouter']      = $data['organization']->core_scouters->where('is_lead', 0)->first();
@@ -1296,11 +1306,11 @@ class AdminController extends Controller
     }
 
     /**
-     * @param UpdateScouterRequest $request
+     * @param UpdateApprovedScouterRequest $request
      * @param $scouter_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function patchApprovedScouter(UpdateScouterRequest $request, $scouter_id)
+    public function patchApprovedScouter(UpdateApprovedScouterRequest $request, $scouter_id)
     {
         if($scouter_id){
             $scouter = CoreScouter::findOrFail($scouter_id);
@@ -1321,7 +1331,7 @@ class AdminController extends Controller
             }
 
             return redirect()->back()
-                ->with(['scouter_updated' => 'Assistant Lead Scouter successfully updated']);
+                ->with(['scouter_updated' => 'Assistant Scout Master successfully updated']);
         }
     }
 
@@ -1343,12 +1353,14 @@ class AdminController extends Controller
 
                 $data['teamId'] = $data['team']->first()->original_id;
                 $data['team_name'] = CoreTeam::where('original_id', $data['teamId'])->first()->name;
+                $data['team_type'] = CoreTeam::where('original_id', $data['teamId'])->first()->type;
 
 
             }else{
 
                 $data['teamId'] = $team_id;
                 $data['team_name'] = CoreTeam::where('original_id', $team_id)->first()->name;
+                $data['team_type'] = CoreTeam::where('original_id', $team_id)->first()->type;
             }
 
             $data['team_member'] = CoreTeamMember::where('team_id', $data['teamId'])->get();
@@ -1365,6 +1377,8 @@ class AdminController extends Controller
     {
         $rules = array(
             'name'              => 'required|unique:core_teams,name,NULL,organization_id'.$request->get('org_id'),
+            'type'              => 'required|string',
+            'gender'            => 'required|string',
             'organization_id'   => 'required|exists:core_organizations,original_id'
         );
         $validator = Validator::make($request->all(), $rules);
@@ -1374,7 +1388,7 @@ class AdminController extends Controller
                 'organization_id' => $request->get('org_id'),
                 'original_id'     => generateUniqueId()
             ]);
-            return redirect()->back()->with(['team_created' => 'The team has been created.']);
+            return redirect()->back()->with(['team_created' => 'The unit has been created.']);
         } else {
             return redirect()->back()->withErrors($validator)
                 ->withInput();
@@ -1406,6 +1420,8 @@ class AdminController extends Controller
 
         $rules = array(
             'name'              => 'required|unique:core_teams,name,'.$request->get('original_id'),
+            'gender'            => 'required|string',
+            'type'              => 'required|string',
             'organization_id'   => 'required|exists:core_organizations,original_id'
         );
 
@@ -1429,7 +1445,7 @@ class AdminController extends Controller
 
                 $response = array(
                     'status'   => 'success',
-                    'msg'      => 'Team successfully updated.',
+                    'msg'      => 'Unit successfully updated.',
                     'team'     => $team
                 );
             }
@@ -1448,7 +1464,7 @@ class AdminController extends Controller
         if($team){
             CoreTeam::destroy($team->id);
         }
-        return redirect()->back()->with('team_deleted', 'One of the team has been removed');
+        return redirect()->back()->with('team_deleted', 'One of the unit has been removed');
     }
 
     /**
@@ -1477,7 +1493,8 @@ class AdminController extends Controller
             'l_name'        => 'required',
             'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"',
-            'position'      => 'required',
+            'position'      => 'required|string',
+            'post'          => 'required|string',
             'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',
             'team_id'       => 'required|exists:teams,id'
@@ -1502,6 +1519,7 @@ class AdminController extends Controller
                     $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
                     $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
                     $teamMember->position          = $request->get('position');
+                    $teamMember->post              = $request->get('post');
                     $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
                     $teamMember->note              = $request->get('note');
                     $teamMember->team_id           = $request->get('team_id');
@@ -1510,7 +1528,7 @@ class AdminController extends Controller
 
                 $response = array(
                     'status'         => 'success',
-                    'msg'            => 'Team Member successfully updated successfully updated.',
+                    'msg'            => 'Unit Member successfully updated successfully updated.',
                     'teamMember'     => $teamMember
                 );
             }
@@ -1548,10 +1566,11 @@ class AdminController extends Controller
             'note'           => $request->get('note'),
             'team_id'        => $request->get('team_id'),
             'position'       => $request->get('position'),
+            'post'           => $request->get('post'),
             'original_id'    => generateUniqueId()
         ]);
 
-        return redirect()->back()->with(['team_member_created' => 'One of the team member has been created']);
+        return redirect()->back()->with(['team_member_created' => 'One of the unit member has been created']);
 
     }
 
@@ -1643,7 +1662,7 @@ class AdminController extends Controller
                 return view('admin.search', $data);
             }
 
-            if ($request->has('school') || $request->has('organization') || $request->has('chairman')) {
+            if ($request->has('school') || $request->has('organization') || $request->has('chairman') || $request->has('registration') || $request->has('district')) {
                 $data['search'] = CoreOrganization::search($data['query'], null, true)
                                     ->orderBy('relevance', 'desc')->get();
                 $data['search_type'] = 'school';
@@ -1673,7 +1692,7 @@ class AdminController extends Controller
     /**
      * Reverse back all the cloned database record associated with given id
      * Can be removed in production
-     * @param $id
+     * @param $id ID of the Organization
      */
     public function uncloneModel($id )
     {
@@ -1693,6 +1712,7 @@ class AdminController extends Controller
             $core_org->core_members()->delete();
             $core_org->delete();
             $org->registration_no = null;
+            $org->is_submitted = 0;
             $org->save();
 
         });
@@ -1704,9 +1724,7 @@ class AdminController extends Controller
     public function getSearchTerms(Request $request)
     {
         $query = $request->input('q', '');
-        $organizations = Organization::where('name','LIKE','%'.$query.'%')->get();
+        $organizations = CoreOrganization::where('name','LIKE','%'.$query.'%')->get();
         return response()->json($organizations);
-        
     }
-
 }

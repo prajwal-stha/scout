@@ -9,7 +9,7 @@
             <!-- general form elements -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ $organizations->count() > 0 ? 'New Form Requests' : 'Grab a cup of coffee. No new form request for now.' }}</h3>
+                    <h3 class="box-title">{{ $organizations->count() > 0 ? 'New Form Requests' : 'No new form request for now.' }}</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -18,7 +18,7 @@
                         <table id="form-requests" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Organizations</th>
+                                <th>Unit</th>
                                 <th>User</th>
                                 <th>Action</th>
                             </tr>
@@ -27,7 +27,7 @@
 
                             @foreach( $organizations as $value)
                                 <tr>
-                                    <td><a data-toggle="tooltip" title="VIEW ORGANIZATION" class="team-name"
+                                    <td><a data-toggle="tooltip" title="VIEW UNIT" class="team-name"
                                            href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                     </td>
                                     <td><a data-toggle="tooltip" title="VIEW USER" href="{{ url('admin/profile', [$value->user->id]) }}">{{ $value->user->f_name }} {{ $value->user->l_name  }}</a></td>

@@ -9,7 +9,7 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Organizations </h3>
+                        <h3 class="box-title">@if(count($organizations) > 0) {{ 'All Units' }}@else {{ 'No Records Found' }} @endif</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
                     <div class="box-body">
@@ -22,7 +22,7 @@
                                         <th>Registration No.</th>
                                         <th>Name</th>
                                         <th>Type</th>
-                                        <th>Chairman</th>
+                                        <th>Chairperson</th>
                                         <th>District</th>
                                         <th>Contact No.</th>
                                     </tr>

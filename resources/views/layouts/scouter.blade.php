@@ -77,11 +77,6 @@
 
                     </ul>
                 </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-               {{--<div class="default-welcome-message">--}}
-                   {{--<span>{{ Auth::user()->f_name }} {{ Auth::user()->l_name }}</span> / <a href="{{ url( '/logout' ) }}">Sign out <i class="fa fa-sign-out"></i></a>--}}
-               {{--</div>--}}
             </div><!-- /.container-fluid -->
         </nav>
     </header>

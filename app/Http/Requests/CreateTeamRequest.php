@@ -18,7 +18,7 @@ class CreateTeamRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(Team::where('organization_id', session()->get('org_id'))->count() < 4) {
+            if(Team::where('organization_id', $this->get('org_id'))->count() < 5) {
                 return TRUE;
             }
         } else {

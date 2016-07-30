@@ -18,7 +18,7 @@
             <!-- general form elements -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Assistant-Lead Scouter Detail</h3>
+                    <h3 class="box-title">Assistant Scout Master</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -90,7 +90,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group{{ $errors->has('name')? ' has-error' : '' }}">
-                                {{ Form::label('asst-lead-scouter', 'Assistant Lead Scouter', array( 'class' => 'control-label col-sm-6')) }}
+                                {{ Form::label('asst-lead-scouter', 'Assistant Scout Master', array( 'class' => 'control-label col-sm-6')) }}
                                 <div class="col-sm-6 scout-selection">
                                     {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
@@ -108,7 +108,7 @@
                                 {{ Form::label('email', 'Email', array( 'class' => 'control-label col-sm-6')) }}
 
                                 <div class="col-sm-6">
-                                    {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'email')) }}
+                                    {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'email', 'placeholder'  => 'Email')) }}
                                     @if ($errors->has('email'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -121,7 +121,7 @@
 
                                 {{ Form::label('perm_letter_no', 'Permission Letter No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                 <div class="col-sm-3">
-                                    {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'perm_letter_no')) }}
+                                    {{ Form::text('permission', null, array('class' => 'form-control', 'id' => 'perm_letter_no', 'placeholder' => 'Permission Letter No.')) }}
                                     @if ($errors->has('permission'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('permission') }}</strong>
@@ -129,7 +129,7 @@
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'perm_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    {{ Form::text('permission_date', null, array('class' => 'form-control date', 'id' => 'perm_date', 'placeholder' => 'Date','data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('permission_date'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('permission_date') }}</strong>
@@ -145,7 +145,7 @@
                                 {{ Form::label('btc_no', 'B.T.C / P.T.C No. / Date', array( 'class' => 'control-label col-sm-6')) }}
                                 <div class="col-sm-3">
 
-                                    {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'btc_no')) }}
+                                    {{ Form::text('btc_no', null, array('class' => 'form-control', 'id' => 'btc_no', 'placeholder'  => 'B.T.C / P.T.C No.')) }}
 
                                     @if ($errors->has('btc_no'))
                                         <span class="help-block">
@@ -155,7 +155,7 @@
 
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'btc_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    {{ Form::text('btc_date', null, array('class' => 'form-control date', 'id' => 'btc_date', 'placeholder' => 'Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('btc_date'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('btc_date') }}</strong>
@@ -171,7 +171,7 @@
                                 {{ Form::label('advance_no', 'Advance Certificate / Date', array( 'class' => 'control-label col-sm-6')) }}
 
                                 <div class="col-sm-3">
-                                    {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'advance_no')) }}
+                                    {{ Form::text('advance_no', null, array('class' => 'form-control', 'id' => 'advance_no', 'placeholder'  => 'Advance No.')) }}
                                     @if ($errors->has('advance_no'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('advance_no') }}</strong>
@@ -179,7 +179,7 @@
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'advance_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    {{ Form::text('advance_date', null, array('class' => 'form-control date', 'id' => 'advance_date', 'placeholder' => 'Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('advance_date'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('advance_date') }}</strong>
@@ -192,10 +192,10 @@
 
                             <div class="form-group{{ $errors->has('alt_no') || $errors->has('alt_date') ? ' has-error' : '' }}">
 
-                                {{ Form::label('alt_no', 'ALT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                {{ Form::label('alt_no', 'Certificate No. / Date', array( 'class' => 'control-label col-sm-6')) }}
 
                                 <div class="col-sm-3">
-                                    {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'alt_no')) }}
+                                    {{ Form::text('alt_no', null, array('class' => 'form-control', 'id' => 'alt_no', 'placeholder'  => 'Certificate No.')) }}
                                     @if ($errors->has('alt_no'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('alt_no') }}</strong>
@@ -203,7 +203,7 @@
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'alt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    {{ Form::text('alt_date', null, array('class' => 'form-control date', 'id' => 'alt_date', 'placeholder' => 'Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('alt_date'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('alt_date') }}</strong>
@@ -215,10 +215,10 @@
 
                             <div class="form-group{{ $errors->has('lt_no') || $errors->has('lt_date') ? ' has-error' : '' }}">
 
-                                {{ Form::label('lt_no', 'LT No. / Date', array( 'class' => 'control-label col-sm-6')) }}
+                                {{ Form::label('lt_no', 'Diploma No. / Date', array( 'class' => 'control-label col-sm-6')) }}
 
                                 <div class="col-sm-3">
-                                    {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lt_no')) }}
+                                    {{ Form::text('lt_no', null, array('class' => 'form-control', 'id' => 'lt_no', 'placeholder'    => 'Diploma No.')) }}
                                     @if ($errors->has('lt_no'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('lt_no') }}</strong>
@@ -226,7 +226,7 @@
                                     @endif
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lt_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                    {{ Form::text('lt_date', null, array('class' => 'form-control date', 'id' => 'lt_date', 'placeholder' => 'Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                     @if ($errors->has('lt_date'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('lt_date') }}</strong>

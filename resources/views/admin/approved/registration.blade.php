@@ -32,7 +32,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 {{ Form::label('registration_no', 'Registration No. *') }}
-                                {{ Form::text('registration_no', null, array('class' => 'form-control', 'id' => 'registration_no')) }}
+                                {{ Form::text('registration_no', null, array('class' => 'form-control', 'id' => 'registration_no', 'placeholder' => 'Registration No.')) }}
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                 <tbody id="list-registration-detail">
 
                                 <tr>
-                                    <th>Unit Registration/Registration</th>
+                                    <th>Unit Registration / Registration</th>
                                     <td>-</td>
                                     <td>{{ 'Rs. '. $rates->registration_rate }}</td>
                                     <td>{{ 'Rs. '. $rates->registration_rate }}</td>
@@ -100,7 +100,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th>Organization Commitee Member</th>
+                                    <th>Unit Commitee Member</th>
                                     <td>{{ $member }}</td>
                                     <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
                                     <td>{{ 'Rs. ' . ($member * $rates->committee_members_rate) }}</td>

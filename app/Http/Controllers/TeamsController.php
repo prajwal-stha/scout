@@ -39,6 +39,8 @@ class TeamsController extends Controller
             Team::create(
                 [
                     'name'            => $request->get('name'),
+                    'gender'          => $request->get('gender'),
+                    'type'            => $request->get('type'),
                     'organization_id' => $request->get('org_id')
                 ]
             );
@@ -62,7 +64,7 @@ class TeamsController extends Controller
         if($team){
             Team::destroy($team->id);
         }
-        return redirect()->back()->with('team_deleted', 'One of the team has been removed');
+        return redirect()->back()->with('team_deleted', 'One of the unit has been removed');
         
     }
 
@@ -88,7 +90,9 @@ class TeamsController extends Controller
     public function patchUpdate(Request $request){
 
         $rules = array(
-            'name'              => 'required|unique:teams,name,'.$request->get('id'),
+            'name'              => 'required|unique:teams,name,NULL,id,organization_id,'.$request->get('org_id'),
+            'type'              => 'required|string',
+            'gender'            => 'required|string',
             'organization_id'   => 'required|exists:organizations,id'
         );
 
@@ -110,12 +114,11 @@ class TeamsController extends Controller
 
                 $response = array(
                     'status'   => 'success',
-                    'msg'      => 'Team successfully updated.',
+                    'msg'      => 'Unit successfully updated.',
                     'team'     => $team
                 );
             }
         }
-
         return response()->json($response);
     }
 }

@@ -61,7 +61,7 @@
             </a>
             {{ Form::open(['url' => 'admin/search', 'method' => 'POST', 'class' => 'main-search col-sm-3 no-padding pull-left']) }}
             <div class="input-group{{ $errors->has('q') ? ' has-error' : '' }}">
-                <input type="text" id="search-organization" name="q" class="form-control" placeholder="Search Organization" value="{{ old('q') }}" autocomplete="off">
+                <input type="text" id="search-organization" name="q" class="form-control" placeholder="Search Unit" value="{{ old('q') }}" autocomplete="off">
                 <span class="input-group-btn">
                     <button type="submit" name="search" id="search-btn" class="btn btn-success"><i class="fa fa-search"></i></button>
                 </span>
@@ -94,7 +94,7 @@
                                     <a href="{{ url('admin/profile', [Auth::user()->id]) }}" class="btn btn-default">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="{{ url( '/logout' ) }}" class="btn btn-default"><i class="fa fa-sign-out"></i>Sign out</a>
+                                    <a href="{{ url('/logout') }}" class="btn btn-default"><i class="fa fa-sign-out"></i>Sign out</a>
                                 </div>
                             </li>
                         </ul>
@@ -123,12 +123,12 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-institution"></i> <span>Organizations</span>
+                        <i class="fa fa-institution"></i> <span>Unit</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="{{ url('admin/approved-organizations') }}">Approved Organizations</a></li>
-                        <li><a href="{{ url('admin/declined-organizations') }}">Declined Organizations</a></li>
+                        <li><a href="{{ url('admin/approved-organizations') }}">Approved Unit</a></li>
+                        <li><a href="{{ url('admin/declined-organizations') }}">Declined Unit</a></li>
                     </ul>
                 </li>
 

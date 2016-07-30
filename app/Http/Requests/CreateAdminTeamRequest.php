@@ -34,6 +34,8 @@ class CreateAdminTeamRequest extends Request
     {
         return [
             'name'              => 'required|unique:teams,name,NULL,id,organization_id,'.$this->get('org_id'),
+            'gender'            => 'required|string',
+            'type'              => 'required|string',
             'org_id'            => 'required|exists:organizations,id'
         ];
     }

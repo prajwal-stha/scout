@@ -24,6 +24,8 @@ class CoreTeam extends Model
     protected $fillable = [
         'original_id',
         'name',
+        'gender',
+        'type',
         'organization_id'
     ];
     

@@ -26,6 +26,7 @@ class CoreTeamMember extends Model
         'dob',
         'entry_date',
         'position',
+        'post',
         'passed_date',
         'note',
         'team_id'

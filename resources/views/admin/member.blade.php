@@ -41,18 +41,27 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {{ Form::label('f_name', 'First Name *') }}
-                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                            {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name', 'placeholder'  => 'First Name')) }}
                             <span class="error-message"></span>
                         </div>
                         <div class="form-group">
                             {{ Form::label('m_name', 'Middle Name') }}
-                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                            {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name', 'placeholder' => 'Middle Name')) }}
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
                             {{ Form::label('l_name', 'Last Name *') }}
-                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                            {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name', 'placeholder'  => 'Last Name')) }}
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group scout-selection">
+                            {{ Form::label('gender', 'Gender *') }}
+                            {{ Form::select('gender', array(
+                                    'Male'       => 'Male',
+                                    'Female'     => 'Female',
+                                    'Other'      => 'Other'
+                                ), null, array('class' => 'form-control', 'id' => 'gender')) }}
                             <span class="error-message"></span>
                         </div>
                     </div>
@@ -86,51 +95,69 @@
 
 
                     {{ Form::open(['url' => 'admin/committee', 'class' => 'form-horizontal', 'id' =>'member-create-form']) }}
-                    <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->id }}">
-                    <div class="box-body">
-                        <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
-                            {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name')) }}
-                                @if ($errors->has('f_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('f_name') }}</strong>
-                                    </span>
-                                @endif
+                        <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->id }}">
+                        <div class="box-body">
+                            <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
+                                {{ Form::label('f-name', 'First Name *', array( 'class' => 'control-label col-sm-3')) }}
+                                <div class="col-sm-4">
+                                    {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f-name', 'placeholder' => 'First Name')) }}
+                                    @if ($errors->has('f_name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('f_name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
+                                {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
+                                <div class="col-sm-4">
+                                    {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder'  => 'Middle Name')) }}
+                                    @if ($errors->has('m_name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('m_name') }}</strong>
+                                        </span>
+                                    @endif
+
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
+                                {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
+                                <div class="col-sm-4">
+                                    {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder' => 'Last Name')) }}
+                                    @if ($errors->has('l_name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('l_name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                                {{ Form::label('member-gender', 'Gender *', array( 'class' => 'control-label col-sm-3')) }}
+                                <div class="col-sm-4">
+                                    {{ Form::select('gender', array(
+                                        'Male'       => 'Male',
+                                        'Female'     => 'Female',
+                                        'Other'      => 'Other'
+                                    ), null, array('class' => 'form-control', 'id' => 'member-gender')) }}
+                                    @if ($errors->has('gender'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('gender') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="box-footer border-bottom">
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-success" id="member-submit">Save</button>
+                                {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default')) }}
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('m_name') ? ' has-error' : '' }}">
-                            {{ Form::label('m-name', 'Middle Name', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name')) }}
-                                @if ($errors->has('m_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('m_name') }}</strong>
-                                    </span>
-                                @endif
-
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
-                            {{ Form::label('l-name', 'Last Name *', array( 'class' => 'control-label col-sm-3')) }}
-                            <div class="col-sm-4">
-                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name')) }}
-                                @if ($errors->has('l_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('l_name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-footer border-bottom">
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-success" id="member-submit">Save</button>
-                            {{ link_to('admin/lead-scouter/'.$organization->id , 'NEXT', array('class' => 'btn btn-default')) }}
-                        </div>
-                    </div>
 
                     {{ Form::close() }}
                     @if(isset($member) && $member->count() > 0)
@@ -146,19 +173,20 @@
                                     </tr>
                                     </thead>
                                     <tbody id="list-admin-member">
-                                    @foreach($member as $value)
-                                        <tr>
-                                            <td>{{ $value->f_name }}</td>
-                                            <td>{{ $value->m_name }}</td>
-                                            <td>{{ $value->l_name }}</td>
-                                            <td>
-                                                <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
-                                                    <i class="fa fa-pencil"></i></a>
-                                                <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
-                                                   href="{{ url( 'admin/delete-committee', [$value->id]) }}"><i
-                                                            class="fa fa-trash-o"></i></a>
-                                        </tr>
-                                    @endforeach
+                                        @foreach($member as $value)
+                                            <tr>
+                                                <td>{{ $value->f_name }}</td>
+                                                <td>{{ $value->m_name }}</td>
+                                                <td>{{ $value->l_name }}</td>
+                                                <td>
+                                                    <a data-toggle="tooltip" title="EDIT" class="btn btn-success adminUpdateMember" data-id="{{ $value->id }}">
+                                                        <i class="fa fa-pencil"></i></a>
+                                                    <a data-toggle="tooltip" title="DELETE" class="btn btn-danger adminDeleteCommittee" data-id="{{ $value->id }}"
+                                                       href="{{ url( 'admin/delete-committee', [$value->id]) }}"><i
+                                                                class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
                                     </tbody>
 

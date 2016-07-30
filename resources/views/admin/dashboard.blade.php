@@ -26,7 +26,7 @@
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3>{{ $approved_organizations }}</h3>
-                        <p>Approved Organizations</p>
+                        <p>Approved Unit</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-institution"></i>
@@ -41,7 +41,7 @@
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3>{{ $declined_organizations }}</h3>
-                        <p>Declined Organizations</p>
+                        <p>Declined Unit</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-institution"></i>
@@ -56,7 +56,7 @@
             <div class="col-md-6">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Approved Organizations</h3>
+                        <h3 class="box-title">Approved Unit</h3>
                     </div>
                     <div class="box-body">
 
@@ -65,7 +65,7 @@
                                 <thead>
                                 <tr>
                                     <th>User</th>
-                                    <th>Organization</th>
+                                    <th>Units</th>
                                 </tr>
                                 </thead>
                                 <tbody id="list-user-orgs">
@@ -162,7 +162,7 @@
             <div class="col-md-6">
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Declined Organizations</h3>
+                        <h3 class="box-title">Declined Unit</h3>
                     </div>
                     <div class="box-body">
 
@@ -171,7 +171,7 @@
                                 <thead>
                                 <tr>
                                     <th>User</th>
-                                    <th>Organization</th>
+                                    <th>Units</th>
                                 </tr>
                                 </thead>
                                 <tbody id="list-user-orgs">

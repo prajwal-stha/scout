@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="box box-success">
                     <div class="box-header">
                         <h3 class="box-title">By Person</h3>
@@ -47,7 +47,7 @@
                         <li class="list-group-item">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="team_member"> Team member
+                                    <input type="checkbox" name="team_member"> Unit member
                                 </label>
                             </div>
                         </li>
@@ -58,10 +58,10 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">By Organization</h3>
+                        <h3 class="box-title">By Unit</h3>
                     </div>
 
 
@@ -69,14 +69,29 @@
                         <li class="list-group-item">
                             <div class="checkbox" name="school">
                                 <label>
-                                    <input type="checkbox" name="school"> School
+                                    <input type="checkbox" name="organization"> Community
+
                                 </label>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="organization"> Organization
+                                    <input type="checkbox" name="school"> School / College
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="registration"> Registration No.
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="district"> District
                                 </label>
                             </div>
                         </li>
@@ -85,17 +100,36 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="box box-success">
                     <div class="box-header">
-                        <h3 class="box-title">By Team</h3>
+                        <h3 class="box-title">By Units [Team]</h3>
                     </div>
 
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="team"> Team
+                                    <input type="checkbox" name="team"> Unit
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <div class="box box-success">
+                    <div class="box-header">
+                        <h3 class="box-title">By Year</h3>
+                    </div>
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="year"> Year
                                 </label>
                             </div>
                         </li>

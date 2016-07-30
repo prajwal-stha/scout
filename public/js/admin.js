@@ -177,6 +177,7 @@ $(document).ready(function(){
                 $('#f_name').val(data.member.f_name);
                 $('#m_name').val(data.member.m_name);
                 $('#l_name').val(data.member.l_name);
+                $('#gender').val(data.member.gender);
                 $('#update-member-org-id').val(data.member.organization_id);
                 $('#update-member-id').val(id);
             });
@@ -209,6 +210,7 @@ $(document).ready(function(){
                 "f_name": $('#f_name').val(),
                 "m_name": $('#m_name').val(),
                 "l_name": $('#l_name').val(),
+                "gender": $('#gender').val(),
                 "organization_id": $('#update-member-org-id').val()
             },
             dataType: "json"
@@ -745,6 +747,7 @@ $(document).ready(function(){
                 $('#f_name').val(data.member.f_name);
                 $('#m_name').val(data.member.m_name);
                 $('#l_name').val(data.member.l_name);
+                $('#gender').val(data.member.gender);
                 $('#update-member-org-id').val(data.member.organization_id);
                 $('#update-member-id').val(id);
             });
@@ -777,6 +780,7 @@ $(document).ready(function(){
                     "f_name": $('#f_name').val(),
                     "m_name": $('#m_name').val(),
                     "l_name": $('#l_name').val(),
+                    "gender": $('#gender').val(),
                     "organization_id": $('#update-member-org-id').val()
             },
             dataType: "json"

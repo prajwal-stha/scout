@@ -18,7 +18,7 @@ class CreateScouterRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(Scouter::where('organization_id', session()->get('org_id'))->count() < 2) {
+            if(Scouter::where('organization_id', $this->get('org_id'))->count() < 2) {
                 return TRUE;
             }
         } else {

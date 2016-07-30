@@ -21,7 +21,7 @@
             <!-- general form elements -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Organization Detail</h3>
+                    <h3 class="box-title">Unit Detail</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -56,9 +56,9 @@
                 @endif
                 <div class="box-body">
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                        {{ Form::label('organization-name', 'Name of Organization *', array( 'class' => 'control-label col-sm-3')) }}
+                        {{ Form::label('organization-name', 'Name of Unit *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name')) }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'organization-name', 'placeholder' => 'Name of Unit')) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
@@ -72,8 +72,8 @@
                         {{ Form::label('organization-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4 scout-selection">
                             {{ Form::select('type', array(
-                                'school'      => 'School',
-                                'other'       => 'Organization'
+                                'other'       => 'Community',
+                                'school'      => 'School / College',
                             ), null, array('class' => 'form-control')) }}
                             @if ($errors->has('type'))
                                 <span class="help-block">
@@ -86,9 +86,9 @@
 
                     <div class="form-group{{ $errors->has('registration_date') ? ' has-error' : '' }}">
 
-                        {{ Form::label('registration_date', 'Organization Start Date *', array( 'class' => 'control-label col-sm-3')) }}
+                        {{ Form::label('registration_date', 'Unit Start Date *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                            {{ Form::text('registration_date', null, array('class' => 'form-control', 'id' => 'registration_date', 'placeholder' => 'Unit Start Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                             @if ($errors->has('registration_date'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('registration_date') }}</strong>
@@ -102,7 +102,7 @@
 
                         {{ Form::label('organization-address-1', 'Address Line 1 *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('address_line_1', null, array('class' => 'form-control', 'id' => 'address_line_1')) }}
+                            {{ Form::text('address_line_1', null, array('class' => 'form-control', 'id' => 'address_line_1', 'placeholder'  => 'Address Line 1')) }}
 
                             @if ($errors->has('address_line_1'))
                                 <span class="help-block">
@@ -116,7 +116,7 @@
 
                         {{ Form::label('organization-address-2', 'Address Line 2', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('address_line_2', null, array('class' => 'form-control', 'id' => 'address_line_2')) }}
+                            {{ Form::text('address_line_2', null, array('class' => 'form-control', 'id' => 'address_line_2', 'placeholder' => 'Address Line 2')) }}
                             @if ($errors->has('address_line_2'))
                                 <span class="help-block">
                                         <strong>{{ $errors->first('address_line_2') }}</strong>
@@ -143,10 +143,10 @@
 
                     <div class="form-group{{ $errors->has('chairman_f_name') || $errors->has('chairman_l_name') ? ' has-error' : '' }}">
 
-                        {{ Form::label('chairman', 'Chairman / Principal *', array( 'class' => 'control-label col-sm-3')) }}
-                        <div class="col-sm-4">
+                        {{ Form::label('chairman', 'Chairperson / Principal *', array( 'class' => 'control-label col-sm-3')) }}
+                        <div class="col-sm-3">
 
-                            {{ Form::text('chairman_f_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
+                            {{ Form::text('chairman_f_name', null, array('class' => 'form-control', 'id' => 'chairman', 'placeholder'  => 'First Name')) }}
 
                             @if ($errors->has('chairman_f_name'))
                                 <span class="help-block">
@@ -155,13 +155,23 @@
                             @endif
                         </div>
 
-                        <div class="col-sm-4">
-                            {{ Form::text('chairman_l_name', null, array('class' => 'form-control', 'id' => 'chairman')) }}
+                        <div class="col-sm-3">
+                            {{ Form::text('chairman_m_name', null, array('class' => 'form-control', 'id' => 'chairman', 'placeholder'  => 'Middle Name')) }}
+
+                            @if ($errors->has('chairman_m_name'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('chairman_m_name') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+
+                        <div class="col-sm-3">
+                            {{ Form::text('chairman_l_name', null, array('class' => 'form-control', 'id' => 'chairman', 'placeholder'   => 'Last Name')) }}
 
                             @if ($errors->has('chairman_l_name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('chairman_l_name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('chairman_l_name') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -169,29 +179,49 @@
 
                     <div class="form-group{{ $errors->has('chairman_mobile_no') ? ' has-error' : '' }}">
 
-                        {{ Form::label('chairman-mobile', 'Chairman Mobile No. *', array( 'class' => 'control-label col-sm-3')) }}
+                        {{ Form::label('chairman-mobile', 'Chairperson Mobile No. *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile')) }}
+                            {{ Form::text('chairman_mobile_no', null, array('class' => 'form-control', 'id' => 'chairman-mobile', 'placeholder'  => 'Mobile No.')) }}
 
                             @if ($errors->has('chairman_mobile_no'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('chairman_mobile_no') }}</strong>
+                                    <strong>{{ $errors->first('chairman_mobile_no') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                    </div>
+
+                    <div class="form-group{{ $errors->has('chairman_gender') ? ' has-error' : '' }}">
+
+                        {{ Form::label('chairman-gender', 'Chairperson Gender. *', array( 'class' => 'control-label col-sm-3')) }}
+                        <div class="col-sm-4 scout-selection">
+                            {{ Form::select('chairman_gender',array(
+                                    'Male'       => 'Male',
+                                    'Female'     => 'Female',
+                                    'Other'      => 'Other'
+                                ), null, array('class' => 'form-control', 'id' => 'chairman-gender')) }}
+
+                            @if ($errors->has('chairman_gender'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('chairman_gender') }}</strong>
                                     </span>
                             @endif
+
                         </div>
 
                     </div>
 
                     <div class="form-group{{ $errors->has('tel_no') ? ' has-error' : '' }}">
 
-                        {{ Form::label( 'organization-tel', 'Organization Tel No. *', array( 'class' => 'control-label col-sm-3')) }}
+                        {{ Form::label( 'organization-tel', 'Unit Tel No. *', array( 'class' => 'control-label col-sm-3')) }}
                         <div class="col-sm-4">
-                            {{ Form::text('tel_no', null, array('class' => 'form-control', 'id' => 'organization-tel')) }}
+                            {{ Form::text('tel_no', null, array('class' => 'form-control', 'id' => 'organization-tel', 'placeholder'    => 'Telephone No.')) }}
 
                             @if ($errors->has('tel_no'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('tel_no') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('tel_no') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -199,15 +229,15 @@
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
 
-                        {{ Form::label( 'organization-email', 'Organization Email *', array( 'class' => 'control-label col-sm-3')) }}
+                        {{ Form::label( 'organization-email', 'Unit Email *', array( 'class' => 'control-label col-sm-3')) }}
 
                         <div class="col-sm-4">
-                            {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'organization-email')) }}
+                            {{ Form::text('email', null, array('class' => 'form-control', 'id' => 'organization-email', 'placeholder'   => 'Email')) }}
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
                             @endif
                         </div>
                     </div>

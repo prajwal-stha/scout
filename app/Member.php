@@ -11,7 +11,7 @@ class Member extends Model
 
     public $timestamps = false;
 
-    protected $fillable = array('f_name', 'm_name', 'l_name', 'organization_id');
+    protected $fillable = array('f_name', 'm_name', 'l_name', 'gender', 'organization_id');
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
