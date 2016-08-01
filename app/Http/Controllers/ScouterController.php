@@ -47,7 +47,7 @@ class ScouterController extends Controller
      */
     public function __construct(Guard $auth){
 
-        $this->middleware( ['auth', 'xss'] );
+        $this->middleware( ['auth', 'xss' , 'guest'] );
         $this->user = $auth->user();
 
     }

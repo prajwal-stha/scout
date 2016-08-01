@@ -2,12 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use SoftDeletes;
+
+    protected $table = 'admins';
     /**
      * The attributes that are mass assignable.
      *
@@ -28,5 +30,10 @@ class Admin extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function scopeVerified($query)
+    {
+        return $query->where('verified', 1);
+    }
     
 }

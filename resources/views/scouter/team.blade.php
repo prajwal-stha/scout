@@ -258,7 +258,7 @@
                     <input type="hidden" name="org_id" id="org_id" value="{{ $org_id or null }}">
                     <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            {{ Form::label('team-name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('team-name', 'Name *', array( 'class' => 'control-label')) }}
                             {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name', 'placeholder' => 'Name')) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">
@@ -269,7 +269,7 @@
 
 
                         <div class="col-md-4 col-sm-4 col-xs-12 scout-selection">
-                            {{ Form::label('team-gender', 'Gender *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('team-gender', 'Gender *', array( 'class' => 'control-label')) }}
                             {{ Form::select('gender', array(
                                     'Male'       => 'Male',
                                     'Female'     => 'Female',
@@ -283,7 +283,7 @@
                         </div>
 
                         <div class="col-md-4 col-sm-4 col-xs-12 scout-selection">
-                            {{ Form::label('team-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('team-type', 'Type *', array( 'class' => 'control-label')) }}
                             {{ Form::select('type', array(
                                     'Six'              => 'Six',
                                     'Patrol'           => 'Patrol',

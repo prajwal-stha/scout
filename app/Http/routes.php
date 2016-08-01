@@ -17,6 +17,18 @@
 
 Route::group( ['middleware' => ['web']], function () {
 
+    /*
+   * Routes for Administrator Authentication
+   */
+
+    Route::get('/administrator/login','AdminAuth\AuthController@showLoginForm');
+    Route::post('/administrator/login','AdminAuth\AuthController@login');
+    Route::get('/administrator/logout','AdminAuth\AuthController@logout');
+
+    // Registration Routes...
+    Route::get('administrator/register', 'AdminAuth\AuthController@showRegistrationForm');
+    Route::post('administrator/register', 'AdminAuth\AuthController@register');
+
     Route::auth();
     /*
      * Admin Authentication Routes
@@ -64,6 +76,7 @@ Route::group( ['middleware' => ['web']], function () {
         'as'    => 'unclone',
         'uses'  => 'AdminController@uncloneModel'
     ));
+
 
     Route::controller( '/', 'ScouterController' );
 

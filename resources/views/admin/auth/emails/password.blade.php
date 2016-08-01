@@ -1,1 +1,0 @@
-You recently requested to reset your password for your account. Click <a href="{{ $link = url('password/reset', $token).'?email='.urlencode($user->getEmailForPasswordReset()) }}">here</a> to reset your password. If you did not request a password reset, please ignore this email.
