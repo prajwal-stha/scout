@@ -18,6 +18,17 @@
 Route::group( ['middleware' => ['web']], function () {
 
     Route::auth();
+    /*
+     * Admin Authentication Routes
+     */
+    Route::get('/admin/login','AdminAuth\AuthController@showLoginForm');
+    Route::post('/admin/login','AdminAuth\AuthController@login');
+    Route::get('/admin/logout','AdminAuth\AuthController@logout');
+
+    // Registration Routes...
+    Route::get('admin/register', 'AdminAuth\AuthController@showRegistrationForm');
+    Route::post('admin/register', 'AdminAuth\AuthController@register');
+
     Route::controller( 'districts', 'DistrictsController', [
         'getAllDistricts'  => 'all-districts',
     ]);

@@ -57,7 +57,7 @@
                         <div class="form-group{{ $errors->has('background_colour') ? ' has-error' : '' }}">
                             {{ Form::label('background-colour', 'Background Colour *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
-                                {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour')) }}
+                                {{ Form::text('background_colour', null, array('class' => 'form-control', 'id' => 'background-colour', 'placeholder' => 'Background Colour')) }}
                                 @if ($errors->has('background_colour'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('background_colour') }}</strong>
@@ -71,7 +71,7 @@
                             {{ Form::label('border-colour', 'Border Colour *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-4">
 
-                                {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour')) }}
+                                {{ Form::text('border_colour', null, array('class' => 'form-control', 'id' => 'border-colour', 'placeholder'    => 'Border Colour')) }}
 
                                 @if ($errors->has('border_colour'))
                                     <span class="help-block">

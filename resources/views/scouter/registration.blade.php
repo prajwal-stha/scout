@@ -55,7 +55,7 @@
                             </tr>
 
                             <tr>
-                                <th>Organization Commitee Member</th>
+                                <th>Unit Commitee Member</th>
                                 <td>{{ $member }}</td>
                                 <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
                                 <td>{{ 'Rs. ' . ($member * $rates->committee_members_rate) }}</td>

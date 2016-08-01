@@ -43,7 +43,8 @@ class TeamMemberController extends Controller
             'passed_date'    => formatDate($request->get('passed_date')),
             'note'           => $request->get('note'),
             'team_id'        => $request->get('team_id'),
-            'position'       => $request->get('position')
+            'position'       => $request->get('position'),
+            'post'           => $request->get('post')
         ]);
 
         return redirect()->back()->with(['team_member_created' => 'One of the team member has been created']);
@@ -89,7 +90,8 @@ class TeamMemberController extends Controller
             'l_name'        => 'required',
             'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"|after:dob',
-            'position'      => 'required',
+            'position'      => 'required|string',
+            'post'          => 'required|string',
             'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',
             'team_id'       => 'required|exists:teams,id'
@@ -114,6 +116,7 @@ class TeamMemberController extends Controller
                     $teamMember->dob               = $request->has('dob') ? formatDate($request->get('dob')) : null;
                     $teamMember->entry_date        = $request->has('entry_date') ? formatDate($request->get('entry_date')) : null;
                     $teamMember->position          = $request->get('position');
+                    $teamMember->post              = $request->get('post');
                     $teamMember->passed_date       = $request->has('passed_date') ? formatDate($request->get('passed_date')) : null;
                     $teamMember->note              = $request->get('note');
                     $teamMember->team_id           = $request->get('team_id');

@@ -37,7 +37,8 @@ class CreateTeamMemberRequest extends Request
             'l_name'        => 'required',
             'dob'           => 'required|date_format:"d/m/Y"',
             'entry_date'    => 'required|date_format:"d/m/Y"|after:dob',
-            'position'      => 'required',
+            'position'      => 'required|string',
+            'post'          => 'required|string',
             'passed_date'   => 'required|date_format:"d/m/Y"|after:entry_date',
             'note'          => 'max:500',
             'team_id'       => 'required|exists:teams,id'

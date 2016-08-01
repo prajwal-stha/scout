@@ -82,7 +82,6 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
-
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : ''}}">
@@ -113,7 +112,6 @@
                             </div>
 
                         </div>
-
 
                 </div><!-- /.box -->
 

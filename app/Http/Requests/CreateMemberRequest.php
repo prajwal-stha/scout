@@ -16,7 +16,7 @@ class CreateMemberRequest extends Request
     public function authorize()
     {
         if (Auth::check()) {
-            if(Member::where('organization_id', session()->get('org_id'))->count() < 7) {
+            if(Member::where('organization_id', $this->get('organization_id'))->count() < 7) {
                 return TRUE;
             }
         } else {
@@ -34,13 +34,14 @@ class CreateMemberRequest extends Request
         return [
             'f_name'          => 'required',
             'l_name'          => 'required',
+            'gender'          => 'required|string',
             'organization_id' => 'required|exists:organizations,id'
         ];
     }
 
     public function forbiddenResponse()
     {
-        return $this->redirector->to('scouter/committe')->withErrors('Committe Member limit reached');
+        return $this->redirector->to('scouter/committe')->withErrors('Commitee Member limit reached');
 
     }
 }

@@ -36,6 +36,7 @@ class CreateOrganizationsRequest extends Request
             'chairman_f_name'       => 'required|string',
             'chairman_l_name'       => 'required|string',
             'chairman_mobile_no'    => 'required|string',
+            'chairman_gender'       => 'required|string',
             'tel_no'                => 'required|string',
             'address_line_1'        => 'required|string',
             'address_line_2'        => 'string',
@@ -48,5 +49,4 @@ class CreateOrganizationsRequest extends Request
         return $this->redirector->to('scouter')->withErrors();
 
     }
-
 }

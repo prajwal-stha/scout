@@ -22,6 +22,7 @@ class CoreOrganization extends Model
         'chairman_f_name',
         'chairman_l_name',
         'chairman_mobile_no',
+        'chairman_gender',
         'tel_no',
         'address_line_1',
         'address_line_2',
@@ -34,6 +35,7 @@ class CoreOrganization extends Model
 
     protected $searchable = [
         'columns' => [
+            'core_organizations.registration_no' => 10,
             'core_organizations.name'            => 10,
             'core_organizations.chairman_f_name' => 10,
             'core_organizations.chairman_l_name' => 10,

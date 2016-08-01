@@ -64,7 +64,26 @@
                     <div class="modal-body">
                         <div class="form-group">
                             {{ Form::label('name', 'Name *') }}
-                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name')) }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'Name')) }}
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group scout-selection">
+                            {{ Form::label('gender', 'Gender *') }}
+                            {{ Form::select('gender', array(
+                                    'Male'       => 'Male',
+                                    'Female'     => 'Female',
+                                    'Other'      => 'Other'
+                                ),null, array('class' => 'form-control', 'id' => 'gender')) }}
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group scout-selection">
+                            {{ Form::label('type', 'Type *') }}
+                            {{ Form::select('type', array(
+                                    'Six'              => 'Six',
+                                    'Patrol'           => 'Patrol',
+                                    'Venture Patrol'   => 'Venture Patrol',
+                                    'Crew'             => 'Crew'
+                                ),null, array('class' => 'form-control', 'id' => 'type')) }}
                             <span class="error-message"></span>
                         </div>
 
@@ -72,7 +91,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="modal-team-submit">Update</button>
+                        <button type="submit" class="btn btn-primary" id="modal-team-submit">Update</button>
                     </div>
 
                 {{ Form::close() }}
@@ -100,17 +119,17 @@
                         <div class="form-group">
                             {{ Form::label('f_name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-3">
-                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name')) }}
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'f_name', 'placeholder'  => 'First Name')) }}
                                 <span class="error-message"></span>
                             </div>
 
                             <div class="col-sm-3">
-                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name')) }}
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm_name', 'placeholder' => 'Middle Name')  ) }}
                                 <span class="error-message"></span>
                             </div>
 
                             <div class="col-sm-3">
-                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name')) }}
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l_name', 'placeholder' => 'Last Name')) }}
                                 <span class="error-message"></span>
                             </div>
 
@@ -119,7 +138,7 @@
                         <div class="form-group">
                             {{ Form::label('dob', 'DOB *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9">
-                                {{ Form::text('dob', null, array('class' => 'form-control', 'id' => 'dob', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('dob', null, array('class' => 'form-control', 'id' => 'dob', 'placeholder' => 'Date of Birth', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -127,13 +146,13 @@
                         <div class="form-group">
                             {{ Form::label('entry_date', 'Date of Join *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9">
-                                {{ Form::text('entry_date', null, array('class' => 'form-control', 'id' => 'entry_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('entry_date', null, array('class' => 'form-control', 'id' => 'entry_date', 'placeholder' => 'Date of Join', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 <span class="error-message"></span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            {{ Form::label('position', 'Current Level *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('position', 'Current Badge Position *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9 scout-selection">
                                 {{ Form::select('position',
                                     array(
@@ -142,13 +161,53 @@
                                     ), null, array('class' => 'form-control', 'id' => 'position' )) }}
                                 <span class="error-message"></span>
                             </div>
-
                         </div>
+
+                        <div class="form-group">
+                            {{ Form::label('post', 'Post *', array( 'class' => 'control-label col-sm-3')) }}
+                            <div class="col-sm-9 scout-selection">
+                                @if(!is_null($team_type))
+                                    @if($team_type == 'Six')
+                                        {{ Form::select('post', array(
+                                           'Membership'      => 'Membership',
+                                           'Star'            => 'Star',
+                                           'Sun'             => 'Sun',
+                                           'Moon'            => 'Moon',
+                                        ), null, array('class' => 'form-control', 'id' => 'post' )) }}
+                                    @elseif($team_type == 'Patrol')
+                                        {{ Form::select('post', array(
+                                           'Membership'      => 'Membership',
+                                           'B.P. Peak'       => 'B.P. Peak',
+                                           'Annapurna'       => 'Annapurna',
+                                           'Kangchenjunga'   => 'Kangchenjunga',
+                                           'Everest'         => 'Everest',
+                                           'President'       => 'President'
+                                        ), null, array('class' => 'form-control', 'id' => 'post' )) }}
+                                    @elseif($team_type == 'Venture Patrol')
+                                        {{ Form::select('post', array(
+                                           'Membership'      => 'Membership',
+                                           'Pioneer'         => 'Pioneer',
+                                           'Explorer'        => 'Explorer',
+                                           'Adventure'       => 'Adventure'
+                                        ), null, array('class' => 'form-control', 'id' => 'post' )) }}
+                                    @elseif($team_type == 'Crew')
+                                        {{ Form::select('post', array(
+                                           'Membership'       => 'Membership',
+                                           'Training'         => 'Training',
+                                           'Service'          => 'Service',
+                                           'Leadership'       => 'Leadership'
+                                        ), null, array('class' => 'form-control', 'id' => 'post' )) }}
+                                    @endif
+                                @endif
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             {{ Form::label('passed_date', 'Passed Date *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9">
-                                {{ Form::text('passed_date', null, array('class' => 'form-control', 'id' => 'passed_date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('passed_date', null, array('class' => 'form-control', 'id' => 'passed_date', 'placeholder' => 'Passed Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -156,7 +215,7 @@
                         <div class="form-group">
                             {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9">
-                                {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'size' => '30x5']) }}
+                                {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'placeholder' => 'Notes', 'size' => '30x5']) }}
                                 <span class="error-message"></span>
                             </div>
                         </div>
@@ -188,7 +247,7 @@
         <div class="col-md-9">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Manage Team</h3>
+                    <h3 class="box-title">Manage Unit</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -198,20 +257,59 @@
 
                     <input type="hidden" name="org_id" id="org_id" value="{{ $org_id or null }}">
                     <div class="row{{ $errors->has('name') ? ' has-error' : '' }}">
-                        {{ Form::label('team-name', 'Name *', array( 'class' => 'control-label col-sm-2')) }}
-                        <div class="col-md-7 col-sm-7 col-xs-12">
-                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name')) }}
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            {{ Form::label('team-name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::text('name', null, array('class' => 'form-control', 'id' => 'team-name', 'placeholder' => 'Name')) }}
                             @if ($errors->has('name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('name') }}</strong>
                                 </span>
                             @endif
                         </div>
-                        <button type="submit" class="btn btn-success" id="team-submit"><i
-                                    class="fa fa-plus-circle"></i> Add Team
-                        </button>
+
+
+                        <div class="col-md-4 col-sm-4 col-xs-12 scout-selection">
+                            {{ Form::label('team-gender', 'Gender *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::select('gender', array(
+                                    'Male'       => 'Male',
+                                    'Female'     => 'Female',
+                                    'Other'      => 'Other'
+                                ),null, array('class' => 'form-control', 'id' => 'team-gender')) }}
+                            @if ($errors->has('gender'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('gender') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12 scout-selection">
+                            {{ Form::label('team-type', 'Type *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::select('type', array(
+                                    'Six'              => 'Six',
+                                    'Patrol'           => 'Patrol',
+                                    'Venture Patrol'   => 'Venture Patrol',
+                                    'Crew'             => 'Crew'
+                                ),null, array('class' => 'form-control', 'id' => 'team-type')) }}
+                            @if ($errors->has('type'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('type') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+
+                    <div class="pt15">
+
+                        <div class="pull-right">
+
+                            <button type="submit" class="btn btn-success" id="team-submit"><i
+                                        class="fa fa-plus-circle"></i> Add Unit
+                            </button>
+                        </div>
 
                     </div>
+
 
                     {{ Form::close() }}
 
@@ -222,6 +320,8 @@
                                 <thead align="center">
                                 <tr>
                                     <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -231,6 +331,8 @@
                                         <td><a class="team-name"
                                                href="{{ url( 'scouter/team', [$value->id]) }}">{{ $value->name }}</a>
                                         </td>
+                                        <td>{{ $value->gender }}</td>
+                                        <td>{{ $value->type }}</td>
                                         <td><a class="btn btn-success updateTeam" data-id="{{ $value->id }}">
                                                 <i class="fa fa-pencil"></i></a>
                                             <a class="btn btn-danger deleteTeam" data-id="{{ $value->id }}"
@@ -261,7 +363,7 @@
 
                             {{ Form::label('name', 'Name *', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-3">
-                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'First')) }}
+                                {{ Form::text('f_name', null, array('class' => 'form-control', 'id' => 'name', 'placeholder' => 'First Name')) }}
 
                                 @if ($errors->has('f_name'))
                                     <span class="help-block">
@@ -270,7 +372,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-3">
-                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder' => 'Middle')) }}
+                                {{ Form::text('m_name', null, array('class' => 'form-control', 'id' => 'm-name', 'placeholder' => 'Middle Name')) }}
 
                                 @if ($errors->has('m_name'))
                                     <span class="help-block">
@@ -279,7 +381,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-3">
-                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder' => 'Last')) }}
+                                {{ Form::text('l_name', null, array('class' => 'form-control', 'id' => 'l-name', 'placeholder' => 'Last Name')) }}
 
                                 @if ($errors->has('l_name'))
                                     <span class="help-block">
@@ -294,7 +396,7 @@
                             {{ Form::label('dob', 'DOB *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
-                                {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('dob', null, array('class' => 'form-control date-picker', 'id' => 'dob1', 'placeholder' => 'Date of Birth', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                 @if ($errors->has('dob'))
                                     <span class="help-block">
@@ -311,7 +413,7 @@
                             {{ Form::label('entry_date', 'Date of Join *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
-                                {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('entry_date', null, array('class' => 'form-control date-picker', 'id' => 'entry_date1', 'placeholder' => 'Date of Join', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
                                 @if ($errors->has('entry_date'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('entry_date') }}</strong>
@@ -323,7 +425,7 @@
 
                         <div class="form-group{{ $errors->has('position') ? ' has-error' : '' }}">
 
-                            {{ Form::label('position', 'Current Level *', array( 'class' => 'control-label col-sm-3')) }}
+                            {{ Form::label('position', 'Current Badge Position *', array( 'class' => 'control-label col-sm-3')) }}
 
 
                             <div class="col-sm-9 scout-selection">
@@ -341,12 +443,65 @@
 
                         </div>
 
+                        @if(isset($team))
+
+                            <div class="form-group{{ $errors->has('post') ? ' has-error' : '' }}">
+
+                                {{ Form::label('post-1', 'Post *', array( 'class' => 'control-label col-sm-3')) }}
+
+
+                                <div class="col-sm-9 scout-selection">
+                                    @if(!is_null($team_type))
+                                        @if($team_type == 'Six')
+                                            {{ Form::select('post', array(
+                                               'Membership'      => 'Membership',
+                                               'Star'            => 'Star',
+                                               'Sun'             => 'Sun',
+                                               'Moon'            => 'Moon',
+                                            ), null, array('class' => 'form-control', 'id' => 'post-1' )) }}
+                                        @elseif($team_type == 'Patrol')
+                                            {{ Form::select('post', array(
+                                               'Membership'      => 'Membership',
+                                               'B.P. Peak'         => 'B.P. Peak',
+                                               'Annapurna'       => 'Annapurna',
+                                               'Kangchenjunga'   => 'Kangchenjunga',
+                                               'Everest'         => 'Everest',
+                                               'President'       => 'President'
+                                            ), null, array('class' => 'form-control', 'id' => 'post-1' )) }}
+                                        @elseif($team_type == 'Venture Patrol')
+                                            {{ Form::select('post', array(
+                                               'Membership'      => 'Membership',
+                                               'Pioneer'         => 'Pioneer',
+                                               'Explorer'        => 'Explorer',
+                                               'Adventure'       => 'Adventure'
+                                            ), null, array('class' => 'form-control', 'id' => 'post-1' )) }}
+                                        @elseif($team_type == 'Crew')
+                                            {{ Form::select('post', array(
+                                               'membership'       => 'Membership',
+                                               'training'         => 'Training',
+                                               'service'          => 'Service',
+                                               'leadership'       => 'Leadership'
+                                            ), null, array('class' => 'form-control', 'id' => 'post-1' )) }}
+                                        @endif
+                                    @endif
+
+                                    @if ($errors->has('post'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('post') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+
+                            </div>
+                        @endif
+
                         <div class="form-group{{ $errors->has('passed_date') ? ' has-error' : '' }}">
 
                             {{ Form::label('passed_date', 'Passed Date *', array( 'class' => 'control-label col-sm-3')) }}
 
                             <div class="col-sm-9">
-                                {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
+                                {{ Form::text('passed_date', null, array('class' => 'form-control date-picker', 'id' => 'passed_date1', 'placeholder' => 'Passed Date', 'data-inputmask' => '"alias": "dd/mm/yyyy"')) }}
 
                                 @if ($errors->has('passed_date'))
                                     <span class="help-block">
@@ -361,7 +516,7 @@
 
                             {{ Form::label('note', 'Notes', array( 'class' => 'control-label col-sm-3')) }}
                             <div class="col-sm-9">
-                                {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'size' => '30x5']) }}
+                                {{ Form::textarea('note', null, ['class' => 'form-control', 'id' => 'note', 'placeholder' => 'Notes', 'size' => '30x5']) }}
                             </div>
                         </div>
                     </div>
@@ -376,18 +531,19 @@
                 @if(isset($team_member) && $team_member->count())
 
                     <div class="row">
-                        <hr>
+                        {{--<hr>--}}
                         <div class="col-md-12">
                             <div class="table-responsive">
 
                                 <table class="table table-bordered table-striped" id="team-member-list">
                                     <thead>
                                     <tr>
-                                        <th>Level</th>
+                                        <th>Badge Position</th>
                                         <th>Name</th>
                                         <th>DOB</th>
                                         <th>Date of Join</th>
                                         <th>Passed Date</th>
+                                        <th>Post</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -399,6 +555,7 @@
                                             <td>{{ $value->dob }}</td>
                                             <td>{{ $value->entry_date }}</td>
                                             <td>{{ $value->passed_date }}</td>
+                                            <td>{{ $value->post }}</td>
                                             <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateTeamMember" data-id="{{ $value->id }}">
                                                     <i class="fa fa-pencil"></i></a>
                                                 <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteTeamMember" data-id="{{ $value->id }}"

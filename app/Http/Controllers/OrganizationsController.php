@@ -60,16 +60,17 @@ class OrganizationsController extends Controller
             'address_line_2'        => $request->get('address_line_2'),
             'district_id'           => $request->get('district'),
             'chairman_f_name'       => $request->get('chairman_f_name'),
+            'chairman_m_name'       => $request->get('chairman_m_name'),
             'chairman_l_name'       => $request->get('chairman_l_name'),
             'chairman_mobile_no'    => $request->get('chairman_mobile_no'),
+            'chairman_gender'       => $request->get('chairman_gender'),
             'tel_no'                => $request->get('tel_no'),
             'email'                 => $request->get('email'),
             'user_id'               => Auth::user()->id,
 
         ]);
-//        session()->put('org_id', $org->id);
         return redirect('scouter/scarf')->with([
-            'org_created'   => 'The organizations is succesfully created',
+            'org_created'   => 'The Unit is succesfully created',
             'title'         => 'Nepal Scouts - Scarf'
         ]);
     }
@@ -91,15 +92,17 @@ class OrganizationsController extends Controller
             $org->address_line_2 = $request->has('address_line_2') ? $request->get('address_line_2') : '';
             $org->district_id = $request->get('district');
             $org->chairman_f_name = $request->get('chairman_f_name');
+            $org->chairman_m_name = $request->get('chairman_m_name');
             $org->chairman_l_name = $request->get('chairman_f_name');
             $org->chairman_mobile_no = $request->get('chairman_mobile_no');
+            $org->chairman_gender = $request->get('chairman_gender');
             $org->tel_no = $request->get('tel_no');
             $org->email = $request->get('email');
             $org->save();
         }
 
         return redirect()->back()
-            ->with(['org_update' => 'Organization successfully updated']);
+            ->with(['org_update' => 'Unit successfully updated']);
 
     }
 
@@ -163,10 +166,11 @@ class OrganizationsController extends Controller
                 'f_name'            => $request->get('f_name'),
                 'm_name'            => $request->get('m_name'),
                 'l_name'            => $request->get('l_name'),
+                'gender'            => $request->get('gender'),
                 'organization_id'   => $request->get('organization_id')
             ]);
 
-           return redirect()->back()->with(['member_created' => 'One of the member has been added to your organization']);
+           return redirect()->back()->with(['member_created' => 'One of the member has been added to your unit']);
 
         } else {
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
@@ -235,8 +239,9 @@ class OrganizationsController extends Controller
     public function patchUpdateMember(Request $request)
     {
         $rules = array(
-            'f_name'            => 'required',
-            'l_name'            => 'required',
+            'f_name'            => 'required|string',
+            'l_name'            => 'required|string',
+            'gender'            => 'required|string',
             'organization_id'   => 'required|exists:organizations,id'
         );
 
@@ -302,13 +307,13 @@ class OrganizationsController extends Controller
 
             if (Scouter::where('organization_id', $organization->id)
                     ->where('is_lead', 1)->count() != 1){
-                return redirect('/lead-scouter')->with('lead_not_filled', 'Please Enter the details of the Lead Scouter first.');
+                return redirect('/lead-scouter')->with('lead_not_filled', 'Please Enter the details of the Scout Master first.');
 
             }
 
             if (Scouter::where('organization_id', $organization->id)
                     ->where('is_lead', 0)->count() != 1){
-                return redirect('/scouter')->with('scouter_not_filled', 'Please Enter the details of the Assistant-Lead Scouter');
+                return redirect('/scouter')->with('scouter_not_filled', 'Please Enter the details of the Assistant Scout Master Scouter');
 
             }
 
@@ -318,9 +323,18 @@ class OrganizationsController extends Controller
                         ->where('teams.organization_id', '=', $organization->id);
                 })
                 ->count();
+            $matchMale = array(
+                'organization_id' => $organization->id,
+                'gender'          => 'Male'
+            );
+
+            $matchFemale = array(
+                'organization_id' => $organization->id,
+                'gender'          => 'Female'
+            );
 
 
-            if (Team::where('organization_id', $organization->id)->count() < 4 || $team_member_count < 24) {
+            if (Team::where($matchMale)->count() < 2 ||  Team::where($matchFemale)->count() < 2 || $team_member_count < 24) {
 
                 return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
 

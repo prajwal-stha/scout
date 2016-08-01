@@ -444,8 +444,8 @@
         <div class="left"><img class="logo" src="{{ asset('img/logo.jpg') }}" alt="Nepal Scout"></div>
         <div class="middle">
             <h1>NEPAL SCOUT</h1>
-            <h2>District Scout Office. <span>{{ $district->name }}</span></h2>
-            <h2>District Code <span>{{ $district->district_code }}</span></h2>
+            <h2>District Scout Office: <span>{{ $district->name }}</span></h2>
+            <h2>District Code: <span>{{ $district->district_code }}</span></h2>
         </div>
         <div class="right">
             <div class="form-type clearfix">
@@ -478,19 +478,19 @@
             </div>
         </div>
         <div class="gender">
-            <span> Male/ Female Section</span>
+            <span> Male / Female Section</span>
         </div>
         <div class="form-title"><span>Registration / Renew Form</span></div>
     </div>
     <div class="form">
         <ol>
-            <li><span class="title">School/Institute : </span>
+            <li><span class="title">School / College : </span>
                 <span class="input">{{ $organization->name }}</span>
             </li>
             <li class="clearfix">
 
                 <div class="col-2">
-                    <span class="title">Principal/Chairman Name : </span>
+                    <span class="title">Principal / Chairperson Name : </span>
                     <span class="input">{{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span>
                 </div>
                 <div class="col-2">
@@ -505,18 +505,18 @@
                     <span class="input">{{ $organization->address_line_1 }} {{ $organization->address_line_2 }}</span>
                 </div>
                 <div class="col-2">
-                    <span class="title">Phone NO. : </span>
+                    <span class="title">Phone No. : </span>
                     <span class="input">{{ $organization->tel_no }}</span>
                 </div>
 
             </li>
             <li class="clearfix">
                 <div class="col-2">
-                    <span class="title">Email (School/Institute)  </span>
+                    <span class="title">Email (School / College)  </span>
                     <span class="input">{{ $organization->email}}</span>
                 </div>
                 <div class="col-2">
-                    <span class="title">Email (Scouter)</span>
+                    <span class="title">Email (Scout Master)</span>
                     <span class="input">{{ $leadScouter->email or '-' }}</span>
                 </div>
 
@@ -525,7 +525,7 @@
                 <div class="title">Committee Member</div>
                 <div class="member-list clearfix">
                     <div>
-                        <div>Chairman: <span class="input">{{ $organization->chairman_f_name }} {{ $organization->chairman_l_name }}</span></div>
+                        <div>Chairperson: <span class="input">{{ $organization->chairman_f_name }}{{ $organization->chairman_m_name or '' }} {{ ' ' .$organization->chairman_l_name }}</span></div>
                     </div>
                     @if($member)
                         @foreach($member as $value)
@@ -545,15 +545,15 @@
                         <tr>
                             <th></th>
                             <th>Full Name</th>
-                            <th>Permission letter / Date</th>
-                            <th>B.T.C/ P.T.C. / Date</th>
-                            <th>Advance / Date</th>
-                            <th>A.L.T / Date</th>
-                            <th>LT / Date</th>
+                            <th>Permission Letter No. / Date</th>
+                            <th>B.T.C/ P.T.C. No. / Date</th>
+                            <th>Advance No. / Date</th>
+                            <th>Ceritificate No. / Date</th>
+                            <th>Diploma No. / Date</th>
                         </tr>
                         @if($leadScouter)
                             <tr>
-                                <th>Lead Scouter</th>
+                                <th>Scout Master</th>
                                 <td>{{ $leadScouter->name }}</td>
                                 <td>{{ $leadScouter->permission or '-' }}  {{ $leadScouter->permission_date or '-' }}</td>
                                 <td>{{ $leadScouter->btc_no or '-' }}  {{ $leadScouter->btc_date or '-' }}</td>
@@ -564,7 +564,7 @@
                         @endif
                         @if($scouter)
                             <tr>
-                                <th>Assistant-Lead Scouter</th>
+                                <th>Assistant Scout Master</th>
                                 <td>{{ $scouter->name }}</td>
                                 <td>{{ $scouter->permission or '-' }}  {{ $scouter->permission_date or '-' }}</td>
                                 <td>{{ $scouter->btc_no or '-' }}  {{ $scouter->btc_date or '-' }}</td>
@@ -583,16 +583,16 @@
                     <?php $i = 1; ?>
 
                     <li>
-                        <div class="title">{{ $value->name }} </div>
+                        <div class="title">{{ $value->name.' : ' }} </div>
                         <div class="table-wrap">
                             <table>
                                 <tr>
                                     <th>SN.</th>
-                                    <th>Position</th>
+                                    <th>Current Badge Position</th>
+                                    <th>Post</th>
                                     <th>Name</th>
                                     <th>DOB</th>
                                     <th>Entry Date</th>
-                                    <th>Current Position</th>
                                     <th>Passed Date</th>
                                     <th>Remark</th>
                                 </tr>
@@ -606,10 +606,10 @@
                                     <tr>
                                         <td>{{ $i }}</td>
                                         <td>{{ $member->position }} </td>
+                                        <td>{{ $member->post }} </td>
                                         <td>{{ $member->f_name }} {{ $member->m_name }} {{ $member->l_name  }}</td>
                                         <td>{{ $member->dob }}</td>
                                         <td>{{ $member->entry_date }}</td>
-                                        <td>{{ $member->position }}</td>
                                         <td>{{ $member->passed_date }}</td>
                                         <td>{{ $member->note }}</td>
                                     </tr>
@@ -655,7 +655,7 @@
 
                         <tr>
 
-                            <th>Organization Commitee Member</th>
+                            <th>Unit Commitee Member</th>
                             <td>{{ $member_no }}</td>
                             <td>{{ 'Rs. ' . $rates->committee_members_rate }}</td>
                             <td>{{ 'Rs. ' . ($member_no * $rates->committee_members_rate) }}</td>
@@ -679,7 +679,7 @@
         </div>
         <div>
             <span>............................................</span>
-            District coordinator
+            District Coordinator
         </div>
         <div>
             <span>............................................</span>

@@ -18,7 +18,7 @@
                                     <thead>
                                     <tr>
                                         <th>Type</th>
-                                        <th>Organizations</th>
+                                        <th>Units</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -32,7 +32,7 @@
                                 @elseif($search_type == 'member')
                                     <thead>
                                         <tr>
-                                            <th>Organizations</th>
+                                            <th>Units</th>
                                             <th>Name</th>
                                         </tr>
                                     </thead>
@@ -48,7 +48,7 @@
                                 @elseif($search_type == 'scouter')
                                     <thead>
                                     <tr>
-                                        <th>Organizations</th>
+                                        <th>Units</th>
                                         <th>Name</th>
                                         <th>Position</th>
                                     </tr>
@@ -66,9 +66,9 @@
                                 @elseif($search_type == 'team')
                                     <thead>
                                     <tr>
-                                        <th>Organizations</th>
-                                        <th>Team</th>
-                                        <th>Team Member</th>
+                                        <th>Unit</th>
+                                        <th>Units</th>
+                                        <th>Unit Member</th>
                                     </tr>
                                     </thead>
                                     <tbody>

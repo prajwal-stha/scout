@@ -8,7 +8,7 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Declined Organizations</h3>
+                        <h3 class="box-title">@if(count($organizations) > 0) {{ 'Declined Units' }}@else {{ 'No Records Found' }} @endif</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
@@ -34,7 +34,7 @@
                                         <th><input name="action_to_all" type="checkbox" class="check-all"></th>
                                         <th>Name</th>
                                         <th>Type</th>
-                                        <th>Chairman</th>
+                                        <th>Chairperson</th>
                                         <th>District</th>
                                         <th>Contact No.</th>
                                         <th>Action</th>

@@ -60,11 +60,11 @@ class ScouterController extends Controller
         $data['district'] = District::all();
         $data['title']    = 'Nepal Scout - Organizations';
         $org = Organization::where('user_id', $this->user->id)->first();
-//        if(session()->has('org_id')){
+
         if($org){
-//            $data['org_id']       = session()->get('org_id');
+
             $data['org_id']       = $org->id;
-//            $data['organization'] = Organization::findOrFail(session()->get('org_id'));
+
             $data['organization'] = $org;
         }
         return view('scouter.organization')->with($data);
@@ -98,9 +98,16 @@ class ScouterController extends Controller
 
         if($org){
             $data['org_id']       = $org->id;
-//            if(Member::where( 'organization_id', session()->get('org_id'))->count() > 0 ) {
-//                $data['member'] = Member::where('organization_id', session()->get('org_id'))->get();
-//            }
+            if(Member::where( 'organization_id', $org->id)->count() == 0) {
+
+                Member::create([
+                    'f_name' => $org->chairman_f_name,
+                    'm_name' => $org->chairman_m_name,
+                    'l_name' => $org->chairman_l_name,
+                    'organization_id' => $org->id
+                ]);
+            }
+
             if(Member::where( 'organization_id', $org->id)->count() > 0){
                 $data['member'] = Member::where('organization_id', $org->id)->get();
             }
@@ -112,6 +119,8 @@ class ScouterController extends Controller
         }
 
     }
+
+
 
     /**
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -197,6 +206,7 @@ class ScouterController extends Controller
                     if ($data['teamId']) {
                         $data['team_member'] = TeamMember::where('team_id', $data['teamId'])->get();
                         $data['team_name']   = Team::findOrFail($data['teamId'])->name;
+                        $data['team_type']   = Team::findOrFail($data['teamId'])->type;
                     }
                 }
 
@@ -207,6 +217,7 @@ class ScouterController extends Controller
                     $data['team_member'] = TeamMember::where('team_id', $teamId)->get();
                     $data['teamId']      = $teamId;
                     $data['team_name']   = Team::findOrFail($teamId)->name;
+                    $data['team_type']   = Team::findOrFail($teamId)->type;
                 }
 
             }
@@ -240,11 +251,21 @@ class ScouterController extends Controller
                         ->where('teams.organization_id', '=', $org->id);
                 })
                 ->count();
+            $matchMale = array(
+                'organization_id' => $org->id,
+                'gender'          => 'Male'
+            );
+
+            $matchFemale = array(
+                'organization_id' => $org->id,
+                'gender'          => 'Female'
+            );
 
 
-            if (Team::where('organization_id', $org->id)->count() < 4 || $team_member_count < 24) {
+            if (Team::where($matchMale)->count() < 2 ||  Team::where($matchFemale)->count() < 2 || $team_member_count < 24) {
 
-                return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams and at least six members for each teams before we can continue.');
+
+                return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams: two of Male and two of Female and at least six members for each teams before you can continue.');
 
             }
             $data['organization'] = $org;
@@ -260,43 +281,6 @@ class ScouterController extends Controller
 
         return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
 
-
-
-        
-    }
-    
-    // Create assistant scouter
-    /**
-     * @param CreateScouterRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function postCreate(CreateScouterRequest $request)
-    {
-
-        if($request->has('org_id')) {
-
-            Scouter::create([
-                'name'              => $request->get('name'),
-                'email'             => $request->get('email'),
-                'permission'        => $request->get('permission'),
-                'permission_date'   => $request->has('permission_date') ? formatDate($request->get('permission_date')) : null,
-                'btc_no'            => $request->get('btc_no'),
-                'btc_date'          => $request->has('btc_date') ? formatDate($request->get('btc_date')) : null,
-                'advance_no'        => $request->get('advance_no'),
-                'advance_date'      => $request->has('advance_date') ? formatDate($request->get('advance_date')) : null,
-                'alt_no'            => $request->get('alt_no'),
-                'alt_date'          => $request->has('alt_date') ? formatDate($request->get('alt_date')) : null,
-                'lt_no'             => $request->get('lt_no'),
-                'lt_date'           => $request->has('lt_date') ? formatDate($request->get('lt_date')) : null,
-                'organization_id'   => $request->get('org_id')
-            ]);
-            return redirect()->back()->with(['scouter_created' => 'The assistant scouter has been created.']);
-        } else {
-
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
-
-        }
-        
     }
 
 
@@ -324,7 +308,7 @@ class ScouterController extends Controller
                 'is_lead'           => true,
                 'organization_id'   => $request->get('org_id')
             ]);
-            return redirect()->back()->with(['lead_created' => 'The lead scouter has been created.']);
+            return redirect()->back()->with(['lead_created' => 'The Scout Master scouter has been created.']);
         } else {
 
             return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
@@ -332,34 +316,36 @@ class ScouterController extends Controller
         }
     }
 
-
+    // Create assistant scouter
     /**
-     * @param UpdateScouterRequest $request
-     * @param $id
+     * @param CreateScouterRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function patchScouter(UpdateScouterRequest $request, $id)
+    public function postCreate(CreateScouterRequest $request)
     {
-        if($id){
-            $scouter = Scouter::findOrFail($id);
-            if($scouter){
-                $scouter->name              = $request->get('name');
-                $scouter->email             = $request->get('email');
-                $scouter->permission        = $request->get('permission');
-                $scouter->permission_date   = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
-                $scouter->btc_no            = $request->get('btc_no');
-                $scouter->btc_date          = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
-                $scouter->advance_no        = $request->get('advance_no');
-                $scouter->advance_date      = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
-                $scouter->alt_no            = $request->get('alt_no');
-                $scouter->alt_date          = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
-                $scouter->lt_no             = $request->get('lt_no');
-                $scouter->lt_date           = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
-                $scouter->save();
-            }
 
-            return redirect()->back()
-                ->with(['scouter_updated' => 'Assistant Lead Scouter successfully updated']);
+        if($request->has('org_id')) {
+
+            Scouter::create([
+                'name'              => $request->get('name'),
+                'email'             => $request->get('email'),
+                'permission'        => $request->get('permission'),
+                'permission_date'   => $request->has('permission_date') ? formatDate($request->get('permission_date')) : null,
+                'btc_no'            => $request->get('btc_no'),
+                'btc_date'          => $request->has('btc_date') ? formatDate($request->get('btc_date')) : null,
+                'advance_no'        => $request->get('advance_no'),
+                'advance_date'      => $request->has('advance_date') ? formatDate($request->get('advance_date')) : null,
+                'alt_no'            => $request->get('alt_no'),
+                'alt_date'          => $request->has('alt_date') ? formatDate($request->get('alt_date')) : null,
+                'lt_no'             => $request->get('lt_no'),
+                'lt_date'           => $request->has('lt_date') ? formatDate($request->get('lt_date')) : null,
+                'organization_id'   => $request->get('org_id')
+            ]);
+            return redirect()->back()->with(['scouter_created' => 'The Assistant Scout Master has been created.']);
+        } else {
+
+            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+
         }
 
     }
@@ -391,9 +377,41 @@ class ScouterController extends Controller
             }
 
             return redirect()->back()
-                ->with(['lead_scouter_updated' => 'Lead Scouter successfully updated']);
+                ->with(['lead_scouter_updated' => 'Scout Master successfully updated']);
         }
     }
+
+    /**
+     * @param UpdateScouterRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function patchScouter(UpdateScouterRequest $request, $id)
+    {
+        if($id){
+            $scouter = Scouter::findOrFail($id);
+            if($scouter){
+                $scouter->name              = $request->get('name');
+                $scouter->email             = $request->get('email');
+                $scouter->permission        = $request->get('permission');
+                $scouter->permission_date   = $request->has('permission_date') ? formatDate($request->get('permission_date')) : null;
+                $scouter->btc_no            = $request->get('btc_no');
+                $scouter->btc_date          = $request->has('btc_date') ? formatDate($request->get('btc_date')) : null;
+                $scouter->advance_no        = $request->get('advance_no');
+                $scouter->advance_date      = $request->has('advance_date') ? formatDate($request->get('advance_date')) : null;
+                $scouter->alt_no            = $request->get('alt_no');
+                $scouter->alt_date          = $request->has('alt_date') ? formatDate($request->get('alt_date')) : null;
+                $scouter->lt_no             = $request->get('lt_no');
+                $scouter->lt_date           = $request->has('lt_date') ? formatDate($request->get('lt_date')) : null;
+                $scouter->save();
+            }
+
+            return redirect()->back()
+                ->with(['scouter_updated' => 'Assistant Scout Master successfully updated']);
+        }
+
+    }
+
 
     /**
      * @return mixed
@@ -446,10 +464,14 @@ class ScouterController extends Controller
     {
         if($id){
             $user = User::findOrFail($id);
+            if($user){
+            $user->f_name            = $request->get('f_name');
+            $user->l_name            = $request->get('l_name');
+            $user->password          = bcrypt($request->get('password'));
 
-            $input = $request->all();
+            $user->save();
+        }
 
-            $user->fill($input)->save();
 
             return redirect()->back()
                 ->with(['user_update' => 'User successfully updated']);

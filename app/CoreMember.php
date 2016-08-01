@@ -11,7 +11,7 @@ class CoreMember extends Model
     use SearchableTrait;
     protected $table = 'core_organization_commitee_members';
 
-    protected $fillable = ['original_id', 'f_name', 'm_name', 'l_name', 'organization_id'];
+    protected $fillable = ['original_id', 'f_name', 'm_name', 'l_name', 'gender', 'organization_id'];
 
     protected $searchable = [
         'columns' => [

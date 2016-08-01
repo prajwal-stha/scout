@@ -20,7 +20,7 @@ class Team extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'organization_id'];
+    protected $fillable = ['name', 'gender', 'type', 'organization_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

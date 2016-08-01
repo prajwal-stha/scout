@@ -2,7 +2,7 @@
     <ul class="nav nav-pills nav-stacked">
 
         <li{!! Request::is('admin/view-organization/*') ? ' class="active"': '' !!}>
-            <a href="{{ url('admin/view-organization', [$organization->id]) }}"><i class="fa fa-institution"></i> Organization Detail
+            <a href="{{ url('admin/view-organization', [$organization->id]) }}"><i class="fa fa-institution"></i> Unit Detail
             </a>
         </li>
 
@@ -12,13 +12,13 @@
 
 
         <li{!! Request::is('admin/lead-scouter/*') ? ' class="active"': '' !!}>
-            <a href="{{ url('admin/lead-scouter', [$organization->id]) }}"><i class="fa fa-user-plus"></i>Lead Scouter Detail</a>
+            <a href="{{ url('admin/lead-scouter', [$organization->id]) }}"><i class="fa fa-user-plus"></i>Scout Master Detail</a>
         </li>
 
 
 
         <li{!! Request::is('admin/scouter/*')  ? ' class="active"': '' !!}>
-            <a href="{{ url('admin/scouter', [$organization->id]) }}"><i class="fa fa-user-plus"></i> Assistant-Lead Scouter Detail</a>
+            <a href="{{ url('admin/scouter', [$organization->id]) }}"><i class="fa fa-user-plus"></i> Assistant Scout Master Detail</a>
         </li>
 
         <li{!! Request::is('admin/teams/*') ? ' class="active"': '' !!}>

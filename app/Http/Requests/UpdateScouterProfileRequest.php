@@ -30,7 +30,7 @@ class UpdateScouterProfileRequest extends Request
         return [
             'f_name'    => 'required|max:255',
             'l_name'    => 'required|max:255',
-            'password'  => 'min:6|confirmed',
+            'password'  => 'somtimes|required|min:6|confirmed',
         ];
     }
 }
