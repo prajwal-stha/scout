@@ -242,6 +242,8 @@ $(document).ready(function(){
         if (id) {
             $.get(url).done(function (data) {
                 $('#name').val(data.team.name);
+                $('#gender').val(data.team.gender);
+                $('#type').val(data.team.type);
                 $('#update-team-org-id').val(data.team.organization_id);
                 $('#update-team-id').val(id);
             });
@@ -275,6 +277,8 @@ $(document).ready(function(){
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#update-team-id').val(),
                 "name": $('#name').val(),
+                "gender": $('#gender').val(),
+                "type": $('#type').val(),
                 "organization_id": $('#update-team-org-id').val()
             },
             dataType: "json"
@@ -349,6 +353,7 @@ $(document).ready(function(){
                 $('#dob').val(data.teamMember.dob);
                 $('#entry_date').val(data.teamMember.entry_date);
                 $('#position').val(data.teamMember.position);
+                $('#post').val(data.teamMember.post);
                 $('#passed_date').val(data.teamMember.passed_date);
                 $('#note').val(data.teamMember.note);
             });
@@ -385,6 +390,7 @@ $(document).ready(function(){
                 "dob": $('#dob').val(),
                 "entry_date": $('#entry_date').val(),
                 "position": $('#position').val(),
+                "post": $('#post').val(),
                 "passed_date": $('#passed_date').val(),
                 "note": $('#note').val(),
                 "team_id": $('#team_id').val()
@@ -650,6 +656,8 @@ $(document).ready(function(){
         if (id) {
             $.get(url).done(function (data) {
                 $('#name').val(data.team.name);
+                $('#gender').val(data.team.gender);
+                $('#type').val(data.team.type);
                 $('#update-team-org-id').val(data.team.organization_id);
                 $('#update-team-id').val(id);
             });
@@ -683,6 +691,8 @@ $(document).ready(function(){
                 "_token": $(this).find('input[name=_token]').val(),
                 "id": $('#update-team-id').val(),
                 "name": $('#name').val(),
+                "gender": $('#gender').val(),
+                "type": $('#type').val(),
                 "organization_id": $('#update-team-org-id').val()
             },
             dataType: "json"
@@ -850,6 +860,7 @@ $(document).ready(function(){
                 $('#dob').val(data.teamMember.dob);
                 $('#entry_date').val(data.teamMember.entry_date);
                 $('#position').val(data.teamMember.position);
+                $('#post').val(data.teamMember.post);
                 $('#passed_date').val(data.teamMember.passed_date);
                 $('#note').val(data.teamMember.note);
             });
@@ -886,6 +897,7 @@ $(document).ready(function(){
                 "dob": $('#dob').val(),
                 "entry_date": $('#entry_date').val(),
                 "position": $('#position').val(),
+                "post": $('#post').val(),
                 "passed_date": $('#passed_date').val(),
                 "note": $('#note').val(),
                 "team_id": $('#team_id').val()

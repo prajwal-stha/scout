@@ -1419,7 +1419,7 @@ class AdminController extends Controller
     {
 
         $rules = array(
-            'name'              => 'required|unique:core_teams,name,'.$request->get('original_id'),
+            'name'              => 'required|unique:core_teams,name,NULL,organization_id'.$request->get('original_id'),
             'gender'            => 'required|string',
             'type'              => 'required|string',
             'organization_id'   => 'required|exists:core_organizations,original_id'
@@ -1570,7 +1570,7 @@ class AdminController extends Controller
             'original_id'    => generateUniqueId()
         ]);
 
-        return redirect()->back()->with(['team_member_created' => 'One of the unit member has been created']);
+        return redirect()->back()->with(['team_member_created' => 'One of the unitp member has been created']);
 
     }
 

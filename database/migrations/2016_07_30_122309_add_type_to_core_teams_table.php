@@ -13,7 +13,7 @@ class AddTypeToCoreTeamsTable extends Migration
     public function up()
     {
         Schema::table('core_teams', function(Blueprint $table){
-            $table->enum('gender', ['male', 'female', 'other'])->after('name');
+            $table->enum('gender', ['Male', 'Female', 'Other'])->after('name');
             $table->enum('type', ['Six', 'Patrol', 'Venture Capital', 'Crew'])->after('gender');
 
         });
