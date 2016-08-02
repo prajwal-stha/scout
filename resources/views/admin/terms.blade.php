@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-group{{ $errors->has('terms') ? ' has-error' : '' }}">
                                 <label for="create-terms">Terms</label>
-                                <textarea class="textarea terms-textarea" id="create-terms" name="terms">{{ old('terms') }}</textarea>
+                                <textarea rows="15" class="textarea terms-textarea form-control" id="create-terms" name="terms">{{ old('terms') }}</textarea>
                                 @if ($errors->has('terms'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('terms') }}</strong>

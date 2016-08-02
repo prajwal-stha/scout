@@ -230,11 +230,11 @@ class AuthController extends Controller
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
-        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
-            $m->from('noreply@nepalscout.org.np', 'Your Application');
-
-            $m->to($user->email, $user->name)->subject('Email Confirmation');
-        });
+//        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
+//            $m->from('noreply@nepalscout.org.np', 'Your Application');
+//
+//            $m->to($user->email, $user->name)->subject('Email Confirmation');
+//        });
 
         return $user;
 
