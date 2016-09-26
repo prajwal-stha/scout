@@ -81,6 +81,7 @@
                             {{ Form::open(['url' => 'organizations/submit', 'method' => 'PATCH', 'class' => 'submit-membership']) }}
                                 <input type="hidden" name="organization_id" id="org_id" value="{{ $organization->id or null }}">
                                 <button type="submit" class="btn btn-primary final-submit"></i> Submit For Review</button>
+
                             {{ Form::close() }}
 
                         @endif

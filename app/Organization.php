@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Carbon\Carbon;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -82,7 +82,8 @@ class Organization extends Model
 
                 $value = $value[2] . '/' . $value[1] . '/' . $value[0];
 
-                return $this->attributes['registration_date'] = Carbon::parse($value);
+                return $this->attributes['registration_date'] = $value;
+
             }
 
             return '';
