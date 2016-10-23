@@ -47,6 +47,7 @@ class AuthController extends Controller
 
     protected $loginPath = '/login';
 
+    protected $redirectPath = 'admin';
 
     /**
      * Create a new authentication controller instance.
@@ -241,12 +242,13 @@ class AuthController extends Controller
     }
 
     protected function authenticated(Request $request, User $user){
-        if($user->verified == 1) {
+        if($user->verified == 1 ) {
+
             if ($user->level == 1) {
-                return redirect()->intended('admin');
+                return redirect('admin');
             }
             if ($user->level == 0) {
-                return redirect()->intended('scouter');
+                return redirect('scouter');
             }
         } else {
             return view('auth.login')->with(['not_verified', 'Please verify your email address before you can login.']);

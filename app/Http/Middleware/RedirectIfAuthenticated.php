@@ -19,7 +19,8 @@ class RedirectIfAuthenticated
     {
         if (Auth::check() && Auth::user()->level == 1) {
             return redirect()->intended('admin');
-        } elseif (Auth::check() && Auth::user()->level == 0) {
+        }
+        elseif (Auth::check() && Auth::user()->level == 0) {
             return redirect()->intended('scouter');
         }
         return $next($request);

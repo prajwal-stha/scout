@@ -31,7 +31,6 @@ use App\Term;
 
 use DB;
 
-use PDF;
 
 /**
  * Class ScouterController
@@ -48,7 +47,6 @@ class ScouterController extends Controller
     public function __construct(Guard $auth){
 
         $this->middleware( ['auth', 'xss'] );
-
 
         $this->user = $auth->user();
 
@@ -69,6 +67,7 @@ class ScouterController extends Controller
 
             $data['organization'] = $org;
         }
+
         return view('scouter.organization')->with($data);
 
     }
@@ -286,10 +285,10 @@ class ScouterController extends Controller
     }
 
 
-    // create lead scouter
     /**
      * @param CreateScouterRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * create lead scouter
      */
     public function postCreateLeadScouter(CreateScouterRequest $request)
     {
@@ -318,10 +317,10 @@ class ScouterController extends Controller
         }
     }
 
-    // Create assistant scouter
     /**
      * @param CreateScouterRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * Create assistant scouter
      */
     public function postCreate(CreateScouterRequest $request)
     {
@@ -455,7 +454,7 @@ class ScouterController extends Controller
        if (Auth::user()->id == User::find($id)->id){
            $data['title'] = 'Nepal Scout - Profile';
            $data['user']  = User::findOrFail($id);
-           if($data['user']->verified == 1){
+           if($data['user']->isVerified()){
                return view('scouter.profile')->with( $data );
            }
        }

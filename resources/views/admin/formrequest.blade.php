@@ -14,6 +14,7 @@
                 <!-- form start -->
 
                 @if($organizations->count() > 0)
+
                     <div class="box-body">
                         <table id="form-requests" class="table table-bordered table-striped">
                             <thead>
@@ -26,11 +27,12 @@
                             <tbody id="form-requests">
 
                             @foreach( $organizations as $value)
+
                                 <tr>
                                     <td><a data-toggle="tooltip" title="VIEW UNIT" class="team-name"
                                            href="{{ url('admin/view-organization', [$value->id]) }}">{{ $value->name }}</a>
                                     </td>
-                                    <td><a data-toggle="tooltip" title="VIEW USER" href="{{ url('admin/profile', [$value->user->id]) }}">{{ $value->user->f_name }} {{ $value->user->l_name  }}</a></td>
+                                    <td><a data-toggle="tooltip" title="VIEW USER" href="{{ url('admin/profile', [$value->user_id]) }}"></a></td>
                                     <td>
                                         <a data-toggle="tooltip" title="VIEW" class="btn btn-primary" href="{{ url('admin/view-organization', [$value->id]) }}"><i
                                                     class="fa fa-eye"></i></a>

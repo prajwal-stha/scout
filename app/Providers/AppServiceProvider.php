@@ -15,12 +15,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $org = Organization::whereNull('registration_no')
-            ->where('is_declined', false)
-            ->where('is_submitted', true)
-            ->count();
+//        if(!app()->runningInConsole() ) {
 
-        view()->share('unregistered_registration_no', $org);
+            $org = Organization::whereNull('registration_no')
+                ->where('is_declined', false)
+                ->where('is_submitted', true)
+                ->count();
+
+            view()->share('unregistered_registration_no', $org);
+
+//        }
 
     }
 

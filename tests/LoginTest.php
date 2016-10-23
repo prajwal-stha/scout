@@ -13,6 +13,6 @@ class LoginTest extends TestCase
             ->type('admin' , 'username')
             ->type('123goldkist', 'password')
             ->press('Sign In')
-            ->seePageIs('/admin');
+            ->seePageIs('admin');
     }
 }

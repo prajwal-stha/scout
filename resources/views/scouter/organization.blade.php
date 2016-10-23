@@ -3,8 +3,6 @@
 
 @section('content')
 
-
-
     <div class="row">
         <div class="col-md-3">
 
@@ -54,6 +52,7 @@
                     {{ Form::open(['url' => 'organizations/create', 'class' => 'form-horizontal', 'id' =>'organization-create-form']) }}
 
                 @endif
+
                 <div class="box-body">
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         {{ Form::label('organization-name', 'Name of Unit *', array( 'class' => 'control-label col-sm-3')) }}
