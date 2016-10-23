@@ -10,9 +10,9 @@ class LoginTest extends TestCase
     public function test_login(){
 
         $this->visit('/')
-            ->type('admin' , 'username')
+            ->type('prs0325' , 'username')
             ->type('123goldkist', 'password')
             ->press('Sign In')
-            ->seePageIs('admin');
+            ->seePageIs('scouter');
     }
 }

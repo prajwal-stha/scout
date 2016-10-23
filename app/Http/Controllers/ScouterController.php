@@ -59,9 +59,9 @@ class ScouterController extends Controller
     public function getIndex(){
         $data['district'] = District::all();
         $data['title']    = 'Nepal Scout - Organizations';
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::where('user_id', $this->user->id)->get();
 
-        if($org){
+        if(!$org){
 
             $data['org_id']       = $org->id;
 

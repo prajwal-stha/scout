@@ -69,7 +69,7 @@ class AuthController extends Controller
 
     protected function getFailedLoginMessage()
     {
-        return "It seems like you haven't registered with us or verified your email address.";
+        return "It seems like you haven't registered with us or not verified your email address with us.";
     }
 
 
@@ -231,11 +231,11 @@ class AuthController extends Controller
             'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
-//        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
-//            $m->from('noreply@nepalscout.org.np', 'Your Application');
-//
-//            $m->to($user->email, $user->name)->subject('Email Confirmation');
-//        });
+        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
+            $m->from('noreply@nepalscout.org.np', 'Your Application');
+
+            $m->to($user->email, $user->name)->subject('Email Confirmation');
+        });
 
         return $user;
 

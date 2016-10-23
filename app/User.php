@@ -91,7 +91,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        if($this->admin()){
+        if($this->level == 1){
             return true;
         }
         return false;
@@ -102,7 +102,7 @@ class User extends Authenticatable
      */
     public function isPublic()
     {
-        if($this->public()){
+        if($this->level == 0){
             return true;
         }
         return false;
@@ -114,7 +114,7 @@ class User extends Authenticatable
      */
     public function isVerified()
     {
-        if($this->verified()){
+        if($this->verified == 1){
             return true;
         }
         return false;

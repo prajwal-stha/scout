@@ -121,7 +121,8 @@
                     </a>
                 </li>
 
-                <li class="treeview">
+                <li class="treeview {!! Request::path() == 'admin/approved-organizations' ||
+                Request::path() == 'admin/declined-organizations' ||  Request::path() == 'scouter/index' ? 'active': '' !!}">
                     <a href="#">
                         <i class="fa fa-institution"></i> <span>Unit</span>
                         <i class="fa fa-angle-left pull-right"></i>
@@ -149,6 +150,18 @@
                     <a href="{{ url('term') }}">
                         <i class="fa fa-tasks"></i> <span>Terms & Conditions</span>
                     </a>
+                </li>
+
+                <li class="treeview {!! Request::path() == 'admin/users' ||
+                Request::path() == 'admin/add-users' ? 'active': '' !!}">
+                    <a href="#">
+                        <i class="fa fa-user"></i> <span>Users</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('admin/users') }}">All Users</a></li>
+                        <li><a href="{{ url('admin/add-users') }}">Add New</a></li>
+                    </ul>
                 </li>
             </ul>
         </section>

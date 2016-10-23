@@ -118,8 +118,8 @@
                             {{ Form::text('address_line_2', null, array('class' => 'form-control', 'id' => 'address_line_2', 'placeholder' => 'Address Line 2')) }}
                             @if ($errors->has('address_line_2'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('address_line_2') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('address_line_2') }}</strong>
+                                </span>
                             @endif
                         </div>
 

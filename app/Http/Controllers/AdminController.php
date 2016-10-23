@@ -15,6 +15,7 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Requests\CreateApprovedTeamMemberRequest;
 use App\Http\Requests\CreateAdminTeamRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\CreateUserRequest;
 
 use App\Http\Controllers\Controller;
 
@@ -43,6 +44,7 @@ use App\Term;
 
 use DB;
 use Validator;
+use Mail;
 
 /**
  * Class AdminController
@@ -116,9 +118,40 @@ class AdminController extends Controller
     public function getUsers()
     {
         $data['title']  = 'Nepal Scout - All Users';
-        $data['user']   = User::verified()->public()->get();
+        $data['user']   = User::all();
         return view('admin.user')->with( $data );
         
+    }
+
+    public function getAddUsers()
+    {
+        $data['title']  = 'Nepal Scout - All Users';
+        return view('admin.add-user')->with( $data );
+
+    }
+
+    public function postAddUsers(CreateUserRequest $request)
+    {
+        $user = User::create([
+            'f_name'   => $request->get('f_name'),
+            'l_name'   => $request->get('l_name'),
+            'email'    => $request->get('email'),
+            'token'    => generateUniqueId(),
+            'level'    => $request->get('level'),
+            'username' => $request->get('username'),
+            'password' => bcrypt($request->get('password'))
+        ]);
+
+        Mail::send('auth.emails.confirm', ['user' => $user], function ($m) use ($user) {
+            $m->from('noreply@nepalscout.org.np', 'Your Application');
+
+            $m->to($user->email, $user->name)->subject('Email Confirmation');
+        });
+
+        return redirect('admin/users')->with([
+            'user_created'   => 'The User is succesfully created.',
+        ]);
+
     }
 
     /**
@@ -133,7 +166,7 @@ class AdminController extends Controller
         if ($user){
             User::destroy($id);
         }
-        return redirect('admin')->with(['user_deleted' => 'One of the user have been blocked']);
+        return redirect('admin/users')->with(['user_deleted' => 'One of the user have been blocked.']);
         
     }
 
@@ -178,7 +211,6 @@ class AdminController extends Controller
      */
     public function getViewOrganization($id = NULL)
     {
-
         $data['organization'] = Organization::findOrFail($id);
         $data['district']     = District::all();
         $data['title']        = 'Nepal Scout';

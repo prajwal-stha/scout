@@ -7,9 +7,29 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">All Registered Users</h3>
+                        <h3 class="box-title">All Users</h3>
                     </div><!-- /.box-header -->
-                    <!-- form start -->
+
+                    @if(Session::has('user_created'))
+
+                        <div class="alert alert-success alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4><i class="icon fa fa-check"></i> Great!</h4>
+                            {{ Session::get('user_created') }}
+                        </div>
+
+                    @endif
+
+                    @if(Session::has('user_deleted'))
+
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h4><i class="icon fa fa-ban"></i> Great!</h4>
+                            {{ Session::get('user_deleted') }}
+                        </div>
+
+                    @endif
+
 
                     @if(count($user) > 0)
                         <div class="box-body">
@@ -21,6 +41,8 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>User Name</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody id="list-registered-users">
@@ -30,6 +52,8 @@
                                                 <td><a data-toggle="tooltip" title="VIEW" href="{{ url('admin/profile', [$value->id]) }}">{{ $value->f_name }} {{ $value->l_name }}</a></td>
                                                 <td>{{ $value->email }}</td>
                                                 <td>{{ $value->username }}</td>
+                                                <td>{{ $value->isAdmin() ? 'Administrator' : 'Public' }}</td>
+                                                <td>{!! $value->isVerified() ? '<span class="label label-success">Verified</span>' : '<span class="label label-warning">Pending</span>' !!}</td>
                                             </tr>
                                         @endforeach
 
