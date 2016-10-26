@@ -152,17 +152,12 @@
                     </a>
                 </li>
 
-                <li class="treeview {!! Request::path() == 'admin/users' ||
-                Request::path() == 'admin/add-users' ? 'active': '' !!}">
-                    <a href="#">
-                        <i class="fa fa-user"></i> <span>Users</span>
-                        <i class="fa fa-angle-left pull-right"></i>
+                <li{!! Request::path() == 'admin/users' ? ' class="active"': '' !!}>
+                    <a href="{{ url('admin/users') }}">
+                        <i class="fa fa-users"></i> <span>Users</span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ url('admin/users') }}">All Users</a></li>
-                        <li><a href="{{ url('admin/add-users') }}">Add New</a></li>
-                    </ul>
                 </li>
+
             </ul>
         </section>
         <!-- /.sidebar -->

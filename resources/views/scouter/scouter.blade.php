@@ -3,6 +3,18 @@
 
 @section('content')
 
+    @if(Session::has('checkCriteria'))
+
+        <div class="alert alert-success alert-dismissable scout">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+            <h4 style="display: inline; "><i class="icon fa fa-info"></i></h4>
+            <p style="display: inline; ">{{ Session::pull('checkCriteria') }}</p>
+            <a href="{{ url('scouter/registration', [$organization->id]) }}" class="btn bg-maroon btn-flat margin">Submit for Review</a>
+
+        </div>
+
+    @endif
 
     <div class="row">
         <div class="col-md-3">
@@ -18,7 +30,7 @@
             <!-- general form elements -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Assistant Scout Master</h3>
+                    <h3 class="box-title">Assistant Scout Master Detail {{ isset($organization) ? ': '. $organization->name : '' }}</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -92,7 +104,7 @@
                             <div class="form-group{{ $errors->has('name')? ' has-error' : '' }}">
                                 {{ Form::label('asst-lead-scouter', 'Assistant Scout Master', array( 'class' => 'control-label col-sm-6')) }}
                                 <div class="col-sm-6 scout-selection">
-                                    {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
+                                    {{ Form::text('name', null, array('class' => 'form-control')) }}
                                     @if ($errors->has('name'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('name') }}</strong>
@@ -241,8 +253,15 @@
                 </div>
                 <div class="box-footer">
                     <div class="pull-right">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        {{ link_to('scouter/team', 'NEXT', array('class' => 'btn btn-default')) }}
+                        @if(isset($org_id))
+                            @if(!$organization->isSubmitted() && !$organization->isRegistered())
+                                <button type="submit" class="btn btn-success">Save</button>
+                                <a href="{{ url('scouter/team', [$org_id]) }}" class="btn btn-default">NEXT</a>
+                            @else
+                                <a href="{{ url('scouter/team', [$org_id]) }}" class="btn btn-default">NEXT</a>
+                            @endif
+
+                        @endif
                     </div>
                 </div>
                 {{ Form::close() }}

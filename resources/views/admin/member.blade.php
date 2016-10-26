@@ -90,7 +90,7 @@
 
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Committee Member Details</h3>
+                        <h3 class="box-title">Committee Member Details : {{ $organization->name }}</h3>
                     </div><!-- /.box-header -->
 
 

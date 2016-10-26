@@ -59,5 +59,4 @@ class CoreTeam extends Model
         return $this->hasMany(CoreTeamMember::class, 'team_id', 'original_id');
 
     }
-
 }

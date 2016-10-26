@@ -30,7 +30,7 @@
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Scout Master Detail</h3>
+                        <h3 class="box-title">Scout Master Detail : {{ $organization->name }}</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 

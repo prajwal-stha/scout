@@ -12,6 +12,7 @@ use App\Http\Requests\CreateScouterRequest;
 use App\Http\Requests\UpdateScouterRequest;
 use App\Http\Requests\UpdateScouterProfileRequest;
 
+use Illuminate\Support\Facades\Session;
 use Auth;
 
 use App\Scouter;
@@ -31,7 +32,6 @@ use App\Term;
 
 use DB;
 
-
 /**
  * Class ScouterController
  * @package App\Http\Controllers
@@ -39,6 +39,9 @@ use DB;
 class ScouterController extends Controller
 {
 
+    /**
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
+     */
     protected $user;
     /**
      * ScouterController constructor.
@@ -61,9 +64,33 @@ class ScouterController extends Controller
         $data['title']    = 'Nepal Scout - Organizations';
         $org = Organization::where('user_id', $this->user->id)->get();
 
-        if(!$org){
+        if($org){
+            $data['organization'] = $org;
 
-            $data['org_id']       = $org->id;
+            return view('scouter.dashboard')->with($data);
+        }
+
+        return view('scouter.organization')->with($data);
+
+    }
+
+    /**
+     * @param null $id
+     * @return $this
+     */
+    public function getOrganization($id = null)
+    {
+        $data['district'] = District::all();
+        $data['title']    = 'Nepal Scout - Organizations';
+        $org = Organization::find($id);
+
+        if($org) {
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
+
+            $data['org_id'] = $org->id;
 
             $data['organization'] = $org;
         }
@@ -73,32 +100,43 @@ class ScouterController extends Controller
     }
 
     /**
-     * @return $this
+     * @param null $id
+     * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function getScarf(){
+    public function getScarf($id = null){
         $data['title']   = 'Nepal Scout - Scarf';
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
         if($org){
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
             $data['org_id']       = $org->id;
             $data['organization'] = $org;
             return view('scouter.scarf')->with($data);
         }else{
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+            return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
 
         }
         
     }
 
     /**
+     * @param $id
      * @return $this
      */
-    public function getCommitte()
+    public function getCommitte( $id = null )
     {
         $data['title']  = 'Nepal Scout - Member';
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
 
         if($org){
             $data['org_id']       = $org->id;
+            $data['organization'] = $org;
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
             if(Member::where( 'organization_id', $org->id)->count() == 0) {
 
                 Member::create([
@@ -115,7 +153,7 @@ class ScouterController extends Controller
             return view('scouter.member')->with($data);
 
         }else{
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+            return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
 
         }
 
@@ -124,34 +162,40 @@ class ScouterController extends Controller
 
 
     /**
+     * @param $id
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function getScouter()
+    public function getScouter( $id = null)
     {
         $data['title'] = 'Nepal Scout - Scouter';
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
         if($org){
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
+            $data['organization'] = $org;
             $data['org_id']       = $org->id;
-            if(Member::where( 'organization_id', $org->id)->distinct()->count() >= 3) {
-
-                $data['member'] = Member::where('organization_id', $org->id)->get();
-
-            } else {
-
-                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
-
-            }
-
-            if(Scouter::where( 'organization_id', $org->id)->count() > 0 ) {
-                $data['scouter']  = Scouter::where('organization_id', $org->id)
-                                    ->where('is_lead', 0)
-                                    ->first();
-            }
+//            if(Member::where( 'organization_id', $org->id)->distinct()->count() >= 3) {
+//
+//                $data['member'] = Member::where('organization_id', $org->id)->get();
+//
+//            } else {
+//
+//                return redirect('scouter/committe/'.$org->id)->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+//
+//            }
+//
+//            if(Scouter::where( 'organization_id', $org->id)->count() > 0 ) {
+//                $data['scouter']  = Scouter::where('organization_id', $org->id)
+//                                    ->where('is_lead', 0)
+//                                    ->first();
+//            }
             return view('scouter.scouter')->with($data);
 
         }
         else{
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+            return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
 
         
@@ -160,18 +204,24 @@ class ScouterController extends Controller
     /**
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function getLeadScouter()
+    public function getLeadScouter( $id = null )
     {
         $data['title'] = 'Nepal Scout - Scouter';
 
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
         if($org){
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
+
+            $data['organization'] = $org;
             $data['org_id']       = $org->id;
             if (Member::where('organization_id', $org->id)->distinct()->count() >= 3) {
                 $data['member'] = Member::where('organization_id', $org->id)->get();
             }else{
 
-                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+                return redirect('scouter/committe/'.$org->id)->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
 
             }
 
@@ -184,20 +234,27 @@ class ScouterController extends Controller
             return view('scouter.lead-scouter')->with($data);
         }
         else {
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+            return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
 
     }
 
     /**
      * @param null $teamId
+     * @param null $id
      * @return $this
      */
-    public function getTeam($teamId = null)
+    public function getTeam( $id = null, $teamId = null)
     {
         $data['title'] = 'Nepal Scout - Scouter';
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
         if($org){
+            if($this->checkCriteria($id)) {
+
+                Session::put('checkCriteria', $this->checkCriteria($id));
+            }
+
+            $data['organization'] = $org;
             $data['org_id'] = $org->id;
             if (is_null($teamId)) {
 
@@ -224,25 +281,26 @@ class ScouterController extends Controller
             }
             return view('scouter.team')->with($data);
         } else {
-            return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+            return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
         }
 
     }
 
 
     /**
+     * @param $id
      * @return $this
      */
-    public function getRegistration()
+    public function getRegistration($id = null)
     {
         $data['title']      = 'Registration Cost Detail';
         $data['rates']      = Rate::first();
-        $org = Organization::where('user_id', $this->user->id)->first();
+        $org = Organization::find($id);
 
         if($org) {
-            if (Member::where('organization_id', $org->id)->distinct()->count() < 3) {
+            if ($org->members->count() < 3) {
 
-                return redirect('/committe')->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
+                return redirect('/committe/'.$org->id)->with('member_not_filled', 'Please Enter the details of at lease three committe members.');
             }
 
             $team_member_count = DB::table('teams')
@@ -263,10 +321,10 @@ class ScouterController extends Controller
             );
 
 
-            if (Team::where($matchMale)->count() < 2 ||  Team::where($matchFemale)->count() < 2 || $team_member_count < 24) {
+            if (Team::where($matchMale)->count() < 2 ||  Team::where($matchFemale)->count() < 2 || $team_member_count < 24)
+            {
 
-
-                return redirect('/team')->with('team_not_filled', 'Please, enter the details of at least four teams: two of Male and two of Female and at least six members for each teams before you can continue.');
+                return redirect('scouter/team/'.$org->id)->with('team_not_filled', 'Please, enter the details of at least four teams: two of Male and two of Female and at least six members for each teams before you can continue.');
 
             }
             $data['organization'] = $org;
@@ -276,11 +334,12 @@ class ScouterController extends Controller
             $data['scout']   = $team_member_count;
             $data['member']  = intval($data['organization']->members->count() + 1);
             $data['total']   = $data['scouter'] + $data['scout'] + $data['member'];
+
             return view('scouter.registration')->with($data);
 
         }
 
-        return redirect('scouter')->with(['no_org' => 'Please fill up this form first to continue.']);
+        return redirect('scouter/organization')->with(['no_org' => 'Please fill up this form first to continue.']);
 
     }
 
@@ -449,6 +508,10 @@ class ScouterController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return $this
+     */
     public function getProfile($id)
     {
        if (Auth::user()->id == User::find($id)->id){
@@ -458,27 +521,64 @@ class ScouterController extends Controller
                return view('scouter.profile')->with( $data );
            }
        }
-        
     }
 
+    /**
+     * @param UpdateScouterProfileRequest $request
+     * @param $id
+     * @return mixed
+     */
     public function patchProfile(UpdateScouterProfileRequest $request, $id)
     {
         if($id){
             $user = User::findOrFail($id);
             if($user){
-            $user->f_name            = $request->get('f_name');
-            $user->l_name            = $request->get('l_name');
-            $user->password          = bcrypt($request->get('password'));
+                $user->f_name            = $request->get('f_name');
+                $user->l_name            = $request->get('l_name');
+                $user->password          = bcrypt($request->get('password'));
 
-            $user->save();
-        }
-
-
+                $user->save();
+            }
             return redirect()->back()
                 ->with(['user_update' => 'User successfully updated']);
 
         }
-        
     }
 
+    private function checkCriteria($id = null)
+    {
+        $org = Organization::find($id);
+
+        if($org) {
+
+            if (!$org->isSubmitted() && !$org->isRegistered() && $org->members->count() >= 3) {
+
+                $team_member_count = DB::table('teams')
+                    ->join('team_members', function ($join) use ($org) {
+
+                        $join->on('teams.id', '=', 'team_members.team_id')
+                            ->where('teams.organization_id', '=', $org->id);
+                    })
+                    ->count();
+
+                $matchMale = array(
+                    'organization_id' => $org->id,
+                    'gender' => 'Male'
+                );
+
+
+                $matchFemale = array(
+                    'organization_id' => $org->id,
+                    'gender' => 'Female'
+                );
+
+                if (Team::where($matchMale)->count() >= 2 && Team::where($matchFemale)->count() >= 2 && $team_member_count >= 24) {
+                    return ' The minimum criteria to submit application for the membership is met.';
+
+                }
+            }
+        }
+        return false;
+
+    }
 }

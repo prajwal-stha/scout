@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class User
  * @package App
@@ -36,11 +38,6 @@ class User extends Authenticatable
      */
     protected $dates = ['deleted_at'];
 
-
-//    public function setPasswordAttribute($value)
-//    {
-//        $this->attributes['password'] = bcrypt($value);
-//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -75,7 +72,6 @@ class User extends Authenticatable
         return $query->where('level', 1);
 
     }
-
 
     /**
      * @param $query
@@ -120,5 +116,4 @@ class User extends Authenticatable
         return false;
 
     }
-
 }

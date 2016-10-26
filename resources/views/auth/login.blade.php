@@ -63,7 +63,7 @@
 
         <form action="{{ url('/login') }}" method="post">
             {{ csrf_field() }}
-            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}" style="position: relative;">
+            <div class="form-group has-feedback {{ $errors->has('username') ? ' has-error' : '' }}">
                 <input type="text" class="form-control" placeholder="User Name" name="username" value="{{ old('username') }}">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 @if ($errors->has('username'))
@@ -72,7 +72,7 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}" style="position: relative;">
+            <div class="form-group has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
                 <input type="password" class="form-control" placeholder="Password" name="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 @if ($errors->has('password'))

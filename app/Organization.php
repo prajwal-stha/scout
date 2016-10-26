@@ -14,11 +14,6 @@ class Organization extends Model
 {
 
     /**
-     * @var string
-     */
-    public $timestamps = false;
-
-    /**
      * @var array
      */
     protected $fillable = array('registration_no', 'district_id', 'registration_date', 'renew_status', 'type', 'name', 'chairman_f_name', 'chairman_l_name', 'chairman_mobile_no', 'tel_no', 'address_line_1', 'address_line_2', 'email', 'user_id', 'background_colour', 'border_colour');
@@ -91,5 +86,30 @@ class Organization extends Model
         }
     }
 
+    public function isSubmitted()
+    {
+        if($this->is_submitted == 1){
+            return true;
+        }
+        return false;
+        
+    }
 
+    public function isDeclined()
+    {
+        if($this->is_declined == 1){
+            return true;
+        }
+        return false;
+        
+    }
+
+    public function isRegistered()
+    {
+        if($this->registration_no != null && !empty($this->registration_no)){
+            return true;
+        }
+        return false;
+        
+    }
 }

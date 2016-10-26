@@ -135,7 +135,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th>Organization Commitee Member</th>
+                                        <th>Unit Commitee Member</th>
                                         <td>{{ 'Rs. '. $rates->committee_members_rate }}</td>
                                     </tr>
 
@@ -203,6 +203,50 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">All Users</h3>
+                    </div><!-- /.box-header -->
+
+
+                    @if(count($users) > 0)
+                        <div class="box-body">
+
+                            <div class="table-responsive">
+                                <table id="table-registerd-users" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>User Name</th>
+                                        <th>Role</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="list-registered-users">
+
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td><a data-toggle="tooltip" title="View Profile" href="{{ url('admin/profile', [$user->id]) }}">{{ $user->f_name }} {{ $user->l_name }}</a></td>
+                                            <td>{{ $user->username }}</td>
+                                            <td>{{ $user->isAdmin() ? 'Administrator' : 'Public' }}</td>
+                                            <td>{!! $user->isVerified() ? '<span class="label label-success">Verified</span>' : '<span class="label label-warning">Pending</span>' !!}</td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    @endif
+
+
+                </div><!-- /.box -->
+
+            </div>
         </div>
     </section><!-- /.content -->
 
@@ -234,6 +278,16 @@
             "info": true,
             "autoWidth": false
         });
+
+        $('#table-registerd-users').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+
     </script>
 
 @stop

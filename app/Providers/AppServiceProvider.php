@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        if(!app()->runningInConsole() ) {
+        if(!app()->runningInConsole() ) {
 
             $org = Organization::whereNull('registration_no')
                 ->where('is_declined', false)
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
             view()->share('unregistered_registration_no', $org);
 
-//        }
+        }
 
     }
 

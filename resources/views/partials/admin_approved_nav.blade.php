@@ -1,5 +1,6 @@
 <div class="box-body no-padding">
     <ul class="nav nav-pills nav-stacked">
+
         <li{!! Request::is('admin/view-approved-organization/*') ? ' class="active"': '' !!}>
 
             <a href="{{ url('admin/view-approved-organization', [$organization->original_id]) }}"><i class="fa fa-institution"></i> Unit Detail

@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
@@ -122,7 +122,7 @@
 
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-6">
                 @if ($terms->count())
 
                     <div class="box box-success">
@@ -149,7 +149,7 @@
                                             <tr>
                                                 <td><input class="check-row" name="action_to[]" type="checkbox" value="{{ $value->id }}"></td>
                                                 <td>{{ $value->title }}</td>
-                                                <td>{{ $value->order }}</td>
+                                                <td><span class="badge bg-green">{{ $value->order }}</span></td>
                                                 <td><a data-toggle="tooltip" title="EDIT" class="btn btn-success updateTerm" data-id="{{ $value->id }}" href="{{ url('term/update', [$value->id]) }}"><i class="fa fa-pencil"></i></a>
                                                     <a data-toggle="tooltip" title="DELETE" class="btn btn-danger deleteTerm" data-id="{{ $value->id }}" href="{{ url( 'term/delete', [$value->id]) }}"><i class="fa fa-trash-o"></i></a>
                                                 </td>

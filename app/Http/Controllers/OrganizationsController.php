@@ -18,6 +18,7 @@ use App\Member;
 use App\Scouter;
 use App\Team;
 use App\TeamMember;
+use App\District;
 use Session;
 use Auth;
 use Validator;
@@ -44,6 +45,17 @@ class OrganizationsController extends Controller
     }
 
     /**
+     * @return $this
+     */
+    public function getCreate()
+    {
+        $data['district'] = District::all();
+        $data['title']    = 'Nepal Scout - Organizations';
+        return view('scouter.organization')->with($data);
+        
+    }
+
+    /**
      *
      * Creates new organization
      * @param CreateOrganizationsRequest $request
@@ -52,7 +64,7 @@ class OrganizationsController extends Controller
     public function postCreate(CreateOrganizationsRequest $request)
     {
 
-        Organization::create([
+        $org = Organization::create([
             'name'                  => $request->get('name'),
             'type'                  => $request->get('type'),
             'registration_date'     => formatDate($request->get('registration_date')),
@@ -69,7 +81,7 @@ class OrganizationsController extends Controller
             'user_id'               => Auth::user()->id,
 
         ]);
-        return redirect('scouter/scarf')->with([
+        return redirect('scouter/scarf/'.$org->id)->with([
             'org_created'   => 'The Unit is succesfully created',
             'title'         => 'Nepal Scouts - Scarf'
         ]);
@@ -93,7 +105,7 @@ class OrganizationsController extends Controller
             $org->district_id = $request->get('district');
             $org->chairman_f_name = $request->get('chairman_f_name');
             $org->chairman_m_name = $request->get('chairman_m_name');
-            $org->chairman_l_name = $request->get('chairman_f_name');
+            $org->chairman_l_name = $request->get('chairman_l_name');
             $org->chairman_mobile_no = $request->get('chairman_mobile_no');
             $org->chairman_gender = $request->get('chairman_gender');
             $org->tel_no = $request->get('tel_no');

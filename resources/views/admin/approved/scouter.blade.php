@@ -31,7 +31,7 @@
 
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Assistant Scout Master Detail</h3>
+                        <h3 class="box-title">Assistant Scout Master Detail : {{ $organization->name }}</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 
@@ -45,7 +45,7 @@
                                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                         {{ Form::label('lead-scouter', 'Lead Scouter *', array( 'class' => 'control-label col-sm-6')) }}
                                         <div class="col-sm-6 scout-selection">
-                                            {{ Form::select('name', formatNameOption($member), null, array('class' => 'form-control')) }}
+                                            {{ Form::text('name', null, array('class' => 'form-control')) }}
                                             @if ($errors->has('name'))
                                                 <span class="help-block">
                                                     <strong>{{ $errors->first('name') }}</strong>

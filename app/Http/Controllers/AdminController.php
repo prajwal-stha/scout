@@ -88,12 +88,13 @@ class AdminController extends Controller
     {
         $data['title']                  = 'Nepal Scout - Dashboard';
         $data['rates']                  = Rate::first();
-        $data['registered_users']       = User::verified()->public()->count();
+        $data['registered_users']       = User::public()->count();
+
         $data['approved_organizations'] = CoreOrganization::all()->count();
         $data['declined_organizations'] = Organization::where('is_declined', 1)
                                             ->where('is_submitted', 1)
                                             ->count();
-        $data['users']                  = User::where('level', 0)->get();
+        $data['users']                  = User::all();
         return view( 'admin.dashboard')->with( $data );
     }
 
@@ -108,9 +109,7 @@ class AdminController extends Controller
 
         return view('admin.profile')->with( $data );
 
-
     }
-
 
     /**
      * @return mixed
@@ -123,13 +122,10 @@ class AdminController extends Controller
         
     }
 
-    public function getAddUsers()
-    {
-        $data['title']  = 'Nepal Scout - All Users';
-        return view('admin.add-user')->with( $data );
-
-    }
-
+    /**
+     * @param CreateUserRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postAddUsers(CreateUserRequest $request)
     {
         $user = User::create([
@@ -1752,6 +1748,10 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getSearchTerms(Request $request)
     {
         $query = $request->input('q', '');

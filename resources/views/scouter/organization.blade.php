@@ -2,6 +2,18 @@
 
 
 @section('content')
+    @if(Session::has('checkCriteria'))
+
+        <div class="alert alert-success alert-dismissable scout">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+
+            <h4 style="display: inline; "><i class="icon fa fa-info"></i></h4>
+            <p style="display: inline; ">{{ Session::pull('checkCriteria') }}</p>
+            <a href="{{ url('scouter/registration', [$organization->id]) }}" class="btn bg-maroon btn-flat margin">Submit for Review</a>
+
+        </div>
+
+    @endif
 
     <div class="row">
         <div class="col-md-3">
@@ -19,7 +31,7 @@
             <!-- general form elements -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Unit Detail</h3>
+                    <h3 class="box-title">Unit Detail {{ isset($organization) ? ': '. $organization->name : '' }}</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
 
@@ -42,6 +54,7 @@
                     </div>
 
                 @endif
+
 
                 @if(isset($org_id))
 
@@ -149,8 +162,8 @@
 
                             @if ($errors->has('chairman_f_name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('chairman_f_name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('chairman_f_name') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -159,8 +172,8 @@
 
                             @if ($errors->has('chairman_m_name'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('chairman_m_name') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('chairman_m_name') }}</strong>
+                                </span>
                             @endif
                         </div>
 
@@ -203,8 +216,8 @@
 
                             @if ($errors->has('chairman_gender'))
                                 <span class="help-block">
-                                        <strong>{{ $errors->first('chairman_gender') }}</strong>
-                                    </span>
+                                    <strong>{{ $errors->first('chairman_gender') }}</strong>
+                                </span>
                             @endif
 
                         </div>
@@ -243,8 +256,19 @@
                 </div>
                 <div class="box-footer">
                     <div class="pull-right">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        {{ link_to('scouter/scarf', 'NEXT', array('class' => 'btn btn-default')) }}
+                        @if(isset($org_id))
+                            @if(!$organization->isRegistered() && !$organization->isRegistered() )
+                                <button type="submit" class="btn btn-success">Save</button>
+
+                            @endif
+                            <a href="{{ url('scouter/scarf', [$org_id]) }}" class="btn btn-default">NEXT</a>
+
+
+                        @else
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a href="{{ url('scouter/scarf') }}" class="btn btn-default">NEXT</a>
+                        @endif
+
                     </div>
                 </div>
 

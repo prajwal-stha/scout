@@ -28,7 +28,7 @@
 
                 <div class="box box-success">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Unit Details</h3>
+                        <h3 class="box-title">Unit Details : {{ $organization->name }}</h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
 

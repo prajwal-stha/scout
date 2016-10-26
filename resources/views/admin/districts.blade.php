@@ -4,16 +4,6 @@
 
 
     <section class="content">
-
-        @if(Session::has('district_updated'))
-
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Great!</h4>
-                {{ Session::get('district_updated') }}
-            </div>
-
-        @endif
         <div class="modal" id="districtModal" tabindex="-1" role="dialog" aria-labelledby="districtModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -47,18 +37,36 @@
         </div>
         <div id="alert-placeholder"></div>
 
-        @if(Session::has('districts_deleted'))
-
-            <div class="alert alert-success alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-check"></i> Great!</h4>
-                {{ Session::get('districts_deleted') }}
-            </div>
-
-        @endif
 
         <div class="row">
-            <div class="col-md-5">
+
+            @if(Session::has('district_updated'))
+                <div class="col-md-12">
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('district_updated') }}
+                    </div>
+
+                </div>
+
+            @endif
+
+            @if(Session::has('districts_deleted'))
+
+                <div class="col-md-12">
+
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-check"></i> Great!</h4>
+                        {{ Session::get('districts_deleted') }}
+                    </div>
+
+                </div>
+
+            @endif
+            <div class="col-md-6">
                 <!-- general form elements -->
                 <div class="box box-success">
                     <div class="box-header with-border">
@@ -99,7 +107,7 @@
 
             </div>
 
-            <div class="col-md-7">
+            <div class="col-md-6">
                 @if ($districts->count())
 
                     <div class="box box-success">
